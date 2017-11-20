@@ -76,11 +76,11 @@ END
    DB2 (A)
    C2D ("]")
    ALU (-)
-   CF1 (carry)
+   CF1 (zero)
    JMP (*1)
    C2D ("[")
    ALU (=)
-   CF1 (carry
+   CF1 (zero)
    JMP (*0)
    CP1 (O1)
    JMP (*2)
@@ -89,7 +89,7 @@ END
 *1:INC (O1)
    JMP (*0)
 *2:INC (L1)
-   CF1 (carry)
+   CF1 (zero)
    INC (H1)
    END
 

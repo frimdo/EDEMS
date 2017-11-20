@@ -54,6 +54,7 @@ uInstructions are 1B opcode with 1 1B operad. Every functional block that can ha
 - `D2O + o1` - move value from DB to uO, o1 is irrelevant.
 - `END + o1` - end of microinstruction. Signal for control unit to fetch another instruction.
 - `JMP + o1` - write o1 to uPC. 
+- `HLT + o1` - stop simulator.
 
 ## brainfuck
 used registers:
@@ -148,12 +149,12 @@ LDa16 loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + 
 ### instructions
 - `|LD 3b where| + |addrH| + |addrL|` - load from 2B address to 8 bit register.
 - `|ST 3b what| + |addrH| + |addrL|` - store from 1B register to 2B address.
-- `|ADD 3b where| + |addrH| + |addrL|` - add 1B value from 2B address to 1B register.
-- `|ADD 2b where| + |addrH| + |addrL|` - add 1B value from 2B address to 2B register.
+- `|ADD 3b where| + |addrH| + |addrL|` - add 1B value from 2B address to 1B register. (result saved in the register)
+- `|ADD 2b where| + |addrH| + |addrL|` - add 1B value from 2B address to 2B register. (result saved in the register)
 - `|INC2 2b what|` - increment 2B register.
 - `|INC 3b what|` - increment 1B register.
 - `|DEC2 2b what|` - decrement 2B register.
-- `|DEC 3b what|` - increment 1B register.
+- `|DEC 3b what|` - decrement 1B register.
 - `|TST| + |addrH| + |addrL|` - if value on 2B address is zero, next instruction is skipped.
 - `|TSTF 3b which|` - if nth bit of F register is zero, next instruction is skipped.
 - `|HLT|` - stop the simulator. Every unknown opcode is HLT.
