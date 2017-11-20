@@ -1,7 +1,7 @@
 # EDEMS
 Educational DEmonstrative Microprocessor Simulator
 ## EDEMS  registers
-EDEMS has 14 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
+EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
 
 | #   | ------------ | #   | ------------ |
 |-----|--------------|-----|--------------|
@@ -14,45 +14,63 @@ EDEMS has 14 registers, two of those are 16b, others are 8b. User reachable are 
 | R12 | IR           | R13 | u0           |
 | R14 | uPC          | R15 | TMP          |
 
-Light colored registers are user-addressable registers, grey are microcode-only-addressable registers.
+Registers 0-7 are user-addressable registers, 8-15 are microcode-only-addressable registers.
 
 Registers H1 and L1 can be used as 16b register HL1,
 Registers H2 and L2 can be used as 16b register HL2,
-Registers PC and SP are 16b and user can not address only one byte.
+Registers PC and SP are only 16b addressable for user.
 
 All registers, except PC(Program Counter) could theoretically be used as general purpose registers, but some bytes of F(flags) is rewrited after almost every ALU operation. SP is used by stack pointer instructions.
 
+
+### F register
+F register contains ALU flags. Those are:
+
+|?|?|?|V|I|N|Z|C|
+|-|-|-|-|-|-|-|-|
+
+- C - carry
+- Z - zero
+- N - Negative
+- I - Interrupt?
+- V - Two's complement overflow
+
 ## uInstructon set
-uInstructions are 1B opcode with 1 1B operand. Every functional block that can have its value (buses, registers) has its own number. They are addressable using that number. `| |` block means 1B value
-- `|CuO| + |o1|` - fill u0 register with corresponding value. u0=IR-o1
-- `|REG| + |o1|` - fill TMP register with value of corresponding register. TMP=R(o1)
-- `|ALU| + |o1|` - ALU does operation defined by o1. o1=1=add, o1=2=or, o1=3=not
-- `|2DB| + |o1|` - move value from o1 (REGISTER) to DB
-- `|2AB| + |o1|` - move value from o1 (REGISTER) to AB
-- `|DB2| + |o1|` - move value from DB to o1 (REGISTER)
-- `|AB2| + |o1|` - move value from AB to o1 (REGISTER)
-- `|INC| + |o1|` - increment value in o1 (REGISTER)
-- `|DEC| + |o1|` - decrement value in o1 (REGISTER)
+uInstructions are 1B opcode with 1 1B operand. Every functional block that can have its value (buses, registers) has its own number. They are addressable using that number. `| |` block means 1B value. u0 register is indexing register. When used in most microinstructions, containing value is used as index instead.
+
+- `|CuO| + |o1|` - fill u0 register with corresponding value. u0=IR-o1.
+- `|ALU| + |o1|` - ALU does operation defined by o1. o1=1=add, o1=2=or, o1=3=not,...
+- `|2DB| + |o1|` - move value from o1 (REGISTER) to DB.
+- `|2AL| + |o1|` - move value from o1 (REGISTER) to AB[0:7].
+- `|2AH| + |o1|` - move value from o1 (REGISTER) to AB[8:15].
+- `|DB2| + |o1|` - move value from DB to o1 (REGISTER).
+- `|AB2| + |o1|` - move value from AB to o1 (REGISTER).
+- `|INC| + |o1|` - increment value in o1 (REGISTER).
+- `|DEC| + |o1|` - decrement value in o1 (REGISTER).
 - `|CP1| + |o1|` - jump over next microinstruction if value in o1 (REGISTER) is 0x00.
 - `|CP2| + |o1|` - jump over 2 next microinstructions if value in o1 (REGISTER) is 0x00.
-- `|CP4| + |o1|` - jump over 4 next microinstructions if value in o1 (REGISTER) is 0x00.
-- `|CP8| + |o1|` - jump over 8 next microinstructions if value in o1 (REGISTER) is 0x00.
+- `|CF1| + |o1|` - jump over next microinstruction if value in F(o1) is 0b.
+- `|CF2| + |o1|` - jump over 2 next microinstructions if value in F(o1) is 0b.
+- `|O2D| + |o1|` - move value from uO to DB, o1 is irrelevant.
+- `|D2O| + |o1|` - move value from DB to uO, o1 is irrelevant.
+- `|END| + |o1|` - end of microinstruction (uPC <= 0x00), o1 is irrelevant.
 
 ## brainfuck
 used registers:
+
 - HL1 - Data pointer, initial value = `0x0010`
 - SP - Output pointer, initial value = `0xFFFF`
 - HL2 - Input pointer, initial value = `0x0000`
-- A - Parenthesis counter, initial value = `0x00`
+- OP1 - Parenthesis counter, initial value = `0x00`
 
 ### Initial memory map
 All of memory is filled with `0x00`
 
 ```
-*********** - HL2
+*********** - HL2 - IP - 0x0000
 *         *
 *         *
-*********** - HL1
+*********** - HL1 - DP - 0x0010
 *         *
 *         *
 *         *
@@ -62,8 +80,7 @@ All of memory is filled with `0x00`
     ...
 *         *
 *         *
-*********** - SP
-*********** - 0x00 (constant for zeroing operation)
+*********** - SP - OP - 0xFFFF
 ```
 ### Pseudocode for commands
 #### > - 0x3E
