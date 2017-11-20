@@ -26,8 +26,7 @@ All registers, except PC(Program Counter) could theoretically be used as general
 ### F register
 F register contains ALU flags. Those are:
 
-|?|?|?|V|I|N|Z|C|
-|-|-|-|-|-|-|-|-|
+`|?|?|?|V||I|N|Z|C|`
 
 - C - carry
 - Z - zero
