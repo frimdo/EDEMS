@@ -66,19 +66,33 @@ END
 END
 ```
 #### ] - 0x5D
-If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
 ```
-counter = 0
+*0:INC (L1)
+   CF1 (carry)
+   INC (H1)
+   2AL (L1)
+   2AH (H1)
+   2DB (memory)
+   DB2 (A)
+   C2D ("]")
+   ALU (-)
+   CF1 (carry)
+   JMP (*1)
+   C2D ("[")
+   ALU (=)
+   CF1 (carry
+   JMP (*0)
+   CP1 (O1)
+   JMP (*2)
+   DEC (O1)
+   JMP (*0)
+*1:INC (O1)
+   JMP (*0)
+*2:INC (L1)
+   CF1 (carry)
+   INC (H1)
+   END
 
-while True:
-    pointer = pointer-1
-    if string[pointer] == "]":
-        counter = counter+1
-    elif string[pointer] == "[" and counter != 0:
-        counter = counter-1
-    elif string[pointer] == "[" and counter == 0:
-        pointer = pointer+1
-        break
 ```
 #### Unknown
 ```

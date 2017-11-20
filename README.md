@@ -26,34 +26,34 @@ All registers, except PC(Program Counter) could theoretically be used as general
 ### F register
 F register contains ALU flags. Those are:
 
-`|?|?|?|V||I|N|Z|C|`
+`|uPC[11]|uPC[10]|uPC[9]|  I  ||  V  |  N  |  Z  |  C  |`
 
 - C - carry
 - Z - zero
 - N - Negative
-- I - Interrupt?
 - V - Two's complement overflow
+- I - Interrupt?
+- uPC - MSB of uPC
 
 ## uInstructon set
-uInstructions are 1B opcode with 1 1B operand. Every functional block that can have its value (buses, registers) has its own number. They are addressable using that number. `| |` block means 1B value. u0 register is indexing register. When used in most microinstructions, containing value is used as index instead.
+uInstructions are 1B opcode with 1 1B operad. Every functional block that can have its value (buses, registers) has its own number. They are addressable using that number. u0 register is indexing register. When used in most microinstructions, containing value is used as index instead.
 
-- `|CuO| + |o1|` - fill u0 register with corresponding value. u0=IR-o1.
-- `|ALU| + |o1|` - ALU does operation defined by o1. o1=1=add, o1=2=or, o1=3=not,...
-- `|2DB| + |o1|` - move value from o1 (REGISTER) to DB.
-- `|2AL| + |o1|` - move value from o1 (REGISTER) to AB[0:7].
-- `|2AH| + |o1|` - move value from o1 (REGISTER) to AB[8:15].
-- `|DB2| + |o1|` - move value from DB to o1 (REGISTER).
-- `|AB2| + |o1|` - move value from AB to o1 (REGISTER).
-- `|INC| + |o1|` - increment value in o1 (REGISTER).
-- `|DEC| + |o1|` - decrement value in o1 (REGISTER).
-- `|CP1| + |o1|` - jump over next microinstruction if value in o1 (REGISTER) is 0x00.
-- `|CP2| + |o1|` - jump over 2 next microinstructions if value in o1 (REGISTER) is 0x00.
-- `|CF1| + |o1|` - jump over next microinstruction if value in F(o1) is 0b.
-- `|CF2| + |o1|` - jump over 2 next microinstructions if value in F(o1) is 0b.
-- `|C2D| + |o1|` - move o1 constant to DB.
-- `|O2D| + |o1|` - move value from uO to DB, o1 is irrelevant.
-- `|D2O| + |o1|` - move value from DB to uO, o1 is irrelevant.
-- `|END| + |o1|` - end of microinstruction (uPC <= 0x00), o1 is irrelevant.
+- `CuO + o1` - fill u0 register with corresponding value. u0=IR-o1.
+- `ALU + o1` - ALU does operation defined by o1. o1=1=add, o1=2=or, o1=3=not,...
+- `2DB + o1` - move value from o1 (REGISTER) to DB.
+- `2AL + o1` - move value from o1 (REGISTER) to AB[0:7].
+- `2AH + o1` - move value from o1 (REGISTER) to AB[8:15].
+- `DB2 + o1` - move value from DB to o1 (REGISTER).
+- `AB2 + o1` - move value from AB to o1 (REGISTER).
+- `INC + o1` - increment value in o1 (REGISTER).
+- `DEC + o1` - decrement value in o1 (REGISTER).
+- `CP1 + o1` - jump over next microinstruction if value in o1 (REGISTER) is 0x00.
+- `CF1 + o1` - jump over next microinstruction if value in F(o1) is 0b.
+- `C2D + o1` - move o1 constant to DB.
+- `O2D + o1` - move value from uO to DB, o1 is irrelevant.
+- `D2O + o1` - move value from DB to uO, o1 is irrelevant.
+- `END + o1` - end of microinstruction. Signal for control unit to fetch another instruction.
+- `JMP + o1` - write o1 to uPC. 
 
 ## brainfuck
 used registers:
