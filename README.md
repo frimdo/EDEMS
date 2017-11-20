@@ -50,6 +50,7 @@ uInstructions are 1B opcode with 1 1B operand. Every functional block that can h
 - `|CP2| + |o1|` - jump over 2 next microinstructions if value in o1 (REGISTER) is 0x00.
 - `|CF1| + |o1|` - jump over next microinstruction if value in F(o1) is 0b.
 - `|CF2| + |o1|` - jump over 2 next microinstructions if value in F(o1) is 0b.
+- `|C2D| + |o1|` - move o1 constant to DB.
 - `|O2D| + |o1|` - move value from uO to DB, o1 is irrelevant.
 - `|D2O| + |o1|` - move value from DB to uO, o1 is irrelevant.
 - `|END| + |o1|` - end of microinstruction (uPC <= 0x00), o1 is irrelevant.
