@@ -43,7 +43,7 @@ High and low bits of microprogram counter. Since microprogram addresses are only
 
 Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use JMP instruction.
 
-|NA  |NA  |NA  |NA  |NA  | uPC[10]| uPC[9]| uPC[8]| 
+`|NA  |NA  |NA  |NA  |NA  | uPC[10]| uPC[9]| uPC[8]| 
 |-|-|-|-|-|-|-|-|
 |uPCH[7] |uPCH[6] |uPCH[5] |uPCH[4] |uPCH[3] |uPCH[2] |uPCH[1] |uPCH[0]|
 
@@ -54,9 +54,9 @@ Rewriting only one of the registers is not recomanded, since you would jump to a
 ### F register
 F register contains ALU flags. Those are:
 
-|  X   |  Q   |  H  |  P   |  V   |  N   |  Z   |  C  |
-|-|-|-|-|-|-|-|-|
-|F[7]|F[6]|F[5]|F[4]|F[3]|F[2]|F[1]|F[0]|
+|  X  |  Q  |  H  |  P  |  V  |  N  |  Z  |  C  |
+|-----|-----|-----|-----|-----|-----|-----|-----|
+|F[7] |F[6] |F[5] |F[4] |F[3] |F[2] |F[1] |F[0] |
 
 - C - carry
 - Z - zero
@@ -108,6 +108,7 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 1. EQU - compare if **EQU**al to zero: DB = DB == 0
 1. BSR - **B**CD **S**hift **R**ight
 1. BSL - **B**CD **S**hift **L**eft
+1. OOP - Do **O**peration defined by **OP** register.
 
 
 ## uInstructon set
