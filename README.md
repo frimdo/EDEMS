@@ -26,7 +26,7 @@ All registers, except PC(Program Counter) could theoretically be used as general
 Those registers can be used as one operand of ALU operations.
 
 ### OP1, OP2 registers
-Are supposed to be used for fetching macroinstruction operands.
+Are supposed to be used for fetching instruction operands.
 
 ### TMP register
 Main register of most ALU operations.
@@ -37,7 +37,7 @@ Indexing register for microinstructions. It can be filled with CuO microinstruct
 ### uPCL, uPCH
 High and low bits of microprogram counter. Since microprogram addresses are only 11b, 5MSB of uPCH is not used.
 
-Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use JMP instruction.
+Rewriting only one of the registers is not recommended, since you would jump to another part of microprogram. For jump you should use JMP instruction.
 
 |NA  |NA  |NA  |NA  |NA  | uPC[10]| uPC[9]| uPC[8]| 
 |-|-|-|-|-|-|-|-|
@@ -81,7 +81,7 @@ ALU has 5 inputs and 3 outputs. Most of the operations use data bus as its outpu
 
 ### Operations
 1. addA - DB = A+TMP
-1. subA - DB = TMP + TwosComplement(A)
+1. subA - DB = TMP + Two'sComplement(A)
 1. notA - DB = ~A
 1. andA - DB = A && TMP
 1. orA - DB = A || TMP
@@ -93,7 +93,7 @@ ALU has 5 inputs and 3 outputs. Most of the operations use data bus as its outpu
 1. lrlA - left rotate
 1. lrcA - left rotate through carry
 1. addL1 - DB = L1+TMP
-1. subL1 - DB = TMP + TwosComplement(L1)
+1. subL1 - DB = TMP + Two'sComplement(L1)
 1. notL1 - DB = ~L1
 1. andL1 - DB = L1 && TMP
 1. orL1 - DB = L1 || TMP
@@ -105,7 +105,7 @@ ALU has 5 inputs and 3 outputs. Most of the operations use data bus as its outpu
 1. lrlL1 - left rotate
 1. lrcL1 - left rotate through carry
 1. addL2 - DB = L2+TMP
-1. subL2 - DB = TMP + TwosComplement(L2)
+1. subL2 - DB = TMP + Two'sComplement(L2)
 1. notL2 - DB = ~L2
 1. andL2 - DB = L2 && TMP
 1. orL2 - DB = L2 || TMP
