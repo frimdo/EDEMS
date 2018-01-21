@@ -5,41 +5,45 @@ EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 
 
 | #   | ------------ | #   | ------------ |
 |-----|--------------|-----|--------------|
-| R0  | H1           | R6  | L1           |
-| R1  | H2           | R7  | L2           |
-| R5  | A            | R4  | F            |
-| R2  | P            | R8  | C            |
-| R3  | S            | R9  | P            |
-| R10 | OP1          | R11 | OP2          |
-| R12 | TMP          | R13 | u0           |
-| R14 | uPCH         | R15 | uPCL         |
+| R07 | F            | R06 | A            |
+| R00 | B            | R03 | C            |
+| R01 | D            | R04 | E            |
+| R03 | S            | R05 | P            |
+| R08 | PCH          | R09 | PCL          |
+| R10 | TMP0         | R13 | OP           |
+| R11 | TMP1         | R14 | TMP2         |
+| R12 | UPCH         | R15 | UPCL         |
 
 Registers 0-7 are user-addressable registers, 8-15 are microcode-only-addressable registers.
 
-Registers H1 and L1 can be used as 16b register HL1,
-Registers H2 and L2 can be used as 16b register HL2,
-Registers PC and SP are only 16b addressable for user.
+
 
 All registers, except PC(Program Counter) could theoretically be used as general purpose registers, but some bytes of F(flags) is rewrited after almost every ALU operation. SP is used by stack pointer instructions.
 
-### A, L1, L2 registers
-Those registers can be used as one operand of ALU operations.
+### A, B, C, D, E, S, P
+Those registers can be used as general purpose 8b registers.
 
-### OP1, OP2 registers
-Are supposed to be used for fetching instruction operands.
+### BC, DE, SP
+Those 8b register pairs can be used as general purpose 16b registers.
 
-### TMP register
-Main register of most ALU operations.
+### TMP0, TMP1, TMP2
+General purpose registers for microcode. 
 
-### uO
-Indexing register for microinstructions. It can be filled with CuO microinstruction or D2O instruction.
+### TMP1TMP2
+register pair can be used as general purpose 16b register for microcode.
 
-### uPCL, uPCH
+### OP 
+Register for addressing of other registers.
+
+### PCH, PCL
+Program counter of microprocessor. Though not addressable for user, is visible and editable using jump instructions.
+
+### UPCL, UPCH
 High and low bits of microprogram counter. Since microprogram addresses are only 11b, 5MSB of uPCH is not used.
 
-Rewriting only one of the registers is not recommended, since you would jump to another part of microprogram. For jump you should use JMP instruction.
+Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use JMP instruction.
 
-|NA  |NA  |NA  |NA  |NA  | uPC[10]| uPC[9]| uPC[8]| 
+`|NA  |NA  |NA  |NA  |NA  | uPC[10]| uPC[9]| uPC[8]| 
 |-|-|-|-|-|-|-|-|
 |uPCH[7] |uPCH[6] |uPCH[5] |uPCH[4] |uPCH[3] |uPCH[2] |uPCH[1] |uPCH[0]|
 
@@ -50,132 +54,95 @@ Rewriting only one of the registers is not recommended, since you would jump to 
 ### F register
 F register contains ALU flags. Those are:
 
-|  NA   |  NA   |  NA   |  I   |  V   |  N   |  Z   |  C  |
-|-|-|-|-|-|-|-|-|
-|F[7]|F[6]|F[5]|F[4]|F[3]|F[2]|F[1]|F[0]|
+|  X  |  Q  |  H  |  P  |  V  |  N  |  Z  |  C  |
+|-----|-----|-----|-----|-----|-----|-----|-----|
+|F[7] |F[6] |F[5] |F[4] |F[3] |F[2] |F[1] |F[0] |
 
 - C - carry
 - Z - zero
 - N - Negative
 - V - Two's complement overflow
-- I - Interrupt?
+- P - Parity (1 if parity odd)
+- H - Half carry
+- Q - Sticky bit 
+- X - not operated by ALU, usage defined by instruction set/user.
 
-## ALUv1
+## ALU
 ```
                            
-|F(c)| |A| |L1| |L2|     |TMP|<-  
-   |    |    |    |        |   |  
-   V    V    V    V        V   |  
-  \-----------------\   /----/ |  
-   \                 \ /    /  |  
-    \          ALU         /   |  
-     \                    /    |  
-      \------------------/     |  
-          |       |  |         |  
-          |       |  |---------|  
-          |       |               
-         |F|  |DATA BUS|
-```
-
-ALU has 5 inputs and 3 outputs. Most of the operations use data bus as its output, but when the output is 16b, TMP register is used for 4 most significant bits.
-
-### Operations
-1. addA - DB = A+TMP
-1. subA - DB = TMP + Two'sComplement(A)
-1. notA - DB = ~A
-1. andA - DB = A && TMP
-1. orA - DB = A || TMP
-1. mulA - multiply A and TMP
-1. rshA - right shift A
-1. rrlA - right rotate A
-1. rrcA - right rotate through carry A
-1. lshA - left shift
-1. lrlA - left rotate
-1. lrcA - left rotate through carry
-1. addL1 - DB = L1+TMP
-1. subL1 - DB = TMP + Two'sComplement(L1)
-1. notL1 - DB = ~L1
-1. andL1 - DB = L1 && TMP
-1. orL1 - DB = L1 || TMP
-1. mulL1 - multiply L1 and TMP
-1. rshL1 - right shift L1
-1. rrlL1 - right rotate L1
-1. rrcL1 - right rotate through carry L1
-1. lshL1 - left shift
-1. lrlL1 - left rotate
-1. lrcL1 - left rotate through carry
-1. addL2 - DB = L2+TMP
-1. subL2 - DB = TMP + Two'sComplement(L2)
-1. notL2 - DB = ~L2
-1. andL2 - DB = L2 && TMP
-1. orL2 - DB = L2 || TMP
-1. mulL2 - multiply L2 and TMP
-1. rshL2 - right shift L2
-1. rrlL2 - right rotate L2
-1. rrcL2 - right rotate through carry L2
-1. lshL2 - left shift
-1. lrlL2 - left rotate
-1. lrcL2 - left rotate through carry
-1. ...
-
-oh my god, this is probably overkill...
-
-## ALUv2
-```
-                           
-|F(c)|  |DB|     |TMP|<-  
-   |      |        |   |  
-   V      V        V   |  
-  \---------\   /----/ |  
-   \         \ /    /  |  
-    \              /   |  
-     \    ALU     /    |  
-      \----------/     |  
-        |    |  |      |  
-        |    |  |------|  
+ |F[C]| |DB|     |TMP1| 
+   |     |        |   
+   V     V        |
+  |  MUX  |       |
+      |           |
+      V           V   
+  \---------\   /----/ 
+   \         \ /    /  
+    \              /---->|F|
+     \    ALU     /    
+      \----------/     
+        |    |  
+        |    |  
         V    V               
-       |F| |DB|
+     |F[C]| |DB|
 ```
 
-ALU has 3 inputs and 3 outputs. Most of the operations use data bus as its output, but when the output is 16b, TMP register is used for 4 most significant bits.
+ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow is written to C flag of F register. Other flags of F are modified too. C flag of F register can be used as input too.
 
 ### Operations
 
-1. addDB - DB = DB+TMP
-1. subDB - DB = TMP + TwosComplement(DB)
-1. notDB - DB = ~DB
-1. andDB - DB = DB && TMP
-1. orrDB - DB = DB || TMP
-1. mulDB - DB,MUL = DB\*MUL
-1. rshDB - right shift DB
-1. rrlDB - right rotate DB
-1. rrcDB - right rotate through carry DB
-1. lshDB - left shift
-1. lrlDB - left rotate
-1. lrcDB - left rotate through carry
-1. equDB - DB = DB == 0
+1. ADD - **ADD** numbers: DB = DB+TMP
+1. SUB - **SUB**stract: DB = TMP + TwosComplement(DB)
+1. NEG - create **NEG**ative number: DB = TwosComplement(DB)
+1. NOT - bitwise **NOT** bits: DB = ~DB
+1. AND - bitwise **AND** bits: DB = DB && TMP
+1. ORR - bitwise **OR** bits: DB = DB || TMP
+1. RSH - **R**ight **SH**ift DB
+1. RRO - **R**ight **RO**tate DB
+1. RRC - **R**ight **R**otate through **C**arry DB
+1. ASR - **A**rithmetic **S**hift **R**ight
+1. LSH - **L**eft **SH**ift
+1. LRO - **L**eft **RO**tate
+1. LRC - **L**eft **R**otate through **C**arry
+1. ASL - **A**rithmetic **S**hift **L**eft
+1. EQU - compare if **EQU**al to zero: DB = DB == 0
+1. BSR - **B**CD **S**hift **R**ight
+1. BSL - **B**CD **S**hift **L**eft
+1. OOP - Do **O**peration defined by **OP** register.
 
 
 ## uInstructon set
-uInstructions are 2B wide. Opcode usually is 1B with 1 1B operad, but there are some exceptions (JMP is 4b opcode with 11b operand) Every functional block that can have its value (buses, registers) has its own number. They are addressable using that number. u0 register is indexing register. When used in most microinstructions, containing value is used as index instead.
+uInstructions are 2B wide. Opcode usually is 12b with 1 4b operad, but there are some exceptions (JMP is 4b opcode with 11b operand). OP register is addressing register. When used in most microinstructions, containing value is used as address of another register instead.
 
-- `CuO + o1` - fill u0 register with corresponding value. u0=IR-o1.
-- `ALU + o1` - ALU does operation defined by o1. o1=1=add, o1=2=or, o1=3=not,...
-- `2DB + o1` - move value from o1 to DB.
-- `2AL + o1` - move value from o1 to AB[0:7].
-- `2AH + o1` - move value from o1 to AB[8:15].
-- `DB2 + o1` - move value from DB to o1.
-- `AB2 + o1` - move value from AB to o1.
-- `INC + o1` - increment value in o1.
-- `DEC + o1` - decrement value in o1.
-- `CP1 + o1` - jump over next microinstruction if value in o1 is 0x00.
-- `CF1 + o1` - jump over next microinstruction if value in F(o1) is 0b. uO acts as normal register for this microinstruction.
-- `C2D + o1` - move o1 constant to DB.
-- `O2D + o1` - move value from uO to DB, o1 is irrelevant.
-- `D2O + o1` - move value from DB to uO, o1 is irrelevant.
-- `END + o1` - end of microinstruction. Signal for control unit to fetch another instruction.
-- `JMP + o1` - write o1 to uPC. 
-- `HLT + o1` - stop simulator.
+O is operand, and number next to it says how many bits it takes. For example `COOP` instruction is 8bit opcode and 8bit operand.
+
+- `COOP + O8` - **CO**unt **OP** register value. OP=IR-o1.
+- `ALU + O5` - **ALU** does operation defined by operand. For example 0x01 is ADD, 0X02 is SUB,...
+- `R>DB + O4` - move value from **R**egister defined by operand to **D**ata **B**uss.
+- `R>AB + O4` - move value from **R**egister defined by operand to 8 least significant bits of **A**ddress **B**uss, nulling 8MSB.
+- `W>AB + O4` - move **W**ord value (16b) from register pair defined by address of high register of pair defined by operand to **A**ddress **B**uss.
+- `DB>R + O4` - move value from **D**ata **B**us to **R**egister.
+- `AB>W + O4` - move value from **A**ddress **B**us to **W**ord pair of register defined by operand. (address of high register of pair)
+- `INCB + O4` - **INC**rement **B**yte value in register defined by operand.
+- `DECB + O4` - **DEC**rement **B**yte value in register defined by operand.
+- `INCW + O4` - **INC**rement **W**ord value in register defined by operand. (address of high register of pair) 
+- `DECW + O4` - **DEC**rement **W**ord value in register defined by operand. (address of high register of pair) 
+- `JOI + O4` - **J**ump **O**ver next microinstruction if value in register defined by operand **I**s 0x00.
+- `JON + O4` - **J**ump **O**ver next microinstruction if value in register defined by operand is **N**ot 0x00.
+- `JOFI + O4` - **J**ump **O**ver next microinstruction if value in F[operand] **I**s 0b. uO acts as normal register for this microinstruction.
+- `JOFN + O4` - **J**ump **O**ver next microinstruction if value in F[operand] is **N**ot 0b. uO acts as normal register for this microinstruction.
+- `C>DB + O8` - move operand as **C**onstant to **DB**
+- `SVR + O4 + O4` - **S**vitch **V**alues in **R**egisters defined by first and second operands.
+- `SVW + O4 + O4` - **S**vitch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair)
+- `O>DB` - move value from **O**P to **DB**.
+- `DB>O` - move value from **DB** to **O**P.
+- `END` - **END** of microinstruction. Signal for control unit to fetch another instruction.
+- `JMP + O11` - write operand to uPC, effectively **J**u**MP**ing in microcode.
+- `HLT` - stop simulator.
+- `READ` - **READ** from memory.
+- `WRT` - **WR**i**T**e to memory.
+- `SETB + O4 + O4` - **SET** **B**yte defined by first operand in register defined by second operand.
+- `RETB + O4 + O4` - **R**es**ET** **B**yte defined by first operand in register defined by second operand.
 
 ## brainfuck
 used registers:
@@ -189,10 +156,10 @@ used registers:
 All of memory is filled with `0x00`
 
 ```
-*********** - HL2 - IP - 0x0000
+*********** - BC - IP(input pointer) - 0x0000
 *         *
 *         *
-*********** - HL1 - DP - 0x0010
+*********** - DE - DP(data pointer) - 0x0010
 *         *
 *         *
 *         *
@@ -202,85 +169,39 @@ All of memory is filled with `0x00`
     ...
 *         *
 *         *
-*********** - SP - OP - 0xFFFF
+*********** - SP - OP(output pointer) - 0xFFFF
 ```
-### Pseudocode for commands
-#### > - 0x3E
-Increment the data pointer (to point to the next cell to the right).
-```
-inc HL1
-```
-#### < - 0x3C
-Decrement the data pointer (to point to the next cell to the left).
-```
-dec HL1
-```
-#### + - 0x2B
-Increment (increase by one) the byte at the data pointer.
-```
-inc *HL1
-```
-#### - - 0x2D
-Decrement (decrease by one) the byte at the data pointer.
-```
-dec *HL1
-```
-#### * - 0x2A
-Output the byte at the data pointer.
-```
-*SP = *HL1
-dec SP
-```
-#### , - 0x2C
-Accept one byte of input, storing its value in the byte at the data pointer.
-```
-*HL1 = *HL2
-inc H1L1
-```
-#### [ - 0x5B
-If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
-```
-nop
-// Special Character
-```
-#### ] - 0x5D
-If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
-```
-counter = 0
-
-while True:
-    pointer = pointer-1
-    if string[pointer] == "]":
-        counter = counter+1
-    elif string[pointer] == "[" and counter != 0:
-        counter = counter-1
-    elif string[pointer] == "[" and counter == 0:
-        pointer = pointer+1
-        break
-```
-
-#### unknown
-Any unknown opcode is skipped.
+### Instructions
+-  `>` - 0x3E Increment the data pointer (to point to the next cell to the right).
+-  `<` - 0x3C Decrement the data pointer (to point to the next cell to the left).
+-  `+` - 0x2B Increment (increase by one) the byte at the data pointer.
+-  `-` - 0x2D Decrement (decrease by one) the byte at the data pointer.
+-  `*` - 0x2A Output the byte at the data pointer.
+-  `,` - 0x2C Accept one byte of input, storing its value in the byte at the data pointer.
+-  `[` - 0x5B If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
+-  `]` - 0x5D If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
+- unknown - Any unknown opcode is skipped.
 
 ## minimal instruction set
 
-Instructions use two, one ore zero operands. Microcode can operate with "microoperands" that opcodes has coded inside. For example: 
-LDa16 loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |addrH| + |addrL|`. every `| |` block means 8bit value. This means that this operation has 8b opcode and two 8b operands. The last 3 bits of opcode defines save location of load action (000b - H1, 111b - L2, 101b - A).
+Instructions use two, one or zero operands. Microcode can operate with "microoperands" that opcodes has coded inside. For example: 
+LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |addrH| + |addrL|`. every `| |` block means 8bit value. This means that this operation has 8b opcode and two 8b operands. The last 3 bits of opcode defines save location of load action (000b - B, 111b - F, 101b - P).
 
 ### instructions
-- `|LD 3b where| + |addrH| + |addrL|` - load from 2B address to 8 bit register.
-- `|ST 3b what| + |addrH| + |addrL|` - store from 1B register to 2B address.
-- `|ADD 3b where| + |addrH| + |addrL|` - add 1B value from 2B address to 1B register. (result saved in the register)
-- `|ADD 2b where| + |addrH| + |addrL|` - add 1B value from 2B address to 2B register. (result saved in the register)
-- `|INC2 2b what|` - increment 2B register.
-- `|INC 3b what|` - increment 1B register.
-- `|DEC2 2b what|` - decrement 2B register.
-- `|DEC 3b what|` - decrement 1B register.
-- `|TST| + |addrH| + |addrL|` - if value on 2B address is zero, next instruction is skipped.
-- `|TSTF 3b which|` - if nth bit of F register is zero, next instruction is skipped.
-- `|HLT|` - stop the simulator. Every unknown opcode is HLT.
+- `|LD 3b where| + |addrH| + |addrL|` - **l**oa**d** from 2B address to 8 bit register.
+- `|ST 3b what| + |addrH| + |addrL|` - **st**ore from 1B register to 2B address.
+- `|ADD 3b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 1B register. (result saved in the register)
+- `|ADD 2b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 2B register. (result saved in the register)
+- `|INCW 2b what|` - **inc**rement 2B register.
+- `|INC 3b what|` - **inc**rement 1B register.
+- `|DECW 2b what|` - **dec**rement 2B register.
+- `|DEC 3b what|` - **dec**rement 1B register.
+- `|TST| + |addrH| + |addrL|` - **t**e**st** if value on 2B address is zero, next instruction is skipped.
+- `|TSTF 3b which|` - **t**e**st** if nth bit of **F** register is zero, next instruction is skipped.
+- `|HLT|` - **H**a**lt** (stop) the simulator. Every unknown opcode is HLT.
+- `|JMP| + |where|` - relative **j**u**mp** to address. (operand is added to PC)
 
-
+<!--
 ## complete instruction set
 
 ### instructions
@@ -298,3 +219,4 @@ LDa16 loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + 
 - |TSTa8|
 - |TSTF 3b which|
 - ...
+-->
