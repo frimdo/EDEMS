@@ -1,0 +1,9 @@
+.memory_block {
+    float: left;
+    text-align: center;
+    width           : 40px;
+    border          : 1px solid #000;
+    box-shadow      : 1px 1px 5px -1px #000;
+    margin          : 1px;
+    cursor          : pointer;
+}
