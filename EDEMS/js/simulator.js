@@ -667,3 +667,5 @@ sim.variableInit = function () {
     sim.memory[i] = parseInt(sim.memory[i], 16).toString(10)
   }
 }
+
+module.exports = sim

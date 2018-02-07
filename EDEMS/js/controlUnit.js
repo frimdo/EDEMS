@@ -1,4 +1,4 @@
-/* global sim */
+var sim = require('./simulator.js')
 var CU = {}
 
 CU.doUInstruction = function () {
@@ -40,3 +40,5 @@ CU.decode = function (opcode) {
       return 'ERROR'
   }
 }
+
+exports = CU

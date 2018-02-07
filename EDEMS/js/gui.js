@@ -1,4 +1,4 @@
-/* global $ */
+var $ = require('jquery')
 var gui = {}
 
 gui.drawMicrocode = function () {
@@ -14,3 +14,5 @@ gui.drawMicrocode = function () {
     $('#microcode').append('<th>' + ROM[i] + '</th>')
   }
 }
+
+module.exports = gui
