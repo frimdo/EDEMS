@@ -1,37 +1,44 @@
-/* global simulator */
+/* global sim */
 var controlUnit = {}
 
 controlUnit.doUInstruction = function () {
-  switch(simulator.toHEX(simulator.registerUPCH)) {
-    case '00':
-      console.log('ALU')
+  var opcode = sim.microcode[sim.toDEC(sim.toHEX(sim.registerUPCH) + sim.toHEX(sim.registerUPCL))]
+  switch (opcode.charAt(0)) {
+    case '0':
+      console.log(opcode + ' ALU')
       break
-    case '01':
-      console.log('SVR')
+    case '1':
+      console.log(opcode + ' SVR')
       break
-    case '02':
-      console.log('SVW')
+    case '2':
+      console.log(opcode + ' SVW')
       break
-    case '03':
-      console.log('SETB')
+    case '3':
+      console.log(opcode + ' SETB')
       break
-    case '04':
-      console.log('RETB')
+    case '4':
+      console.log(opcode + ' RETB')
       break
-    case '05':
-      console.log('C>DB')
+    case '5':
+      console.log(opcode + ' C>DB')
       break
-    case '06':
-      console.log('COOP')
+    case '6':
+      console.log(opcode + ' COOP')
       break
-    case '08':
-      console.log('JMP')
+    case '8':
+      console.log(opcode + ' JMP')
       break
-    case '07':
-      console.log('07')
+    case '7':
+      console.log(opcode + ' 07')
       break
     default:
-      console.log('uInstruction decoding error at memory address ' + simulator.toHEX(simulator.registerUPCH) + simulator.toHEX(simulator.registerUPCL))
+      console.log('uInstruction decoding error at memory address ' + sim.toHEX(sim.registerUPCH) + sim.toHEX(sim.registerUPCL))
       break
+  }
+  sim.registerUPCL++
+  var tmp = sim.registerUPCL
+  sim.registerUPCL = sim.registerUPCL & 255
+  if (tmp !== sim.registerUPCL) {
+    sim.registerUPCH = (sim.registerUPCH + 1) & 7
   }
 }

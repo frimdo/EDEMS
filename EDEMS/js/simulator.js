@@ -1,26 +1,26 @@
-var simulator = {}
-simulator.microcode = new Array(2048)
-simulator.memory = new Array(65536)
-simulator.dataBus = 0
-simulator.addressBus = 0
-simulator.registerF = 0
-simulator.registerA = 0
-simulator.registerB = 0
-simulator.registerC = 0
-simulator.registerD = 0
-simulator.registerE = 0
-simulator.registerS = 0
-simulator.registerP = 0
-simulator.registerPCH = 0
-simulator.registerPCL = 0
-simulator.registerTMP0 = 0
-simulator.registerTMP1 = 0
-simulator.registerTMP2 = 0
-simulator.registerOP = 0
-simulator.registerUPCH = 0
-simulator.registerUPCL = 0
+var sim = {}
+sim.microcode = new Array(2048)
+sim.memory = new Array(65536)
+sim.dataBus = 0
+sim.addressBus = 0
+sim.registerF = 0
+sim.registerA = 0
+sim.registerB = 0
+sim.registerC = 0
+sim.registerD = 0
+sim.registerE = 0
+sim.registerS = 0
+sim.registerP = 0
+sim.registerPCH = 0
+sim.registerPCL = 0
+sim.registerTMP0 = 0
+sim.registerTMP1 = 0
+sim.registerTMP2 = 0
+sim.registerOP = 0
+sim.registerUPCH = 0
+sim.registerUPCL = 0
 
-simulator.toHEX = function (dec) {
+sim.toHEX = function (dec) {
   var value = parseInt(dec, 10).toString(16)
   if (value.length === 1) {
     value = '0' + value
@@ -28,24 +28,24 @@ simulator.toHEX = function (dec) {
   return value
 }
 
-simulator.storeMicrocode = function () {
-  let tmp = new Array(2048)
-  for (var i = 0; i < 2048; i++) {
-    tmp[i] = parseInt(simulator.microcode[i], 10).toString(16)
-  }
-  window.localStorage.setItem('microcode', tmp.toString())
+sim.toDEC = function (hex) {
+  return parseInt(hex, 16)
 }
 
-simulator.storeMemory = function () {
+sim.storeMicrocode = function () {
+  window.localStorage.setItem('microcode', sim.microcode.toString())
+}
+
+sim.storeMemory = function () {
   let tmp = new Array(65536)
   for (var i = 0; i < 65536; i++) {
-    tmp[i] = parseInt(simulator.memory[i], 10).toString(16)
+    tmp[i] = parseInt(sim.memory[i], 10).toString(16)
   }
   window.localStorage.setItem('memory', tmp.toString())
 }
 
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
-simulator.variableInit = function () {
+sim.variableInit = function () {
   if (window.localStorage.getItem('registerF') === null) {
     window.localStorage.setItem('registerF', '0')
   }
@@ -139,12 +139,9 @@ simulator.variableInit = function () {
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000`
     )
   }
-  simulator.microcode = window.localStorage.getItem('microcode').replace(/\s/g, '').split(',')
-  if (simulator.microcode.length !== 2048) {
+  sim.microcode = window.localStorage.getItem('microcode').replace(/\s/g, '').split(',')
+  if (sim.microcode.length !== 2048) {
     window.alert('localStorage microcode is wrong size!')
-  }
-  for (let i = 0; i < 2048; i++) {
-    simulator.microcode[i] = parseInt(simulator.microcode[i], 16).toString(10)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
@@ -662,11 +659,11 @@ simulator.variableInit = function () {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0`
     )
   }
-  simulator.memory = window.localStorage.getItem('memory').replace(/\s/g, '').split(',')
-  if (simulator.memory.length !== 65536) {
+  sim.memory = window.localStorage.getItem('memory').replace(/\s/g, '').split(',')
+  if (sim.memory.length !== 65536) {
     window.alert('localStorage memory is wrong size!')
   }
   for (let i = 0; i < 65536; i++) {
-    simulator.memory[i] = parseInt(simulator.memory[i], 16).toString(10)
+    sim.memory[i] = parseInt(sim.memory[i], 16).toString(10)
   }
 }

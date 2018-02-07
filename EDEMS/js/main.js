@@ -1,4 +1,8 @@
+/* global $ */
+/* global sim */
+/* global gui */
+// /* global controlUnit */
 $(document).ready(function () {
-  simulator.variableInit()
+  sim.variableInit()
   gui.drawMicrocode()
 })
