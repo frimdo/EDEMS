@@ -1,5 +1,6 @@
 # EDEMS
 Educational DEmonstrative Microprocessor Simulator
+
 ## EDEMS  registers
 EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
 
@@ -204,6 +205,7 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 - `|JMP| + |where|` - relative **j**u**mp** to address. (operand is added to PC)
 
 <!--
+
 ## complete instruction set
 
 ### instructions
