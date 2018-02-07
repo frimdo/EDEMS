@@ -1,3 +1,4 @@
 *.swp
 ~*
 .~*
+EDEMS/node_modules
