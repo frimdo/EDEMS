@@ -1,8 +1,108 @@
 var simulator = {}
- simulator.microcode = new Array(2048)
- simulator.memory = new Array(65536)
+simulator.microcode = new Array(2048)
+simulator.memory = new Array(65536)
+simulator.dataBus = 0
+simulator.addressBus = 0
+simulator.registerF = 0
+simulator.registerA = 0
+simulator.registerB = 0
+simulator.registerC = 0
+simulator.registerD = 0
+simulator.registerE = 0
+simulator.registerS = 0
+simulator.registerP = 0
+simulator.registerPCH = 0
+simulator.registerPCL = 0
+simulator.registerTMP0 = 0
+simulator.registerTMP1 = 0
+simulator.registerTMP2 = 0
+simulator.registerOP = 0
+simulator.registerUPCH = 0
+simulator.registerUPCL = 0
 
+simulator.toHEX = function (dec) {
+  var value = parseInt(dec, 10).toString(16)
+  if (value.length === 1) {
+    value = '0' + value
+  }
+  return value
+}
+
+simulator.storeMicrocode = function () {
+  let tmp = new Array(2048)
+  for (var i = 0; i < 2048; i++) {
+    tmp[i] = parseInt(simulator.microcode[i], 10).toString(16)
+  }
+  window.localStorage.setItem('microcode', tmp.toString())
+}
+
+simulator.storeMemory = function () {
+  let tmp = new Array(65536)
+  for (var i = 0; i < 65536; i++) {
+    tmp[i] = parseInt(simulator.memory[i], 10).toString(16)
+  }
+  window.localStorage.setItem('memory', tmp.toString())
+}
+
+/* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 simulator.variableInit = function () {
+  if (window.localStorage.getItem('registerF') === null) {
+    window.localStorage.setItem('registerF', '0')
+  }
+  if (window.localStorage.getItem('registerA') === null) {
+    window.localStorage.setItem('registerA', '0')
+  }
+  if (window.localStorage.getItem('registerB') === null) {
+    window.localStorage.setItem('registerB', '0')
+  }
+  if (window.localStorage.getItem('registerC') === null) {
+    window.localStorage.setItem('registerC', '0')
+  }
+  if (window.localStorage.getItem('registerD') === null) {
+    window.localStorage.setItem('registerD', '0')
+  }
+  if (window.localStorage.getItem('registerE') === null) {
+    window.localStorage.setItem('registerE', '0')
+  }
+  if (window.localStorage.getItem('registerS') === null) {
+    window.localStorage.setItem('registerS', '0')
+  }
+  if (window.localStorage.getItem('registerP') === null) {
+    window.localStorage.setItem('registerP', '0')
+  }
+  if (window.localStorage.getItem('registerPCH') === null) {
+    window.localStorage.setItem('registerPCH', '0')
+  }
+  if (window.localStorage.getItem('registerPCL') === null) {
+    window.localStorage.setItem('registerPCL', '0')
+  }
+  if (window.localStorage.getItem('registerTMP0') === null) {
+    window.localStorage.setItem('registerTMP0', '0')
+  }
+  if (window.localStorage.getItem('registerOP') === null) {
+    window.localStorage.setItem('registerOP', '0')
+  }
+  if (window.localStorage.getItem('registerTMP1') === null) {
+    window.localStorage.setItem('registerTMP1', '0')
+  }
+  if (window.localStorage.getItem('registerTMP2') === null) {
+    window.localStorage.setItem('registerTMP2', '0')
+  }
+  if (window.localStorage.getItem('registerUPCH') === null) {
+    window.localStorage.setItem('registerUPCH', '0')
+  }
+  if (window.localStorage.getItem('registerUPCL') === null) {
+    window.localStorage.setItem('registerUPCL', '0')
+  }
+  if (window.localStorage.getItem('DB') === null) {
+    window.localStorage.setItem('DB', '0')
+  }
+  if (window.localStorage.getItem('AB') === null) {
+    window.localStorage.setItem('AB', '0')
+  }
+  if (window.localStorage.getItem('freq') === null) {
+    window.localStorage.setItem('freq', '1')
+  }
   if (window.localStorage.getItem('microcode') === null) {
     window.localStorage.setItem('microcode', `
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
@@ -569,77 +669,4 @@ simulator.variableInit = function () {
   for (let i = 0; i < 65536; i++) {
     simulator.memory[i] = parseInt(simulator.memory[i], 16).toString(10)
   }
-  if (window.localStorage.getItem('registerF') === null) {
-    window.localStorage.setItem('registerF', '0')
-  }
-  if (window.localStorage.getItem('registerA') === null) {
-    window.localStorage.setItem('registerA', '0')
-  }
-  if (window.localStorage.getItem('registerB') === null) {
-    window.localStorage.setItem('registerB', '0')
-  }
-  if (window.localStorage.getItem('registerC') === null) {
-    window.localStorage.setItem('registerC', '0')
-  }
-  if (window.localStorage.getItem('registerD') === null) {
-    window.localStorage.setItem('registerD', '0')
-  }
-  if (window.localStorage.getItem('registerE') === null) {
-    window.localStorage.setItem('registerE', '0')
-  }
-  if (window.localStorage.getItem('registerS') === null) {
-    window.localStorage.setItem('registerS', '0')
-  }
-  if (window.localStorage.getItem('registerP') === null) {
-    window.localStorage.setItem('registerP', '0')
-  }
-  if (window.localStorage.getItem('registerPCH') === null) {
-    window.localStorage.setItem('registerPCH', '0')
-  }
-  if (window.localStorage.getItem('registerPCL') === null) {
-    window.localStorage.setItem('registerPCL', '0')
-  }
-  if (window.localStorage.getItem('registerTMP0') === null) {
-    window.localStorage.setItem('registerTMP0', '0')
-  }
-  if (window.localStorage.getItem('registerOP') === null) {
-    window.localStorage.setItem('registerOP', '0')
-  }
-  if (window.localStorage.getItem('registerTMP1') === null) {
-    window.localStorage.setItem('registerTMP1', '0')
-  }
-  if (window.localStorage.getItem('registerTMP2') === null) {
-    window.localStorage.setItem('registerTMP2', '0')
-  }
-  if (window.localStorage.getItem('registerUPCH') === null) {
-    window.localStorage.setItem('registerUPCH', '0')
-  }
-  if (window.localStorage.getItem('registerUPCL') === null) {
-    window.localStorage.setItem('registerUPCL', '0')
-  }
-  if (window.localStorage.getItem('DB') === null) {
-    window.localStorage.setItem('DB', '0')
-  }
-  if (window.localStorage.getItem('AB') === null) {
-    window.localStorage.setItem('AB', '0')
-  }
-  if (window.localStorage.getItem('freq') === null) {
-    window.localStorage.setItem('freq', '1')
-  }
-}
-
-simulator.storeMicrocode = function () {
-  let tmp = new Array(2048)
-  for (var i = 0; i < 2048; i++) {
-    tmp[i] = parseInt(simulator.microcode[i], 10).toString(16)
-  }
-  window.localStorage.setItem('microcode', tmp.toString())
-}
-
-simulator.storeMemory = function () {
-  let tmp = new Array(65536)
-  for (var i = 0; i < 65536; i++) {
-    tmp[i] = parseInt(simulator.memory[i], 10).toString(16)
-  }
-  window.localStorage.setItem('memory', tmp.toString())
 }

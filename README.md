@@ -134,8 +134,8 @@ O is operand, and number next to it says how many bits it takes. For example `CO
 | `JOFI + O4`      | 0x071? | **J**ump **O**ver next microinstruction if value in F[operand] **I**s 0b. uO acts as normal register for this microinstruction. |
 | `JOFN + O4`      | 0x070? | **J**ump **O**ver next microinstruction if value in F[operand] is **N**ot 0b. uO acts as normal register for this microinstruction. |
 | `C>DB + O8`      | 0x05?? | move operand as **C**onstant to **DB** |
-| `SVR + O4 + O4`  | 0x01?? | **S**vitch **V**alues in **R**egisters defined by first and second operands. |
-| `SVW + O4 + O4`  | 0x02?? | **S**vitch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair) |
+| `SVR + O4 + O4`  | 0x01?? | **S**witch **V**alues in **R**egisters defined by first and second operands. |
+| `SVW + O4 + O4`  | 0x02?? | **S**witch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair) |
 | `O>DB`           | 0x07F0 | move value from **O**P to **DB**. |
 | `DB>O`           | 0x07F1 | move value from **DB** to **O**P. |
 | `END`            | 0x07F2 | **END** of microinstruction. Signal for control unit to fetch another instruction. |
