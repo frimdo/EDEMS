@@ -41,4 +41,4 @@ CU.decode = function (opcode) {
   }
 }
 
-exports = CU
+module.exports = CU
