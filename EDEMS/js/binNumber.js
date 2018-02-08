@@ -5,54 +5,54 @@ class BinNumber {
     binNumber pair
   */
   constructor (val, bits = 8, paired = undefined) {
-    if (typeof val === 'number') {
-      this.value = val
-    } else if (typeof val === 'string') {
-      if (val.substring(0, 2) === '0x') {
-        this.value = parseInt(val, 16)
-      } else if (val.substring(0, 2) === '0b') {
-        this.value = parseInt(val, 2)
-      }
-    }
     this.bits = bits
     this.maximum = (2 ** bits) - 1
     this.pair = paired
+    if (typeof val === 'number') {
+      this.val = val
+    } else if (typeof val === 'string') {
+      if (val.substring(0, 2) === '0x') {
+        this.val = parseInt(val, 16)
+      } else if (val.substring(0, 2) === '0b') {
+        this.val = parseInt(val, 2)
+      }
+    }
   }
 
   set val (val) {
     if (typeof val === 'number') {
       this.value = val & this.maximum
-    } else if (typeof val === 'string') {
-      if (val.substring(0, 2) === '0x') {
-        this.val = parseInt(val.substring(2, val.length), 16)
-      } else if (val.substring(0, 2) === '0b') {
-        this.val = parseInt(val.substring(2, val.length), 2)
-      } else {
-        throw TypeError('Wrong input string')
-      }
-    } else {
-      throw TypeError('Wrong input type')
+      return
     }
+    if (typeof val === 'string' && val.substring(0, 2) === '0x') {
+      this.val = parseInt(val.substring(2, val.length), 16) & this.maximum
+      return
+    }
+    if (typeof val === 'string' && val.substring(0, 2) === '0b') {
+      this.val = parseInt(val.substring(2, val.length), 2) & this.maximum
+      return
+    }
+    throw TypeError('Wrong input')
   }
 
   set valPair (val) {
     this.pair.val = val
-    if (typeof val === 'number') {
-      val = '0b' + parseInt(val, 10).toString(2)
-    } else if (typeof val === 'string') {
-      if (val.substring(0, 2) === '0x') {
-        // TODO: Tady na tom řádku se špatně konvertuje hex na bin
-        val = '0b' + parseInt(val.substring(2, val.length).toString(16), 10).toString(2)
-      } else {
-        throw TypeError('Wrong input string')
-      }
-    } else {
-      throw TypeError('Wrong input type')
+
+    if (typeof val === 'string' && val.substring(0, 2) === '0b') {
+      val = val.substring(0, val.length - this.pair.bits)
     }
-    console.log('valPair: ' + val)
-    val = val >> this.pair.bits
-    console.log('valPair: ' + val)
-    this.val = val
+    if (typeof val === 'string' && val.substring(0, 2) === '0x') {
+      val = parseInt(val, 16)
+    }
+    if (typeof val === 'number') {
+      val = val.toString(2)
+      val = '0b' + val.substring(0, val.length - this.pair.bits)
+    }
+    try {
+      this.val = val
+    } catch (err) {
+      this.val = 0
+    }
   }
 
   get hex () {
@@ -88,7 +88,6 @@ class BinNumber {
     } else {
       return this.bin + this.pair.bin.padStart(8, '0')
     }
-    // TODO: Tohle by se mělo nulovat podle velikosti maxima čísla
   }
 
   get dec () {
