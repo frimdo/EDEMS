@@ -1,16 +1,12 @@
-var sim = require('./simulator.js')
+var global = require('./globals.js')
 var CU = {}
 
 CU.doUInstruction = function () {
-  var opcode = sim.microcode[sim.toDEC(sim.toHEX(sim.registerUPCH) + sim.toHEX(sim.registerUPCL))]
+  var opcode = global.microcode[global.registerUPCH.decPair]
+  console.log(opcode)
   console.log(opcode, CU.decode(opcode))
 
-  sim.registerUPCL++
-  var tmp = sim.registerUPCL
-  sim.registerUPCL = sim.registerUPCL & 255
-  if (tmp !== sim.registerUPCL) {
-    sim.registerUPCH = (sim.registerUPCH + 1) & 7
-  }
+  global.registerUPCH.incrPair()
 }
 
 CU.decode = function (opcode) {

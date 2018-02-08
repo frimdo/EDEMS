@@ -1,23 +1,27 @@
 var $ = require('jquery')
-var sim = require('./simulator.js')
-var gui = require('./gui.js')
-var BinNumber = require('./binNumber.js')
+var global = require('./globals.js')
+var LS = require('./browser/localStorage.js')
+var gui = require('./browser/gui.js')
+var CU = require('./controlUnit.js')
 
 $(document).ready(function () {
-  sim.variableInit()
-  gui.drawMicrocode()
+  LS.initGlobals()
+  gui.refresh()
 })
+console.log(global.microcode[0])
+global.microcode[0] = '000'
+global.microcode[1] = '100'
+global.microcode[2] = '200'
+global.microcode[3] = '300'
+global.microcode[4] = '400'
+global.microcode[5] = '500'
+global.microcode[6] = '600'
+global.microcode[7] = '700'
+global.microcode[8] = '800'
+global.microcode[9] = '900'
+global.microcode[10] = 'A00'
 
-var L = new BinNumber(253)
-var H = new BinNumber(12, 3, L)
-
-H.val = '0xAAA'
-console.log(H.hex) // B
-H.valPair = 258
-console.log(H.hexPair) // 102
-H.valPair = 2047 // '0x7FF'
-console.log(H.hexPair) // 7FF
-H.valPair = 426 // '0x1AA'
-console.log(H.hexPair) // 1AA
-H.valPair = 2986 // '0xBAA'
-console.log(H.hexPair) // 3AA
+gui.refresh()
+for (var i = 0; i < 12; i++) {
+  CU.doUInstruction()
+}

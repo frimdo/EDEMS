@@ -4,7 +4,7 @@ class BinNumber {
     number maximum
     binNumber pair
   */
-  constructor (val, bits = 8, paired = undefined) {
+  constructor (val, paired = undefined, bits = 8) {
     this.bits = bits
     this.maximum = (2 ** bits) - 1
     this.pair = paired
@@ -48,6 +48,7 @@ class BinNumber {
       val = val.toString(2)
       val = '0b' + val.substring(0, val.length - this.pair.bits)
     }
+
     try {
       this.val = val
     } catch (err) {
