@@ -3,8 +3,7 @@ var CU = {}
 
 CU.doUInstruction = function () {
   var opcode = global.microcode[global.registerUPCH.decPair]
-  console.log(opcode)
-  console.log(opcode, CU.decode(opcode))
+  console.log('CU: ', opcode, CU.decode(opcode))
 
   global.registerUPCH.incrPair()
 }

@@ -30,7 +30,7 @@ global.registerTMP2 = new BinNumber(0)
 global.registerTMP1 = new BinNumber(0, global.registerTMP2)
 
 global.registerUPCL = new BinNumber(0)
-global.registerUPCH = new BinNumber(0, 3, global.UPCL)
+global.registerUPCH = new BinNumber(0, global.registerUPCL, 3)
 
 global.freq = 0
 
