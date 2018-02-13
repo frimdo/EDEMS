@@ -1,3 +1,7 @@
 *.swp
 ~*
 .~*
+EDEMS/node_modules
+*edems.js
+*/.idea
+

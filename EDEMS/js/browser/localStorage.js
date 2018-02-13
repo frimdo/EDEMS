@@ -1,107 +1,115 @@
-var sim = {}
-sim.microcode = new Array(2048)
-sim.memory = new Array(65536)
-sim.dataBus = 0
-sim.addressBus = 0
-sim.registerF = 0
-sim.registerA = 0
-sim.registerB = 0
-sim.registerC = 0
-sim.registerD = 0
-sim.registerE = 0
-sim.registerS = 0
-sim.registerP = 0
-sim.registerPCH = 0
-sim.registerPCL = 0
-sim.registerTMP0 = 0
-sim.registerTMP1 = 0
-sim.registerTMP2 = 0
-sim.registerOP = 0
-sim.registerUPCH = 0
-sim.registerUPCL = 0
+var global = require('../globals.js')
 
-sim.toHEX = function (dec) {
-  var value = parseInt(dec, 10).toString(16)
-  if (value.length === 1) {
-    value = '0' + value
-  }
-  return value
+var LS = {}
+
+LS.storeMicrocode = function () {
+  window.localStorage.setItem('microcode', global.microcode.toString())
 }
 
-sim.toDEC = function (hex) {
-  return parseInt(hex, 16)
-}
-
-sim.storeMicrocode = function () {
-  window.localStorage.setItem('microcode', sim.microcode.toString())
-}
-
-sim.storeMemory = function () {
-  let tmp = new Array(65536)
+LS.storeMemory = function () {
+  var tmp = new Array(65536)
   for (var i = 0; i < 65536; i++) {
-    tmp[i] = parseInt(sim.memory[i], 10).toString(16)
+    tmp[i] = parseInt(global.memory[i], 10).toString(16)
   }
   window.localStorage.setItem('memory', tmp.toString())
 }
 
+LS.storeRegisters = function () {
+  window.localStorage.setItem('registerF', global.registerF.hex)
+  window.localStorage.setItem('registerA', global.registerA.hex)
+  window.localStorage.setItem('registerB', global.registerB.hex)
+  window.localStorage.setItem('registerC', global.registerC.hex)
+  window.localStorage.setItem('registerD', global.registerD.hex)
+  window.localStorage.setItem('registerE', global.registerE.hex)
+  window.localStorage.setItem('registerS', global.registerS.hex)
+  window.localStorage.setItem('registerP', global.registerP.hex)
+  window.localStorage.setItem('registerPCH', global.registerPCH.hex)
+  window.localStorage.setItem('registerPCL', global.registerUPCL.hex)
+  window.localStorage.setItem('registerTMP0', global.registerTMP0.hex)
+  window.localStorage.setItem('registerOP', global.registerOP.hex)
+  window.localStorage.setItem('registerTMP1', global.registerTMP1.hex)
+  window.localStorage.setItem('registerTMP2', global.registerTMP2.hex)
+  window.localStorage.setItem('registerUPCH', global.registerUPCH.hex)
+  window.localStorage.setItem('registerUPCL', global.registerUPCL.hex)
+}
+
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
-sim.variableInit = function () {
+LS.initGlobals = function () {
   if (window.localStorage.getItem('registerF') === null) {
-    window.localStorage.setItem('registerF', '0')
+    window.localStorage.setItem('registerF', '0x00')
+    global.registerF = window.localStorage.getItem('registerF')
   }
   if (window.localStorage.getItem('registerA') === null) {
-    window.localStorage.setItem('registerA', '0')
+    window.localStorage.setItem('registerA', '0x00')
+    global.registerA = window.localStorage.getItem('registerA')
   }
   if (window.localStorage.getItem('registerB') === null) {
-    window.localStorage.setItem('registerB', '0')
+    window.localStorage.setItem('registerB', '0x00')
+    global.registerB = window.localStorage.getItem('registerB')
   }
   if (window.localStorage.getItem('registerC') === null) {
-    window.localStorage.setItem('registerC', '0')
+    window.localStorage.setItem('registerC', '0x00')
+    global.registerC = window.localStorage.getItem('registerC')
   }
   if (window.localStorage.getItem('registerD') === null) {
-    window.localStorage.setItem('registerD', '0')
+    window.localStorage.setItem('registerD', '0x00')
+    global.registerD = window.localStorage.getItem('registerD')
   }
   if (window.localStorage.getItem('registerE') === null) {
-    window.localStorage.setItem('registerE', '0')
+    window.localStorage.setItem('registerE', '0x00')
+    global.registerE = window.localStorage.getItem('registerE')
   }
   if (window.localStorage.getItem('registerS') === null) {
-    window.localStorage.setItem('registerS', '0')
+    window.localStorage.setItem('registerS', '0x00')
+    global.registerS = window.localStorage.getItem('registerS')
   }
   if (window.localStorage.getItem('registerP') === null) {
-    window.localStorage.setItem('registerP', '0')
+    window.localStorage.setItem('registerP', '0x00')
+    global.registerP = window.localStorage.getItem('registerP')
   }
   if (window.localStorage.getItem('registerPCH') === null) {
-    window.localStorage.setItem('registerPCH', '0')
+    window.localStorage.setItem('registerPCH', '0x00')
+    global.registerPCH = window.localStorage.getItem('registerPCH')
   }
   if (window.localStorage.getItem('registerPCL') === null) {
-    window.localStorage.setItem('registerPCL', '0')
+    window.localStorage.setItem('registerPCL', '0x00')
+    global.registerF = window.localStorage.getItem('registerF')
   }
   if (window.localStorage.getItem('registerTMP0') === null) {
-    window.localStorage.setItem('registerTMP0', '0')
+    window.localStorage.setItem('registerTMP0', '0x00')
+    global.registerTMP0 = window.localStorage.getItem('registerTMP0')
   }
   if (window.localStorage.getItem('registerOP') === null) {
-    window.localStorage.setItem('registerOP', '0')
+    window.localStorage.setItem('registerOP', '0x00')
+    global.registerOP = window.localStorage.getItem('registerOP')
   }
   if (window.localStorage.getItem('registerTMP1') === null) {
-    window.localStorage.setItem('registerTMP1', '0')
+    window.localStorage.setItem('registerTMP1', '0x00')
+    global.registerTMP1 = window.localStorage.getItem('registerTMP1')
   }
   if (window.localStorage.getItem('registerTMP2') === null) {
-    window.localStorage.setItem('registerTMP2', '0')
+    window.localStorage.setItem('registerTMP2', '0x00')
+    global.registerTMP2 = window.localStorage.getItem('registerTMP2')
   }
   if (window.localStorage.getItem('registerUPCH') === null) {
-    window.localStorage.setItem('registerUPCH', '0')
+    window.localStorage.setItem('registerUPCH', '0x00')
+    global.registerUPCH = window.localStorage.getItem('registerUPCH')
   }
   if (window.localStorage.getItem('registerUPCL') === null) {
-    window.localStorage.setItem('registerUPCL', '0')
+    window.localStorage.setItem('registerUPCL', '0x00')
+    global.registerUPCL = window.localStorage.getItem('registerUPCL')
   }
   if (window.localStorage.getItem('DB') === null) {
-    window.localStorage.setItem('DB', '0')
+    window.localStorage.setItem('DB', '0x00')
+    global.DB = window.localStorage.getItem('DB')
   }
   if (window.localStorage.getItem('AB') === null) {
-    window.localStorage.setItem('AB', '0')
+    window.localStorage.setItem('AB', '0x00')
+    global.AB = window.localStorage.getItem('AB')
   }
   if (window.localStorage.getItem('freq') === null) {
     window.localStorage.setItem('freq', '1')
+    global.freq = window.localStorage.getItem('freq')
   }
   if (window.localStorage.getItem('microcode') === null) {
     window.localStorage.setItem('microcode', `
@@ -139,10 +147,11 @@ sim.variableInit = function () {
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000`
     )
   }
-  sim.microcode = window.localStorage.getItem('microcode').replace(/\s/g, '').split(',')
-  if (sim.microcode.length !== 2048) {
-    window.alert('localStorage microcode is wrong size!')
+  global.microcode = window.localStorage.getItem('microcode').replace(/\s/g, '').split(',')
+  if (global.microcode.length !== 2048) {
+    throw RangeError('localStorage microcode is wrong size!')
   }
+
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -659,11 +668,13 @@ sim.variableInit = function () {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0`
     )
   }
-  sim.memory = window.localStorage.getItem('memory').replace(/\s/g, '').split(',')
-  if (sim.memory.length !== 65536) {
-    window.alert('localStorage memory is wrong size!')
+  global.memory = window.localStorage.getItem('memory').replace(/\s/g, '').split(',')
+  if (global.memory.length !== 65536) {
+    throw RangeError('localStorage microcode is wrong size!')
   }
   for (let i = 0; i < 65536; i++) {
-    sim.memory[i] = parseInt(sim.memory[i], 16).toString(10)
+    global.memory[i] = parseInt(global.memory[i], 16).toString(10)
   }
 }
+
+module.exports = LS
