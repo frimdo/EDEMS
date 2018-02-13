@@ -1,9 +1,4 @@
 class BinNumber {
-  /* private vars:
-    number value
-    number maximum
-    binNumber pair
-  */
   constructor (val, paired = undefined, bits = 8) {
     this.bits = bits
     this.maximum = (2 ** bits) - 1
@@ -155,6 +150,10 @@ class BinNumber {
     }
     this.value ^= 1 << num
     return this
+  }
+
+  onChange (from, to){
+    return 0
   }
 }
 

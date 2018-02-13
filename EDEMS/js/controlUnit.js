@@ -1,4 +1,5 @@
 var global = require('./globals.js')
+var gui = require('./browser/gui.js')
 var CU = {}
 
 CU.doUInstruction = function () {
@@ -6,6 +7,8 @@ CU.doUInstruction = function () {
   console.log('CU: ', opcode, '=', CU.decode(opcode))
 
   global.registerUPCH.incrPair()
+  gui.refresh()
+
 }
 
 CU.decode = function (opcode) {

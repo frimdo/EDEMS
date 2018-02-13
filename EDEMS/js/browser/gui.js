@@ -28,8 +28,8 @@ gui.refresh = function () {
   for (var i = 0; i < global.memory.length; i++) {
     $('#memory' + i).text(global.to1Bhex(global.memory[i]))
   }
-  console.log('microcode' + global.registerPCH.decPair)
-  document.getElementById('microcode' + global.registerPCH.decPair).style.backgroundColor = '#808080'
+
+  document.getElementById('microcode' + global.registerUPCH.decPair).style.backgroundColor = '#808080'
 }
 
 gui.drawMicrocode = function () {

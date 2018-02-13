@@ -9,16 +9,20 @@ $(document).ready(function () {
   gui.drawMicrocode()
   /*gui.drawMemory()*/
   gui.refresh()
+  document.getElementById('step-btn').onclick = function() {
+    CU.doUInstruction()}
+  global.microcode[0] = '1AA'
+  global.microcode[1] = '2AA'
+  global.microcode[2] = '3AA'
+  global.microcode[3] = '4AA'
+  global.microcode[4] = '5AA'
+  global.microcode[5] = '6AA'
+  global.microcode[6] = '7AA'
 
-  global.microcode[1] = '1AA'
-  global.microcode[2] = '6AB'
-  global.microcode[3] = '73A'
-  global.microcode[4] = '891'
+  // TODO: využít metodu onChange
+  global.registerA.onChange = function(from, to){
+    console.log(from, to)
+  }
+  global.registerA.onChange('a je', 'to')
 
-  CU.doUInstruction()
-  CU.doUInstruction()
-  CU.doUInstruction()
-  CU.doUInstruction()
-  CU.doUInstruction()
-  gui.refresh()
 })
