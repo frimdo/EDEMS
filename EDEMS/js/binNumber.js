@@ -17,17 +17,20 @@ class BinNumber {
   set val (val) {
     if (typeof val === 'number') {
       this.value = val & this.maximum
+      this.onChange()
       return
     }
     if (typeof val === 'string' && val.substring(0, 2) === '0x') {
       this.val = parseInt(val.substring(2, val.length), 16) & this.maximum
+      this.onChange()
       return
     }
     if (typeof val === 'string' && val.substring(0, 2) === '0b') {
       this.val = parseInt(val.substring(2, val.length), 2) & this.maximum
+      this.onChange()
       return
     }
-    throw TypeError('Wrong input')
+    throw new TypeError('Wrong input')
   }
 
   set valPair (val) {
@@ -49,20 +52,21 @@ class BinNumber {
     } catch (err) {
       this.val = 0
     }
+    this.onChange()
   }
 
   get hex () {
     var value = parseInt(this.value, 10).toString(16)
     if (value.length === 1) {
       value = '0' + value
-      // TODO: Tohle by se mělo nulovat podle velikosti maxima čísla
+      /* TODO: Tohle by se mìlo nulovat podle velikosti maxima čísla */
     }
     return value
   }
 
   get hexPair () {
     if (this.pair === undefined) {
-      throw TypeError('Instance does not have a pair.')
+      throw new TypeError('Instance does not have a pair.')
     }
     if (this.value === 0) {
       return this.pair.hex
@@ -77,7 +81,7 @@ class BinNumber {
 
   get binPair () {
     if (this.pair === undefined) {
-      throw TypeError('Instance does not have a pair.')
+      throw new TypeError('Instance does not have a pair.')
     }
     if (this.value === 0) {
       return this.pair.bin
@@ -92,13 +96,14 @@ class BinNumber {
 
   get decPair () {
     if (this.pair === undefined) {
-      throw TypeError('Instance does not have a pair.')
+      throw new TypeError('Instance does not have a pair.')
     }
     return parseInt(this.hexPair, 16)
   }
 
   incr () {
     this.value = (this.value + 1) & this.maximum
+    this.onChange()
     return this
   }
 
@@ -110,18 +115,20 @@ class BinNumber {
         this.pair.val = 0
       }
     }
+    this.onChange()
     return this
   }
 
   decr () {
     this.value = (this.value - 1) & this.maximum
+    this.onChange()
     return this
   }
 
   decrPair () {
     if (this.pair.value === 0 && this.value === 0) {
-      this.pair.value = this.pair.maximum
-      this.value = this.maximum
+      this.pair.val = this.pair.maximum
+      this.val = this.maximum
       return this
     }
     this.valPair = this.decPair - 1
@@ -133,6 +140,7 @@ class BinNumber {
       throw new RangeError('Argument num too big.')
     }
     this.value |= 1 << num
+    this.onChange()
     return this
   }
 
@@ -141,6 +149,7 @@ class BinNumber {
       throw new RangeError('argument num too big')
     }
     this.value &= ~(1 << num)
+    this.onChange()
     return this
   }
 
@@ -149,10 +158,11 @@ class BinNumber {
       throw new RangeError('argument num too big')
     }
     this.value ^= 1 << num
+    this.onChange()
     return this
   }
 
-  onChange (from, to){
+  onChange () {
     return 0
   }
 }

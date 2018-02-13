@@ -1,5 +1,6 @@
 var $ = require('jquery')
 var global = require('../globals.js')
+
 var gui = {}
 
 gui.refresh = function () {
@@ -20,7 +21,6 @@ gui.refresh = function () {
   $('#registerUPCH').text('0x' + global.registerUPCH.hex)
   $('#registerUPCL').text('0x' + global.registerUPCL.hex)
 
-
   for (var i = 0; i < global.microcode.length; i++) {
     $('#microcode' + i).text(global.microcode[i])
   }
@@ -29,7 +29,7 @@ gui.refresh = function () {
     $('#memory' + i).text(global.to1Bhex(global.memory[i]))
   }
 
-  document.getElementById('microcode' + global.registerUPCH.decPair).style.backgroundColor = '#808080'
+  $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
 }
 
 gui.drawMicrocode = function () {

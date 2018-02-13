@@ -22,3 +22,11 @@ table, th, td {
     vertical-align: top;
     padding: 5px;
 }
+
+.highlighted {
+    background-color: #cccccc;
+}
+
+.umem-highlighted {
+    background-color: #cccccc;
+}
