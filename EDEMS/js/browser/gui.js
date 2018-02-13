@@ -25,7 +25,11 @@ gui.refresh = function () {
     $('#microcode' + i).text(global.microcode[i])
   }
 
-
+  for (var i = 0; i < global.memory.length; i++) {
+    $('#memory' + i).text(global.to1Bhex(global.memory[i]))
+  }
+  console.log('microcode' + global.registerPCH.decPair)
+  document.getElementById('microcode' + global.registerPCH.decPair).style.backgroundColor = '#808080'
 }
 
 gui.drawMicrocode = function () {
@@ -41,5 +45,17 @@ gui.drawMicrocode = function () {
   }
 }
 
+gui.drawMemory = function () {
+  $('#memory').append('<table>')
+  $('#memory').append('<caption>Memory</caption>')
+  $('#memory').append('<tr>')
+
+  for (var i = 0; i < global.memory.length; i++) {
+    if (i % 8 === 0) {
+      $('#memory').append('</tr>').append('<tr>')
+    }
+    $('#memory').append('<th><div id=memory'+ i + '>Placeholder</div></th>')
+  }
+}
 
 module.exports = gui

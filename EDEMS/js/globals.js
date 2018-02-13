@@ -34,4 +34,12 @@ global.registerUPCH = new BinNumber(0, global.registerUPCL, 3)
 
 global.freq = 0
 
+global.to1Bhex = function (num) {
+  num = num.toString(16)
+  if (num.length === 1) {
+    num = '0' + num
+    return num
+  }
+}
+
 module.exports = global
