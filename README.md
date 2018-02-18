@@ -92,23 +92,24 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 
 ### Operations
 
-1. ADD - **ADD** numbers: DB = DB+TMP
+1. ADD - **ADD** numbers: DB = TMP + DB
 1. SUB - **SUB**stract: DB = TMP + TwosComplement(DB)
 1. NEG - create **NEG**ative number: DB = TwosComplement(DB)
 1. NOT - bitwise **NOT** bits: DB = ~DB
 1. AND - bitwise **AND** bits: DB = DB && TMP
 1. ORR - bitwise **OR** bits: DB = DB || TMP
+1. XOR - bitwise **XOR** bits: DB = DB ^ TMP
 1. RSH - **R**ight **SH**ift DB
-1. RRO - **R**ight **RO**tate DB
-1. RRC - **R**ight **R**otate through **C**arry DB
-1. ASR - **A**rithmetic **S**hift **R**ight
 1. LSH - **L**eft **SH**ift
+1. RRO - **R**ight **RO**tate DB
 1. LRO - **L**eft **RO**tate
+1. RRC - **R**ight **R**otate through **C**arry DB
 1. LRC - **L**eft **R**otate through **C**arry
+1. ASR - **A**rithmetic **S**hift **R**ight
 1. ASL - **A**rithmetic **S**hift **L**eft
-1. EQU - compare if **EQU**al to zero: DB = DB == 0
 1. BSR - **B**CD **S**hift **R**ight
 1. BSL - **B**CD **S**hift **L**eft
+1. EQU - compare if **EQU**al to zero: DB = DB == 0
 1. OOP - Do **O**peration defined by **OP** register.
 
 
@@ -152,7 +153,6 @@ used registers:
 
 - HL1 - Data pointer, initial value = `0x0010`
 - SP - Output pointer, initial value = `0xFFFF`
-- HL2 - Input pointer, initial value = `0x0000`
 - OP1 - Parenthesis counter, initial value = `0x00`
 
 ### Initial memory map
