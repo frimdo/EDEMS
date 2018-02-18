@@ -10,22 +10,14 @@ $(document).ready(function () {
   gui.drawMicrocode()
   gui.refresh()
 
-  $('#microcode0').text(global.microcode[0] = '0AA')
-  $('#microcode1').text(global.microcode[1] = '1AA')
-  $('#microcode2').text(global.microcode[2] = '2AA')
-  $('#microcode3').text(global.microcode[3] = '3AA')
-  $('#microcode4').text(global.microcode[4] = '4AA')
-  $('#microcode5').text(global.microcode[5] = '5AA')
-  $('#microcode6').text(global.microcode[6] = '6AA')
-  $('#microcode7').text(global.microcode[7] = '7AA')
-  $('#microcode8').text(global.microcode[8] = '8AA')
-  $('#microcode9').text(global.microcode[9] = '9AA')
-  $('#microcode10').text(global.microcode[10] = 'AAA')
-  $('#microcode11').text(global.microcode[11] = 'BAA')
-  $('#microcode12').text(global.microcode[12] = 'CAA')
-  $('#microcode13').text(global.microcode[13] = 'DAA')
-  $('#microcode14').text(global.microcode[14] = 'EAA')
-  $('#microcode15').text(global.microcode[15] = 'FAA')
+  global.instructionRegister = 5
+
+  $('#microcode0').text(global.microcode[0] = '601')
+  $('#microcode1').text(global.microcode[1] = '501')
+  $('#microcode2').text(global.microcode[2] = '79A')
+  $('#microcode3').text(global.microcode[3] = '503')
+  $('#microcode4').text(global.microcode[4] = '001')
+
 
   document.getElementById('step-btn').onclick = function() {
     CU.doUInstruction(function(){
@@ -159,6 +151,30 @@ $(document).ready(function () {
     $('#registerUPCH').addClass('highlighted');
     setTimeout(function () {
       $('#registerUPCH').removeClass('highlighted');
+    }, 500);
+  }
+  
+  global.addressBus.onChange = function() {
+    $('#addressBus').text('0x' + global.addressBus.hex)
+    $('#addressBus').addClass('highlighted');
+    setTimeout(function () {
+      $('#addressBus').removeClass('highlighted');
+    }, 500);
+  }
+
+  global.dataBus.onChange = function() {
+    $('#dataBus').text('0x' + global.dataBus.hex)
+    $('#dataBus').addClass('highlighted');
+    setTimeout(function () {
+      $('#dataBus').removeClass('highlighted');
+    }, 500);
+  }
+
+  global.instructionRegister.onChange = function() {
+    $('#instructionRegister').text('0x' + global.instructionRegister.hex)
+    $('#instructionRegister').addClass('highlighted');
+    setTimeout(function () {
+      $('#instructionRegister').removeClass('highlighted');
     }, 500);
   }
 

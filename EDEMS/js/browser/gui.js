@@ -20,6 +20,9 @@ gui.refresh = function () {
   $('#registerTMP2').text('0x' + global.registerTMP2.hex)
   $('#registerUPCH').text('0x' + global.registerUPCH.hex)
   $('#registerUPCL').text('0x' + global.registerUPCL.hex)
+  $('#dataBus').text('0x' + global.dataBus.hex)
+  $('#addressBus').text('0x' + global.addressBus.hex)
+  $('#instructionRegister').text('0x' + global.instructionRegister.hex)
 
   for (var i = 0; i < global.microcode.length; i++) {
     $('#microcode' + i).text(global.microcode[i])

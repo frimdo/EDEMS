@@ -9,7 +9,7 @@ EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 
 | R07 | F            | R06 | A            |
 | R00 | B            | R03 | C            |
 | R01 | D            | R04 | E            |
-| R03 | S            | R05 | P            |
+| R02 | S            | R05 | P            |
 | R08 | PCH          | R09 | PCL          |
 | R10 | TMP0         | R13 | OP           |
 | R11 | TMP1         | R14 | TMP2         |
@@ -100,12 +100,13 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 1. ORR - bitwise **OR** bits: DB = DB || TMP
 1. XOR - bitwise **XOR** bits: DB = DB ^ TMP
 1. RSH - **R**ight **SH**ift DB
-1. LSH - **L**eft **SH**ift
 1. RRO - **R**ight **RO**tate DB
-1. LRO - **L**eft **RO**tate
 1. RRC - **R**ight **R**otate through **C**arry DB
-1. LRC - **L**eft **R**otate through **C**arry
 1. ASR - **A**rithmetic **S**hift **R**ight
+1. LSH - **L**eft **SH**ift
+1. LRO - **L**eft **RO**tate
+1. LRC - **L**eft **R**otate through **C**arry
+1. ASL - **A**rithmetic **S**hift **L**eft
 1. ASL - **A**rithmetic **S**hift **L**eft
 1. BSR - **B**CD **S**hift **R**ight
 1. BSL - **B**CD **S**hift **L**eft

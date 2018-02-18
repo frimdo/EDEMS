@@ -1,5 +1,5 @@
 class BinNumber {
-  constructor (val, paired = undefined, bits = 8) {
+  constructor (val, bits = 8, paired = undefined) {
     this.bits = bits
     this.maximum = (2 ** bits) - 1
     this.pair = paired

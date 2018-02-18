@@ -4,11 +4,10 @@
   "description": "Educational DEmonstrative Microprocessor Simulator",
   "main": "main.js",
   "scripts": {
-    "watch": "watchify js/main.js --full-paths -o edems.js",
+    "watch": "watchify -p browserify-notify js/main.js --full-paths -o edems.js",
     "testwatch": "jest --notify --watchAll",
     "build": "browserify js/main.js -o edems.js",
     "test": "jest"
-
   },
   "repository": {
     "type": "git",
@@ -22,6 +21,7 @@
     "watchify": "^3.10.0"
   },
   "dependencies": {
+    "browserify-notify": "^1.1.2",
     "jquery": "^3.3.1"
   }
 }
