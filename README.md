@@ -71,7 +71,7 @@ F register contains ALU flags. Those are:
 ## ALU
 ```
                            
- |F[C]| |DB|     |TMP1| 
+ |F[C]| |DB|     |TMP0| 
    |     |        |   
    V     V        |
   |  MUX  |       |
