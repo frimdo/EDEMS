@@ -3,7 +3,7 @@ var global = require('./globals.js')
 var LS = require('./browser/localStorage.js')
 var gui = require('./browser/gui.js')
 var CU = require('./controlUnit.js')
-
+var BinNumber = require('./binNumber.js')
 
 $(document).ready(function () {
   LS.initGlobals()
@@ -17,7 +17,7 @@ $(document).ready(function () {
   $('#microcode2').text(global.microcode[2] = '79A')
   $('#microcode3').text(global.microcode[3] = '503')
   $('#microcode4').text(global.microcode[4] = '001')
-
+  $('#microcode5').text(global.microcode[5] = '804')
 
   document.getElementById('step-btn').onclick = function() {
     CU.doUInstruction(function(){

@@ -57,11 +57,14 @@ class BinNumber {
 
   get hex () {
     var value = parseInt(this.value, 10).toString(16)
-    if (value.length === 1) {
-      value = '0' + value
-      /* TODO: Tohle by se mìlo nulovat podle velikosti maxima čísla */
+
+    if(this.bits <= 8) {
+      return'0'.repeat(2 - value.length) + value
+    } else if(this.bits <= 16) {
+      return '0'.repeat(4 - value.length) + value
+    } else {
+      return value
     }
-    return value
   }
 
   get hexPair () {
@@ -153,6 +156,7 @@ class BinNumber {
     return this
   }
 
+  /*
   togBit (num) {
     if (2 ** (num + 1) > this.maximum) {
       throw new RangeError('argument num too big')
@@ -161,7 +165,7 @@ class BinNumber {
     this.onChange()
     return this
   }
-
+  */ // TODO: Smazat pokud není potřeba
   onChange () {
     return 0
   }

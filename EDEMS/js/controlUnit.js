@@ -19,6 +19,9 @@ CU.doUInstruction = function (afterUInstruction) {
       case 'RETB':
         uinstr.retb(opcode.operand1, opcode.operand2)
         break
+      case 'JMP':
+        uinstr.jmp(opcode.operand1)
+        break
       case 'C>DB':
         uinstr.c2db(opcode.operand1)
         break
@@ -86,7 +89,7 @@ CU.doUInstruction = function (afterUInstruction) {
         uinstr.wrt()
         break
       default:
-        console.log(opcode)
+        throw new Error('Unknown opcode:'+ opcode)
         break
     }
   } catch(err) {
@@ -282,28 +285,28 @@ uinstr.c2db = function(operand) {
 }
 
 uinstr.svr = function(operand1, operand2) {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.register(hex2num(operand1)).dec
+  global.register(hex2num(operand1)).val = global.register(hex2num(operand2)).dec
+  global.register(hex2num(operand2)).val = tmp
 }
 
 uinstr.svw = function(operand1, operand2) {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.register(hex2num(operand1)).decPair
+  global.register(hex2num(operand1)).valPair = global.register(hex2num(operand2)).decPair
+  global.register(hex2num(operand2)).valPair = tmp
 }
 
 uinstr.jmp = function(operand) {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
+  global.registerUPCH.valPair = hex2num(operand) - 1
+  console.log("jumping to address: ",  hex2num(operand))
 }
 
 uinstr.setb = function(operand1, operand2) {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
+  global.register(hex2num(operand2)).setBit(hex2num(operand1))
 }
 
 uinstr.retb = function(operand1, operand2) {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
+  global.register(hex2num(operand2)).resBit(hex2num(operand1))
 }
 
 
