@@ -4,6 +4,7 @@ var global = {}
 
 global.microcode = new Array(2048)
 global.memory = new Array(65536)
+global.onMemoryChange = function () { return 0}
 
 global.instructionRegister = new BinNumber(0)
 
@@ -44,8 +45,8 @@ global.to1Bhex = function (num) {
   }
 }
 
-global.register = function(x) {
-  switch(x){
+global.register = function (x) {
+  switch (x) {
     case 0:
       return global.registerB
     case 1:

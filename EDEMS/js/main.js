@@ -11,7 +11,7 @@ $(document).ready(function () {
 
   LS.initGlobals()
   gui.drawMicrocode()
-  gui.drawMemory()
+  //gui.drawMemory()
   gui.refresh()
 
   global.instructionRegister = 5
@@ -33,6 +33,18 @@ $(document).ready(function () {
 
   document.getElementById('stop-btn').onclick = function () {
     clock.stop()
+  }
+
+  document.getElementById('freq').onchange = function () {
+    var tmp = document.getElementById("freq").value
+    if (tmp < 1){
+      tmp = 1
+    }
+    if (tmp > 500){
+      tmp = 500
+    }
+    global.freq = tmp
+    document.getElementById("freq").value=tmp
   }
 
   global.registerA.onChange = function () {

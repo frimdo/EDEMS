@@ -23,6 +23,7 @@ gui.refresh = function () {
   $('#dataBus').text('0x' + global.dataBus.hex)
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
+  document.getElementById("freq").value = global.freq
 
   for (var i = 0; i < global.microcode.length; i++) {
     $('#microcode' + i).text(global.microcode[i])
