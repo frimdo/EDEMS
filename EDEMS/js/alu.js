@@ -99,17 +99,23 @@ ALU.rsh = function () {
 }
 
 ALU.rro = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.dataBus.bin
+  tmp = '0'.repeat(8 - tmp.length) + tmp
+  global.dataBus.val = '0b' + tmp.charAt(7) + tmp.substring(0, 7)
 }
 
 ALU.rrc = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.dataBus.bin
+  var F = global.registerF.bin
+  tmp = '0'.repeat(8 - tmp.length) + tmp
+  global.dataBus.val = '0b' + F.charAt(F.length - 1) + tmp.substring(0, 7)
+  global.registerF.val = '0b' + F.substring(0,F.length - 1) + tmp.charAt(7)
 }
 
 ALU.asr = function () {
-  // Nefunguje, není 8b číslo. global.dataBus.val = global.dataBus.dec >> 1
+  var tmp = global.dataBus.bin
+  tmp = '0'.repeat(8 - tmp.length) + tmp
+  global.dataBus.val = '0b' + tmp.charAt(0) + tmp.substring(0, 7)
 }
 
 ALU.lsh = function () {
@@ -117,13 +123,17 @@ ALU.lsh = function () {
 }
 
 ALU.lro = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.dataBus.bin
+  tmp = '0'.repeat(8 - tmp.length) + tmp
+  global.dataBus.val = '0b' + tmp.substring(1, 8) + tmp.charAt(0)
 }
 
 ALU.lrc = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var tmp = global.dataBus.bin
+  var F = global.registerF.bin
+  tmp = '0'.repeat(8 - tmp.length) + tmp
+  global.dataBus.val = '0b' + tmp.substring(1, 8) + F.charAt(F.length - 1)
+  global.registerF.val = '0b' + F.substring(0,F.length - 1) + tmp.charAt(0)
 }
 
 ALU.asl = function () {

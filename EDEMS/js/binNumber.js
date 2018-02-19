@@ -155,17 +155,6 @@ class BinNumber {
     this.onChange()
     return this
   }
-
-  /*
-  togBit (num) {
-    if (2 ** (num + 1) > this.maximum) {
-      throw new RangeError('argument num too big')
-    }
-    this.value ^= 1 << num
-    this.onChange()
-    return this
-  }
-  */ // TODO: Smazat pokud není potřeba
   onChange () {
     return 0
   }
