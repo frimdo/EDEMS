@@ -90,7 +90,7 @@ CU.doUInstruction = function () {
         uinstr.wrt()
         break
       default:
-        throw new Error('Unknown opcode:' + opcode)
+        throw new Error('CU.doUInstruction: Unknown opcode:' + opcode)
         break
     }
   } catch (err) {
@@ -102,7 +102,7 @@ CU.doUInstruction = function () {
 
 CU.decode = function (opcode) {
   if (opcode.length !== 3) {
-    throw new Error('wrong opcode: 0x' + opcode)
+    throw new Error('CU.decode: wrong opcode: 0x' + opcode)
   }
   switch (opcode.charAt(0)) {
     case '1':
@@ -164,13 +164,13 @@ CU.decode = function (opcode) {
             case '5':
               return {Name: 'WRT'}
             default:
-              throw new Error('wrong opcode: 0x' + opcode)
+              throw new Error('CU.decode: wrong opcode: 0x' + opcode)
           }
         default:
-          throw new Error('wrong opcode: 0x' + opcode)
+          throw new Error('CU.decode: wrong opcode: 0x' + opcode)
       }
     default:
-      throw new Error('wrong opcode: 0x' + opcode)
+      throw new Error('CU.decode: wrong opcode: 0x' + opcode)
   }
 }
 
@@ -189,8 +189,10 @@ uinstr.db2o = function () {
 
 uinstr.end = function () {
   console.log('This Microinstruction is not implemented yet!')
+  global.registerPCH.incrPair()
+  global.instructionRegister.val = global.memory[global.registerPCH.decPair]
+  global.registerUPCH.valPair = 0 //neco jinyho nez 0
   // TODO: dopsat
-  // Co má udělat end?
 }
 
 uinstr.hlt = function () {

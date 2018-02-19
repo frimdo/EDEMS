@@ -30,7 +30,7 @@ class BinNumber {
       this.onChange()
       return
     }
-    throw new TypeError('Wrong input')
+    throw new TypeError('BinNumber - val: Wrong input')
   }
 
   set valPair (val) {
@@ -69,7 +69,7 @@ class BinNumber {
 
   get hexPair () {
     if (this.pair === undefined) {
-      throw new TypeError('Instance does not have a pair.')
+      throw new TypeError('BinNumber - hexPair: Instance does not have a pair.')
     }
     if (this.value === 0) {
       return this.pair.hex
@@ -84,7 +84,7 @@ class BinNumber {
 
   get binPair () {
     if (this.pair === undefined) {
-      throw new TypeError('Instance does not have a pair.')
+      throw new TypeError('BinNumber - binPair: Instance does not have a pair.')
     }
     if (this.value === 0) {
       return this.pair.bin
@@ -99,7 +99,7 @@ class BinNumber {
 
   get decPair () {
     if (this.pair === undefined) {
-      throw new TypeError('Instance does not have a pair.')
+      throw new TypeError('BinNumber - decPair: Instance does not have a pair.')
     }
     return parseInt(this.hexPair, 16)
   }
@@ -140,7 +140,7 @@ class BinNumber {
 
   setBit (num) {
     if (2 ** (num + 1) > this.maximum) {
-      throw new RangeError('Argument num too big.')
+      throw new RangeError('BinNumber - setBit: Argument num too big.')
     }
     this.value |= 1 << num
     this.onChange()
@@ -149,12 +149,13 @@ class BinNumber {
 
   resBit (num) {
     if (2 ** (num + 1) > this.maximum) {
-      throw new RangeError('argument num too big')
+      throw new RangeError('BinNumber - resBit: argument num too big')
     }
     this.value &= ~(1 << num)
     this.onChange()
     return this
   }
+
   onChange () {
     return 0
   }

@@ -36,15 +36,15 @@ $(document).ready(function () {
   }
 
   document.getElementById('freq').onchange = function () {
-    var tmp = document.getElementById("freq").value
-    if (tmp < 1){
+    var tmp = document.getElementById('freq').value
+    if (tmp < 1) {
       tmp = 1
     }
-    if (tmp > 500){
+    if (tmp > 500) {
       tmp = 500
     }
     global.freq = tmp
-    document.getElementById("freq").value=tmp
+    document.getElementById('freq').value = tmp
   }
 
   global.registerA.onChange = function () {

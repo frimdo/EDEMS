@@ -62,7 +62,7 @@ ALU.doOperation = function (x) {
       ALU.oop()
       break
     default:
-      throw new RangeError('Unknown ALU operation: ' + x)
+      throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
 }
 
@@ -109,7 +109,7 @@ ALU.rrc = function () {
   var F = global.registerF.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
   global.dataBus.val = '0b' + F.charAt(F.length - 1) + tmp.substring(0, 7)
-  global.registerF.val = '0b' + F.substring(0,F.length - 1) + tmp.charAt(7)
+  global.registerF.val = '0b' + F.substring(0, F.length - 1) + tmp.charAt(7)
 }
 
 ALU.asr = function () {
@@ -133,7 +133,7 @@ ALU.lrc = function () {
   var F = global.registerF.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
   global.dataBus.val = '0b' + tmp.substring(1, 8) + F.charAt(F.length - 1)
-  global.registerF.val = '0b' + F.substring(0,F.length - 1) + tmp.charAt(0)
+  global.registerF.val = '0b' + F.substring(0, F.length - 1) + tmp.charAt(0)
 }
 
 ALU.asl = function () {
@@ -160,7 +160,7 @@ ALU.bsl = function () {
 
 ALU.oop = function () {
   if (global.registerOP.dec === 19) {
-    throw new RangeError('Recursion caused by Register OP containing instruction to do operation defined by register OP.')
+    throw new RangeError('ALU.oop: Recursion caused by Register OP containing instruction to do operation defined by register OP.')
   }
   ALU.doOperation(global.registerOP.dec)
 }
