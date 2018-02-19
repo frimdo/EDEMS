@@ -4,10 +4,14 @@ var LS = require('./browser/localStorage.js')
 var gui = require('./browser/gui.js')
 var CU = require('./controlUnit.js')
 var BinNumber = require('./binNumber.js')
+var clock = require('./clock.js')
 
 $(document).ready(function () {
+  window.clock = clock
+
   LS.initGlobals()
   gui.drawMicrocode()
+  gui.drawMemory()
   gui.refresh()
 
   global.instructionRegister = 5
@@ -19,163 +23,172 @@ $(document).ready(function () {
   $('#microcode4').text(global.microcode[4] = '001')
   $('#microcode5').text(global.microcode[5] = '804')
 
-  document.getElementById('step-btn').onclick = function() {
-    CU.doUInstruction(function(){
-      $('.umem-highlighted').removeClass('umem-highlighted')
-      $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
-    })
+  document.getElementById('ustep-btn').onclick = function () {
+    clock.ustep()
   }
 
-  global.registerA.onChange = function(){
+  document.getElementById('urun-btn').onclick = function () {
+    clock.urun()
+  }
+
+  document.getElementById('stop-btn').onclick = function () {
+    clock.stop()
+  }
+
+  global.registerA.onChange = function () {
     $('#registerA').text('0x' + global.registerA.hex)
-    $('#registerA').addClass('highlighted');
+    $('#registerA').addClass('highlighted')
     setTimeout(function () {
-      $('#registerA').removeClass('highlighted');
-    }, 500);
+      $('#registerA').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerF.onChange = function(){
+  global.registerF.onChange = function () {
     $('#registerF').text('0x' + global.registerF.hex)
-    $('#registerF').addClass('highlighted');
+    $('#registerF').addClass('highlighted')
     setTimeout(function () {
-      $('#registerF').removeClass('highlighted');
-    }, 500);
+      $('#registerF').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerC.onChange = function(){
+  global.registerC.onChange = function () {
     $('#registerC').text('0x' + global.registerC.hex)
-    $('#registerC').addClass('highlighted');
+    $('#registerC').addClass('highlighted')
     setTimeout(function () {
-      $('#registerC').removeClass('highlighted');
-    }, 500);
+      $('#registerC').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerB.onChange = function(){
+  global.registerB.onChange = function () {
     $('#registerB').text('0x' + global.registerB.hex)
-    $('#registerB').addClass('highlighted');
+    $('#registerB').addClass('highlighted')
     setTimeout(function () {
-      $('#registerB').removeClass('highlighted');
-    }, 500);
+      $('#registerB').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerE.onChange = function(){
+  global.registerE.onChange = function () {
     $('#registerE').text('0x' + global.registerE.hex)
-    $('#registerE').addClass('highlighted');
+    $('#registerE').addClass('highlighted')
     setTimeout(function () {
-      $('#registerE').removeClass('highlighted');
-    }, 500);
+      $('#registerE').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerD.onChange = function(){
+  global.registerD.onChange = function () {
     $('#registerD').text('0x' + global.registerD.hex)
-    $('#registerD').addClass('highlighted');
+    $('#registerD').addClass('highlighted')
     setTimeout(function () {
-      $('#registerD').removeClass('highlighted');
-    }, 500);
+      $('#registerD').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerP.onChange = function(){
+  global.registerP.onChange = function () {
     $('#registerP').text('0x' + global.registerP.hex)
-    $('#registerP').addClass('highlighted');
+    $('#registerP').addClass('highlighted')
     setTimeout(function () {
-      $('#registerP').removeClass('highlighted');
-    }, 500);
+      $('#registerP').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerS.onChange = function(){
+  global.registerS.onChange = function () {
     $('#registerS').text('0x' + global.registerS.hex)
-    $('#registerS').addClass('highlighted');
+    $('#registerS').addClass('highlighted')
     setTimeout(function () {
-      $('#registerS').removeClass('highlighted');
-    }, 500);
+      $('#registerS').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerPCL.onChange = function(){
+  global.registerPCL.onChange = function () {
     $('#registerPCL').text('0x' + global.registerPCL.hex)
-    $('#registerPCL').addClass('highlighted');
+    $('#registerPCL').addClass('highlighted')
     setTimeout(function () {
-      $('#registerPCL').removeClass('highlighted');
-    }, 500);
+      $('#registerPCL').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerPCH.onChange = function(){
+  global.registerPCH.onChange = function () {
     $('#registerPCH').text('0x' + global.registerPCH.hex)
-    $('#registerPCH').addClass('highlighted');
+    $('#registerPCH').addClass('highlighted')
     setTimeout(function () {
-      $('#registerPCH').removeClass('highlighted');
-    }, 500);
+      $('#registerPCH').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerOP.onChange = function(){
+  global.registerOP.onChange = function () {
     $('#registerOP').text('0x' + global.registerOP.hex)
-    $('#registerOP').addClass('highlighted');
+    $('#registerOP').addClass('highlighted')
     setTimeout(function () {
-      $('#registerOP').removeClass('highlighted');
-    }, 500);
+      $('#registerOP').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerTMP0.onChange = function(){
+  global.registerTMP0.onChange = function () {
     $('#registerTMP0').text('0x' + global.registerTMP0.hex)
-    $('#registerTMP0').addClass('highlighted');
+    $('#registerTMP0').addClass('highlighted')
     setTimeout(function () {
-      $('#registerTMP0').removeClass('highlighted');
-    }, 500);
+      $('#registerTMP0').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerTMP2.onChange = function(){
+  global.registerTMP2.onChange = function () {
     $('#registerTMP2').text('0x' + global.registerTMP2.hex)
-    $('#registerTMP2').addClass('highlighted');
+    $('#registerTMP2').addClass('highlighted')
     setTimeout(function () {
-      $('#registerTMP2').removeClass('highlighted');
-    }, 500);
+      $('#registerTMP2').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerTMP1.onChange = function(){
+  global.registerTMP1.onChange = function () {
     $('#registerTMP1').text('0x' + global.registerTMP1.hex)
-    $('#registerTMP1').addClass('highlighted');
+    $('#registerTMP1').addClass('highlighted')
     setTimeout(function () {
-      $('#registerTMP1').removeClass('highlighted');
-    }, 500);
+      $('#registerTMP1').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerUPCL.onChange = function(){
+  global.registerUPCL.onChange = function () {
     $('#registerUPCL').text('0x' + global.registerUPCL.hex)
-    $('#registerUPCL').addClass('highlighted');
+    $('#registerUPCL').addClass('highlighted')
+    $('.umem-highlighted').removeClass('umem-highlighted')
+    $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
     setTimeout(function () {
-      $('#registerUPCL').removeClass('highlighted');
-    }, 500);
+      $('#registerUPCL').removeClass('highlighted')
+    }, 500)
   }
 
-  global.registerUPCH.onChange = function(){
+  global.registerUPCH.onChange = function () {
     $('#registerUPCH').text('0x' + global.registerUPCH.hex)
-    $('#registerUPCH').addClass('highlighted');
+    $('#registerUPCH').addClass('highlighted')
+    $('.umem-highlighted').removeClass('umem-highlighted')
+    $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
     setTimeout(function () {
-      $('#registerUPCH').removeClass('highlighted');
-    }, 500);
+      $('#registerUPCH').removeClass('highlighted')
+    }, 500)
   }
-  
-  global.addressBus.onChange = function() {
+
+  global.addressBus.onChange = function () {
     $('#addressBus').text('0x' + global.addressBus.hex)
-    $('#addressBus').addClass('highlighted');
+    $('#addressBus').addClass('highlighted')
     setTimeout(function () {
-      $('#addressBus').removeClass('highlighted');
-    }, 500);
+      $('#addressBus').removeClass('highlighted')
+    }, 500)
   }
 
-  global.dataBus.onChange = function() {
+  global.dataBus.onChange = function () {
     $('#dataBus').text('0x' + global.dataBus.hex)
-    $('#dataBus').addClass('highlighted');
+    $('#dataBus').addClass('highlighted')
     setTimeout(function () {
-      $('#dataBus').removeClass('highlighted');
-    }, 500);
+      $('#dataBus').removeClass('highlighted')
+    }, 500)
   }
 
-  global.instructionRegister.onChange = function() {
+  global.instructionRegister.onChange = function () {
     $('#instructionRegister').text('0x' + global.instructionRegister.hex)
-    $('#instructionRegister').addClass('highlighted');
+    $('#instructionRegister').addClass('highlighted')
     setTimeout(function () {
-      $('#instructionRegister').removeClass('highlighted');
-    }, 500);
+      $('#instructionRegister').removeClass('highlighted')
+    }, 500)
   }
 
 })

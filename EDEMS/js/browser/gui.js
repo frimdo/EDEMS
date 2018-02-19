@@ -44,7 +44,7 @@ gui.drawMicrocode = function () {
     if (i % 8 === 0) {
       $('#microcode').append('</tr>').append('<tr>')
     }
-    $('#microcode').append('<th><div id=microcode'+ i + '>Placeholder</div></th>')
+    $('#microcode').append('<th><div id=microcode' + i + '>Placeholder</div></th>')
   }
 }
 
@@ -57,7 +57,7 @@ gui.drawMemory = function () {
     if (i % 8 === 0) {
       $('#memory').append('</tr>').append('<tr>')
     }
-    $('#memory').append('<th><div id=memory'+ i + '>Placeholder</div></th>')
+    $('#memory').append('<th><div id=memory' + i + '>Placeholder</div></th>')
   }
 }
 

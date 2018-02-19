@@ -34,7 +34,7 @@ global.registerTMP1 = new BinNumber(0, 8, global.registerTMP2)
 global.registerUPCL = new BinNumber(0)
 global.registerUPCH = new BinNumber(0, 8, global.registerUPCL, 3)
 
-global.freq = 0
+global.freq = 10
 
 global.to1Bhex = function (num) {
   num = num.toString(16)

@@ -58,9 +58,9 @@ class BinNumber {
   get hex () {
     var value = parseInt(this.value, 10).toString(16)
 
-    if(this.bits <= 8) {
-      return'0'.repeat(2 - value.length) + value
-    } else if(this.bits <= 16) {
+    if (this.bits <= 8) {
+      return '0'.repeat(2 - value.length) + value
+    } else if (this.bits <= 16) {
       return '0'.repeat(4 - value.length) + value
     } else {
       return value

@@ -3,7 +3,7 @@ var global = require('./globals.js')
 var ALU = {}
 
 ALU.doOperation = function (x) {
-  switch(x) {
+  switch (x) {
     case 1:
       ALU.add()
       break
@@ -68,7 +68,6 @@ ALU.doOperation = function (x) {
 
 ALU.add = function () {
   global.dataBus.val = global.registerTMP0.dec + global.dataBus.dec
-  console.log(global.dataBus.val, '=', global.registerTMP0.dec, '+', global.dataBus.dec)
 }
 
 ALU.sub = function () {
@@ -150,11 +149,10 @@ ALU.bsl = function () {
 }
 
 ALU.oop = function () {
-  if(global.registerOP.dec === 19){
+  if (global.registerOP.dec === 19) {
     throw new RangeError('Recursion caused by Register OP containing instruction to do operation defined by register OP.')
   }
   ALU.doOperation(global.registerOP.dec)
 }
-
 
 module.exports = ALU

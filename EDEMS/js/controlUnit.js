@@ -1,8 +1,9 @@
 var global = require('./globals.js')
 var alu = require('./alu.js')
+
 var CU = {}
 
-CU.doUInstruction = function (afterUInstruction) {
+CU.doUInstruction = function () {
   try {
     var opcode = CU.decode(global.microcode[global.registerUPCH.decPair])
     console.log(opcode)
@@ -89,16 +90,14 @@ CU.doUInstruction = function (afterUInstruction) {
         uinstr.wrt()
         break
       default:
-        throw new Error('Unknown opcode:'+ opcode)
+        throw new Error('Unknown opcode:' + opcode)
         break
     }
-  } catch(err) {
+  } catch (err) {
     console.log('CU:', err)
   }
 
   global.registerUPCH.incrPair()
-
-  afterUInstruction()
 }
 
 CU.decode = function (opcode) {
@@ -131,25 +130,25 @@ CU.decode = function (opcode) {
         case '2':
           return {Name: 'JON ', operand1: opcode.charAt(2)}
         case '3':
-          return {Name: 'JOI ', operand1:opcode.charAt(2)}
+          return {Name: 'JOI ', operand1: opcode.charAt(2)}
         case '4':
-          return {Name: 'DECW ', operand1:opcode.charAt(2)}
+          return {Name: 'DECW ', operand1: opcode.charAt(2)}
         case '5':
-          return {Name: 'INCW ', operand1:opcode.charAt(2)}
+          return {Name: 'INCW ', operand1: opcode.charAt(2)}
         case '6':
-          return {Name: 'DECB ', operand1:opcode.charAt(2)}
+          return {Name: 'DECB ', operand1: opcode.charAt(2)}
         case '7':
-          return {Name: 'INCB ', operand1:opcode.charAt(2)}
+          return {Name: 'INCB ', operand1: opcode.charAt(2)}
         case '8':
-          return {Name: 'AB>W ', operand1:opcode.charAt(2)}
+          return {Name: 'AB>W ', operand1: opcode.charAt(2)}
         case '9':
-          return {Name: 'DB>R ', operand1:opcode.charAt(2)}
+          return {Name: 'DB>R ', operand1: opcode.charAt(2)}
         case 'A':
-          return {Name: 'W>AB ', operand1:opcode.charAt(2)}
+          return {Name: 'W>AB ', operand1: opcode.charAt(2)}
         case 'B':
-          return {Name: 'R>AB ', operand1:opcode.charAt(2)}
+          return {Name: 'R>AB ', operand1: opcode.charAt(2)}
         case 'C':
-          return {Name: 'R>DB ', operand1:opcode.charAt(2)}
+          return {Name: 'R>DB ', operand1: opcode.charAt(2)}
         case 'F':
           switch (opcode.charAt(2)) {
             case '0':
@@ -175,92 +174,92 @@ CU.decode = function (opcode) {
   }
 }
 
-function hex2num(string){
-  return parseInt(string, 16);
+function hex2num (string) {
+  return parseInt(string, 16)
 }
 
 uinstr = {}
-uinstr.o2db = function() {
+uinstr.o2db = function () {
   global.dataBus.val = global.registerOP.dec
 }
 
-uinstr.db2o = function() {
+uinstr.db2o = function () {
   global.registerOP.val = global.dataBus.dec
 }
 
-uinstr.end = function() {
+uinstr.end = function () {
   console.log('This Microinstruction is not implemented yet!')
   // TODO: dopsat
   // Co má udělat end?
 }
 
-uinstr.hlt = function() {
+uinstr.hlt = function () {
   console.log('This Microinstruction is not implemented yet!')
   // TODO: dopsat
   // Potřebujeme hlt?
 }
 
-uinstr.read = function() {
+uinstr.read = function () {
   global.dataBus.val = global.memory[global.addressBus.decPair]
 }
 
-uinstr.wrt = function() {
+uinstr.wrt = function () {
   global.memory[global.addressBus.decPair] = global.dataBus.dec
 }
 
-uinstr.alu = function(operand) {
+uinstr.alu = function (operand) {
   alu.doOperation(hex2num(operand))
 }
 
-uinstr.r2db = function(operand) {
+uinstr.r2db = function (operand) {
   global.dataBus.val = global.register(hex2num(operand)).dec
 }
 
-uinstr.r2ab = function(operand) {
+uinstr.r2ab = function (operand) {
   global.addressBus.val = global.register(hex2num(operand)).dec
 }
 
-uinstr.w2ab = function(operand) {
+uinstr.w2ab = function (operand) {
   global.addressBus.val = global.register(hex2num(operand)).decPair
 }
 
-uinstr.db2r = function(operand) {
+uinstr.db2r = function (operand) {
   global.register(hex2num(operand)).val = global.dataBus.dec
 }
 
-uinstr.ab2w = function(operand) {
+uinstr.ab2w = function (operand) {
   global.register(hex2num(operand)).valPair = global.addressBus.dec
 }
 
-uinstr.incb = function(operand) {
+uinstr.incb = function (operand) {
   global.register(hex2num(operand)).incr()
 }
 
-uinstr.incw = function(operand) {
+uinstr.incw = function (operand) {
   global.register(hex2num(operand)).incrPair()
 }
 
-uinstr.decb = function(operand) {
+uinstr.decb = function (operand) {
   global.register(hex2num(operand)).decr()
 }
 
-uinstr.decw = function(operand) {
+uinstr.decw = function (operand) {
   global.register(hex2num(operand)).decrPair()
 }
 
-uinstr.joi = function(operand) {
+uinstr.joi = function (operand) {
   if (global.register(hex2num(operand)).dec === 0) {
     global.registerUPCH.incrPair()
   }
 }
 
-uinstr.jon = function(operand) {
+uinstr.jon = function (operand) {
   if (global.register(hex2num(operand)).dec !== 0) {
     global.registerUPCH.incrPair()
   }
 }
 
-uinstr.jofi = function(operand) {
+uinstr.jofi = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
   if (F.charAt(hex2num(operand)) === '0') {
@@ -268,7 +267,7 @@ uinstr.jofi = function(operand) {
   }
 }
 
-uinstr.jofn = function(operand) {
+uinstr.jofn = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
   if (F.charAt(hex2num(operand)) !== '0') {
@@ -276,40 +275,36 @@ uinstr.jofn = function(operand) {
   }
 }
 
-uinstr.coop = function(operand) {
+uinstr.coop = function (operand) {
   global.registerOP.val = global.instructionRegister.dec - hex2num(operand)
 }
 
-uinstr.c2db = function(operand) {
+uinstr.c2db = function (operand) {
   global.dataBus.val = '0x' + operand
 }
 
-uinstr.svr = function(operand1, operand2) {
+uinstr.svr = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).dec
   global.register(hex2num(operand1)).val = global.register(hex2num(operand2)).dec
   global.register(hex2num(operand2)).val = tmp
 }
 
-uinstr.svw = function(operand1, operand2) {
+uinstr.svw = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).decPair
   global.register(hex2num(operand1)).valPair = global.register(hex2num(operand2)).decPair
   global.register(hex2num(operand2)).valPair = tmp
 }
 
-uinstr.jmp = function(operand) {
+uinstr.jmp = function (operand) {
   global.registerUPCH.valPair = hex2num(operand) - 1
-  console.log("jumping to address: ",  hex2num(operand))
 }
 
-uinstr.setb = function(operand1, operand2) {
+uinstr.setb = function (operand1, operand2) {
   global.register(hex2num(operand2)).setBit(hex2num(operand1))
 }
 
-uinstr.retb = function(operand1, operand2) {
+uinstr.retb = function (operand1, operand2) {
   global.register(hex2num(operand2)).resBit(hex2num(operand1))
 }
-
-
-
 
 module.exports = CU
