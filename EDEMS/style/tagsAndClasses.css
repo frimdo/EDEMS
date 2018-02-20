@@ -28,6 +28,12 @@ div, button {
     border: 1px solid #2d2d2d;
     padding: 2px;
 }
+button:disabled,
+button[disabled]{
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
 
 input {
     margin: 0;

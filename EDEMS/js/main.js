@@ -5,6 +5,7 @@ var gui = require('./browser/gui.js')
 var CU = require('./controlUnit.js')
 var BinNumber = require('./binNumber.js')
 var clock = require('./clock.js')
+var alu = require('./alu.js')
 
 $(document).ready(function () {
   document.getElementById('file').style.display = 'none'
@@ -32,6 +33,18 @@ $(document).ready(function () {
 
   document.getElementById('stop-btn').onclick = function () {
     clock.stop()
+  }
+
+  document.getElementById('WRT').onclick = function () {
+    CU.uinstr.wrt()
+  }
+
+  document.getElementById('REA').onclick = function () {
+    CU.uinstr.read()
+  }
+
+  document.getElementById('AL2').onclick = function () {
+    alu.doOperation(document.getElementById('aluSelect').selectedIndex + 1)
   }
 
   document.getElementById('freq').onchange = function () {

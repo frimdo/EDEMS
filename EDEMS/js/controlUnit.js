@@ -9,89 +9,88 @@ CU.doUInstruction = function () {
     console.log(opcode)
     switch (opcode.Name) {
       case 'SVR':
-        uinstr.svr(opcode.operand1, opcode.operand2)
+        CU.uinstr.svr(opcode.operand1, opcode.operand2)
         break
       case 'SVW':
-        uinstr.svw(opcode.operand1, opcode.operand2)
+        CU.uinstr.svw(opcode.operand1, opcode.operand2)
         break
       case 'SETB':
-        uinstr.setb(opcode.operand1, opcode.operand2)
+        CU.uinstr.setb(opcode.operand1, opcode.operand2)
         break
       case 'RETB':
-        uinstr.retb(opcode.operand1, opcode.operand2)
+        CU.uinstr.retb(opcode.operand1, opcode.operand2)
         break
       case 'JMP':
-        uinstr.jmp(opcode.operand1)
+        CU.uinstr.jmp(opcode.operand1)
         break
       case 'C>DB':
-        uinstr.c2db(opcode.operand1)
+        CU.uinstr.c2db(opcode.operand1)
         break
       case 'COOP':
-        uinstr.coop(opcode.operand1)
+        CU.uinstr.coop(opcode.operand1)
         break
       case 'ALU':
-        uinstr.alu(opcode.operand1)
+        CU.uinstr.alu(opcode.operand1)
         break
       case 'JOFN ':
-        uinstr.jofn(opcode.operand1)
+        CU.uinstr.jofn(opcode.operand1)
         break
       case 'JOFI ':
-        uinstr.jofi(opcode.operand1)
+        CU.uinstr.jofi(opcode.operand1)
         break
       case 'JON ':
-        uinstr.jon(opcode.operand1)
+        CU.uinstr.jon(opcode.operand1)
         break
       case 'JOI ':
-        uinstr.joi(opcode.operand1)
+        CU.uinstr.joi(opcode.operand1)
         break
       case 'DECW ':
-        uinstr.decw(opcode.operand1)
+        CU.uinstr.decw(opcode.operand1)
         break
       case 'INCW ':
-        uinstr.incw(opcode.operand1)
+        CU.uinstr.incw(opcode.operand1)
         break
       case 'DECB ':
-        uinstr.decb(opcode.operand1)
+        CU.uinstr.decb(opcode.operand1)
         break
       case 'INCB ':
-        uinstr.incb(opcode.operand1)
+        CU.uinstr.incb(opcode.operand1)
         break
       case 'AB>W ':
-        uinstr.ab2w(opcode.operand1)
+        CU.uinstr.ab2w(opcode.operand1)
         break
       case 'DB>R ':
-        uinstr.db2r(opcode.operand1)
+        CU.uinstr.db2r(opcode.operand1)
         break
       case 'W>AB ':
-        uinstr.w2ab(opcode.operand1)
+        CU.uinstr.w2ab(opcode.operand1)
         break
       case 'R>AB ':
-        uinstr.r2ab(opcode.operand1)
+        CU.uinstr.r2ab(opcode.operand1)
         break
       case 'R>DB ':
-        uinstr.r2db(opcode.operand1)
+        CU.uinstr.r2db(opcode.operand1)
         break
       case 'O>DB':
-        uinstr.o2db()
+        CU.uinstr.o2db()
         break
       case 'DB>O':
-        uinstr.db2o()
+        CU.uinstr.db2o()
         break
       case 'END':
-        uinstr.end()
+        CU.uinstr.end()
         break
       case 'HLT':
-        uinstr.hlt()
+        CU.uinstr.hlt()
         break
       case 'READ':
-        uinstr.read()
+        CU.uinstr.read()
         break
       case 'WRT':
-        uinstr.wrt()
+        CU.uinstr.wrt()
         break
       default:
         throw new Error('CU.doUInstruction: Unknown opcode:' + opcode)
-        break
     }
   } catch (err) {
     console.log('CU:', err)
@@ -178,16 +177,16 @@ function hex2num (string) {
   return parseInt(string, 16)
 }
 
-uinstr = {}
-uinstr.o2db = function () {
+CU.uinstr = {}
+CU.uinstr.o2db = function () {
   global.dataBus.val = global.registerOP.dec
 }
 
-uinstr.db2o = function () {
+CU.uinstr.db2o = function () {
   global.registerOP.val = global.dataBus.dec
 }
 
-uinstr.end = function () {
+CU.uinstr.end = function () {
   console.log('This Microinstruction is not implemented yet!')
   global.registerPCH.incrPair()
   global.instructionRegister.val = global.memory[global.registerPCH.decPair]
@@ -195,73 +194,73 @@ uinstr.end = function () {
   // TODO: dopsat
 }
 
-uinstr.hlt = function () {
+CU.uinstr.hlt = function () {
   console.log('This Microinstruction is not implemented yet!')
   // TODO: dopsat
   // Potřebujeme hlt?
 }
 
-uinstr.read = function () {
-  global.dataBus.val = global.memory[global.addressBus.decPair]
+CU.uinstr.read = function () {
+  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
 }
 
-uinstr.wrt = function () {
-  global.memory[global.addressBus.decPair] = global.dataBus.dec
+CU.uinstr.wrt = function () {
+  global.memory[global.addressBus.dec] = global.dataBus.dec
 }
 
-uinstr.alu = function (operand) {
+CU.uinstr.alu = function (operand) {
   alu.doOperation(hex2num(operand))
 }
 
-uinstr.r2db = function (operand) {
+CU.uinstr.r2db = function (operand) {
   global.dataBus.val = global.register(hex2num(operand)).dec
 }
 
-uinstr.r2ab = function (operand) {
+CU.uinstr.r2ab = function (operand) {
   global.addressBus.val = global.register(hex2num(operand)).dec
 }
 
-uinstr.w2ab = function (operand) {
+CU.uinstr.w2ab = function (operand) {
   global.addressBus.val = global.register(hex2num(operand)).decPair
 }
 
-uinstr.db2r = function (operand) {
+CU.uinstr.db2r = function (operand) {
   global.register(hex2num(operand)).val = global.dataBus.dec
 }
 
-uinstr.ab2w = function (operand) {
+CU.uinstr.ab2w = function (operand) {
   global.register(hex2num(operand)).valPair = global.addressBus.dec
 }
 
-uinstr.incb = function (operand) {
+CU.uinstr.incb = function (operand) {
   global.register(hex2num(operand)).incr()
 }
 
-uinstr.incw = function (operand) {
+CU.uinstr.incw = function (operand) {
   global.register(hex2num(operand)).incrPair()
 }
 
-uinstr.decb = function (operand) {
+CU.uinstr.decb = function (operand) {
   global.register(hex2num(operand)).decr()
 }
 
-uinstr.decw = function (operand) {
+CU.uinstr.decw = function (operand) {
   global.register(hex2num(operand)).decrPair()
 }
 
-uinstr.joi = function (operand) {
+CU.uinstr.joi = function (operand) {
   if (global.register(hex2num(operand)).dec === 0) {
     global.registerUPCH.incrPair()
   }
 }
 
-uinstr.jon = function (operand) {
+CU.uinstr.jon = function (operand) {
   if (global.register(hex2num(operand)).dec !== 0) {
     global.registerUPCH.incrPair()
   }
 }
 
-uinstr.jofi = function (operand) {
+CU.uinstr.jofi = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
   if (F.charAt(hex2num(operand)) === '0') {
@@ -269,7 +268,7 @@ uinstr.jofi = function (operand) {
   }
 }
 
-uinstr.jofn = function (operand) {
+CU.uinstr.jofn = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
   if (F.charAt(hex2num(operand)) !== '0') {
@@ -277,35 +276,35 @@ uinstr.jofn = function (operand) {
   }
 }
 
-uinstr.coop = function (operand) {
+CU.uinstr.coop = function (operand) {
   global.registerOP.val = global.instructionRegister.dec - hex2num(operand)
 }
 
-uinstr.c2db = function (operand) {
+CU.uinstr.c2db = function (operand) {
   global.dataBus.val = '0x' + operand
 }
 
-uinstr.svr = function (operand1, operand2) {
+CU.uinstr.svr = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).dec
   global.register(hex2num(operand1)).val = global.register(hex2num(operand2)).dec
   global.register(hex2num(operand2)).val = tmp
 }
 
-uinstr.svw = function (operand1, operand2) {
+CU.uinstr.svw = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).decPair
   global.register(hex2num(operand1)).valPair = global.register(hex2num(operand2)).decPair
   global.register(hex2num(operand2)).valPair = tmp
 }
 
-uinstr.jmp = function (operand) {
+CU.uinstr.jmp = function (operand) {
   global.registerUPCH.valPair = hex2num(operand) - 1
 }
 
-uinstr.setb = function (operand1, operand2) {
+CU.uinstr.setb = function (operand1, operand2) {
   global.register(hex2num(operand2)).setBit(hex2num(operand1))
 }
 
-uinstr.retb = function (operand1, operand2) {
+CU.uinstr.retb = function (operand1, operand2) {
   global.register(hex2num(operand2)).resBit(hex2num(operand1))
 }
 

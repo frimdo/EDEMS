@@ -44,7 +44,7 @@
         <button type="button" class="flowButton" id="AL2">↑</button>
         <button type="button" class="flowButton" id="D2L" disabled>↓</button>
         <button type="button" class="flowButton" id="RAL" disabled>→</button>
-        <button type="button" class="flowButton" id="ALR">←</button>
+        <button type="button" class="flowButton" id="ALR" disabled>←</button>
 
         <div id="externalDataBus">
             External Data Bus
@@ -58,7 +58,8 @@
 
         <div id="memory-grid">
             Memory
-            <div id="memory-edit">
+            <div class="insideBlock">
+                <div id="memory-edit">
                 <input type="text" id="memory-input0" title="memory-input0" value="placeholder"><br>
                 <input type="text" id="memory-input1" title="memory-input1" value="placeholder"><br>
                 <input type="text" id="memory-input2" title="memory-input2" value="placeholder"><br>
@@ -68,7 +69,7 @@
                 <input type="text" id="memory-input6" title="memory-input6" value="placeholder"><br>
                 <input type="text" id="memory-input7" title="memory-input7" value="placeholder"><br>
             </div>
-            <div id=memory>
+                <div id=memory>
                 <table>
                     <tr>
                         <th>
@@ -333,12 +334,14 @@
                     </tr>
                 </table>
             </div>
+            </div>
         </div>
 
         <div id="controlUnit-grid">
             Control Unit
-            <div id="instructionRegister">placeholder</div>
-            <div id="microcode-edit">
+            <div class="insideBlock">
+                <div id="instructionRegister">placeholder</div>
+                <div id="microcode-edit">
                 <input type="text" id="microcode-input0" title="microcode-input0" value="placeholder"><br>
                 <input type="text" id="microcode-input1" title="microcode-input1" value="placeholder"><br>
                 <input type="text" id="microcode-input2" title="microcode-input2" value="placeholder"><br>
@@ -348,7 +351,7 @@
                 <input type="text" id="microcode-input6" title="microcode-input6" value="placeholder"><br>
                 <input type="text" id="microcode-input7" title="microcode-input7" value="placeholder"><br>
             </div>
-            <div id=microcode>
+                <div id=microcode>
                 <table>
                     <tr>
                         <th>
@@ -613,11 +616,13 @@
                     </tr>
                 </table>
             </div>
+            </div>
         </div>
 
         <div id=registers-grid>
             Registers
-            <div id="registersBlocks">
+            <div class="insideBlock">
+                <div id="registersBlocks" class="insideBlock">
             <button type="button" id="F-block" class="registerBlock">F<div id="registerF">placeholder</div></button>
             <button type="button" id="A-block" class="registerBlock">A<div id="registerA">placeholder</div></button>
             <button type="button" id="B-block" class="registerBlock">B<div id="registerB">placeholder</div></button>
@@ -636,10 +641,34 @@
             <button type="button" id="UPCL-block" class="registerBlock">UPCL<div id="registerUPCL">placeholder</div></button>
 
             </div>
+            </div>
         </div>
 
         <div id="alu-grid">
             ALU
+            <div class="insideBlock">
+                <select id="aluSelect">
+                    <option value="1">1: add</option>
+                    <option value="2">2: sub</option>
+                    <option value="3">3: neg</option>
+                    <option value="4">4: not</option>
+                    <option value="5">5: and</option>
+                    <option value="6">6: orr</option>
+                    <option value="7">7: xor</option>
+                    <option value="8">8: rsh</option>
+                    <option value="9">9: lsh</option>
+                    <option value="10">10: rro</option>
+                    <option value="11">11: lro</option>
+                    <option value="12">12: rrc</option>
+                    <option value="13">13: lcr</option>
+                    <option value="14">14: asr</option>
+                    <option value="15">15: asl</option>
+                    <option value="16">16: bsr</option>
+                    <option value="17">17: bsl</option>
+                    <option value="18">18: equ</option>
+                    <option value="19">19: oop</option>
+                </select>
+            </div>
         </div>
 
         <div id="addressBus-grid">

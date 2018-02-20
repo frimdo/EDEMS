@@ -164,5 +164,5 @@ ALU.oop = function () {
   }
   ALU.doOperation(global.registerOP.dec)
 }
-
+// TODO: ALU operace by měly ovlivňovat F registr
 module.exports = ALU
