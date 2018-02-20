@@ -1,7 +1,7 @@
-@import 'reset.css';
-@import 'tagsAndClasses.css';
-@import 'header.css';
-@import 'body.css';
+@import './style/reset.css';
+@import './style/tagsAndClasses.css';
+@import './style/header.css';
+@import './style/body.css';
 
 
 #main-grid {
