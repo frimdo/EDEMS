@@ -1,0 +1,115 @@
+#body-grid {
+    border: 0;
+    grid-area: body-grid;
+    /*background-color: #a5c17d;*/
+
+    display: grid;
+    grid-row-gap: 3px;
+    grid-column-gap: 3px;
+    grid-template-columns: 1fr 1fr 4fr 1fr 1fr    1fr    6fr 1fr 1fr    1fr    1fr 1fr 3fr 1fr 1fr    1fr     1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+    grid-template-areas:
+            "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB"
+            ".   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2"
+            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+            "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
+            ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
+            "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+}
+
+#externalDataBus {
+    grid-area: EDB;
+    background-color: #c18977;
+}
+
+#internalDataBus {
+    grid-area: DAB;
+    background-color: #c18977;
+}
+
+#memory-grid {
+    padding: 5px;
+    overflow-y: auto;
+    grid-area: MEM;
+    background-color: #d17baf;
+}
+
+#controlUnit-grid {
+    padding: 5px;
+    overflow-y: auto;
+    grid-area: COU;
+    background-color: #a38ac1;
+}
+
+#registers-grid {
+    padding: 5px;
+    overflow-y: auto;
+    grid-area: REG;
+    background-color: #6886c1;
+}
+
+#alu-grid {
+    padding: 5px;
+    grid-area: ALU;
+    background-color: #80a3c1;
+}
+
+#addressBus-grid {
+    grid-area: ADB;
+    background-color: #8cc18d;
+}
+
+#REA {grid-area: REA;}
+#WRT {grid-area: WRT;}
+#D2D {grid-area: D2D;}
+#M2C {grid-area: M2C;}
+#A2M {grid-area: A2M;}
+#C2D {grid-area: C2D;}
+#R2D {grid-area: R2D;}
+#D2R {grid-area: D2R;}
+#W2A {grid-area: W2A;}
+#A2W {grid-area: A2W;}
+#AL2 {grid-area: AL2;}
+#D2L {grid-area: D2L;}
+#RAL {grid-area: RAL;}
+#ALR {grid-area: ALR;}
+
+#registersBlocks {
+    height: auto;
+    padding: 15px;
+
+    display: grid;
+    grid-row-gap: 15px;
+    grid-column-gap: 15px;
+    background-color: dimgrey;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+            "rF    rA"
+            "rB    rC"
+            "rD    rE"
+            "rS    rP"
+            "rPCH  rPCL"
+            "rTMP0 rOP"
+            "rTMP1 rTMP2"
+            "rUPCH rUPCL";
+}
+
+#F-block {grid-area: rF;}
+#A-block {grid-area: rA;}
+#B-block {grid-area: rB;}
+#C-block {grid-area: rC;}
+#D-block {grid-area: rD;}
+#E-block {grid-area: rE;}
+#S-block {grid-area: rS;}
+#P-block {grid-area: rP;}
+#PCH-block {grid-area: rPCH;}
+#PCL-block {grid-area: rPCL;}
+#TMP0-block {grid-area: rTMP0;}
+#OP-block {grid-area: rOP;}
+#TMP1-block {grid-area: rTMP1;}
+#TMP2-block {grid-area: rTMP2;}
+#UPCH-block {grid-area: rUPCH;}
+#UPCL-block {grid-area: rUPCL;}

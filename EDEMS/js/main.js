@@ -7,11 +7,10 @@ var BinNumber = require('./binNumber.js')
 var clock = require('./clock.js')
 
 $(document).ready(function () {
+  document.getElementById('file').style.display = 'none'
   window.clock = clock
 
   LS.initGlobals()
-  gui.drawMicrocode()
-  //gui.drawMemory()
   gui.refresh()
 
   global.instructionRegister = 5
@@ -188,10 +187,15 @@ $(document).ready(function () {
   }
 
   global.dataBus.onChange = function () {
-    $('#dataBus').text('0x' + global.dataBus.hex)
-    $('#dataBus').addClass('highlighted')
+    $('#EdataBus').text('0x' + global.dataBus.hex)
+    $('#EdataBus').addClass('highlighted')
     setTimeout(function () {
-      $('#dataBus').removeClass('highlighted')
+      $('#EdataBus').removeClass('highlighted')
+    }, 500)
+    $('#IdataBus').text('0x' + global.dataBus.hex)
+    $('#IdataBus').addClass('highlighted')
+    setTimeout(function () {
+      $('#IdataBus').removeClass('highlighted')
     }, 500)
   }
 

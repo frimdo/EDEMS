@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -5,52 +6,648 @@
     <script src="edems.js"></script>
 </head>
 <body>
-<table>
-    <tr>
-        <td>
+
+<div id="main-grid">
+
+    <div id="header-grid">
+
+        <div id="buttons-grid">
+            <input type="file" id="file" name="file" enctype="multipart/form-data"/>
+            <button type="button" id="import">Import</button>
+            <button type="button" id="export">Export</button>
+        </div>
+
+        <div id="clock-grid">
             <button type="button" id="ustep-btn">uStep</button>
             <button type="button" id="urun-btn">uRun</button>
-            <button type="button" id="stop-btn">Stop</button><br>
-            frequency: <input type="number" id="freq" min="1" max="500"><br>
+            <button type="button" id="stop-btn">Stop</button>
+            f: <input type="number" id="freq" title="freq" min="1" max="500">
+        </div>
 
-            import: <input type="file" id="file" name="file" enctype="multipart/form-data"/><br>
+        <div id="logo">
+            EDEMS
+        </div>
+    </div>
 
-            <div id=registers>
-                <table>
-                    <caption>Registers</caption>
-                    <tr> <td>F</td> <td><div id="registerF">placeholder</div></td> <td>A</td> <td><div id="registerA">placeholder</div></td> </tr>
-                    <tr> <td>B</td> <td><div id="registerB">placeholder</div></td> <td>C</td> <td><div id="registerC">placeholder</div></td> </tr>
-                    <tr> <td>D</td> <td><div id="registerD">placeholder</div></td> <td>E</td> <td><div id="registerE">placeholder</div></td> </tr>
-                    <tr> <td>S</td> <td><div id="registerS">placeholder</div></td> <td>P</td> <td><div id="registerP">placeholder</div></td> </tr>
-                    <tr> <td>PCH</td> <td><div id="registerPCH">placeholder</div></td> <td>PCL</td> <td><div id="registerPCL">placeholder</div></td> </tr>
-                    <tr> <td>TMP0</td> <td><div id="registerTMP0">placeholder</div></td> <td>OP</td> <td><div id="registerOP">placeholder</div></td> </tr>
-                    <tr> <td>TMP1</td> <td><div id="registerTMP1">placeholder</div></td> <td>TMP2</td> <td><div id="registerTMP2">placeholder</div></td> </tr>
-                    <tr> <td>UPCH</td> <td><div id="registerUPCH">placeholder</div></td> <td>UPCL</td> <td><div id="registerUPCL">placeholder</div></td> </tr>
-                </table>
+    <div id="body-grid">
+
+        <button type="button" class="flowButton" id="D2D" disabled>↔</button>
+        <button type="button" class="flowButton" id="REA">↑</button>
+        <button type="button" class="flowButton" id="WRT">↓</button>
+        <button type="button" class="flowButton" id="M2C" disabled>→</button>
+        <button type="button" class="flowButton" id="A2M" disabled>↑</button>
+        <button type="button" class="flowButton" id="C2D" disabled>↑</button>
+        <button type="button" class="flowButton" id="R2D">↑</button>
+        <button type="button" class="flowButton" id="D2R">↓</button>
+        <button type="button" class="flowButton" id="W2A">↑</button>
+        <button type="button" class="flowButton" id="A2W">↓</button>
+        <button type="button" class="flowButton" id="AL2">↑</button>
+        <button type="button" class="flowButton" id="D2L" disabled>↓</button>
+        <button type="button" class="flowButton" id="RAL" disabled>→</button>
+        <button type="button" class="flowButton" id="ALR">←</button>
+
+        <div id="externalDataBus">
+            External Data Bus
+            <div id="EdataBus">placeholder</div>
+        </div>
+
+        <div id="internalDataBus">
+            Internal Data Bus
+            <div id="IdataBus">placeholder</div>
+        </div>
+
+        <div id="memory-grid">
+            Memory
+            <div id="memory-edit">
+                <input type="text" id="memory-input0" title="memory-input0" value="placeholder"><br>
+                <input type="text" id="memory-input1" title="memory-input1" value="placeholder"><br>
+                <input type="text" id="memory-input2" title="memory-input2" value="placeholder"><br>
+                <input type="text" id="memory-input3" title="memory-input3" value="placeholder"><br>
+                <input type="text" id="memory-input4" title="memory-input4" value="placeholder"><br>
+                <input type="text" id="memory-input5" title="memory-input5" value="placeholder"><br>
+                <input type="text" id="memory-input6" title="memory-input6" value="placeholder"><br>
+                <input type="text" id="memory-input7" title="memory-input7" value="placeholder"><br>
             </div>
-            <div id=busses>
-                <table>
-                    <caption>Busses</caption>
-                    <tr> <td>DB</td> <td><div id="dataBus">placeholder</div>
-                    <tr> <td>AB</td> <td><div id="addressBus">placeholder</div>
-                </table>
-            </div>
-            <div id=IR>
-                <table>
-                    <caption>instructionRegister</caption>
-                    <tr> <td>instructionRegister</td> <td><div id="instructionRegister">placeholder</div>
-                </table>
-            </div>
-        </td>
-        <td>
-            <div id=microcode>
-            </div>
-        </td>
-        <td>
             <div id=memory>
+                <table>
+                    <tr>
+                        <th>
+                            <div></div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory0>00</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory1>01</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory2>02</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory3>03</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory4>04</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory5>05</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory6>06</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-memory7>07</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory0>00</div>
+                        </th>
+                        <th>
+                            <div id=memory0>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory1>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory2>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory3>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory4>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory5>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory6>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory7>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory1>01</div>
+                        </th>
+                        <th>
+                            <div id=memory8>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory9>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory10>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory11>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory12>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory13>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory14>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory15>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory2>02</div>
+                        </th>
+                        <th>
+                            <div id=memory16>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory17>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory18>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory19>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory20>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory21>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory22>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory23>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory3>03</div>
+                        </th>
+                        <th>
+                            <div id=memory24>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory25>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory26>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory27>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory28>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory29>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory30>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory31>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory4>05</div>
+                        </th>
+                        <th>
+                            <div id=memory32>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory33>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory34>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory35>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory36>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory37>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory38>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory39>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory5>05</div>
+                        </th>
+                        <th>
+                            <div id=memory40>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory41>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory42>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory43>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory44>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory45>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory46>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory47>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory6>06</div>
+                        </th>
+                        <th>
+                            <div id=memory48>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory49>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory50>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory51>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory52>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory53>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory54>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory55>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-memory7>07</div>
+                        </th>
+                        <th>
+                            <div id=memory56>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory57>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory58>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory59>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory60>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory61>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory62>NA</div>
+                        </th>
+                        <th>
+                            <div id=memory63>NA</div>
+                        </th>
+                    </tr>
+                </table>
             </div>
-        </td>
-    </tr>
-</table>
+        </div>
+
+        <div id="controlUnit-grid">
+            Control Unit
+            <div id="instructionRegister">placeholder</div>
+            <div id="microcode-edit">
+                <input type="text" id="microcode-input0" title="microcode-input0" value="placeholder"><br>
+                <input type="text" id="microcode-input1" title="microcode-input1" value="placeholder"><br>
+                <input type="text" id="microcode-input2" title="microcode-input2" value="placeholder"><br>
+                <input type="text" id="microcode-input3" title="microcode-input3" value="placeholder"><br>
+                <input type="text" id="microcode-input4" title="microcode-input4" value="placeholder"><br>
+                <input type="text" id="microcode-input5" title="microcode-input5" value="placeholder"><br>
+                <input type="text" id="microcode-input6" title="microcode-input6" value="placeholder"><br>
+                <input type="text" id="microcode-input7" title="microcode-input7" value="placeholder"><br>
+            </div>
+            <div id=microcode>
+                <table>
+                    <tr>
+                        <th>
+                            <div></div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode-microcode0>00</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode1>01</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode2>02</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode3>03</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode4>04</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode5>05</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode6>06</div>
+                        </th>
+                        <th>
+                            <div id=x-offset-microcode7>07</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode0>00</div>
+                        </th>
+                        <th>
+                            <div id=microcode0>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode1>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode2>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode3>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode4>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode5>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode6>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode7>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode1>01</div>
+                        </th>
+                        <th>
+                            <div id=microcode8>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode9>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode10>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode11>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode12>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode13>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode14>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode15>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode2>02</div>
+                        </th>
+                        <th>
+                            <div id=microcode16>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode17>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode18>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode19>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode20>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode21>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode22>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode23>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode3>03</div>
+                        </th>
+                        <th>
+                            <div id=microcode24>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode25>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode26>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode27>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode28>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode29>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode30>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode31>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode4>05</div>
+                        </th>
+                        <th>
+                            <div id=microcode32>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode33>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode34>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode35>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode36>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode37>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode38>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode39>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode5>05</div>
+                        </th>
+                        <th>
+                            <div id=microcode40>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode41>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode42>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode43>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode44>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode45>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode46>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode47>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode6>06</div>
+                        </th>
+                        <th>
+                            <div id=microcode48>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode49>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode50>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode51>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode52>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode53>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode54>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode55>NA</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div id=y-offset-microcode7>07</div>
+                        </th>
+                        <th>
+                            <div id=microcode56>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode57>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode58>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode59>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode60>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode61>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode62>NA</div>
+                        </th>
+                        <th>
+                            <div id=microcode63>NA</div>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div id=registers-grid>
+            Registers
+            <div id="registersBlocks">
+            <button type="button" id="F-block" class="registerBlock">F<div id="registerF">placeholder</div></button>
+            <button type="button" id="A-block" class="registerBlock">A<div id="registerA">placeholder</div></button>
+            <button type="button" id="B-block" class="registerBlock">B<div id="registerB">placeholder</div></button>
+            <button type="button" id="C-block" class="registerBlock">C<div id="registerC">placeholder</div></button>
+            <button type="button" id="D-block" class="registerBlock">D<div id="registerD">placeholder</div></button>
+            <button type="button" id="E-block" class="registerBlock">E<div id="registerE">placeholder</div></button>
+            <button type="button" id="S-block" class="registerBlock">S<div id="registerS">placeholder</div></button>
+            <button type="button" id="P-block" class="registerBlock">P<div id="registerP">placeholder</div></button>
+            <button type="button" id="PCH-block" class="registerBlock">PCH<div id="registerPCH">placeholder</div></button>
+            <button type="button" id="PCL-block" class="registerBlock">PCL<div id="registerPCL">placeholder</div></button>
+            <button type="button" id="TMP0-block" class="registerBlock">TMP0<div id="registerTMP0">placeholder</div></button>
+            <button type="button" id="OP-block" class="registerBlock">OP<div id="registerOP">placeholder</div></button>
+            <button type="button" id="TMP1-block" class="registerBlock">TMP1<div id="registerTMP1">placeholder</div></button>
+            <button type="button" id="TMP2-block" class="registerBlock">TMP2<div id="registerTMP2">placeholder</div></button>
+            <button type="button" id="UPCH-block" class="registerBlock">UPCH<div id="registerUPCH">placeholder</div></button>
+            <button type="button" id="UPCL-block" class="registerBlock">UPCL<div id="registerUPCL">placeholder</div></button>
+
+            </div>
+        </div>
+
+        <div id="alu-grid">
+            ALU
+        </div>
+
+        <div id="addressBus-grid">
+            Address Bus
+            <div id="addressBus">placeholder</div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

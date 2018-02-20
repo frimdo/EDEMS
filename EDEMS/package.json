@@ -2,7 +2,7 @@
   "name": "edems",
   "version": "1.0.0",
   "description": "Educational DEmonstrative Microprocessor Simulator",
-  "main": "main.js",
+  "main": "browser/gui.js",
   "scripts": {
     "watch": "watchify -p browserify-notify js/main.js --full-paths -o edems.js",
     "testwatch": "jest --notify --watchAll",

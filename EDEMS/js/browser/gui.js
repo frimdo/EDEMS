@@ -20,7 +20,8 @@ gui.refresh = function () {
   $('#registerTMP2').text('0x' + global.registerTMP2.hex)
   $('#registerUPCH').text('0x' + global.registerUPCH.hex)
   $('#registerUPCL').text('0x' + global.registerUPCL.hex)
-  $('#dataBus').text('0x' + global.dataBus.hex)
+  $('#EdataBus').text('0x' + global.dataBus.hex)
+  $('#IdataBus').text('0x' + global.dataBus.hex)
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
   document.getElementById("freq").value = global.freq
@@ -34,32 +35,6 @@ gui.refresh = function () {
   }
 
   $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
-}
-
-gui.drawMicrocode = function () {
-  $('#microcode').append('<table>')
-  $('#microcode').append('<caption>Micromemory</caption>')
-  $('#microcode').append('<tr>')
-
-  for (var i = 0; i < global.microcode.length; i++) {
-    if (i % 8 === 0) {
-      $('#microcode').append('</tr>').append('<tr>')
-    }
-    $('#microcode').append('<th><div id=microcode' + i + '>Placeholder</div></th>')
-  }
-}
-
-gui.drawMemory = function () {
-  $('#memory').append('<table>')
-  $('#memory').append('<caption>Memory</caption>')
-  $('#memory').append('<tr>')
-
-  for (var i = 0; i < global.memory.length; i++) {
-    if (i % 8 === 0) {
-      $('#memory').append('</tr>').append('<tr>')
-    }
-    $('#memory').append('<th><div id=memory' + i + '>Placeholder</div></th>')
-  }
 }
 
 module.exports = gui

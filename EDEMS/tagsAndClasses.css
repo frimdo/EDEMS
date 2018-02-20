@@ -1,0 +1,45 @@
+* {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    color: #2d2d2d;
+}
+
+body {
+    background-color: #cccccc;
+}
+
+table {
+    height: 100%;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    /* border: 1px solid black;*/
+    vertical-align: center;
+    padding: 2px;
+}
+
+div, button {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #2d2d2d;
+    padding: 2px;
+}
+
+input {
+    margin: 0;
+    padding: 0;
+}
+
+.highlighted, .umem-highlighted {
+    color: #cccccc;
+    background-color: #707070;
+}
+
+.flowButton {
+    font-weight: bold;
+    font-size: 150%
+}

@@ -1,32 +1,21 @@
-.memory_block {
-    float: left;
-    color: #000000;
-    vertical-align: middle;
-    border-radius: 3px;
-    text-align: center;
-    width: 40px;
-    background: #ccc;
-    height: 20px;
-    border: 1px solid #000;
-    box-shadow: 1px 1px 5px -1px #000;
-    margin: 1px;
-    cursor: pointer;
-}
+@import 'reset.css';
+@import 'tagsAndClasses.css';
+@import 'header.css';
+@import 'body.css';
 
-table {
-    border-collapse: collapse;
-}
 
-table, th, td {
-    border: 1px solid black;
-    vertical-align: top;
-    padding: 5px;
-}
+#main-grid {
+    border: 0;
+    height: 98vh;
 
-.highlighted {
-    background-color: #cccccc;
-}
-
-.umem-highlighted {
-    background-color: #cccccc;
+    display: grid;
+    grid-row-gap: 15px;
+    grid-column-gap: 15px;
+    grid-template-columns: 10px 1fr 10px;
+    grid-template-rows: 10px 1fr 16fr 10px;
+    grid-template-areas:
+            ". .           ."
+            ". header-grid ."
+            ". body-grid   ."
+            ". .           .";
 }

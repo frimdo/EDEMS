@@ -1,0 +1,29 @@
+#header-grid {
+    border: 0;
+    grid-area: header-grid;
+    /*background-color: #81c19d;*/
+
+    display: grid;
+    grid-row-gap: 15px;
+    grid-column-gap: 15px;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas:
+            "buttons-grid clock-grid logo";
+}
+
+#buttons-grid {
+    grid-area: buttons-grid;
+    background-color: #a5a6c1;
+}
+
+#clock-grid {
+    grid-area: clock-grid;
+    background-color: #97a9c1;
+}
+
+#logo {
+    background-color: #c18977;
+    grid-area: logo;
+    font-weight: bold;
+    font-size: 200%
+}
