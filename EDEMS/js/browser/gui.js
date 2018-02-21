@@ -34,7 +34,6 @@ gui.refresh = function () {
     var num = global.memory[i].toString(16)
     if (num.length === 1) {
       num = '0' + num
-      return num
     }
     $('#memory' + i).text(num)
   }

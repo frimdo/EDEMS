@@ -23,6 +23,40 @@ $(document).ready(function () {
   $('#microcode4').text(global.microcode[4] = '001')
   $('#microcode5').text(global.microcode[5] = '804')
 
+  document.getElementById('F-button').onclick = function (){
+    /*var element = document.getElementById('F-button')
+    for(x in document.getElementsByClassName('selected1')){
+
+    }
+    if(document.getElementsByClassName('selected1').length >= 1){
+      $('#F-button').addClass('selected2')
+    } else {
+      $('#F-button').addClass('selected1')
+    }*/
+  }
+  document.getElementById('A-button').onclick = function (){
+    /*console.log(document.getElementsByClassName('selected1'), document.getElementsByClassName('selected1').length)
+    if(document.getElementsByClassName('selected1').length >= 1){
+      $('#A-button').addClass('selected2')
+    } else {
+      $('#A-button').addClass('selected1')
+    }*/
+  }
+  document.getElementById('B-button').onclick = function (){}
+  document.getElementById('C-button').onclick = function (){}
+  document.getElementById('D-button').onclick = function (){}
+  document.getElementById('E-button').onclick = function (){}
+  document.getElementById('S-button').onclick = function (){}
+  document.getElementById('P-button').onclick = function (){}
+  document.getElementById('PCH-button').onclick = function (){}
+  document.getElementById('PCL-button').onclick = function (){}
+  document.getElementById('TMP0-button').onclick = function (){}
+  document.getElementById('OP-button').onclick = function (){}
+  document.getElementById('TMP1-button').onclick = function (){}
+  document.getElementById('TMP2-button').onclick = function (){}
+  document.getElementById('UPCH-button').onclick = function (){}
+  document.getElementById('UPCL-button').onclick = function (){}
+
   document.getElementById('ustep-btn').onclick = function () {
     clock.ustep()
   }

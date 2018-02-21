@@ -22,11 +22,12 @@ table, th, td {
 }
 
 div, button {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     border: 1px solid #2d2d2d;
     padding: 2px;
+    text-align: center;
 }
 button:disabled,
 button[disabled]{
@@ -40,6 +41,14 @@ input {
     padding: 0;
 }
 
+select {
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+
 .highlighted, .umem-highlighted {
     color: #cccccc;
     background-color: #707070;
@@ -48,4 +57,12 @@ input {
 .flowButton {
     font-weight: bold;
     font-size: 150%
+}
+
+.selected1 {
+    background-color: #a5c17d;
+}
+
+.selected2 {
+    background-color: #7877c1;
 }
