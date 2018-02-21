@@ -37,14 +37,6 @@ global.registerUPCH = new BinNumber(0, 8, global.registerUPCL, 3)
 
 global.freq = 10
 
-global.to1Bhex = function (num) {
-  num = num.toString(16)
-  if (num.length === 1) {
-    num = '0' + num
-    return num
-  }
-}
-
 global.register = function (x) {
   switch (x) {
     case 0:

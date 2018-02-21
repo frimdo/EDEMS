@@ -31,7 +31,12 @@ gui.refresh = function () {
   }
 
   for (var i = 0; i < global.memory.length; i++) {
-    $('#memory' + i).text(global.to1Bhex(global.memory[i]))
+    var num = global.memory[i].toString(16)
+    if (num.length === 1) {
+      num = '0' + num
+      return num
+    }
+    $('#memory' + i).text(num)
   }
 
   $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
