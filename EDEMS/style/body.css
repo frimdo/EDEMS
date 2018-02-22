@@ -16,7 +16,7 @@
             "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
             "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
             "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
-            ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
+            ".   .   .   A2M .   .   .   .   .   .   .   A2W .   W2A .   .   .   .   .  "
             "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
 }
 
@@ -81,39 +81,13 @@
 #registers-grid .insideBlock {
     padding-bottom: 0;
 }
-/*
-#registersBlocks {
 
-    display: grid;
-    grid-row-gap: 15px;
-    grid-column-gap: 15px;
-    background-color: dimgrey;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-            "rF    rA"
-            "rB    rC"
-            "rD    rE"
-            "rS    rP"
-            "rPCH  rPCL"
-            "rTMP0 rOP"
-            "rTMP1 rTMP2"
-            "rUPCH rUPCL";
-
+#incr {
+    float: left;
+    width: 10%;
 }
-*/
-#F-block {}
-#A-block {}
-#B-block {}
-#C-block {}
-#D-block {}
-#E-block {}
-#S-block {}
-#P-block {}
-#PCH-block {}
-#PCL-block {}
-#TMP0-block {}
-#OP-block {}
-#TMP1-block {}
-#TMP2-block {}
-#UPCH-block {}
-#UPCL-block {}
+
+#decr {
+    float: right;
+    width: 10%;
+}

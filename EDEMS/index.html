@@ -21,7 +21,7 @@
             <button type="button" id="ustep-btn">uStep</button>
             <button type="button" id="urun-btn">uRun</button>
             <button type="button" id="stop-btn">Stop</button>
-            f: <input type="number" id="freq" title="freq" min="1" max="500">
+            f: <input type="number" id="freq" title="freq" min="1" max="500"> Hz
         </div>
 
         <div id="logo">
@@ -57,7 +57,9 @@
         </div>
 
         <div id="memory-grid">
-            Memory
+            <div class="nameBlock">
+                Memory
+            </div>
             <div class="insideBlock">
                 <div id="memory-edit">
                 <input type="text" id="memory-input0" title="memory-input0" value="placeholder"><br>
@@ -338,7 +340,9 @@
         </div>
 
         <div id="controlUnit-grid">
-            Control Unit
+            <div class="nameBlock">
+                Control Unit
+            </div>
             <div class="insideBlock">
                 <div id="IR">
                     Instruction Register
@@ -623,54 +627,58 @@
         </div>
 
         <div id=registers-grid>
-            Registers
+            <div class="nameBlock">Registers
+                <button type="button" id="incr">+1</button>
+                <button type="button" id="decr">-1</button>
+            </div>
             <div class="insideBlock">
-                    <div class="pairBlock">
-                        <button type="button" id="F-pair" class="pairButton"></button>
-                        <button type="button" id="F-button" class="registerButton">F <span>[7]</span><div id="registerF">placeholder</div></button>
-                        <button type="button" id="A-button" class="registerButton">A <span>[6]</span><div id="registerA">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="B-pair" class="pairButton"></button>
-                        <button type="button" id="B-button" class="registerButton">B <span>[0]</span><div id="registerB">placeholder</div></button>
-                        <button type="button" id="C-button" class="registerButton">C <span>[3]</span><div id="registerC">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="D-pair" class="pairButton"></button>
-                        <button type="button" id="D-button" class="registerButton">D <span>[1]</span><div id="registerD">placeholder</div></button>
-                        <button type="button" id="E-button" class="registerButton">E <span>[4]</span><div id="registerE">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="S-pair" class="pairButton"></button>
-                        <button type="button" id="S-button" class="registerButton">S <span>[2]</span><div id="registerS">placeholder</div></button>
-                        <button type="button" id="P-button" class="registerButton">P <span>[5]</span><div id="registerP">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="PCH-pair" class="pairButton"></button>
-                        <button type="button" id="PCH-button" class="registerButton">PCH <span>[8]</span><div id="registerPCH">placeholder</div></button>
-                        <button type="button" id="PCL-button" class="registerButton">PCL <span>[9]</span><div id="registerPCL">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="TMP0-pair" class="pairButton"></button>
-                        <button type="button" id="TMP0-button" class="registerButton">TMP0 <span>[10]</span><div id="registerTMP0">placeholder</div></button>
-                        <button type="button" id="OP-button" class="registerButton">OP <span>[13]</span><div id="registerOP">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="TMP1-pair" class="pairButton"></button>
-                        <button type="button" id="TMP1-button" class="registerButton">TMP1 <span>[11]</span><div id="registerTMP1">placeholder</div></button>
-                        <button type="button" id="TMP2-button" class="registerButton">TMP2 <span>[14]</span><div id="registerTMP2">placeholder</div></button>
-                    </div>
-                    <div class="pairBlock">
-                        <button type="button" id="UPCH-pair" class="pairButton"></button>
-                        <button type="button" id="UPCH-button" class="registerButton">UPCH <span>[12]</span><div id="registerUPCH">placeholder</div></button>
-                        <button type="button" id="UPCL-button" class="registerButton">UPCL <span>[15]</span><div id="registerUPCL">placeholder</div></button>
-                    </div>
-
+                <div class="pairBlock">
+                    <button type="button" id="F-pair" class="pairButton"></button>
+                    <button type="button" id="F-button" class="registerButton">F <span>[7]</span><div id="registerF">placeholder</div></button>
+                    <button type="button" id="A-button" class="registerButton">A <span>[6]</span><div id="registerA">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="B-pair" class="pairButton"></button>
+                    <button type="button" id="B-button" class="registerButton">B <span>[0]</span><div id="registerB">placeholder</div></button>
+                    <button type="button" id="C-button" class="registerButton">C <span>[3]</span><div id="registerC">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="D-pair" class="pairButton"></button>
+                    <button type="button" id="D-button" class="registerButton">D <span>[1]</span><div id="registerD">placeholder</div></button>
+                    <button type="button" id="E-button" class="registerButton">E <span>[4]</span><div id="registerE">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="S-pair" class="pairButton"></button>
+                    <button type="button" id="S-button" class="registerButton">S <span>[2]</span><div id="registerS">placeholder</div></button>
+                    <button type="button" id="P-button" class="registerButton">P <span>[5]</span><div id="registerP">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="PCH-pair" class="pairButton"></button>
+                    <button type="button" id="PCH-button" class="registerButton">PCH <span>[8]</span><div id="registerPCH">placeholder</div></button>
+                    <button type="button" id="PCL-button" class="registerButton">PCL <span>[9]</span><div id="registerPCL">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="TMP0-pair" class="pairButton"></button>
+                    <button type="button" id="TMP0-button" class="registerButton">TMP0 <span>[10]</span><div id="registerTMP0">placeholder</div></button>
+                    <button type="button" id="OP-button" class="registerButton">OP <span>[13]</span><div id="registerOP">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="TMP1-pair" class="pairButton"></button>
+                    <button type="button" id="TMP1-button" class="registerButton">TMP1 <span>[11]</span><div id="registerTMP1">placeholder</div></button>
+                    <button type="button" id="TMP2-button" class="registerButton">TMP2 <span>[14]</span><div id="registerTMP2">placeholder</div></button>
+                </div>
+                <div class="pairBlock">
+                    <button type="button" id="UPCH-pair" class="pairButton"></button>
+                    <button type="button" id="UPCH-button" class="registerButton">UPCH <span>[12]</span><div id="registerUPCH">placeholder</div></button>
+                    <button type="button" id="UPCL-button" class="registerButton">UPCL <span>[15]</span><div id="registerUPCL">placeholder</div></button>
+                </div>
             </div>
         </div>
 
         <div id="alu-grid">
-            ALU
+            <div class="nameBlock">
+                ALU
+            </div>
             <div class="insideBlock">
                 <select id="aluSelect">
                     <option value="1">1: add</option>

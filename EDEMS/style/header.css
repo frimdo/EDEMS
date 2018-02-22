@@ -21,6 +21,10 @@
     background-color: #97a9c1;
 }
 
+#clock-grid input {
+    width: 50px;
+}
+
 #logo {
     background-color: #c18977;
     grid-area: logo;

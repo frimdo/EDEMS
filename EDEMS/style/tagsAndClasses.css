@@ -25,9 +25,9 @@ table, th, td {
 }
 
 div, button {
-    -webkit-border-radius: 2px;
+    /*-webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    border-radius: 2px;
+    border-radius: 2px;*/
     border: 1px solid #2d2d2d;
     padding: 2px;
     text-align: center;
@@ -90,5 +90,12 @@ select {
 }
 
 #body-grid div {
-    box-shadow: 2px 1px 3px #2d2d2d;
+    /*box-shadow: 2px 1px 3px #2d2d2d;*/
+}
+
+.nameBlock {
+    height: 30px;
+    line-height: 25px;
+    vertical-align: middle;
+    margin-bottom: 2px;
 }

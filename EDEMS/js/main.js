@@ -31,6 +31,214 @@ $(document).ready(function () {
 
 function onclickSetup(){
 
+  document.getElementById('decr').onclick = function () {
+    var array = []
+    var elements = document.getElementsByClassName('selectedRegister')
+    for (var i = 0; i < elements.length; i++) {
+      array.push(elements[i].id)
+    }
+    if (array.includes('F-pair')) {
+      CU.uinstr.decw('7')
+      return
+    }
+    if (array.includes('B-pair')) {
+      CU.uinstr.decw('0')
+      return
+    }
+    if (array.includes('D-pair')) {
+      CU.uinstr.decw('1')
+      return
+    }
+    if (array.includes('S-pair')) {
+      CU.uinstr.decw('2')
+      return
+    }
+    if (array.includes('PCH-pair')) {
+      CU.uinstr.decw('8')
+      return
+    }
+    if (array.includes('TMP0-pair')) {
+      CU.uinstr.decw('A')
+      return
+    }
+    if (array.includes('TMP1-pair')) {
+      CU.uinstr.decw('B')
+      return
+    }
+    if (array.includes('UPCH-pair')) {
+      CU.uinstr.decw('C')
+      return
+    }
+    if (array.includes('A-button')) {
+      CU.uinstr.decb('6')
+      return
+    }
+    if (array.includes('F-button')) {
+      CU.uinstr.decb('7')
+      return
+    }
+    if (array.includes('C-button')) {
+      CU.uinstr.decb('3')
+      return
+    }
+    if (array.includes('B-button')) {
+      CU.uinstr.decb('0')
+      return
+    }
+    if (array.includes('E-button')) {
+      CU.uinstr.decb('4')
+      return
+    }
+    if (array.includes('D-button')) {
+      CU.uinstr.decb('1')
+      return
+    }
+    if (array.includes('P-button')) {
+      CU.uinstr.decb('5')
+      return
+    }
+    if (array.includes('S-button')) {
+      CU.uinstr.decb('2')
+      return
+    }
+    if (array.includes('PCL-button')) {
+      CU.uinstr.decb('9')
+      return
+    }
+    if (array.includes('PCH-button')) {
+      CU.uinstr.decb('8')
+      return
+    }
+    if (array.includes('OP-button')) {
+      CU.uinstr.decb('D')
+      return
+    }
+    if (array.includes('TMP0-button')) {
+      CU.uinstr.decb('A')
+      return
+    }
+    if (array.includes('TMP2-button')) {
+      CU.uinstr.decb('E')
+      return
+    }
+    if (array.includes('TMP1-button')) {
+      CU.uinstr.decb('B')
+      return
+    }
+    if (array.includes('UPCL-button')) {
+      CU.uinstr.decb('F')
+      return
+    }
+    if (array.includes('UPCH-button')) {
+      CU.uinstr.decb('C')
+      return
+    }
+  }
+
+  document.getElementById('incr').onclick = function () {
+    var array = []
+    var elements = document.getElementsByClassName('selectedRegister')
+    for (var i = 0; i < elements.length; i++) {
+      array.push(elements[i].id)
+    }
+    if (array.includes('F-pair')) {
+      CU.uinstr.incw('7')
+      return
+    }
+    if (array.includes('B-pair')) {
+      CU.uinstr.incw('0')
+      return
+    }
+    if (array.includes('D-pair')) {
+      CU.uinstr.incw('1')
+      return
+    }
+    if (array.includes('S-pair')) {
+      CU.uinstr.incw('2')
+      return
+    }
+    if (array.includes('PCH-pair')) {
+      CU.uinstr.incw('8')
+      return
+    }
+    if (array.includes('TMP0-pair')) {
+      CU.uinstr.incw('A')
+      return
+    }
+    if (array.includes('TMP1-pair')) {
+      CU.uinstr.incw('B')
+      return
+    }
+    if (array.includes('UPCH-pair')) {
+      CU.uinstr.incw('C')
+      return
+    }
+    if (array.includes('A-button')) {
+      CU.uinstr.incb('6')
+      return
+    }
+    if (array.includes('F-button')) {
+      CU.uinstr.incb('7')
+      return
+    }
+    if (array.includes('C-button')) {
+      CU.uinstr.incb('3')
+      return
+    }
+    if (array.includes('B-button')) {
+      CU.uinstr.incb('0')
+      return
+    }
+    if (array.includes('E-button')) {
+      CU.uinstr.incb('4')
+      return
+    }
+    if (array.includes('D-button')) {
+      CU.uinstr.incb('1')
+      return
+    }
+    if (array.includes('P-button')) {
+      CU.uinstr.incb('5')
+      return
+    }
+    if (array.includes('S-button')) {
+      CU.uinstr.incb('2')
+      return
+    }
+    if (array.includes('PCL-button')) {
+      CU.uinstr.incb('9')
+      return
+    }
+    if (array.includes('PCH-button')) {
+      CU.uinstr.incb('8')
+      return
+    }
+    if (array.includes('OP-button')) {
+      CU.uinstr.incb('D')
+      return
+    }
+    if (array.includes('TMP0-button')) {
+      CU.uinstr.incb('A')
+      return
+    }
+    if (array.includes('TMP2-button')) {
+      CU.uinstr.incb('E')
+      return
+    }
+    if (array.includes('TMP1-button')) {
+      CU.uinstr.incb('B')
+      return
+    }
+    if (array.includes('UPCL-button')) {
+      CU.uinstr.incb('F')
+      return
+    }
+    if (array.includes('UPCH-button')) {
+      CU.uinstr.incb('C')
+      return
+    }
+  }
+
   document.getElementById('D2R').onclick = function () {
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
@@ -41,11 +249,11 @@ function onclickSetup(){
       return
     }
   if(array.includes('A-button')){
-      CU.uinstr.db2r('0')
+      CU.uinstr.db2r('6')
     return
     }
   if(array.includes('F-button')){
-      CU.uinstr.db2r('6')
+      CU.uinstr.db2r('7')
     return
     }
   if(array.includes('C-button')){
