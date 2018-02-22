@@ -3,6 +3,9 @@
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     color: #2d2d2d;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
@@ -28,7 +31,9 @@ div, button {
     border: 1px solid #2d2d2d;
     padding: 2px;
     text-align: center;
+
 }
+
 button:disabled,
 button[disabled]{
     border: 1px solid #999999;
@@ -43,10 +48,6 @@ input {
 
 select {
     width: 100%;
-    text-align: center;
-    height: 100%;
-    margin-top: 20%;
-    margin-bottom: 20%;
 }
 
 .highlighted, .umem-highlighted {
@@ -59,10 +60,35 @@ select {
     font-size: 150%
 }
 
-.selected1 {
+.selectedRegister {
     background-color: #a5c17d;
 }
 
-.selected2 {
-    background-color: #7877c1;
+.registerButton {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 40%;
+    top: -54px;
+    position: relative;
+}
+
+.pairBlock {
+    margin-bottom: 2px;
+    height: 64px;
+}
+
+.pairButton {
+    height: 60px;
+    width: 100%;
+    clear: both;
+    float: none;
+}
+
+.registerButton span {
+    color: #636363;
+}
+
+#body-grid div {
+    box-shadow: 2px 1px 3px #2d2d2d;
 }

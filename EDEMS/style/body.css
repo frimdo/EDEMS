@@ -77,9 +77,12 @@
 #RAL {grid-area: RAL;}
 #ALR {grid-area: ALR;}
 
+
+#registers-grid .insideBlock {
+    padding-bottom: 0;
+}
+/*
 #registersBlocks {
-    height: auto;
-    padding: 15px;
 
     display: grid;
     grid-row-gap: 15px;
@@ -95,21 +98,22 @@
             "rTMP0 rOP"
             "rTMP1 rTMP2"
             "rUPCH rUPCL";
-}
 
-#F-block {grid-area: rF;}
-#A-block {grid-area: rA;}
-#B-block {grid-area: rB;}
-#C-block {grid-area: rC;}
-#D-block {grid-area: rD;}
-#E-block {grid-area: rE;}
-#S-block {grid-area: rS;}
-#P-block {grid-area: rP;}
-#PCH-block {grid-area: rPCH;}
-#PCL-block {grid-area: rPCL;}
-#TMP0-block {grid-area: rTMP0;}
-#OP-block {grid-area: rOP;}
-#TMP1-block {grid-area: rTMP1;}
-#TMP2-block {grid-area: rTMP2;}
-#UPCH-block {grid-area: rUPCH;}
-#UPCL-block {grid-area: rUPCL;}
+}
+*/
+#F-block {}
+#A-block {}
+#B-block {}
+#C-block {}
+#D-block {}
+#E-block {}
+#S-block {}
+#P-block {}
+#PCH-block {}
+#PCL-block {}
+#TMP0-block {}
+#OP-block {}
+#TMP1-block {}
+#TMP2-block {}
+#UPCH-block {}
+#UPCL-block {}
