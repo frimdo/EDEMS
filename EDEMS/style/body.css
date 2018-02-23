@@ -82,12 +82,13 @@
     padding-bottom: 0;
 }
 
-#incr {
+#incr, #decr{
+    font-weight: bold;
     float: left;
-    width: 10%;
+    width: 7%;
 }
 
-#decr {
+#svr {
     float: right;
-    width: 10%;
+    width: 14%;
 }

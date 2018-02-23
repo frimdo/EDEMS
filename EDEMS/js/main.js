@@ -19,9 +19,9 @@ $(document).ready(function () {
   window.alu=alu
 
   LS.initGlobals()
-  gui.refresh()
   onclickSetup()
   onChangeSetup()
+  gui.refresh()
 
 
   $('#microcode0').text(global.microcode[0] = '601')
