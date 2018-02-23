@@ -31,3 +31,17 @@
     font-weight: bold;
     font-size: 200%
 }
+
+#IdataBus {
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid #2d2d2d;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: inherit;
+    width: 100%;
+}
+
+#IdataBus:hover{
+    background-color: #e7a793;
+}

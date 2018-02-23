@@ -31,7 +31,6 @@ div, button {
     border: 1px solid #2d2d2d;
     padding: 2px;
     text-align: center;
-
 }
 
 button:disabled,
@@ -52,7 +51,12 @@ select {
 
 .highlighted, .umem-highlighted {
     color: #cccccc;
-    background-color: #707070;
+    background-color: #707070 !important;
+}
+
+.failed {
+    color: #cccccc;
+    background-color: #70393b !important;
 }
 
 .flowButton {

@@ -10,7 +10,13 @@ var alu = require('./alu.js')
 
 $(document).ready(function () {
   document.getElementById('file').style.display = 'none'
-  window.clock = clock
+
+  window.global=global
+  window.LS=LS
+  window.gui=gui
+  window.CU=CU
+  window.clock=clock
+  window.alu=alu
 
   LS.initGlobals()
   gui.refresh()
@@ -324,11 +330,11 @@ function onclickSetup(){
       return
     }
     if(array.includes('A-button')){
-      CU.uinstr.r2db('0')
+      CU.uinstr.r2db('6')
       return
     }
     if(array.includes('F-button')){
-      CU.uinstr.r2db('6')
+      CU.uinstr.r2db('7')
       return
     }
     if(array.includes('C-button')){
@@ -838,9 +844,36 @@ function onChangeSetup(){
     setTimeout(function () {
       $('#EdataBus').removeClass('highlighted')
     }, 500)
-    $('#IdataBus').text('0x' + global.dataBus.hex).addClass('highlighted')
+    document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
+    $('#IdataBus').addClass('highlighted')
     setTimeout(function () {
       $('#IdataBus').removeClass('highlighted')
+    }, 500)
+  }
+
+  document.getElementById('IdataBus').onchange = function () {
+    var tmp = document.getElementById('IdataBus').value
+    if (tmp.length == 4 || tmp.length == 2) {
+      if (tmp.length == 2) {
+        tmp = '0x' + tmp
+      }
+      try{
+        global.dataBus.val = tmp
+      } catch(x){
+        console.log(x)
+        global.dataBus.val = global.dataBus.dec
+      }
+      return
+    }
+
+    $('#EdataBus').addClass('failed')
+    setTimeout(function () {
+      $('#EdataBus').removeClass('failed')
+    }, 500)
+    $('#IdataBus').addClass('failed')
+    setTimeout(function () {
+      document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
+      $('#IdataBus').removeClass('failed')
     }, 500)
   }
 

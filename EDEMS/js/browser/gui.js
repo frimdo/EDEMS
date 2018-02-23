@@ -21,7 +21,7 @@ gui.refresh = function () {
   $('#registerUPCH').text('0x' + global.registerUPCH.hex)
   $('#registerUPCL').text('0x' + global.registerUPCL.hex)
   $('#EdataBus').text('0x' + global.dataBus.hex)
-  $('#IdataBus').text('0x' + global.dataBus.hex)
+  document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
   document.getElementById("freq").value = global.freq
