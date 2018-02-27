@@ -6,7 +6,7 @@
     display: grid;
     grid-row-gap: 3px;
     grid-column-gap: 3px;
-    grid-template-columns: 1fr 1fr 4fr 1fr 1fr 1fr 6fr 1fr 1fr 1fr 1fr 1fr 3fr 1fr 1fr 1fr 1fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
     grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
     grid-template-areas:
             "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB"

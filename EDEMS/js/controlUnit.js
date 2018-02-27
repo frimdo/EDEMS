@@ -206,6 +206,7 @@ CU.uinstr.read = function () {
 
 CU.uinstr.wrt = function () {
   global.memory[global.addressBus.dec] = global.dataBus.dec
+  global.onMemoryChange()
 }
 
 CU.uinstr.alu = function (operand) {
