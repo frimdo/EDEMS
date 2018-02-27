@@ -92,3 +92,8 @@
     float: right;
     width: 14%;
 }
+
+/*
+#scrollArea-memory, #scrollArea-microcode {
+    resize: vertical;
+}*/

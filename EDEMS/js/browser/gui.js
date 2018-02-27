@@ -55,6 +55,13 @@ gui.DrawMemoryTable = function () {
       value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
       elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
     }
+
+    $('.mem-highlighted').removeClass('mem-highlighted')
+    $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
+
+    setTimeout(function () {
+      $('#memory' + global.addressBus.dec).removeClass('mem-highlighted')
+    }, 500)
   }
 
   gui.MemoryTable = new Clusterize({
@@ -95,7 +102,8 @@ gui.DrawMicrocodeTable = function () {
     for (var i = 0; i < elements.length; i++) {
       elements.item(i).innerHTML = global.microcode[+elements.item(i).id.replace('microcode', '')]
     }
-    global.registerUPCH.onChange()
+    $('.umem-highlighted').removeClass('umem-highlighted')
+    $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
   }
 
   gui.MemoryTable = new Clusterize({
