@@ -104,3 +104,7 @@ select {
     vertical-align: middle;
     margin-bottom: 2px;
 }
+
+.table-descr {
+    background-color: #c1c1c1;
+}
