@@ -433,7 +433,14 @@ gui.DrawMicrocodeTable = function () {
     contentId: 'contentArea-microcode',
     rows_in_block: 8,
     callbacks: {
-      clusterChanged: global.onMicrocodeChange
+      clusterChanged: function () {
+        var elements = document.getElementsByClassName('microcodeBlock')
+        for (var i = 0; i < elements.length; i++) {
+          elements.item(i).innerHTML = global.microcode[+elements.item(i).id.replace('microcode', '')]
+        }
+        $('.umem-highlighted').removeClass('umem-highlighted')
+        $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+      }
     }
   })
 
