@@ -50,7 +50,11 @@ select {
     width: 100%;
 }
 
-.highlighted, .umem-highlighted, .mem-highlighted {
+.mem-highlighted {
+    background-color: #8cc18d;
+}
+
+.highlighted, .umem-highlighted {
     color: #cccccc;
     background-color: #707070 !important;
 }

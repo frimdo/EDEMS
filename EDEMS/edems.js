@@ -398,6 +398,8 @@ gui.DrawMemoryTable = function () {
           value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
           elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
         }
+        $('.mem-highlighted').removeClass('mem-highlighted')
+        $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
       }
     }
   })
@@ -423,15 +425,6 @@ gui.DrawMicrocodeTable = function () {
       newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock">...</div></th>'
     }
     gui.microcodeData.push(newline + '</tr>')
-  }
-
-  global.onMicrocodeChange = function () {
-    var elements = document.getElementsByClassName('microcodeBlock')
-    for (var i = 0; i < elements.length; i++) {
-      elements.item(i).innerHTML = global.microcode[+elements.item(i).id.replace('microcode', '')]
-    }
-    $('.umem-highlighted').removeClass('umem-highlighted')
-    $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
   }
 
   gui.MemoryTable = new Clusterize({
@@ -988,6 +981,7 @@ gui.onclickSetup = function () {
       }
       $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
       $('#svr').removeClass('svrSelected')
+      $(this).addClass('selectedRegister')
     }
   }
 
@@ -1016,6 +1010,8 @@ gui.onclickSetup = function () {
         )
         $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
         $('#svr').removeClass('svrSelected')
+        $(this).addClass('selectedPair')
+        $(this).siblings().addClass('selectedRegister')
       }
     }
   }
@@ -1063,6 +1059,15 @@ gui.onclickSetup = function () {
 }
 
 gui.onChangeSetup = function () {
+  global.onMicrocodeChange = function () {
+    var elements = document.getElementsByClassName('microcodeBlock')
+    for (var i = 0; i < elements.length; i++) {
+      elements.item(i).innerHTML = global.microcode[+elements.item(i).id.replace('microcode', '')]
+    }
+    $('.umem-highlighted').removeClass('umem-highlighted')
+    $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+  }
+
   global.onMemoryChange = function () {
 
     // Scroll to changed element
@@ -1081,11 +1086,11 @@ gui.onChangeSetup = function () {
 
     // Highlight changed element
     setTimeout(function () { // Delay for clusterize to render object
-      $('.mem-highlighted').removeClass('mem-highlighted')
-      $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
+      $('.highlighted').removeClass('highlighted')
+      $('#memory' + global.addressBus.dec).addClass('highlighted')
     }, 50)
     setTimeout(function () {
-      $('#memory' + global.addressBus.dec).removeClass('mem-highlighted')
+      $('#memory' + global.addressBus.dec).removeClass('highlighted')
     }, 500)
 
 
@@ -1224,6 +1229,8 @@ gui.onChangeSetup = function () {
     setTimeout(function () {
       $('#addressBus').removeClass('highlighted')
     }, 500)
+    $('.mem-highlighted').removeClass('mem-highlighted')
+    $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
   }
 
   global.dataBus.onChange = function () {
