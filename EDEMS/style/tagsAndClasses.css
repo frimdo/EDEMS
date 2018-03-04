@@ -110,5 +110,11 @@ select {
 }
 
 .svrSelected {
-    background-color: #00ffff;
+    background-color: #5aa2a0;
+}
+
+.hidden {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
 }

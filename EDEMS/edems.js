@@ -1043,6 +1043,23 @@ gui.onclickSetup = function () {
   document.getElementById('AL2').onclick = function () {
     alu.doOperation(document.getElementById('aluSelect').selectedIndex + 1)
   }
+
+  document.getElementById('advanced').onclick = function () {
+    global.advanced = !global.advanced
+    if(global.advanced){
+      $('#body-grid').addClass('advanced')
+      $('#controlUnit-grid').removeClass('hidden')
+      $('#C2D').removeClass('hidden')
+      $('#M2C').removeClass('hidden')
+    } else {
+      $('#body-grid').removeClass('advanced')
+      $('#controlUnit-grid').addClass('hidden')
+      $('#C2D').addClass('hidden')
+      $('#M2C').addClass('hidden')
+    }
+  }
+  global.advanced = true
+  document.getElementById('advanced').onclick()
 }
 
 gui.onChangeSetup = function () {
