@@ -72,37 +72,37 @@ global.register = function (x) {
   } else if (typeof(x) === 'string'){
     switch (x) {
       case 'B':
-        return 0
+        return '0'
       case 'D':
-        return 1
+        return '1'
       case 'S':
-        return 2
+        return '2'
       case 'C':
-        return 3
+        return '3'
       case 'E':
-        return 4
+        return '4'
       case 'P':
-        return 5
+        return '5'
       case 'A':
-        return 6
+        return '6'
       case 'F':
-        return 7
+        return '7'
       case 'PCH':
-        return 8
+        return '8'
       case 'PCL':
-        return 9
+        return '9'
       case 'TMP0':
-        return 10
+        return 'A'
       case 'TMP1':
-        return 11
+        return 'B'
       case 'UPCH':
-        return 12
+        return 'C'
       case 'OP':
-        return 13
+        return 'D'
       case 'TMP2':
-        return 14
+        return 'E'
       case 'UPCL':
-        return 15
+        return 'F'
       default:
         throw new RangeError('There is no register with name: ' + x)
     }

@@ -454,101 +454,13 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.includes('F-pair')) {
-      CU.uinstr.decw('7')
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
+      CU.uinstr.decb(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
-    if (array.includes('B-pair')) {
-      CU.uinstr.decw('0')
-      return
-    }
-    if (array.includes('D-pair')) {
-      CU.uinstr.decw('1')
-      return
-    }
-    if (array.includes('S-pair')) {
-      CU.uinstr.decw('2')
-      return
-    }
-    if (array.includes('PCH-pair')) {
-      CU.uinstr.decw('8')
-      return
-    }
-    if (array.includes('TMP0-pair')) {
-      CU.uinstr.decw('A')
-      return
-    }
-    if (array.includes('TMP1-pair')) {
-      CU.uinstr.decw('B')
-      return
-    }
-    if (array.includes('UPCH-pair')) {
-      CU.uinstr.decw('C')
-      return
-    }
-    if (array.includes('A-button')) {
-      CU.uinstr.decb('6')
-      return
-    }
-    if (array.includes('F-button')) {
-      CU.uinstr.decb('7')
-      return
-    }
-    if (array.includes('C-button')) {
-      CU.uinstr.decb('3')
-      return
-    }
-    if (array.includes('B-button')) {
-      CU.uinstr.decb('0')
-      return
-    }
-    if (array.includes('E-button')) {
-      CU.uinstr.decb('4')
-      return
-    }
-    if (array.includes('D-button')) {
-      CU.uinstr.decb('1')
-      return
-    }
-    if (array.includes('P-button')) {
-      CU.uinstr.decb('5')
-      return
-    }
-    if (array.includes('S-button')) {
-      CU.uinstr.decb('2')
-      return
-    }
-    if (array.includes('PCL-button')) {
-      CU.uinstr.decb('9')
-      return
-    }
-    if (array.includes('PCH-button')) {
-      CU.uinstr.decb('8')
-      return
-    }
-    if (array.includes('OP-button')) {
-      CU.uinstr.decb('D')
-      return
-    }
-    if (array.includes('TMP0-button')) {
-      CU.uinstr.decb('A')
-      return
-    }
-    if (array.includes('TMP2-button')) {
-      CU.uinstr.decb('E')
-      return
-    }
-    if (array.includes('TMP1-button')) {
-      CU.uinstr.decb('B')
-      return
-    }
-    if (array.includes('UPCL-button')) {
-      CU.uinstr.decb('F')
-      return
-    }
-    if (array.includes('UPCH-button')) {
-      CU.uinstr.decb('C')
-    }
+    CU.uinstr.decw(global.register(pair.id.split('-')[0]))
+    return
   }
 
   document.getElementById('incr').onclick = function () {
@@ -557,101 +469,13 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.includes('F-pair')) {
-      CU.uinstr.incw('7')
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
+      CU.uinstr.incb(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
-    if (array.includes('B-pair')) {
-      CU.uinstr.incw('0')
-      return
-    }
-    if (array.includes('D-pair')) {
-      CU.uinstr.incw('1')
-      return
-    }
-    if (array.includes('S-pair')) {
-      CU.uinstr.incw('2')
-      return
-    }
-    if (array.includes('PCH-pair')) {
-      CU.uinstr.incw('8')
-      return
-    }
-    if (array.includes('TMP0-pair')) {
-      CU.uinstr.incw('A')
-      return
-    }
-    if (array.includes('TMP1-pair')) {
-      CU.uinstr.incw('B')
-      return
-    }
-    if (array.includes('UPCH-pair')) {
-      CU.uinstr.incw('C')
-      return
-    }
-    if (array.includes('A-button')) {
-      CU.uinstr.incb('6')
-      return
-    }
-    if (array.includes('F-button')) {
-      CU.uinstr.incb('7')
-      return
-    }
-    if (array.includes('C-button')) {
-      CU.uinstr.incb('3')
-      return
-    }
-    if (array.includes('B-button')) {
-      CU.uinstr.incb('0')
-      return
-    }
-    if (array.includes('E-button')) {
-      CU.uinstr.incb('4')
-      return
-    }
-    if (array.includes('D-button')) {
-      CU.uinstr.incb('1')
-      return
-    }
-    if (array.includes('P-button')) {
-      CU.uinstr.incb('5')
-      return
-    }
-    if (array.includes('S-button')) {
-      CU.uinstr.incb('2')
-      return
-    }
-    if (array.includes('PCL-button')) {
-      CU.uinstr.incb('9')
-      return
-    }
-    if (array.includes('PCH-button')) {
-      CU.uinstr.incb('8')
-      return
-    }
-    if (array.includes('OP-button')) {
-      CU.uinstr.incb('D')
-      return
-    }
-    if (array.includes('TMP0-button')) {
-      CU.uinstr.incb('A')
-      return
-    }
-    if (array.includes('TMP2-button')) {
-      CU.uinstr.incb('E')
-      return
-    }
-    if (array.includes('TMP1-button')) {
-      CU.uinstr.incb('B')
-      return
-    }
-    if (array.includes('UPCL-button')) {
-      CU.uinstr.incb('F')
-      return
-    }
-    if (array.includes('UPCH-button')) {
-      CU.uinstr.incb('C')
-    }
+    CU.uinstr.incw(global.register(pair.id.split('-')[0]))
+    return
   }
 
   document.getElementById('D2R').onclick = function () {
@@ -660,72 +484,12 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.join('-').split('-').includes('pair')) {
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
+      CU.uinstr.db2r(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
-    if (array.includes('A-button')) {
-      CU.uinstr.db2r('6')
-      return
-    }
-    if (array.includes('F-button')) {
-      CU.uinstr.db2r('7')
-      return
-    }
-    if (array.includes('C-button')) {
-      CU.uinstr.db2r('3')
-      return
-    }
-    if (array.includes('B-button')) {
-      CU.uinstr.db2r('0')
-      return
-    }
-    if (array.includes('E-button')) {
-      CU.uinstr.db2r('4')
-      return
-    }
-    if (array.includes('D-button')) {
-      CU.uinstr.db2r('1')
-      return
-    }
-    if (array.includes('P-button')) {
-      CU.uinstr.db2r('5')
-      return
-    }
-    if (array.includes('S-button')) {
-      CU.uinstr.db2r('2')
-      return
-    }
-    if (array.includes('PCL-button')) {
-      CU.uinstr.db2r('9')
-      return
-    }
-    if (array.includes('PCH-button')) {
-      CU.uinstr.db2r('8')
-      return
-    }
-    if (array.includes('OP-button')) {
-      CU.uinstr.db2r('D')
-      return
-    }
-    if (array.includes('TMP0-button')) {
-      CU.uinstr.db2r('A')
-      return
-    }
-    if (array.includes('TMP2-button')) {
-      CU.uinstr.db2r('E')
-      return
-    }
-    if (array.includes('TMP1-button')) {
-      CU.uinstr.db2r('B')
-      return
-    }
-    if (array.includes('UPCL-button')) {
-      CU.uinstr.db2r('F')
-      return
-    }
-    if (array.includes('UPCH-button')) {
-      CU.uinstr.db2r('C')
-    }
+    return
   }
 
   document.getElementById('R2D').onclick = function () {
@@ -734,72 +498,12 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.join('-').split('-').includes('pair')) {
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
+      CU.uinstr.r2db(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
-    if (array.includes('A-button')) {
-      CU.uinstr.r2db('6')
-      return
-    }
-    if (array.includes('F-button')) {
-      CU.uinstr.r2db('7')
-      return
-    }
-    if (array.includes('C-button')) {
-      CU.uinstr.r2db('3')
-      return
-    }
-    if (array.includes('B-button')) {
-      CU.uinstr.r2db('0')
-      return
-    }
-    if (array.includes('E-button')) {
-      CU.uinstr.r2db('4')
-      return
-    }
-    if (array.includes('D-button')) {
-      CU.uinstr.r2db('1')
-      return
-    }
-    if (array.includes('P-button')) {
-      CU.uinstr.r2db('5')
-      return
-    }
-    if (array.includes('S-button')) {
-      CU.uinstr.r2db('2')
-      return
-    }
-    if (array.includes('PCL-button')) {
-      CU.uinstr.r2db('9')
-      return
-    }
-    if (array.includes('PCH-button')) {
-      CU.uinstr.r2db('8')
-      return
-    }
-    if (array.includes('OP-button')) {
-      CU.uinstr.r2db('D')
-      return
-    }
-    if (array.includes('TMP0-button')) {
-      CU.uinstr.r2db('A')
-      return
-    }
-    if (array.includes('TMP2-button')) {
-      CU.uinstr.r2db('E')
-      return
-    }
-    if (array.includes('TMP1-button')) {
-      CU.uinstr.r2db('B')
-      return
-    }
-    if (array.includes('UPCL-button')) {
-      CU.uinstr.r2db('F')
-      return
-    }
-    if (array.includes('UPCH-button')) {
-      CU.uinstr.r2db('C')
-    }
+    return
   }
 
   document.getElementById('W2A').onclick = function () {
@@ -808,37 +512,13 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.includes('F-pair')) {
-      CU.uinstr.ab2w('7')
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
+      CU.uinstr.r2ab(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
-    if (array.includes('B-pair')) {
-      CU.uinstr.ab2w('0')
-      return
-    }
-    if (array.includes('D-pair')) {
-      CU.uinstr.ab2w('1')
-      return
-    }
-    if (array.includes('S-pair')) {
-      CU.uinstr.ab2w('2')
-      return
-    }
-    if (array.includes('PCH-pair')) {
-      CU.uinstr.ab2w('8')
-      return
-    }
-    if (array.includes('TMP0-pair')) {
-      CU.uinstr.ab2w('A')
-      return
-    }
-    if (array.includes('TMP1-pair')) {
-      CU.uinstr.ab2w('B')
-      return
-    }
-    if (array.includes('UPCH-pair')) {
-      CU.uinstr.ab2w('C')
-    }
+    CU.uinstr.w2ab(global.register(pair.id.split('-')[0]))
+    return
   }
 
   document.getElementById('A2W').onclick = function () {
@@ -847,106 +527,17 @@ gui.onclickSetup = function () {
     for (var i = 0; i < elements.length; i++) {
       array.push(elements[i].id)
     }
-    if (array.includes('F-pair')) {
-      CU.uinstr.w2ab('7')
+    var pair = document.getElementsByClassName('selectedPair')[0]
+    if (pair === undefined){
       return
     }
-    if (array.includes('B-pair')) {
-      CU.uinstr.w2ab('0')
-      return
-    }
-    if (array.includes('D-pair')) {
-      CU.uinstr.w2ab('1')
-      return
-    }
-    if (array.includes('S-pair')) {
-      CU.uinstr.w2ab('2')
-      return
-    }
-    if (array.includes('PCH-pair')) {
-      CU.uinstr.w2ab('8')
-      return
-    }
-    if (array.includes('TMP0-pair')) {
-      CU.uinstr.w2ab('A')
-      return
-    }
-    if (array.includes('TMP1-pair')) {
-      CU.uinstr.w2ab('B')
-      return
-    }
-    if (array.includes('UPCH-pair')) {
-      CU.uinstr.w2ab('C')
-      return
-    }
-    if (array.includes('A-button')) {
-      CU.uinstr.r2ab('6')
-      return
-    }
-    if (array.includes('F-button')) {
-      CU.uinstr.r2ab('7')
-      return
-    }
-    if (array.includes('C-button')) {
-      CU.uinstr.r2ab('3')
-      return
-    }
-    if (array.includes('B-button')) {
-      CU.uinstr.r2ab('0')
-      return
-    }
-    if (array.includes('E-button')) {
-      CU.uinstr.r2ab('4')
-      return
-    }
-    if (array.includes('D-button')) {
-      CU.uinstr.r2ab('1')
-      return
-    }
-    if (array.includes('P-button')) {
-      CU.uinstr.r2ab('5')
-      return
-    }
-    if (array.includes('S-button')) {
-      CU.uinstr.r2ab('2')
-      return
-    }
-    if (array.includes('PCL-button')) {
-      CU.uinstr.r2ab('9')
-      return
-    }
-    if (array.includes('PCH-button')) {
-      CU.uinstr.r2ab('8')
-      return
-    }
-    if (array.includes('OP-button')) {
-      CU.uinstr.r2ab('D')
-      return
-    }
-    if (array.includes('TMP0-button')) {
-      CU.uinstr.r2ab('A')
-      return
-    }
-    if (array.includes('TMP2-button')) {
-      CU.uinstr.r2ab('E')
-      return
-    }
-    if (array.includes('TMP1-button')) {
-      CU.uinstr.r2ab('B')
-      return
-    }
-    if (array.includes('UPCL-button')) {
-      CU.uinstr.r2ab('F')
-      return
-    }
-    if (array.includes('UPCH-button')) {
-      CU.uinstr.r2ab('C')
-    }
+    CU.uinstr.ab2w(global.register(pair.id.split('-')[0]))
+    return
   }
 
   document.getElementById('svr').onclick = function () {
-    if (document.getElementsByClassName('selectedRegister')[0] === undefined &&
-      document.getElementsByClassName('selectedPair')[0] === undefined) {
+    if (document.getElementsByClassName('selectedRegister')[0] === undefined
+      && document.getElementsByClassName('selectedPair')[0] === undefined) {
       return
     }
     var svr = $('#svr')
@@ -1003,7 +594,6 @@ gui.onclickSetup = function () {
   document.getElementById('UPCH-pair').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
       $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
-      console.log('pair')
       $(this).addClass('selectedPair')
       $(this).siblings().addClass('selectedRegister')
    } else {                                 // SVR button pressed
@@ -1261,7 +851,6 @@ gui.onChangeSetup = function () {
       try {
         global.dataBus.val = tmp
       } catch (x) {
-        console.log(x)
         global.dataBus.val = global.dataBus.dec
       }
       return
@@ -2288,6 +1877,7 @@ CU.uinstr.decb = function (operand) {
 }
 
 CU.uinstr.decw = function (operand) {
+  console.log("decw: ", operand)
   operand = hex2num(operand)
   if(operand === 13){
     global.register(global.registerOP.dec).decrPair()
@@ -2459,37 +2049,37 @@ global.register = function (x) {
   } else if (typeof(x) === 'string'){
     switch (x) {
       case 'B':
-        return 0
+        return '0'
       case 'D':
-        return 1
+        return '1'
       case 'S':
-        return 2
+        return '2'
       case 'C':
-        return 3
+        return '3'
       case 'E':
-        return 4
+        return '4'
       case 'P':
-        return 5
+        return '5'
       case 'A':
-        return 6
+        return '6'
       case 'F':
-        return 7
+        return '7'
       case 'PCH':
-        return 8
+        return '8'
       case 'PCL':
-        return 9
+        return '9'
       case 'TMP0':
-        return 10
+        return 'A'
       case 'TMP1':
-        return 11
+        return 'B'
       case 'UPCH':
-        return 12
+        return 'C'
       case 'OP':
-        return 13
+        return 'D'
       case 'TMP2':
-        return 14
+        return 'E'
       case 'UPCL':
-        return 15
+        return 'F'
       default:
         throw new RangeError('There is no register with name: ' + x)
     }

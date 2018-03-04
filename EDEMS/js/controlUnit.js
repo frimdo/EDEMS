@@ -291,6 +291,7 @@ CU.uinstr.decb = function (operand) {
 }
 
 CU.uinstr.decw = function (operand) {
+  console.log("decw: ", operand)
   operand = hex2num(operand)
   if(operand === 13){
     global.register(global.registerOP.dec).decrPair()

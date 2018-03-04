@@ -16,7 +16,7 @@
             "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
             "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
             "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
-            ".   .   .   A2M .   .   .   .   .   .   .   A2W .   W2A .   .   .   .   .  "
+            ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
             "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
 }
 
@@ -38,7 +38,7 @@
             "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
             "MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU"
             "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .  "
-            ".   .   .   A2M .   .   .   A2W .   W2A .   .   .   .   .  "
+            ".   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .  "
             "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
 }
 
