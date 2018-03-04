@@ -274,7 +274,7 @@ gui.onclickSetup = function () {
   document.getElementById('UPCH-button').onclick =
   document.getElementById('UPCL-button').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
       $(this).addClass('selectedRegister')
    } else {                                 // SVR button pressed
       var pair = document.getElementsByClassName('selectedPair')[0]
@@ -286,7 +286,7 @@ gui.onclickSetup = function () {
           global.register(this.id.split('-')[0])
         )
       }
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
       $('#svr').removeClass('svrSelected')
       $(this).addClass('selectedRegister')
     }
@@ -302,7 +302,7 @@ gui.onclickSetup = function () {
   document.getElementById('TMP1-pair').onclick =
   document.getElementById('UPCH-pair').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
       $(this).addClass('selectedPair')
       $(this).siblings().addClass('selectedRegister')
    } else {                                 // SVR button pressed
@@ -314,7 +314,7 @@ gui.onclickSetup = function () {
           global.register(document.getElementsByClassName('selectedPair')[0].id.split('-')[0]),
           global.register(this.id.split('-')[0])
         )
-        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
+        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
         $('#svr').removeClass('svrSelected')
         $(this).addClass('selectedPair')
         $(this).siblings().addClass('selectedRegister')
