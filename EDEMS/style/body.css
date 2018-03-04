@@ -1,4 +1,4 @@
-#body-grid {
+#body-grid.advanced {
     border: 0;
     grid-area: body-grid;
     /*background-color: #a5c17d;*/
@@ -18,6 +18,28 @@
             "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
             ".   .   .   A2M .   .   .   .   .   .   .   A2W .   W2A .   .   .   .   .  "
             "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+}
+
+#body-grid:not(.advanced) {
+    border: 0;
+    grid-area: body-grid;
+    /*background-color: #a5c17d;*/
+
+    display: grid;
+    grid-row-gap: 3px;
+    grid-column-gap: 3px;
+    grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
+    grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+    grid-template-areas:
+            "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB"
+            ".   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2"
+            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU"
+            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .  "
+            ".   .   .   A2M .   .   .   A2W .   W2A .   .   .   .   .  "
+            "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
 }
 
 #externalDataBus {

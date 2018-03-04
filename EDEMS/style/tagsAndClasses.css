@@ -65,7 +65,7 @@ select {
     font-size: 150%
 }
 
-.selectedRegister {
+.selectedRegister, .selectedPair {
     background-color: #a5c17d;
 }
 
@@ -107,4 +107,8 @@ select {
 
 .table-descr {
     background-color: #c1c1c1;
+}
+
+.svrSelected {
+    background-color: #00ffff;
 }
