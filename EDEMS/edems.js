@@ -449,6 +449,9 @@ gui.DrawMicrocodeTable = function () {
 
 gui.onclickSetup = function () {
   document.getElementById('decr').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -464,6 +467,9 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('incr').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -479,6 +485,10 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('D2R').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      CU.uinstr.db2o()
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -493,6 +503,10 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('R2D').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      CU.uinstr.o2db()
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -507,6 +521,9 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('W2A').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -522,6 +539,9 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('A2W').onclick = function () {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+      return
+    }
     var array = []
     var elements = document.getElementsByClassName('selectedRegister')
     for (var i = 0; i < elements.length; i++) {
@@ -536,8 +556,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('svr').onclick = function () {
-    if (document.getElementsByClassName('selectedRegister')[0] === undefined
-      && document.getElementsByClassName('selectedPair')[0] === undefined) {
+    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
       return
     }
     var svr = $('#svr')
@@ -545,6 +564,32 @@ gui.onclickSetup = function () {
       svr.removeClass('svrSelected')
     } else {
       svr.addClass('svrSelected')
+    }
+  }
+
+  document.getElementById('OP-button').onclick = function () {
+    if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
+      if ($(this).hasClass('selectedRegister')){
+        $(this).removeClass('selectedRegister').addClass('OPSelected')
+        return
+      } else if ($(this).hasClass('OPSelected')){
+        $(this).removeClass('OPSelected').addClass('selectedRegister')
+      }
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+      $(this).addClass('selectedRegister')
+    } else {                                 // SVR button pressed
+      var pair = document.getElementsByClassName('selectedPair')[0]
+      if (pair !== undefined) {
+        return
+      } else {
+        CU.uinstr.svr(
+          global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]),
+          global.register(this.id.split('-')[0])
+        )
+      }
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+      $('#svr').removeClass('svrSelected')
+      $(this).addClass('selectedRegister')
     }
   }
 
@@ -559,7 +604,6 @@ gui.onclickSetup = function () {
   document.getElementById('PCH-button').onclick =
   document.getElementById('PCL-button').onclick =
   document.getElementById('TMP0-button').onclick =
-  document.getElementById('OP-button').onclick =
   document.getElementById('TMP1-button').onclick =
   document.getElementById('TMP2-button').onclick =
   document.getElementById('UPCH-button').onclick =
@@ -577,7 +621,7 @@ gui.onclickSetup = function () {
           global.register(this.id.split('-')[0])
         )
       }
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
       $('#svr').removeClass('svrSelected')
       $(this).addClass('selectedRegister')
     }
@@ -605,7 +649,7 @@ gui.onclickSetup = function () {
           global.register(document.getElementsByClassName('selectedPair')[0].id.split('-')[0]),
           global.register(this.id.split('-')[0])
         )
-        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
         $('#svr').removeClass('svrSelected')
         $(this).addClass('selectedPair')
         $(this).siblings().addClass('selectedRegister')

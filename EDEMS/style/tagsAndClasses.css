@@ -117,6 +117,10 @@ select {
     background-color: #5aa2a0;
 }
 
+.OPSelected {
+    background-color: #a38ac1;
+}
+
 .hidden {
     position: absolute !important;
     top: -9999px !important;
