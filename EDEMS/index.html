@@ -63,8 +63,7 @@
                 Memory
             </div>
             <div class="insideBlock block">
-                <div id="memory-editor" class="memory-editor block">
-.model small
+                <div id="memory-editor" class="block">.model small
 .stack 100h
 
 .data
@@ -98,6 +97,22 @@ end start
                 Control Unit
             </div>
             <div class="insideBlock block">
+                <div id="microcode-editor" class="block">.model small
+.stack 100h
+
+.data
+msg	db	'Hello world!$'
+
+.code
+start:
+mov	ah, 09h   ; Display the message
+lea	dx, msg
+int	21h
+mov	ax, 4C00h  ; Terminate the executable
+int	21h
+
+end start
+                </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll block">
                     <table>
                         <tbody id="contentArea-microcode" class="clusterize-content">

@@ -412,9 +412,15 @@ gui.DrawMemoryTable = function () {
 }
 
 gui.DrawMemoryEditor = function () {
-  global.editor = ace.edit('memory-editor');
-  global.editor.getSession().setMode('ace/mode/assembly_x86');
-  global.editor.setTheme('ace/theme/dreamweaver');
+  global.memoryEditor = ace.edit('memory-editor');
+  global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
+  global.memoryEditor.setTheme('ace/theme/dreamweaver');
+}
+
+gui.DrawMicrocodeEditor = function () {
+  global.microcodeEditor = ace.edit('microcode-editor');
+  global.microcodeEditor.getSession().setMode('ace/mode/assembly_x86');
+  global.microcodeEditor.setTheme('ace/theme/dreamweaver');
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -2186,6 +2192,7 @@ $(document).ready(function () {
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
+  gui.DrawMicrocodeEditor()
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()

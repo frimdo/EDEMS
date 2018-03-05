@@ -33,6 +33,7 @@ $(document).ready(function () {
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
+  gui.DrawMicrocodeEditor()
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()

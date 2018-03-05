@@ -125,3 +125,8 @@ select {
     top: -9999px !important;
     left: -9999px !important;
 }
+
+.ace_editor {
+    font-family: inherit !important;
+    font-size: 16px !important;
+}

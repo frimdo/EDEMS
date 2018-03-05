@@ -1,6 +1,7 @@
 #body-grid.advanced {
     border: 0;
     grid-area: body-grid;
+    max-height: 90vh;
     /*background-color: #a5c17d;*/
 
     display: grid;
@@ -120,12 +121,8 @@
     resize: vertical;
 }*/
 
-#memory-editor {
+#memory-editor, #microcode-editor {
     height: 40vh;
     margin-bottom: 2px;
 }
 
-.ace_editor {
-    font-family: inherit !important;
-    font-size: 16px !important;
-}
