@@ -1,6 +1,10 @@
 var $ = require('jquery')
 var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
+var ace = require('brace')
+require('brace/mode/assembly_x86')
+require('brace/theme/dreamweaver')
+//var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
 
@@ -33,17 +37,17 @@ gui.DrawMemoryTable = function () {
   gui.memoryData = []
   
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr">0x</div></th>'
+  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-memory' + i + ' class="table-descr">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-memory' + i + ' class="table-descr block">0' + i + '</div></th>'
   }
   gui.memoryData.push(newline + '</tr>')
 
   // Creating other rows
     for (i = 0; i < (global.memory.length); i += 8) {
-    newline = '<th><div id=y-offset-memory' + i + ' class="table-descr">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-memory' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock">...</div></th>'
+      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock block">...</div></th>'
     }
     gui.memoryData.push(newline + '</tr>')
   }
@@ -72,22 +76,28 @@ gui.DrawMemoryTable = function () {
   gui.MemoryTable.refresh(gui.memoryData)
 }
 
+gui.DrawMemoryEditor = function () {
+  global.editor = ace.edit('memory-editor');
+  global.editor.getSession().setMode('ace/mode/assembly_x86');
+  global.editor.setTheme('ace/theme/dreamweaver');
+}
+
 gui.DrawMicrocodeTable = function () {
 
   gui.microcodeData = []
 
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr">0x</div></th>'
+  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="table-descr">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="table-descr block">0' + i + '</div></th>'
   }
   gui.microcodeData.push(newline + '</tr>')
 
   // Creating other rows
   for (i = 0; i < (global.microcode.length); i += 8) {
-    newline = '<th><div id=y-offset-microcode' + i + ' class="table-descr">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-microcode' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock">...</div></th>'
+      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock block">...</div></th>'
     }
     gui.microcodeData.push(newline + '</tr>')
   }

@@ -6,6 +6,7 @@ var CU = require('./controlUnit.js')
 var clock = require('./clock.js')
 var alu = require('./alu.js')
 
+
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
 
 $(document).ready(function () {
@@ -26,12 +27,17 @@ $(document).ready(function () {
   $('#microcode2').text(global.microcode[2] = '79A')
   $('#microcode3').text(global.microcode[3] = '503')
   $('#microcode4').text(global.microcode[4] = '001')
-  $('#microcode5').text(global.microcode[5] = '797')
+  $('#microcode5').text(global.microcode[5] = '796')
   $('#microcode6').text(global.microcode[6] = '804')
 
   gui.DrawMemoryTable()
+  gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
 })
+
+window.onbeforeunload = function() {
+  LS.storeGlobals()
+}

@@ -12,21 +12,21 @@
 
     <div id="header-grid">
 
-        <div id="buttons-grid">
+        <div id="buttons-grid"  class="block">
             <input type="file" id="file" name="file" enctype="multipart/form-data"/>
             <button type="button" id="import">Import</button>
             <button type="button" id="export">Export</button>
             <button type="button" id="advanced">Advanced</button>
         </div>
 
-        <div id="clock-grid">
+        <div id="clock-grid"  class="block">
             <button type="button" id="ustep-btn">uStep</button>
             <button type="button" id="urun-btn">uRun</button>
             <button type="button" id="stop-btn">Stop</button>
             f: <input type="number" id="freq" title="freq" min="1" max="500"> Hz
         </div>
 
-        <div id="logo">
+        <div id="logo"  class="block">
             EDEMS
         </div>
     </div>
@@ -48,22 +48,39 @@
         <button type="button" class="flowButton" id="RAL" disabled>➡</button>
         <button type="button" class="flowButton" id="ALR" disabled>⬅</button>
 
-        <div id="externalDataBus">
+        <div id="externalDataBus" class="block">
             External Data Bus
-            <div id="EdataBus">placeholder</div>
+            <div id="EdataBus" class="block">placeholder</div>
         </div>
 
-        <div id="internalDataBus">
+        <div id="internalDataBus" class="block">
             Internal Data Bus
             <input type="text" name="IdataBus" id="IdataBus" title="IdataBus">
         </div>
 
-        <div id="memory-grid">
-            <div class="nameBlock">
+        <div id="memory-grid" class="block">
+            <div class="nameBlock block">
                 Memory
             </div>
-            <div class="insideBlock">
-                <div id="scrollArea-memory" class="clusterize-scroll">
+            <div class="insideBlock block">
+                <div id="memory-editor" class="memory-editor block">
+.model small
+.stack 100h
+
+.data
+msg	db	'Hello world!$'
+
+.code
+start:
+mov	ah, 09h   ; Display the message
+lea	dx, msg
+int	21h
+mov	ax, 4C00h  ; Terminate the executable
+int	21h
+
+end start
+                </div>
+                <div id="scrollArea-memory" class="clusterize-scroll block">
                     <table>
                         <tbody id="contentArea-memory" class="clusterize-content">
                         <tr class="clusterize-no-data">
@@ -76,12 +93,12 @@
 
         </div>
 
-        <div id="controlUnit-grid">
-            <div class="nameBlock">
+        <div id="controlUnit-grid" class="block">
+            <div class="nameBlock block">
                 Control Unit
             </div>
-            <div class="insideBlock">
-                <div id="scrollArea-microcode" class="clusterize-scroll">
+            <div class="insideBlock block">
+                <div id="scrollArea-microcode" class="clusterize-scroll block">
                     <table>
                         <tbody id="contentArea-microcode" class="clusterize-content">
                         <tr class="clusterize-no-data">
@@ -93,61 +110,61 @@
             </div>
         </div>
 
-        <div id=registers-grid>
-            <div class="nameBlock">Registers
+        <div id=registers-grid class="block">
+            <div class="nameBlock block">Registers
                 <button type="button" id="incr">+1</button>
                 <button type="button" id="decr">-1</button>
                 <button type="button" id="svr">🔃</button>
             </div>
-            <div class="insideBlock">
+            <div class="insideBlock block">
                 <div class="pairBlock">
                     <button type="button" id="F-pair" class="pairButton"></button>
-                    <button type="button" id="F-button" class="registerButton">F <span>[7]</span><div id="registerF">placeholder</div></button>
-                    <button type="button" id="A-button" class="registerButton selectedRegister">A <span>[6]</span><div id="registerA">placeholder</div></button>
+                    <button type="button" id="F-button" class="registerButton">F <span>[7]</span><div class="block" id="registerF">placeholder</div></button>
+                    <button type="button" id="A-button" class="registerButton selectedRegister">A <span>[6]</span><div class="block" id="registerA">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="B-pair" class="pairButton"></button>
-                    <button type="button" id="B-button" class="registerButton">B <span>[0]</span><div id="registerB">placeholder</div></button>
-                    <button type="button" id="C-button" class="registerButton">C <span>[3]</span><div id="registerC">placeholder</div></button>
+                    <button type="button" id="B-button" class="registerButton">B <span>[0]</span><div class="block" id="registerB">placeholder</div></button>
+                    <button type="button" id="C-button" class="registerButton">C <span>[3]</span><div class="block" id="registerC">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="D-pair" class="pairButton"></button>
-                    <button type="button" id="D-button" class="registerButton">D <span>[1]</span><div id="registerD">placeholder</div></button>
-                    <button type="button" id="E-button" class="registerButton">E <span>[4]</span><div id="registerE">placeholder</div></button>
+                    <button type="button" id="D-button" class="registerButton">D <span>[1]</span><div class="block" id="registerD">placeholder</div></button>
+                    <button type="button" id="E-button" class="registerButton">E <span>[4]</span><div class="block" id="registerE">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="S-pair" class="pairButton"></button>
-                    <button type="button" id="S-button" class="registerButton">S <span>[2]</span><div id="registerS">placeholder</div></button>
-                    <button type="button" id="P-button" class="registerButton">P <span>[5]</span><div id="registerP">placeholder</div></button>
+                    <button type="button" id="S-button" class="registerButton">S <span>[2]</span><div class="block" id="registerS">placeholder</div></button>
+                    <button type="button" id="P-button" class="registerButton">P <span>[5]</span><div class="block" id="registerP">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="PCH-pair" class="pairButton"></button>
-                    <button type="button" id="PCH-button" class="registerButton">PCH <span>[8]</span><div id="registerPCH">placeholder</div></button>
-                    <button type="button" id="PCL-button" class="registerButton">PCL <span>[9]</span><div id="registerPCL">placeholder</div></button>
+                    <button type="button" id="PCH-button" class="registerButton">PCH <span>[8]</span><div class="block" id="registerPCH">placeholder</div></button>
+                    <button type="button" id="PCL-button" class="registerButton">PCL <span>[9]</span><div class="block" id="registerPCL">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="TMP0-pair" class="pairButton"></button>
-                    <button type="button" id="TMP0-button" class="registerButton">TMP0 <span>[10]</span><div id="registerTMP0">placeholder</div></button>
-                    <button type="button" id="OP-button" class="registerButton">OP <span>[13]</span><div id="registerOP">placeholder</div></button>
+                    <button type="button" id="TMP0-button" class="registerButton">TMP0 <span>[10]</span><div class="block" id="registerTMP0">placeholder</div></button>
+                    <button type="button" id="OP-button" class="registerButton">OP <span>[13]</span><div class="block" id="registerOP">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="TMP1-pair" class="pairButton"></button>
-                    <button type="button" id="TMP1-button" class="registerButton">TMP1 <span>[11]</span><div id="registerTMP1">placeholder</div></button>
-                    <button type="button" id="TMP2-button" class="registerButton">TMP2 <span>[14]</span><div id="registerTMP2">placeholder</div></button>
+                    <button type="button" id="TMP1-button" class="registerButton">TMP1 <span>[11]</span><div class="block" id="registerTMP1">placeholder</div></button>
+                    <button type="button" id="TMP2-button" class="registerButton">TMP2 <span>[14]</span><div class="block" id="registerTMP2">placeholder</div></button>
                 </div>
                 <div class="pairBlock">
                     <button type="button" id="UPCH-pair" class="pairButton"></button>
-                    <button type="button" id="UPCH-button" class="registerButton">UPCH <span>[12]</span><div id="registerUPCH">placeholder</div></button>
-                    <button type="button" id="UPCL-button" class="registerButton">UPCL <span>[15]</span><div id="registerUPCL">placeholder</div></button>
+                    <button type="button" id="UPCH-button" class="registerButton">UPCH <span>[12]</span><div class="block" id="registerUPCH">placeholder</div></button>
+                    <button type="button" id="UPCL-button" class="registerButton">UPCL <span>[15]</span><div class="block" id="registerUPCL">placeholder</div></button>
                 </div>
             </div>
         </div>
 
-        <div id="alu-grid">
-            <div class="nameBlock">
+        <div id="alu-grid" class="block">
+            <div class="nameBlock block">
                 ALU
             </div>
-            <div class="insideBlock">
+            <div class="insideBlock block">
                 <select id="aluSelect">
                     <option value="1">1: add</option>
                     <option value="2">2: sub</option>
@@ -172,9 +189,9 @@
             </div>
         </div>
 
-        <div id="addressBus-grid">
+        <div id="addressBus-grid" class="block">
             Address Bus
-            <div id="addressBus">placeholder</div>
+            <div id="addressBus" class="block">placeholder</div>
         </div>
 
     </div>

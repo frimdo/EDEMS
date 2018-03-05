@@ -2,6 +2,12 @@ var global = require('../globals.js')
 
 var LS = {}
 
+LS.storeGlobals = function () {
+  LS.storeMicrocode()
+  LS.storeMemory()
+  LS.storeRegisters()
+}
+
 LS.storeMicrocode = function () {
   window.localStorage.setItem('microcode', global.microcode.toString())
 }

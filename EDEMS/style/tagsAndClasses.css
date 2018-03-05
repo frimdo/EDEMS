@@ -1,5 +1,5 @@
 * {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     color: #2d2d2d;
@@ -10,6 +10,7 @@
 
 body {
     background-color: #cccccc;
+    font-family: inherit;
 }
 
 table {
@@ -20,14 +21,16 @@ table {
 
 table, th, td {
     /* border: 1px solid black;*/
-    vertical-align: center;
+    vertical-align: middle;
     padding: 2px;
 }
 
-div, button {
-    /*-webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;*/
+div {
+    font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
+}
+
+.block, button {
+    font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
     border: 1px solid #2d2d2d;
     padding: 2px;
     text-align: center;
@@ -96,10 +99,6 @@ select {
 
 .registerButton span {
     color: #636363;
-}
-
-#body-grid div {
-    /*box-shadow: 2px 1px 3px #2d2d2d;*/
 }
 
 .nameBlock {

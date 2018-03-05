@@ -3,4 +3,5 @@
 .~*
 EDEMS/node_modules
 */.idea*
+*/.bundle.js
 
