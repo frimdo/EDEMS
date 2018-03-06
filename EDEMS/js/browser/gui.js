@@ -3,7 +3,8 @@ var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
-require('brace/theme/dreamweaver')
+require('../ace/EdemsMicrocodeAssembly')
+require('brace/theme/textmate')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
@@ -79,13 +80,13 @@ gui.DrawMemoryTable = function () {
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor');
   global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.memoryEditor.setTheme('ace/theme/dreamweaver');
+  global.memoryEditor.setTheme('ace/theme/textmate');
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor');
-  global.microcodeEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.microcodeEditor.setTheme('ace/theme/dreamweaver');
+  global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly');
+  global.microcodeEditor.setTheme('ace/theme/textmate');
 }
 
 gui.DrawMicrocodeTable = function () {

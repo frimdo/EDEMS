@@ -1,4 +1,159 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js":[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
+ace.define("ace/mode/EdemsMicrocodeAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
+
+var EdemsMicrocodeAssemblyHighlightRules = function() {
+  // regexp must not have capturing parentheses. Use (?:) instead.
+  // regexps are ordered -> the first match is used
+
+  this.$rules = { start:
+      [ { token: 'keyword.control.assembly',
+        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|HLT|READ|WRT|SETB|RETB)\\b',
+        caseInsensitive: true },
+        { token: 'variable.parameter.register.assembly',
+          regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.decimal.assembly',
+          regex: '\\b[0-9]+\\b' },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b0x[A-F0-9]+\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b[A-F0-9]+h\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.binary.assembly',
+          regex: '\\b0b[0-1]+\\b',
+          caseInsensitive: true },
+        { token: 'comment.assembly', regex: ';.*$' } ]
+  };
+
+  this.normalizeRules();
+};
+
+  EdemsMicrocodeAssemblyHighlightRules.metaData = { fileTypes: [ 'asm' ],
+    name: 'Edems Microcode Assembly',
+    scopeName: 'source.assembly' };
+
+
+  oop.inherits(EdemsMicrocodeAssemblyHighlightRules, TextHighlightRules);
+
+exports.EdemsMicrocodeAssemblyHighlightRules = EdemsMicrocodeAssemblyHighlightRules;
+});
+
+ace.define("ace/mode/folding/coffee",["require","exports","module","ace/lib/oop","ace/mode/folding/fold_mode","ace/range"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../../lib/oop");
+var BaseFoldMode = acequire("./fold_mode").FoldMode;
+var Range = acequire("../../range").Range;
+
+var FoldMode = exports.FoldMode = function() {};
+oop.inherits(FoldMode, BaseFoldMode);
+
+(function() {
+
+    this.getFoldWidgetRange = function(session, foldStyle, row) {
+        var range = this.indentationBlock(session, row);
+        if (range)
+            return range;
+
+        var re = /\S/;
+        var line = session.getLine(row);
+        var startLevel = line.search(re);
+        if (startLevel == -1 || line[startLevel] != "#")
+            return;
+
+        var startColumn = line.length;
+        var maxRow = session.getLength();
+        var startRow = row;
+        var endRow = row;
+
+        while (++row < maxRow) {
+            line = session.getLine(row);
+            var level = line.search(re);
+
+            if (level == -1)
+                continue;
+
+            if (line[level] != "#")
+                break;
+
+            endRow = row;
+        }
+
+        if (endRow > startRow) {
+            var endColumn = session.getLine(endRow).length;
+            return new Range(startRow, startColumn, endRow, endColumn);
+        }
+    };
+    this.getFoldWidget = function(session, foldStyle, row) {
+        var line = session.getLine(row);
+        var indent = line.search(/\S/);
+        var next = session.getLine(row + 1);
+        var prev = session.getLine(row - 1);
+        var prevIndent = prev.search(/\S/);
+        var nextIndent = next.search(/\S/);
+
+        if (indent == -1) {
+            session.foldWidgets[row - 1] = prevIndent!= -1 && prevIndent < nextIndent ? "start" : "";
+            return "";
+        }
+        if (prevIndent == -1) {
+            if (indent == nextIndent && line[indent] == "#" && next[indent] == "#") {
+                session.foldWidgets[row - 1] = "";
+                session.foldWidgets[row + 1] = "";
+                return "start";
+            }
+        } else if (prevIndent == indent && line[indent] == "#" && prev[indent] == "#") {
+            if (session.getLine(row - 2).search(/\S/) == -1) {
+                session.foldWidgets[row - 1] = "start";
+                session.foldWidgets[row + 1] = "";
+                return "";
+            }
+        }
+
+        if (prevIndent!= -1 && prevIndent < indent)
+            session.foldWidgets[row - 1] = "start";
+        else
+            session.foldWidgets[row - 1] = "";
+
+        if (indent < nextIndent)
+            return "start";
+        else
+            return "";
+    };
+
+}).call(FoldMode.prototype);
+
+});
+
+ace.define("ace/mode/EdemsMicrocodeAssembly",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/EdemsMicrocodeAssemblyHighlightRules","ace/mode/folding/coffee"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextMode = acequire("./text").Mode;
+var EdemsMicrocodeAssemblyHighlightRules = acequire("./EdemsMicrocodeAssemblyHighlightRules").EdemsMicrocodeAssemblyHighlightRules;
+var FoldMode = acequire("./folding/coffee").FoldMode;
+
+var Mode = function() {
+    this.HighlightRules = EdemsMicrocodeAssemblyHighlightRules;
+    this.foldingRules = new FoldMode();
+    this.$behaviour = this.$defaultBehaviour;
+};
+oop.inherits(Mode, TextMode);
+
+(function() {
+    this.lineCommentStart = ";";
+    this.$id = "ace/mode/EdemsMicrocodeAssembly";
+}).call(Mode.prototype);
+
+exports.Mode = Mode;
+});
+
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js":[function(require,module,exports){
 var global = require('./globals.js')
 
 var ALU = {}
@@ -338,7 +493,8 @@ var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
-require('brace/theme/dreamweaver')
+require('../ace/EdemsMicrocodeAssembly')
+require('brace/theme/textmate')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
@@ -414,13 +570,13 @@ gui.DrawMemoryTable = function () {
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor');
   global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.memoryEditor.setTheme('ace/theme/dreamweaver');
+  global.memoryEditor.setTheme('ace/theme/textmate');
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor');
-  global.microcodeEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.microcodeEditor.setTheme('ace/theme/dreamweaver');
+  global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly');
+  global.microcodeEditor.setTheme('ace/theme/textmate');
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -969,7 +1125,7 @@ gui.onChangeSetup = function () {
 
 module.exports = gui
 
-},{"../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/dreamweaver":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/dreamweaver.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/textmate":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/textmate.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -22982,144 +23138,132 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/dreamweaver.js":[function(require,module,exports){
-ace.define("ace/theme/dreamweaver",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/textmate.js":[function(require,module,exports){
+ace.define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
+"use strict";
+
 exports.isDark = false;
-exports.cssClass = "ace-dreamweaver";
-exports.cssText = ".ace-dreamweaver .ace_gutter {\
-background: #e8e8e8;\
+exports.cssClass = "ace-tm";
+exports.cssText = ".ace-tm .ace_gutter {\
+background: #f0f0f0;\
 color: #333;\
 }\
-.ace-dreamweaver .ace_print-margin {\
+.ace-tm .ace_print-margin {\
 width: 1px;\
 background: #e8e8e8;\
 }\
-.ace-dreamweaver {\
+.ace-tm .ace_fold {\
+background-color: #6B72E6;\
+}\
+.ace-tm {\
 background-color: #FFFFFF;\
 color: black;\
 }\
-.ace-dreamweaver .ace_fold {\
-background-color: #757AD8;\
-}\
-.ace-dreamweaver .ace_cursor {\
+.ace-tm .ace_cursor {\
 color: black;\
 }\
-.ace-dreamweaver .ace_invisible {\
+.ace-tm .ace_invisible {\
 color: rgb(191, 191, 191);\
 }\
-.ace-dreamweaver .ace_storage,\
-.ace-dreamweaver .ace_keyword {\
+.ace-tm .ace_storage,\
+.ace-tm .ace_keyword {\
 color: blue;\
 }\
-.ace-dreamweaver .ace_constant.ace_buildin {\
+.ace-tm .ace_constant {\
+color: rgb(197, 6, 11);\
+}\
+.ace-tm .ace_constant.ace_buildin {\
 color: rgb(88, 72, 246);\
 }\
-.ace-dreamweaver .ace_constant.ace_language {\
+.ace-tm .ace_constant.ace_language {\
 color: rgb(88, 92, 246);\
 }\
-.ace-dreamweaver .ace_constant.ace_library {\
+.ace-tm .ace_constant.ace_library {\
 color: rgb(6, 150, 14);\
 }\
-.ace-dreamweaver .ace_invalid {\
-background-color: rgb(153, 0, 0);\
-color: white;\
+.ace-tm .ace_invalid {\
+background-color: rgba(255, 0, 0, 0.1);\
+color: red;\
 }\
-.ace-dreamweaver .ace_support.ace_function {\
+.ace-tm .ace_support.ace_function {\
 color: rgb(60, 76, 114);\
 }\
-.ace-dreamweaver .ace_support.ace_constant {\
+.ace-tm .ace_support.ace_constant {\
 color: rgb(6, 150, 14);\
 }\
-.ace-dreamweaver .ace_support.ace_type,\
-.ace-dreamweaver .ace_support.ace_class {\
-color: #009;\
+.ace-tm .ace_support.ace_type,\
+.ace-tm .ace_support.ace_class {\
+color: rgb(109, 121, 222);\
 }\
-.ace-dreamweaver .ace_support.ace_php_tag {\
-color: #f00;\
-}\
-.ace-dreamweaver .ace_keyword.ace_operator {\
+.ace-tm .ace_keyword.ace_operator {\
 color: rgb(104, 118, 135);\
 }\
-.ace-dreamweaver .ace_string {\
-color: #00F;\
+.ace-tm .ace_string {\
+color: rgb(3, 106, 7);\
 }\
-.ace-dreamweaver .ace_comment {\
+.ace-tm .ace_comment {\
 color: rgb(76, 136, 107);\
 }\
-.ace-dreamweaver .ace_comment.ace_doc {\
+.ace-tm .ace_comment.ace_doc {\
 color: rgb(0, 102, 255);\
 }\
-.ace-dreamweaver .ace_comment.ace_doc.ace_tag {\
+.ace-tm .ace_comment.ace_doc.ace_tag {\
 color: rgb(128, 159, 191);\
 }\
-.ace-dreamweaver .ace_constant.ace_numeric {\
+.ace-tm .ace_constant.ace_numeric {\
 color: rgb(0, 0, 205);\
 }\
-.ace-dreamweaver .ace_variable {\
-color: #06F\
+.ace-tm .ace_variable {\
+color: rgb(49, 132, 149);\
 }\
-.ace-dreamweaver .ace_xml-pe {\
+.ace-tm .ace_xml-pe {\
 color: rgb(104, 104, 91);\
 }\
-.ace-dreamweaver .ace_entity.ace_name.ace_function {\
-color: #00F;\
+.ace-tm .ace_entity.ace_name.ace_function {\
+color: #0000A2;\
 }\
-.ace-dreamweaver .ace_heading {\
+.ace-tm .ace_heading {\
 color: rgb(12, 7, 255);\
 }\
-.ace-dreamweaver .ace_list {\
+.ace-tm .ace_list {\
 color:rgb(185, 6, 144);\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_selection {\
+.ace-tm .ace_meta.ace_tag {\
+color:rgb(0, 22, 142);\
+}\
+.ace-tm .ace_string.ace_regex {\
+color: rgb(255, 0, 0)\
+}\
+.ace-tm .ace_marker-layer .ace_selection {\
 background: rgb(181, 213, 255);\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_step {\
+.ace-tm.ace_multiselect .ace_selection.ace_start {\
+box-shadow: 0 0 3px 0px white;\
+}\
+.ace-tm .ace_marker-layer .ace_step {\
 background: rgb(252, 255, 0);\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_stack {\
+.ace-tm .ace_marker-layer .ace_stack {\
 background: rgb(164, 229, 101);\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_bracket {\
+.ace-tm .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
 border: 1px solid rgb(192, 192, 192);\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_active-line {\
+.ace-tm .ace_marker-layer .ace_active-line {\
 background: rgba(0, 0, 0, 0.07);\
 }\
-.ace-dreamweaver .ace_gutter-active-line {\
-background-color : #DCDCDC;\
+.ace-tm .ace_gutter-active-line {\
+background-color : #dcdcdc;\
 }\
-.ace-dreamweaver .ace_marker-layer .ace_selected-word {\
+.ace-tm .ace_marker-layer .ace_selected-word {\
 background: rgb(250, 250, 255);\
 border: 1px solid rgb(200, 200, 250);\
 }\
-.ace-dreamweaver .ace_meta.ace_tag {\
-color:#009;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_anchor {\
-color:#060;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_form {\
-color:#F90;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_image {\
-color:#909;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_script {\
-color:#900;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_style {\
-color:#909;\
-}\
-.ace-dreamweaver .ace_meta.ace_tag.ace_table {\
-color:#099;\
-}\
-.ace-dreamweaver .ace_string.ace_regex {\
-color: rgb(255, 0, 0)\
-}\
-.ace-dreamweaver .ace_indent-guide {\
+.ace-tm .ace_indent-guide {\
 background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\
-}";
+}\
+";
 
 var dom = acequire("../lib/dom");
 dom.importCssString(exports.cssText, exports.cssClass);
