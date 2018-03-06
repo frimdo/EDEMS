@@ -25,6 +25,7 @@
     border: 0;
     grid-area: body-grid;
     /*background-color: #a5c17d;*/
+    max-height: 90vh;
 
     display: grid;
     grid-row-gap: 3px;
