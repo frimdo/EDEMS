@@ -45,10 +45,34 @@ $(document).ready(function () {
 
 
 
-  var input = `WRT
+  var input = `COOP 0x12
+ALU 
 R>DB A
-DB>R TMP0
-SVR D UPCL`
+R>AB A
+W>AB B
+DB>R OP
+AB>W TMP1
+INCB A
+DECB F
+INCW F
+DECW UPCH
+JOI PCL
+JON tmp0
+JOFI C
+JOFN D
+C>DB 0x1
+SVR E F
+SVW S D
+O>DB
+DB>O
+END
+JMP 0b101
+HLT
+READ
+WRT
+SETB F 2
+RETB B 0b101
+`
 
   console.log(uComp.compile(input))
 })

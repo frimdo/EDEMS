@@ -2094,7 +2094,7 @@ global.registerD = new BinNumber(0, 8, global.registerE)
 global.registerP = new BinNumber(0)
 global.registerS = new BinNumber(0, 8, global.registerP)
 global.registerPCL = new BinNumber(0)
-global.registerPCH = new BinNumber(0, 8, global.registerPCL)
+global.registerPCH = new BinNumber(0, 3, global.registerPCL)
 global.registerOP = new BinNumber(0)
 global.registerTMP0 = new BinNumber(0, 8, global.registerOP)
 global.registerTMP2 = new BinNumber(0)
@@ -2105,82 +2105,73 @@ global.registerUPCH = new BinNumber(0, 8, global.registerUPCL, 3)
 global.freq = 10
 
 global.register = function (x) {
-  if(typeof(x) === 'number') {
-    switch (x) {
-      case 0:
-        return global.registerB
-      case 1:
-        return global.registerD
-      case 2:
-        return global.registerS
-      case 3:
-        return global.registerC
-      case 4:
-        return global.registerE
-      case 5:
-        return global.registerP
-      case 6:
-        return global.registerA
-      case 7:
-        return global.registerF
-      case 8:
-        return global.registerPCH
-      case 9:
-        return global.registerPCL
-      case 10:
-        return global.registerTMP0
-      case 11:
-        return global.registerTMP1
-      case 12:
-        return global.registerUPCH
-      case 13:
-        return global.registerOP
-      case 14:
-        return global.registerTMP2
-      case 15:
-        return global.registerUPCL
-      default:
-        throw new RangeError('There is no register with index: ' + x)
-    }
-  } else if (typeof(x) === 'string'){
-    switch (x) {
-      case 'B':
-        return '0'
-      case 'D':
-        return '1'
-      case 'S':
-        return '2'
-      case 'C':
-        return '3'
-      case 'E':
-        return '4'
-      case 'P':
-        return '5'
-      case 'A':
-        return '6'
-      case 'F':
-        return '7'
-      case 'PCH':
-        return '8'
-      case 'PCL':
-        return '9'
-      case 'TMP0':
-        return 'A'
-      case 'TMP1':
-        return 'B'
-      case 'UPCH':
-        return 'C'
-      case 'OP':
-        return 'D'
-      case 'TMP2':
-        return 'E'
-      case 'UPCL':
-        return 'F'
-      default:
-        throw new RangeError('There is no register with name: ' + x)
-    }
-  } else {
-    throw TypeError('Register must be number or string')
+  switch (x) {
+    case 0:
+      return global.registerB
+    case 1:
+      return global.registerD
+    case 2:
+      return global.registerS
+    case 3:
+      return global.registerC
+    case 4:
+      return global.registerE
+    case 5:
+      return global.registerP
+    case 6:
+      return global.registerA
+    case 7:
+      return global.registerF
+    case 8:
+      return global.registerPCH
+    case 9:
+      return global.registerPCL
+    case 10:
+      return global.registerTMP0
+    case 11:
+      return global.registerTMP1
+    case 12:
+      return global.registerUPCH
+    case 13:
+      return global.registerOP
+    case 14:
+      return global.registerTMP2
+    case 15:
+      return global.registerUPCL
+    case 'B':
+      return '0'
+    case 'D':
+      return '1'
+    case 'S':
+      return '2'
+    case 'C':
+      return '3'
+    case 'E':
+      return '4'
+    case 'P':
+      return '5'
+    case 'A':
+      return '6'
+    case 'F':
+      return '7'
+    case 'PCH':
+      return '8'
+    case 'PCL':
+      return '9'
+    case 'TMP0':
+      return 'A'
+    case 'TMP1':
+      return 'B'
+    case 'UPCH':
+      return 'C'
+    case 'OP':
+      return 'D'
+    case 'TMP2':
+      return 'E'
+    case 'UPCL':
+      return 'F'
+    default:
+      throw new RangeError('There is no register with name or index: ' + x)
   }
 }
 
@@ -2234,10 +2225,34 @@ $(document).ready(function () {
 
 
 
-  var input = `WRT
+  var input = `COOP 0x12
+ALU 
 R>DB A
-DB>R TMP0
-SVR D UPCL`
+R>AB A
+W>AB B
+DB>R OP
+AB>W TMP1
+INCB A
+DECB F
+INCW F
+DECW UPCH
+JOI PCL
+JON tmp0
+JOFI C
+JOFN D
+C>DB 0x1
+SVR E F
+SVW S D
+O>DB
+DB>O
+END
+JMP 0b101
+HLT
+READ
+WRT
+SETB F 2
+RETB B 0b101
+`
 
   console.log(uComp.compile(input))
 })
@@ -2246,104 +2261,180 @@ window.onbeforeunload = function() {
   LS.storeGlobals()
 }
 },{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js":[function(require,module,exports){
-var global = require("./globals.js")
+var global = require('./globals.js')
+var BinNumber = require('./binNumber.js')
 
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
   var output = []
+  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '6', '3', '4', '5', '9', '13', '14', '15']
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
     .split('\n')
   console.log(input)
   for (var i = 0; i < input.length; i++) {
-    var line = input[i].split(' ')
-    switch (line[0]){
+    var line = input[i].trim().split(' ')
+    switch (line[0]) {
       case ('COOP'):
+        var byte = 1536
+        try {
+          byte += parseNumber(line[1], 8)
+          output.push(byte.toString(16))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('ALU'):
+        output.push('000')
+        console.log(line[0], 'This uInstruction is not implemented yet.')
+        //TODO: implementovat
+        break
       case ('R>DB'):
         try {
           output.push('7C' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('R>AB'):
         try {
           output.push('7B' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('W>AB'):
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        }
+        try {
+          output.push('7A' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('DB>R'):
         try {
           output.push('79' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('AB>W'):
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        }
+        try {
+          output.push('78' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('INCB'):
         try {
           output.push('77' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('DECB'):
         try {
           output.push('76' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('INCW'):
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        }
+        try {
+          output.push('75' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('DECW'):
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        }
+        try {
+          output.push('74' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('JOI'):
         try {
           output.push('73' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('JON'):
         try {
           output.push('72' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('JOFI'):
         try {
           output.push('71' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('JOFN'):
         try {
           output.push('70' + global.register(line[1]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('C>DB'):
+        var byte = 1280
+        try {
+          byte += parseNumber(line[1], 8)
+          output.push(byte.toString(16))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('SVR'):
-        var byte = "1"
+        var byte = '1'
         try {
           byte += global.register(line[1])
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         try {
           output.push(byte += global.register(line[2]))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('SVW'):
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        }
+        var byte = '2'
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        if (lowRegisters.includes(line[1])) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[2] + ' is low register of pair.')
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('O>DB'):
         output.push('7F0')
         break
@@ -2354,6 +2445,14 @@ microcodeCompiler.compile = function (input) {
         output.push('7F2')
         break
       case ('JMP'):
+        var byte = 2048
+        try {
+          byte += parseNumber(line[1], 11)
+          output.push(byte.toString(16))
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+        break
       case ('HLT'):
         output.push('7F3')
         break
@@ -2364,42 +2463,65 @@ microcodeCompiler.compile = function (input) {
         output.push('7F5')
         break
       case ('SETB'):
-        var byte = "3"
+        var byte = '3'
         try {
           byte += global.register(line[1])
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         try {
-          output.push(byte += global.register(line[2]))
+          output.push(byte + parseNumber(line[2], 3))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
       case ('RETB'):
-        var byte = "4"
+        var byte = '4'
         try {
           byte += global.register(line[1])
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         try {
-          output.push(byte += global.register(line[2]))
+          output.push(byte + parseNumber(line[2], 3))
         } catch (err) {
-          throw SyntaxError("Error on line: " + i + " " + err.message)
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+      case (''):
+        break
       default:
-        throw SyntaxError("Error on line: " + i + line[0] + ' is not a valid keyword.')
+        throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
     }
   }
   return output
 }
 
+function parseNumber (input, bits) {
+  input = input.toLowerCase()
+  var output = {}
+  if (isNaN(input)) {
+    try {
+      output = new BinNumber(input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  } else if (input) {
+    try {
+      output = new BinNumber(+input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  }
+  return output.dec
+}
+
 module.exports = microcodeCompiler
 
 
-},{"./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js":[function(require,module,exports){
+},{"./binNumber.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/binNumber.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js":[function(require,module,exports){
 /* ***** BEGIN LICENSE BLOCK *****
  * Distributed under the BSD license:
  *

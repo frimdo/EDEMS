@@ -21,7 +21,7 @@ global.registerD = new BinNumber(0, 8, global.registerE)
 global.registerP = new BinNumber(0)
 global.registerS = new BinNumber(0, 8, global.registerP)
 global.registerPCL = new BinNumber(0)
-global.registerPCH = new BinNumber(0, 8, global.registerPCL)
+global.registerPCH = new BinNumber(0, 3, global.registerPCL)
 global.registerOP = new BinNumber(0)
 global.registerTMP0 = new BinNumber(0, 8, global.registerOP)
 global.registerTMP2 = new BinNumber(0)
@@ -32,82 +32,73 @@ global.registerUPCH = new BinNumber(0, 8, global.registerUPCL, 3)
 global.freq = 10
 
 global.register = function (x) {
-  if(typeof(x) === 'number') {
-    switch (x) {
-      case 0:
-        return global.registerB
-      case 1:
-        return global.registerD
-      case 2:
-        return global.registerS
-      case 3:
-        return global.registerC
-      case 4:
-        return global.registerE
-      case 5:
-        return global.registerP
-      case 6:
-        return global.registerA
-      case 7:
-        return global.registerF
-      case 8:
-        return global.registerPCH
-      case 9:
-        return global.registerPCL
-      case 10:
-        return global.registerTMP0
-      case 11:
-        return global.registerTMP1
-      case 12:
-        return global.registerUPCH
-      case 13:
-        return global.registerOP
-      case 14:
-        return global.registerTMP2
-      case 15:
-        return global.registerUPCL
-      default:
-        throw new RangeError('There is no register with index: ' + x)
-    }
-  } else if (typeof(x) === 'string'){
-    switch (x) {
-      case 'B':
-        return '0'
-      case 'D':
-        return '1'
-      case 'S':
-        return '2'
-      case 'C':
-        return '3'
-      case 'E':
-        return '4'
-      case 'P':
-        return '5'
-      case 'A':
-        return '6'
-      case 'F':
-        return '7'
-      case 'PCH':
-        return '8'
-      case 'PCL':
-        return '9'
-      case 'TMP0':
-        return 'A'
-      case 'TMP1':
-        return 'B'
-      case 'UPCH':
-        return 'C'
-      case 'OP':
-        return 'D'
-      case 'TMP2':
-        return 'E'
-      case 'UPCL':
-        return 'F'
-      default:
-        throw new RangeError('There is no register with name: ' + x)
-    }
-  } else {
-    throw TypeError('Register must be number or string')
+  switch (x) {
+    case 0:
+      return global.registerB
+    case 1:
+      return global.registerD
+    case 2:
+      return global.registerS
+    case 3:
+      return global.registerC
+    case 4:
+      return global.registerE
+    case 5:
+      return global.registerP
+    case 6:
+      return global.registerA
+    case 7:
+      return global.registerF
+    case 8:
+      return global.registerPCH
+    case 9:
+      return global.registerPCL
+    case 10:
+      return global.registerTMP0
+    case 11:
+      return global.registerTMP1
+    case 12:
+      return global.registerUPCH
+    case 13:
+      return global.registerOP
+    case 14:
+      return global.registerTMP2
+    case 15:
+      return global.registerUPCL
+    case 'B':
+      return '0'
+    case 'D':
+      return '1'
+    case 'S':
+      return '2'
+    case 'C':
+      return '3'
+    case 'E':
+      return '4'
+    case 'P':
+      return '5'
+    case 'A':
+      return '6'
+    case 'F':
+      return '7'
+    case 'PCH':
+      return '8'
+    case 'PCL':
+      return '9'
+    case 'TMP0':
+      return 'A'
+    case 'TMP1':
+      return 'B'
+    case 'UPCH':
+      return 'C'
+    case 'OP':
+      return 'D'
+    case 'TMP2':
+      return 'E'
+    case 'UPCL':
+      return 'F'
+    default:
+      throw new RangeError('There is no register with name or index: ' + x)
   }
 }
 

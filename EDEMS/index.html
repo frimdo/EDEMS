@@ -97,21 +97,34 @@ end start
                 Control Unit
             </div>
             <div class="insideBlock block">
-                <div id="microcode-editor" class="block">.model small
-.stack 100h
+                <div id="microcode-editor" class="block">COOP 0x12
+ALU ADD
+R>DB A
+R>AB A
+W>AB B
+DB>R OP
+AB>W TMP1
+INCB A
+DECB F
+INCW F
+DECW UPCH
+JOI PCL
+JON tmp0
+JOFI C
+JOFN D
+C>DB 0x1
+SVR E F
+SVW S D
+O>DB
+DB>O
+END
+JMP 0b101
+HLT
+READ
+WRT
+SETB F 2
+RETB B 0b101
 
-.data
-msg	db	'Hello world!$'
-
-.code
-start:
-mov	ah, 09h   ; Display the message
-lea	dx, msg
-int	21h
-mov	ax, 4C00h  ; Terminate the executable
-int	21h
-
-end start
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll block">
                     <table>
