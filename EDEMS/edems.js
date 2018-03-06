@@ -2164,6 +2164,7 @@ var gui = require('./browser/gui.js')
 var CU = require('./controlUnit.js')
 var clock = require('./clock.js')
 var alu = require('./alu.js')
+var uComp = require('./microcodeCompiler.js')
 
 
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
@@ -2199,12 +2200,176 @@ $(document).ready(function () {
 
   global.advanced = false
   document.getElementById('advanced').onclick()
+
+
+
+
+  var input = `WRT
+R>DB A
+DB>R TMP0
+SVR D UPCL`
+
+  console.log(uComp.compile(input))
 })
 
 window.onbeforeunload = function() {
   LS.storeGlobals()
 }
-},{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js":[function(require,module,exports){
+},{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js":[function(require,module,exports){
+var global = require("./globals.js")
+
+var microcodeCompiler = {}
+
+microcodeCompiler.compile = function (input) {
+  var output = []
+
+  input = input.toUpperCase()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+  console.log(input)
+  for (var i = 0; i < input.length; i++) {
+    var line = input[i].split(' ')
+    switch (line[0]){
+      case ('COOP'):
+      case ('ALU'):
+      case ('R>DB'):
+        try {
+          output.push('7C' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('R>AB'):
+        try {
+          output.push('7B' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('W>AB'):
+      case ('DB>R'):
+        try {
+          output.push('79' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('AB>W'):
+      case ('INCB'):
+        try {
+          output.push('77' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('DECB'):
+        try {
+          output.push('76' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('INCW'):
+      case ('DECW'):
+      case ('JOI'):
+        try {
+          output.push('73' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('JON'):
+        try {
+          output.push('72' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('JOFI'):
+        try {
+          output.push('71' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('JOFN'):
+        try {
+          output.push('70' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('C>DB'):
+      case ('SVR'):
+        var byte = "1"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('SVW'):
+      case ('O>DB'):
+        output.push('7F0')
+        break
+      case ('DB>O'):
+        output.push('7F1')
+        break
+      case ('END'):
+        output.push('7F2')
+        break
+      case ('JMP'):
+      case ('HLT'):
+        output.push('7F3')
+        break
+      case ('READ'):
+        output.push('7F4')
+        break
+      case ('WRT'):
+        output.push('7F5')
+        break
+      case ('SETB'):
+        var byte = "3"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      case ('RETB'):
+        var byte = "4"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
+      default:
+        throw SyntaxError("Error on line: " + i + line[0] + ' is not a valid keyword.')
+    }
+  }
+  return output
+}
+
+module.exports = microcodeCompiler
+
+
+},{"./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js":[function(require,module,exports){
 /* ***** BEGIN LICENSE BLOCK *****
  * Distributed under the BSD license:
  *

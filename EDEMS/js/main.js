@@ -5,6 +5,7 @@ var gui = require('./browser/gui.js')
 var CU = require('./controlUnit.js')
 var clock = require('./clock.js')
 var alu = require('./alu.js')
+var uComp = require('./microcodeCompiler.js')
 
 
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
@@ -40,6 +41,16 @@ $(document).ready(function () {
 
   global.advanced = false
   document.getElementById('advanced').onclick()
+
+
+
+
+  var input = `WRT
+R>DB A
+DB>R TMP0
+SVR D UPCL`
+
+  console.log(uComp.compile(input))
 })
 
 window.onbeforeunload = function() {

@@ -1,3 +1,5 @@
+var global = require("./globals.js")
+
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
@@ -13,20 +15,86 @@ microcodeCompiler.compile = function (input) {
       case ('COOP'):
       case ('ALU'):
       case ('R>DB'):
+        try {
+          output.push('7C' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('R>AB'):
+        try {
+          output.push('7B' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('W>AB'):
       case ('DB>R'):
+        try {
+          output.push('79' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('AB>W'):
       case ('INCB'):
+        try {
+          output.push('77' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('DECB'):
+        try {
+          output.push('76' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('INCW'):
       case ('DECW'):
       case ('JOI'):
+        try {
+          output.push('73' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('JON'):
+        try {
+          output.push('72' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('JOFI'):
+        try {
+          output.push('71' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('JOFN'):
+        try {
+          output.push('70' + global.register(line[1]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('C>DB'):
       case ('SVR'):
+        var byte = "1"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('SVW'):
       case ('O>DB'):
         output.push('7F0')
@@ -48,20 +116,37 @@ microcodeCompiler.compile = function (input) {
         output.push('7F5')
         break
       case ('SETB'):
+        var byte = "3"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       case ('RETB'):
+        var byte = "4"
+        try {
+          byte += global.register(line[1])
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        try {
+          output.push(byte += global.register(line[2]))
+        } catch (err) {
+          throw SyntaxError("Error on line: " + i + " " + err.message)
+        }
+        break
       default:
-        throw SyntaxError(input[i] + ' is not a valid keyword.')
+        throw SyntaxError("Error on line: " + i + line[0] + ' is not a valid keyword.')
     }
   }
   return output
 }
 
-//module.exports = microcodeCompiler
+module.exports = microcodeCompiler
 
-//testing area
-
-var input = `ALU 0x12
-R>DB 0xA
-INCW 0x1`
-
-console.log(microcodeCompiler.compile(input))
