@@ -367,12 +367,42 @@ gui.onclickSetup = function () {
     if(global.advanced){
       $('#advanced').html('Basic')
       $('#body-grid').addClass('advanced')
+
+      $('#TMP0-pair').removeClass('hidden')
+      $('#TMP1-pair').removeClass('hidden')
+      $('#UPCH-pair').removeClass('hidden')
+      $('#TMP0-button').removeClass('hidden')
+      $('#OP-button').removeClass('hidden')
+      $('#TMP1-button').removeClass('hidden')
+      $('#TMP2-button').removeClass('hidden')
+      $('#UPCH-button').removeClass('hidden')
+      $('#UPCL-button').removeClass('hidden')
+
+      $('#PCH-pair').prop('disabled', false)
+      $('#PCH-button').prop('disabled', false)
+      $('#PCL-button').prop('disabled', false)
+
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
     } else {
       $('#advanced').html('Advanced')
       $('#body-grid').removeClass('advanced')
+
+      $('#TMP0-pair').addClass('hidden')
+      $('#TMP1-pair').addClass('hidden')
+      $('#UPCH-pair').addClass('hidden')
+      $('#TMP0-button').addClass('hidden')
+      $('#OP-button').addClass('hidden')
+      $('#TMP1-button').addClass('hidden')
+      $('#TMP2-button').addClass('hidden')
+      $('#UPCH-button').addClass('hidden')
+      $('#UPCL-button').addClass('hidden')
+
+      $('#PCH-pair').prop('disabled', true)
+      $('#PCH-button').prop('disabled', true)
+      $('#PCL-button').prop('disabled', true)
+
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
       $('#M2C').addClass('hidden')
