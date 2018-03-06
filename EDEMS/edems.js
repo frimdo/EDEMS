@@ -700,19 +700,19 @@ gui.onclickSetup = function () {
   document.getElementById('advanced').onclick = function () {
     global.advanced = !global.advanced
     if(global.advanced){
+      $('#advanced').html('Basic')
       $('#body-grid').addClass('advanced')
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
     } else {
+      $('#advanced').html('Advanced')
       $('#body-grid').removeClass('advanced')
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
       $('#M2C').addClass('hidden')
     }
   }
-  global.advanced = true
-  document.getElementById('advanced').onclick()
 }
 
 gui.onChangeSetup = function () {
@@ -2196,6 +2196,9 @@ $(document).ready(function () {
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
+
+  global.advanced = false
+  document.getElementById('advanced').onclick()
 })
 
 window.onbeforeunload = function() {

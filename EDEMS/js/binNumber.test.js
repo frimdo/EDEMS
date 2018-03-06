@@ -12,6 +12,6 @@ test('dec', function () {
 
 test('decPair', function () {
   var x = new BinNumber(127)
-  var y = new BinNumber(127, x)
+  var y = new BinNumber(127, 8, x)
   expect(y.decPair).toBe(32639);
 })

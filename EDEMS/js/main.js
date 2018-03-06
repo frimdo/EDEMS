@@ -37,6 +37,9 @@ $(document).ready(function () {
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
+
+  global.advanced = false
+  document.getElementById('advanced').onclick()
 })
 
 window.onbeforeunload = function() {
