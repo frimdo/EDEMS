@@ -36,7 +36,7 @@ gui.refresh = function () {
 gui.DrawMemoryTable = function () {
 
   gui.memoryData = []
-  
+
   // Creating x-offset row
   var newline = '<tr><th><div class="table-descr block">0x</div></th>'
   for (var i = 0; i < 8; i++) {
@@ -73,7 +73,7 @@ gui.DrawMemoryTable = function () {
       }
     }
   })
-  
+
   gui.MemoryTable.refresh(gui.memoryData)
 }
 
