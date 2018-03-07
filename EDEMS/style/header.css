@@ -1,4 +1,5 @@
 #header-grid {
+    font-size: 80%;
     border: 0;
     grid-area: header-grid;
     /*background-color: #81c19d;*/
