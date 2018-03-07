@@ -28,29 +28,44 @@
     }
 }
 
+#header-grid * button {
+    border: none;
+}
 
 #buttons-grid {
+    display: flex;
+    justify-content: space-around;
     grid-area: buttons-grid;
 /*background-color: #a5a6c1;*/
-    background-color: rgba(162, 214, 179, 0.8);
+    background-color: rgba(255,255,255,0.5);
+    /*background-color: rgba(162, 214, 179, 0.8);*/
+}
+
+#buttons-grid button, #clock-grid button{
+    margin: 5px;
+    flex-grow: 10;
+}
+
+#clock-grid span{
+    font-size: 120%;
+    margin: 5px;
+    flex-grow: 1;
 }
 
 #clock-grid {
+    display: flex;
+    justify-content: center;
     grid-area: clock-grid;
 /*background-color: #97a9c1;*/
-    background-color: rgba(162, 214, 179, 0.8);
-}
-
-#clock-grid button, #clock-grid input{
-    width: 14%;
+    background-color: rgba(255,255,255,0.5);
 }
 
 #logo {
 /*background-color: #c18977;*/
-    background-color: rgba(162, 214, 179, 0.8);
+    background-color: rgba(255,255,255,0.5);
     grid-area: logo;
     font-weight: bold;
-    font-size: 300%
+    font-size: 370%;
 }
 
 body{
