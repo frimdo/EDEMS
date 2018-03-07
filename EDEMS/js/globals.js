@@ -21,13 +21,13 @@ global.registerD = new BinNumber(0, 8, global.registerE)
 global.registerP = new BinNumber(0)
 global.registerS = new BinNumber(0, 8, global.registerP)
 global.registerPCL = new BinNumber(0)
-global.registerPCH = new BinNumber(0, 3, global.registerPCL)
+global.registerPCH = new BinNumber(0, 8, global.registerPCL)
 global.registerOP = new BinNumber(0)
 global.registerTMP0 = new BinNumber(0, 8, global.registerOP)
 global.registerTMP2 = new BinNumber(0)
 global.registerTMP1 = new BinNumber(0, 8, global.registerTMP2)
 global.registerUPCL = new BinNumber(0)
-global.registerUPCH = new BinNumber(0, 8, global.registerUPCL, 3)
+global.registerUPCH = new BinNumber(0, 3, global.registerUPCL, 3)
 
 global.freq = 10
 

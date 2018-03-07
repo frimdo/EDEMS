@@ -11,37 +11,50 @@
             "buttons-grid clock-grid logo";
 }
 
+@media (max-width: 767px) {
+    #header-grid {
+        border: 0;
+        grid-area: header-grid;
+        /*background-color: #81c19d;*/
+
+        display: grid;
+        grid-row-gap: 15px;
+        grid-column-gap: 15px;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+                "buttons-grid logo"
+                "clock-grid clock-grid";
+    }
+}
+
+
 #buttons-grid {
     grid-area: buttons-grid;
-    background-color: #a5a6c1;
+/*background-color: #a5a6c1;*/
+    background-color: rgba(162, 214, 179, 0.8);
 }
 
 #clock-grid {
     grid-area: clock-grid;
-    background-color: #97a9c1;
+/*background-color: #97a9c1;*/
+    background-color: rgba(162, 214, 179, 0.8);
 }
 
-#clock-grid input {
-    width: 50px;
+#clock-grid button, #clock-grid input{
+    width: 14%;
 }
 
 #logo {
-    background-color: #c18977;
+/*background-color: #c18977;*/
+    background-color: rgba(162, 214, 179, 0.8);
     grid-area: logo;
     font-weight: bold;
-    font-size: 200%
+    font-size: 300%
 }
 
-#IdataBus {
-    font-family: inherit;
-    font-size: inherit;
-    border: 1px solid #2d2d2d;
-    padding-bottom: 1px;
-    text-align: center;
-    background-color: inherit;
-    width: 100%;
-}
-
-#IdataBus:hover{
-    background-color: #e7a793;
+body{
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
 }

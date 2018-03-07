@@ -1,5 +1,6 @@
 * {
     font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
+    font-size: 100%;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
     color: #2d2d2d;
@@ -29,12 +30,23 @@ div {
     font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
 }
 
-.block, button {
+.block, button, .block input {
     font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
-    border: 1px solid #2d2d2d;
+    font-size: 120%;
+    /*border: 1px solid #2d2d2d;*/
     padding: 2px;
     text-align: center;
     color: #2d2d2d;
+}
+
+button {
+    background-color: #dedede;
+    border: 2px solid #333333;
+    color: #2d2d2d;
+}
+
+button:hover {
+    background-color: #f9f9f9;
 }
 
 button:disabled,
@@ -54,7 +66,7 @@ select {
 }
 
 .mem-highlighted {
-    background-color: #8cc18d;
+    background-color: #c1a06f;
 }
 
 .highlighted, .umem-highlighted {
@@ -73,7 +85,12 @@ select {
 }
 
 .selectedRegister, .selectedPair {
-    background-color: #a5c17d;
+    border: 2px solid #2d2d2d;
+    background-color: #c8cbef;
+}
+
+.selectedRegister:hover, .selectedPair:hover {
+    background-color: #c8cbef;
 }
 
 .registerButton {
@@ -81,17 +98,19 @@ select {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 40%;
-    top: -54px;
+    top: -62px;
     position: relative;
 }
 
 .pairBlock {
-    margin-bottom: 2px;
+    font-size: 60%;
+    margin-bottom: 8px;
     height: 64px;
 }
 
 .pairButton {
-    height: 60px;
+    height: 70px;
+    flex-grow: 1;
     width: 100%;
     clear: both;
     float: none;
@@ -106,6 +125,11 @@ select {
     line-height: 25px;
     vertical-align: middle;
     margin-bottom: 2px;
+}
+
+.nameBlock button {
+    font-size: 60%;
+    width: 14%;
 }
 
 .table-descr {
@@ -129,4 +153,15 @@ select {
 .ace_editor {
     font-family: inherit !important;
     font-size: 16px !important;
+}
+
+.insideBlock{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.memoryBlock, .microcodeBlock, .table-descr{
+    border: 1px solid #2d2d2d;
+    font-size: 65%;
 }

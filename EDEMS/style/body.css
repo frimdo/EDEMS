@@ -7,18 +7,19 @@
     display: grid;
     grid-row-gap: 3px;
     grid-column-gap: 3px;
-    grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
-    grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+    grid-template-rows: 10px 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
     grid-template-areas:
-            "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB"
-            ".   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2"
-            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
-            "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
-            ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
-            "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+            ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  "
+            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
+            ".  .   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .   .  "
+            ".  .   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .   .  "
+            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  ";
 }
 
 #body-grid:not(.advanced) {
@@ -30,60 +31,132 @@
     display: grid;
     grid-row-gap: 3px;
     grid-column-gap: 3px;
-    grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
-    grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+    grid-template-rows: 10px 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
     grid-template-areas:
-            "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB"
-            ".   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2"
-            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU"
-            "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .  "
-            ".   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .  "
-            "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+            ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  "
+            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
+            ".  .   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .   .  "
+            ".  .   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .   .  "
+            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  ";
+}
+
+
+@media (max-width: 767px) {
+    #body-grid.advanced {
+        border: 0;
+        grid-area: body-grid;
+        max-height: 90vh;
+        /*background-color: #a5c17d;*/
+
+        display: grid;
+        grid-row-gap: 3px;
+        grid-column-gap: 3px;
+        grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+        grid-template-areas:
+                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB"
+                ".   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2"
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+                "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
+                ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
+                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+    }
+
+    #body-grid:not(.advanced) {
+        border: 0;
+        grid-area: body-grid;
+        /*background-color: #a5c17d;*/
+        max-height: 90vh;
+
+        display: grid;
+        grid-row-gap: 3px;
+        grid-column-gap: 3px;
+        grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+        grid-template-areas:
+                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB"
+                ".   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2"
+                "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU"
+                "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .  "
+                ".   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .  "
+                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+    }
 }
 
 #externalDataBus {
     grid-area: EDB;
-    background-color: #c18977;
+    background-color: rgba(193,137,119, 0.8);
 }
 
 #internalDataBus {
     grid-area: DAB;
-    background-color: #c18977;
+    background-color: rgba(193,137,119,0.8);
+}
+
+
+#internalDataBus input {
+    /*border: 1px solid #2d2d2d;*/
+    border: none;
+    padding-bottom: 1px;
+    text-align: center;
+    background-color: rgba(193,137,119,0.8);
+    width: 100%;
+}
+
+#internalDataBus input:hover{
+    background-color: #e7a793;
 }
 
 #memory-grid {
+    display: flex;
+    flex-direction: column;
     padding: 5px;
     overflow-y: auto;
     grid-area: MEM;
-    background-color: #d17baf;
+    background-color: rgba(209,123,175,0.8);
 }
 
 #controlUnit-grid {
+    display: flex;
+    flex-direction: column;
     padding: 5px;
     overflow-y: auto;
     grid-area: COU;
-    background-color: #a38ac1;
+    background-color: rgba(163,138,193,0.8);
 }
 
 #registers-grid {
+    display: flex;
+    flex-direction: column;
     padding: 5px;
-    overflow-y: auto;
+
     grid-area: REG;
-    background-color: #6886c1;
+    background-color: rgba(104,134,193,0.8);
 }
 
 #alu-grid {
+    display: flex;
+    flex-direction: column;
     padding: 5px;
     grid-area: ALU;
-    background-color: #80a3c1;
+    background-color: rgba(128,163,193,0.8);
 }
 
 #addressBus-grid {
     grid-area: ADB;
-    background-color: #8cc18d;
+    background-color: rgba(193,160,111,0.8);
 }
 
 #REA {grid-area: REA;}
@@ -104,26 +177,26 @@
 
 #registers-grid .insideBlock {
     padding-bottom: 0;
+    overflow-y: auto;
 }
 
 #incr, #decr{
     font-weight: bold;
     float: left;
-    width: 7%;
 }
 
 #svr {
     float: right;
-    width: 14%;
 }
 
-/*
+
 #scrollArea-memory, #scrollArea-microcode {
-    resize: vertical;
-}*/
+    flex-grow: 1;
+}
 
 #memory-editor, #microcode-editor {
-    height: 40vh;
+    flex-grow: 1;
     margin-bottom: 2px;
 }
+
 
