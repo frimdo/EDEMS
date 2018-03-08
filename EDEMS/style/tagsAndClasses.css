@@ -72,8 +72,13 @@ select {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 40%;
-    top: -62px;
+    top: -56px;
     position: relative;
+    font-size: 150%;
+}
+
+.registerButton div{
+    font-size: 120%;
 }
 
 .pairBlock {
@@ -83,7 +88,7 @@ select {
 }
 
 .pairButton {
-    height: 70px;
+    height: 65px;
     flex-grow: 1;
     width: 100%;
     clear: both;
@@ -95,6 +100,7 @@ select {
     line-height: 25px;
     vertical-align: middle;
     margin-bottom: 2px;
+    font-size: 120%;
 }
 
 .nameBlock button {
@@ -121,6 +127,7 @@ select {
 
 .memoryBlock, .microcodeBlock, .table-descr {
     border: 1px solid #2d2d2d;
-    font-size: 65%;
+    font-size: 100%;
+    padding: 1px;
 }
 

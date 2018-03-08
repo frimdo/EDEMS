@@ -1,0 +1,217 @@
+.block {
+    box-shadow: 2px 2px 2px #000000;
+}
+
+body {
+    background-color: #00675b;
+}
+
+.selectedPair {
+    background-color: #004ba0 !important;
+}
+
+.selectedRegister {
+    background-color: #004ba0 !important;
+}
+
+.selectedRegister, .OPSelected {
+    color: #fafafa !important;
+}
+
+.selectedRegister:hover, .selectedPair:hover {
+    background-color: #0a55aa !important;
+}
+
+.registerButton span {
+    color: #e0e0e0;
+}
+
+.pairButton {
+    background-color: #63a4ff;
+}
+
+.pairButton:hover {
+    background-color: #6daeff;
+}
+
+.registerButton {
+    border-color: #1976d2;
+    background-color: #1976d2;
+    color: #000000;
+}
+
+.registerButton:hover {
+    border-color: #2380dc;
+    background-color: #2380dc;
+}
+
+.memory-table-descr {
+    background-color: #9a0007;
+    border: 1px solid #9a0007;
+}
+
+.memoryBlock {
+    background-color: #ff6659;
+    border: 1px solid #ff6659;
+    color: #000000;
+}
+
+.microcode-table-descr {
+    background-color: #6a0080;
+    border: 1px solid #6a0080;
+}
+
+.microcodeBlock{
+    background-color: #d05ce3;
+    border: 1px solid #d05ce3;
+    color: #000000;
+}
+
+
+.svrSelected {
+    background-color: #004ba0 !important;
+}
+
+.OPSelected {
+    background-color: #0097a7;
+}
+/*
+.ace-tm {
+    background-color: #dedede !important;
+}
+*/
+#freq {
+    background-color: #52c7b8;
+    border: none;
+}
+#buttons-grid, #clock-grid, #logo {
+    background-color: #009688;
+}
+
+#buttons-grid button, #clock-grid button, #logo button, #logo span, #logo select {
+    color: #000000;
+    background-color: #52c7b8;
+}
+
+#buttons-grid button:hover, #clock-grid button:hover{
+    background-color: #5cd1c2;
+}
+
+
+#logo select {
+    background-color: transparent;
+}
+
+#logo select:hover {
+    background-color: #52c7b8;
+}
+
+#body-grid {
+    /*background-color: #009688;*/
+}
+
+#externalDataBus {
+    background-color: #ffb300;
+}
+
+#internalDataBus {
+    background-color: #ffb300;
+}
+
+#internalDataBus input {
+    background-color: transparent;
+}
+
+#internalDataBus input:hover {
+    background-color: #ffbd0a;
+}
+
+#memory-grid {
+    background-color: #d32f2f;
+    color: #fafafa;
+}
+
+#controlUnit-grid {
+    background-color: #9c27b0;
+    color: #fafafa;
+}
+
+#registers-grid {
+    background-color: #1976d2;
+    color: #fafafa;
+}
+
+#registers-grid .nameBlock button{
+    background-color: #63a4ff;
+    color: #000000;
+}
+
+#registers-grid .nameBlock button:hover{
+    background-color: #5986e1;
+    color: #000000;
+}
+
+
+#registers-grid button{
+    border: none;
+}
+
+#alu-grid {
+    background-color: #388e3c;
+    color: #fafafa;
+}
+
+#aluSelect {
+    text-align: center;
+    background-color: #6abf69;
+    border: none;
+    padding: 4px;
+    color: #000000;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#aluSelect:hover {
+    background-color: #74c973;
+}
+
+#addressBus-grid {
+    background-color: #ff9800;
+}
+
+.flowButton {
+    background-color: #52c7b8;
+    border: 1px solid #52c7b8;
+    color: #000000;
+}
+
+.flowButton:hover {
+    background-color: #5cd1c2;
+    border: 1px solid #5cd1c2;
+    color: #000000;
+}
+
+
+.flowButton:disabled,
+.flowButton[disabled],
+.pairButton:disabled,
+.pairButton[disabled],
+.registerButton:disabled,
+.registerButton[disabled] {
+    background-color: #757575;
+    border: 1px solid #757575;
+    color: #000000;
+}
+
+.mem-highlighted {
+    background-color: #ff9800;
+}
+
+.highlighted, .umem-highlighted {
+    color: #fafafa !important;
+    background-color: rgba(0,0,0,0.2) !important;
+}
+
+.failed {
+    background-color: #F44336 !important;
+}

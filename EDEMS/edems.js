@@ -405,7 +405,8 @@ var Clusterize = require('clusterize.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
-require('brace/theme/textmate')
+require('brace/theme/solarized_dark')
+require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
@@ -439,17 +440,17 @@ gui.DrawMemoryTable = function () {
   gui.memoryData = []
 
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
+  var newline = '<tr><th><div class="memory-table-descr">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-memory' + i + ' class="table-descr block">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-memory' + i + ' class="memory-table-descr">0' + i + '</div></th>'
   }
   gui.memoryData.push(newline + '</tr>')
 
   // Creating other rows
     for (i = 0; i < (global.memory.length); i += 8) {
-    newline = '<th><div id=y-offset-memory' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-memory' + i + ' class="memory-table-descr">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock block">...</div></th>'
+      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock">...</div></th>'
     }
     gui.memoryData.push(newline + '</tr>')
   }
@@ -481,13 +482,13 @@ gui.DrawMemoryTable = function () {
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor');
   global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.memoryEditor.setTheme('ace/theme/textmate');
+  global.memoryEditor.setTheme('ace/theme/solarized_dark');
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor');
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly');
-  global.microcodeEditor.setTheme('ace/theme/textmate');
+  global.microcodeEditor.setTheme('ace/theme/solarized_dark');
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -495,17 +496,17 @@ gui.DrawMicrocodeTable = function () {
   gui.microcodeData = []
 
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
+  var newline = '<tr><th><div class="microcode-table-descr">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="table-descr block">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="microcode-table-descr">0' + i + '</div></th>'
   }
   gui.microcodeData.push(newline + '</tr>')
 
   // Creating other rows
   for (i = 0; i < (global.microcode.length); i += 8) {
-    newline = '<th><div id=y-offset-microcode' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-microcode' + i + ' class="microcode-table-descr">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock block">...</div></th>'
+      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock">...</div></th>'
     }
     gui.microcodeData.push(newline + '</tr>')
   }
@@ -653,7 +654,8 @@ gui.onclickSetup = function () {
   document.getElementById('OP-button').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
       if ($(this).hasClass('selectedRegister')){
-        $(this).removeClass('selectedRegister').addClass('OPSelected')
+        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+        $(this).addClass('OPSelected')
         return
       } else if ($(this).hasClass('OPSelected')){
         $(this).removeClass('OPSelected').addClass('selectedRegister')
@@ -1036,7 +1038,7 @@ gui.onChangeSetup = function () {
 
 module.exports = gui
 
-},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/textmate":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/textmate.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -23048,132 +23050,91 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
-},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/textmate.js":[function(require,module,exports){
-ace.define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
-"use strict";
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js":[function(require,module,exports){
+ace.define("ace/theme/solarized_dark",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
 
-exports.isDark = false;
-exports.cssClass = "ace-tm";
-exports.cssText = ".ace-tm .ace_gutter {\
-background: #f0f0f0;\
-color: #333;\
+exports.isDark = true;
+exports.cssClass = "ace-solarized-dark";
+exports.cssText = ".ace-solarized-dark .ace_gutter {\
+background: #01313f;\
+color: #d0edf7\
 }\
-.ace-tm .ace_print-margin {\
+.ace-solarized-dark .ace_print-margin {\
 width: 1px;\
-background: #e8e8e8;\
+background: #33555E\
 }\
-.ace-tm .ace_fold {\
-background-color: #6B72E6;\
+.ace-solarized-dark {\
+background-color: #002B36;\
+color: #93A1A1\
 }\
-.ace-tm {\
-background-color: #FFFFFF;\
-color: black;\
+.ace-solarized-dark .ace_entity.ace_other.ace_attribute-name,\
+.ace-solarized-dark .ace_storage {\
+color: #93A1A1\
 }\
-.ace-tm .ace_cursor {\
-color: black;\
+.ace-solarized-dark .ace_cursor,\
+.ace-solarized-dark .ace_string.ace_regexp {\
+color: #D30102\
 }\
-.ace-tm .ace_invisible {\
-color: rgb(191, 191, 191);\
+.ace-solarized-dark .ace_marker-layer .ace_active-line,\
+.ace-solarized-dark .ace_marker-layer .ace_selection {\
+background: rgba(255, 255, 255, 0.1)\
 }\
-.ace-tm .ace_storage,\
-.ace-tm .ace_keyword {\
-color: blue;\
+.ace-solarized-dark.ace_multiselect .ace_selection.ace_start {\
+box-shadow: 0 0 3px 0px #002B36;\
 }\
-.ace-tm .ace_constant {\
-color: rgb(197, 6, 11);\
+.ace-solarized-dark .ace_marker-layer .ace_step {\
+background: rgb(102, 82, 0)\
 }\
-.ace-tm .ace_constant.ace_buildin {\
-color: rgb(88, 72, 246);\
-}\
-.ace-tm .ace_constant.ace_language {\
-color: rgb(88, 92, 246);\
-}\
-.ace-tm .ace_constant.ace_library {\
-color: rgb(6, 150, 14);\
-}\
-.ace-tm .ace_invalid {\
-background-color: rgba(255, 0, 0, 0.1);\
-color: red;\
-}\
-.ace-tm .ace_support.ace_function {\
-color: rgb(60, 76, 114);\
-}\
-.ace-tm .ace_support.ace_constant {\
-color: rgb(6, 150, 14);\
-}\
-.ace-tm .ace_support.ace_type,\
-.ace-tm .ace_support.ace_class {\
-color: rgb(109, 121, 222);\
-}\
-.ace-tm .ace_keyword.ace_operator {\
-color: rgb(104, 118, 135);\
-}\
-.ace-tm .ace_string {\
-color: rgb(3, 106, 7);\
-}\
-.ace-tm .ace_comment {\
-color: rgb(76, 136, 107);\
-}\
-.ace-tm .ace_comment.ace_doc {\
-color: rgb(0, 102, 255);\
-}\
-.ace-tm .ace_comment.ace_doc.ace_tag {\
-color: rgb(128, 159, 191);\
-}\
-.ace-tm .ace_constant.ace_numeric {\
-color: rgb(0, 0, 205);\
-}\
-.ace-tm .ace_variable {\
-color: rgb(49, 132, 149);\
-}\
-.ace-tm .ace_xml-pe {\
-color: rgb(104, 104, 91);\
-}\
-.ace-tm .ace_entity.ace_name.ace_function {\
-color: #0000A2;\
-}\
-.ace-tm .ace_heading {\
-color: rgb(12, 7, 255);\
-}\
-.ace-tm .ace_list {\
-color:rgb(185, 6, 144);\
-}\
-.ace-tm .ace_meta.ace_tag {\
-color:rgb(0, 22, 142);\
-}\
-.ace-tm .ace_string.ace_regex {\
-color: rgb(255, 0, 0)\
-}\
-.ace-tm .ace_marker-layer .ace_selection {\
-background: rgb(181, 213, 255);\
-}\
-.ace-tm.ace_multiselect .ace_selection.ace_start {\
-box-shadow: 0 0 3px 0px white;\
-}\
-.ace-tm .ace_marker-layer .ace_step {\
-background: rgb(252, 255, 0);\
-}\
-.ace-tm .ace_marker-layer .ace_stack {\
-background: rgb(164, 229, 101);\
-}\
-.ace-tm .ace_marker-layer .ace_bracket {\
+.ace-solarized-dark .ace_marker-layer .ace_bracket {\
 margin: -1px 0 0 -1px;\
-border: 1px solid rgb(192, 192, 192);\
+border: 1px solid rgba(147, 161, 161, 0.50)\
 }\
-.ace-tm .ace_marker-layer .ace_active-line {\
-background: rgba(0, 0, 0, 0.07);\
+.ace-solarized-dark .ace_gutter-active-line {\
+background-color: #0d3440\
 }\
-.ace-tm .ace_gutter-active-line {\
-background-color : #dcdcdc;\
+.ace-solarized-dark .ace_marker-layer .ace_selected-word {\
+border: 1px solid #073642\
 }\
-.ace-tm .ace_marker-layer .ace_selected-word {\
-background: rgb(250, 250, 255);\
-border: 1px solid rgb(200, 200, 250);\
+.ace-solarized-dark .ace_invisible {\
+color: rgba(147, 161, 161, 0.50)\
 }\
-.ace-tm .ace_indent-guide {\
-background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\
+.ace-solarized-dark .ace_keyword,\
+.ace-solarized-dark .ace_meta,\
+.ace-solarized-dark .ace_support.ace_class,\
+.ace-solarized-dark .ace_support.ace_type {\
+color: #859900\
 }\
-";
+.ace-solarized-dark .ace_constant.ace_character,\
+.ace-solarized-dark .ace_constant.ace_other {\
+color: #CB4B16\
+}\
+.ace-solarized-dark .ace_constant.ace_language {\
+color: #B58900\
+}\
+.ace-solarized-dark .ace_constant.ace_numeric {\
+color: #D33682\
+}\
+.ace-solarized-dark .ace_fold {\
+background-color: #268BD2;\
+border-color: #93A1A1\
+}\
+.ace-solarized-dark .ace_entity.ace_name.ace_function,\
+.ace-solarized-dark .ace_entity.ace_name.ace_tag,\
+.ace-solarized-dark .ace_support.ace_function,\
+.ace-solarized-dark .ace_variable,\
+.ace-solarized-dark .ace_variable.ace_language {\
+color: #268BD2\
+}\
+.ace-solarized-dark .ace_string {\
+color: #2AA198\
+}\
+.ace-solarized-dark .ace_comment {\
+font-style: italic;\
+color: #657B83\
+}\
+.ace-solarized-dark .ace_indent-guide {\
+background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNg0Db1ZVCxc/sPAAd4AlUHlLenAAAAAElFTkSuQmCC) right repeat-y\
+}";
 
 var dom = acequire("../lib/dom");
 dom.importCssString(exports.cssText, exports.cssClass);

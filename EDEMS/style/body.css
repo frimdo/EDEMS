@@ -206,12 +206,14 @@
 
 #incr, #decr {
     font-weight: bold;
+    margin: 2px;
     float: left;
     width: 9%;
 }
 
 #svr {
     float: right;
+    margin: 2px;
 }
 
 #scrollArea-memory, #scrollArea-microcode {
@@ -227,8 +229,11 @@
     position: relative;
     float: right;
     top: 40px;
-    font-size: 90%;
+    font-size: 60%;
     margin: 8px;
     z-index: 100;
 }
 
+#EdataBus, #addressBus {
+    font-size: 120%;
+}

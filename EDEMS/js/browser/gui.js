@@ -4,7 +4,8 @@ var Clusterize = require('clusterize.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
-require('brace/theme/textmate')
+require('brace/theme/solarized_dark')
+require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
@@ -38,17 +39,17 @@ gui.DrawMemoryTable = function () {
   gui.memoryData = []
 
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
+  var newline = '<tr><th><div class="memory-table-descr">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-memory' + i + ' class="table-descr block">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-memory' + i + ' class="memory-table-descr">0' + i + '</div></th>'
   }
   gui.memoryData.push(newline + '</tr>')
 
   // Creating other rows
     for (i = 0; i < (global.memory.length); i += 8) {
-    newline = '<th><div id=y-offset-memory' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-memory' + i + ' class="memory-table-descr">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock block">...</div></th>'
+      newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock">...</div></th>'
     }
     gui.memoryData.push(newline + '</tr>')
   }
@@ -80,13 +81,13 @@ gui.DrawMemoryTable = function () {
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor');
   global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.memoryEditor.setTheme('ace/theme/textmate');
+  global.memoryEditor.setTheme('ace/theme/solarized_dark');
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor');
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly');
-  global.microcodeEditor.setTheme('ace/theme/textmate');
+  global.microcodeEditor.setTheme('ace/theme/solarized_dark');
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -94,17 +95,17 @@ gui.DrawMicrocodeTable = function () {
   gui.microcodeData = []
 
   // Creating x-offset row
-  var newline = '<tr><th><div class="table-descr block">0x</div></th>'
+  var newline = '<tr><th><div class="microcode-table-descr">0x</div></th>'
   for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="table-descr block">0' + i + '</div></th>'
+    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="microcode-table-descr">0' + i + '</div></th>'
   }
   gui.microcodeData.push(newline + '</tr>')
 
   // Creating other rows
   for (i = 0; i < (global.microcode.length); i += 8) {
-    newline = '<th><div id=y-offset-microcode' + i + ' class="table-descr block">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-microcode' + i + ' class="microcode-table-descr">'+i.toString(16)+'</div></th>'
     for (var y = 0; y < 8; y++) {
-      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock block">...</div></th>'
+      newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock">...</div></th>'
     }
     gui.microcodeData.push(newline + '</tr>')
   }
@@ -252,7 +253,8 @@ gui.onclickSetup = function () {
   document.getElementById('OP-button').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
       if ($(this).hasClass('selectedRegister')){
-        $(this).removeClass('selectedRegister').addClass('OPSelected')
+        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+        $(this).addClass('OPSelected')
         return
       } else if ($(this).hasClass('OPSelected')){
         $(this).removeClass('OPSelected').addClass('selectedRegister')
