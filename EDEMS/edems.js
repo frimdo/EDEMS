@@ -11,7 +11,7 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'keyword.control.assembly',
-        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|READ|WRT|SETB|RETB)\\b',
+        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
         caseInsensitive: true },
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
@@ -767,11 +767,11 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('WRT').onclick = function () {
-    CU.uinstr.wrt()
+    CU.uinstr.wt()
   }
 
   document.getElementById('REA').onclick = function () {
-    CU.uinstr.read()
+    CU.uinstr.rd()
   }
 
   document.getElementById('AL2').onclick = function () {
@@ -1843,11 +1843,11 @@ CU.doUInstruction = function () {
       case 'END':
         CU.uinstr.end()
         break
-      case 'READ':
-        CU.uinstr.read()
+      case 'RD':
+        CU.uinstr.rd()
         break
-      case 'WRT':
-        CU.uinstr.wrt()
+      case 'WT':
+        CU.uinstr.wt()
         break
       default:
         throw new Error('CU.doUInstruction: Unknown opcode:' + opcode)
@@ -1917,9 +1917,9 @@ CU.decode = function (opcode) {
             case '2':
               return {Name: 'END'}
             case '4':
-              return {Name: 'READ'}
+              return {Name: 'RD'}
             case '5':
-              return {Name: 'WRT'}
+              return {Name: 'WT'}
             default:
               throw new Error('CU.decode: wrong opcode: 0x' + opcode)
           }
@@ -1952,11 +1952,11 @@ CU.uinstr.end = function () {
   // TODO: dopsat
 }
 
-CU.uinstr.read = function () {
+CU.uinstr.rd = function () {
   global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
 }
 
-CU.uinstr.wrt = function () {
+CU.uinstr.wt = function () {
   global.memory[global.addressBus.dec] = global.dataBus.dec
   global.onMemoryChange()
 }
@@ -2488,10 +2488,10 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('READ'):
+      case ('RD'):
         output.push('7F4')
         break
-      case ('WRT'):
+      case ('WT'):
         output.push('7F5')
         break
       case ('SETB'):

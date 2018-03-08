@@ -366,11 +366,11 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('WRT').onclick = function () {
-    CU.uinstr.wrt()
+    CU.uinstr.wt()
   }
 
   document.getElementById('REA').onclick = function () {
-    CU.uinstr.read()
+    CU.uinstr.rd()
   }
 
   document.getElementById('AL2').onclick = function () {

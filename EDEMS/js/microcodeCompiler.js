@@ -190,10 +190,10 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('READ'):
+      case ('RD'):
         output.push('7F4')
         break
-      case ('WRT'):
+      case ('WT'):
         output.push('7F5')
         break
       case ('SETB'):
