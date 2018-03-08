@@ -80,9 +80,6 @@ CU.doUInstruction = function () {
       case 'END':
         CU.uinstr.end()
         break
-      case 'HLT':
-        CU.uinstr.hlt()
-        break
       case 'READ':
         CU.uinstr.read()
         break
@@ -156,8 +153,6 @@ CU.decode = function (opcode) {
               return {Name: 'DB>O'}
             case '2':
               return {Name: 'END'}
-            case '3':
-              return {Name: 'HLT'}
             case '4':
               return {Name: 'READ'}
             case '5':
@@ -192,12 +187,6 @@ CU.uinstr.end = function () {
   global.instructionRegister.val = global.memory[global.registerPCH.decPair]
   global.registerUPCH.valPair = 0 //neco jinyho nez 0
   // TODO: dopsat
-}
-
-CU.uinstr.hlt = function () {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
-  // Potřebujeme hlt?
 }
 
 CU.uinstr.read = function () {

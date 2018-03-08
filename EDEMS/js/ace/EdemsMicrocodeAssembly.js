@@ -10,7 +10,7 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'keyword.control.assembly',
-        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|HLT|READ|WRT|SETB|RETB)\\b',
+        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|READ|WRT|SETB|RETB)\\b',
         caseInsensitive: true },
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',

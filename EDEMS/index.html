@@ -101,6 +101,7 @@ end start
         <div id="controlUnit-grid" class="block">
             <div class="nameBlock">
                 Control Unit
+                <button id="compileMicrocode" type="button">compile</button>
             </div>
             <div class="insideBlock">
                 <div id="microcode-editor">COOP 0x12
@@ -111,8 +112,8 @@ DB>R OP
 AB>W TMP1
 INCB A
 DECB F
-INCW F
-DECW UPCH
+INCW PCH
+DECW F
 JOI PCL
 JON tmp0
 JOFI C
@@ -124,7 +125,6 @@ O>DB
 DB>O
 END
 JMP 0b101
-HLT
 READ
 WRT
 SETB F 2

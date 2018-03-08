@@ -125,9 +125,10 @@ select {
     flex-direction: column;
 }
 
-.memoryBlock, .microcodeBlock, .table-descr {
+.memoryBlock, .microcodeBlock, .microcode-table-descr, .memory-table-descr {
     border: 1px solid #2d2d2d;
     font-size: 100%;
     padding: 1px;
+    min-width: 34.55px;
 }
 

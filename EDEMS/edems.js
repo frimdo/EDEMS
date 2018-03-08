@@ -11,7 +11,7 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'keyword.control.assembly',
-        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|HLT|READ|WRT|SETB|RETB)\\b',
+        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|READ|WRT|SETB|RETB)\\b',
         caseInsensitive: true },
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
@@ -402,6 +402,7 @@ module.exports = BinNumber
 var $ = require('jquery')
 var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
+var uCompiler = require('../microcodeCompiler.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
@@ -532,6 +533,17 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+  document.getElementById('compileMicrocode').onclick = function () {
+    try {
+      var code = uCompiler.compile(global.microcodeEditor.getValue())
+    } catch(Error) {
+      alert(Error)
+    }
+    console.log(code)
+    Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
+    global.onMicrocodeChange()
+  }
+
   document.getElementById('decr').onclick = function () {
     if(document.getElementsByClassName('OPSelected')[0] !== undefined){
       return
@@ -1038,7 +1050,7 @@ gui.onChangeSetup = function () {
 
 module.exports = gui
 
-},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -1831,9 +1843,6 @@ CU.doUInstruction = function () {
       case 'END':
         CU.uinstr.end()
         break
-      case 'HLT':
-        CU.uinstr.hlt()
-        break
       case 'READ':
         CU.uinstr.read()
         break
@@ -1907,8 +1916,6 @@ CU.decode = function (opcode) {
               return {Name: 'DB>O'}
             case '2':
               return {Name: 'END'}
-            case '3':
-              return {Name: 'HLT'}
             case '4':
               return {Name: 'READ'}
             case '5':
@@ -1943,12 +1950,6 @@ CU.uinstr.end = function () {
   global.instructionRegister.val = global.memory[global.registerPCH.decPair]
   global.registerUPCH.valPair = 0 //neco jinyho nez 0
   // TODO: dopsat
-}
-
-CU.uinstr.hlt = function () {
-  console.log('This Microinstruction is not implemented yet!')
-  // TODO: dopsat
-  // Potřebujeme hlt?
 }
 
 CU.uinstr.read = function () {
@@ -2289,40 +2290,6 @@ $(document).ready(function () {
   gui.refresh()
 
   global.advanced = false
-
-
-
-
-  var input = `COOP 0x12
-ALU 
-R>DB A
-R>AB A
-W>AB B
-DB>R OP
-AB>W TMP1
-INCB A
-DECB F
-INCW F
-DECW UPCH
-JOI PCL
-JON tmp0
-JOFI C
-JOFN D
-C>DB 0x1
-SVR E F
-SVW S D
-O>DB
-DB>O
-END
-JMP 0b101
-HLT
-READ
-WRT
-SETB F 2
-RETB B 0b101
-`
-
-  console.log(uComp.compile(input))
 })
 
 window.onbeforeunload = function() {
@@ -2520,9 +2487,6 @@ microcodeCompiler.compile = function (input) {
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
-        break
-      case ('HLT'):
-        output.push('7F3')
         break
       case ('READ'):
         output.push('7F4')
