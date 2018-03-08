@@ -2,7 +2,6 @@
     border: 0;
     grid-area: body-grid;
     max-height: 90vh;
-    background-color: rgba(0,0,0,0.1);
 
     display: grid;
     grid-row-gap: 3px;
@@ -26,9 +25,7 @@
 #body-grid:not(.advanced) {
     border: 0;
     grid-area: body-grid;
-    /*background-color: #a5c17d;*/
     max-height: 90vh;
-    background-color: rgba(0,0,0,0.1);
 
     display: grid;
     grid-row-gap: 3px;
@@ -54,7 +51,6 @@
     #body-grid.advanced {
         grid-area: body-grid;
         max-height: 90vh;
-        /*background-color: #a5c17d;*/
 
         display: grid;
         grid-row-gap: 3px;
@@ -76,7 +72,6 @@
     #body-grid:not(.advanced) {
         border: 0;
         grid-area: body-grid;
-        /*background-color: #a5c17d;*/
         max-height: 90vh;
 
         display: grid;
@@ -99,26 +94,18 @@
 
 #externalDataBus {
     grid-area: EDB;
-    background-color: rgba(193,137,119, 0.8);
 }
 
 #internalDataBus {
     grid-area: DAB;
-    background-color: rgba(193,137,119,0.8);
 }
-
 
 #internalDataBus input {
     /*border: 1px solid #2d2d2d;*/
     border: none;
     padding-bottom: 1px;
     text-align: center;
-    background-color: transparent;
     width: 100%;
-}
-
-#internalDataBus input:hover{
-    background-color: #e7a793;
 }
 
 #memory-grid {
@@ -127,7 +114,6 @@
     padding: 5px;
     overflow-y: auto;
     grid-area: MEM;
-    background-color: rgba(209,123,175,0.8);
 }
 
 #controlUnit-grid {
@@ -136,7 +122,6 @@
     padding: 5px;
     overflow-y: auto;
     grid-area: COU;
-    background-color: rgba(163,138,193,0.8);
 }
 
 #registers-grid {
@@ -145,7 +130,6 @@
     padding: 5px;
 
     grid-area: REG;
-    background-color: rgba(104,134,193,0.8);
 }
 
 #alu-grid {
@@ -153,36 +137,74 @@
     flex-direction: column;
     padding: 5px;
     grid-area: ALU;
-    background-color: rgba(128,163,193,0.8);
 }
 
 #addressBus-grid {
     grid-area: ADB;
-    background-color: rgba(193,160,111,0.8);
 }
 
-#REA {grid-area: REA;}
-#WRT {grid-area: WRT;}
-#D2D {grid-area: D2D;}
-#M2C {grid-area: M2C;}
-#A2M {grid-area: A2M;}
-#C2D {grid-area: C2D;}
-#R2D {grid-area: R2D;}
-#D2R {grid-area: D2R;}
-#W2A {grid-area: W2A;}
-#A2W {grid-area: A2W;}
-#AL2 {grid-area: AL2;}
-#D2L {grid-area: D2L;}
-#RAL {grid-area: RAL;}
-#ALR {grid-area: ALR;}
+#REA {
+    grid-area: REA;
+}
 
+#WRT {
+    grid-area: WRT;
+}
+
+#D2D {
+    grid-area: D2D;
+}
+
+#M2C {
+    grid-area: M2C;
+}
+
+#A2M {
+    grid-area: A2M;
+}
+
+#C2D {
+    grid-area: C2D;
+}
+
+#R2D {
+    grid-area: R2D;
+}
+
+#D2R {
+    grid-area: D2R;
+}
+
+#W2A {
+    grid-area: W2A;
+}
+
+#A2W {
+    grid-area: A2W;
+}
+
+#AL2 {
+    grid-area: AL2;
+}
+
+#D2L {
+    grid-area: D2L;
+}
+
+#RAL {
+    grid-area: RAL;
+}
+
+#ALR {
+    grid-area: ALR;
+}
 
 #registers-grid .insideBlock {
     padding-bottom: 0;
     overflow-y: auto;
 }
 
-#incr, #decr{
+#incr, #decr {
     font-weight: bold;
     float: left;
     width: 9%;
@@ -191,7 +213,6 @@
 #svr {
     float: right;
 }
-
 
 #scrollArea-memory, #scrollArea-microcode {
     flex-grow: 1;

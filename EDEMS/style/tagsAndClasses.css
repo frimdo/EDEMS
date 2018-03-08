@@ -3,14 +3,12 @@
     font-size: 100%;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
-    color: #2d2d2d;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 body {
-    background-color: #cccccc;
     font-family: inherit;
 }
 
@@ -36,24 +34,15 @@ div {
     /*border: 1px solid #2d2d2d;*/
     padding: 2px;
     text-align: center;
-    color: #2d2d2d;
 }
 
 button {
-    background-color: #dedede;
     border: 1px solid #333333;
-    color: #2d2d2d;
-}
-
-button:hover {
-    background-color: #f9f9f9;
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
     border: 0;
-    background-color: #9e9e9e;
-    color: #666666;
 }
 
 input {
@@ -65,20 +54,6 @@ select {
     width: 100%;
 }
 
-.mem-highlighted {
-    background-color: #c1a06f;
-}
-
-.highlighted, .umem-highlighted {
-    color: #cccccc !important;
-    background-color: #707070 !important;
-}
-
-.failed {
-    color: #cccccc;
-    background-color: #70393b !important;
-}
-
 .flowButton {
     font-weight: bold;
     font-size: 150%
@@ -86,17 +61,10 @@ select {
 
 .selectedPair {
     border: 1px solid #2d2d2d;
-    background-color: transparent;
-    /*background-color: rgba(104,134,193,1);*/
 }
 
-.selectedRegister{
+.selectedRegister {
     border: 1px solid #2d2d2d;
-    background-color: rgba(104,134,193,1);
-}
-
-.selectedRegister:hover, .selectedPair:hover {
-    background-color: rgba(104,134,193,1);
 }
 
 .registerButton {
@@ -122,10 +90,6 @@ select {
     float: none;
 }
 
-.registerButton span {
-    color: #4b4b4b;
-}
-
 .nameBlock {
     height: 30px;
     line-height: 25px;
@@ -136,18 +100,6 @@ select {
 .nameBlock button {
     font-size: 60%;
     width: 14%;
-}
-
-.table-descr {
-    background-color: #c1c1c1;
-}
-
-.svrSelected {
-    background-color: #5aa2a0;
-}
-
-.OPSelected {
-    background-color: #a38ac1;
 }
 
 .hidden {
@@ -161,17 +113,14 @@ select {
     font-size: 16px !important;
 }
 
-.insideBlock{
+.insideBlock {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-.memoryBlock, .microcodeBlock, .table-descr{
+.memoryBlock, .microcodeBlock, .table-descr {
     border: 1px solid #2d2d2d;
     font-size: 65%;
 }
 
-.ace-tm {
-    background-color: #dedede !important;
-}

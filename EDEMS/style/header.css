@@ -2,21 +2,18 @@
     font-size: 80%;
     border: 0;
     grid-area: header-grid;
-    /*background-color: #81c19d;*/
 
     display: grid;
     grid-row-gap: 15px;
     grid-column-gap: 15px;
     grid-template-columns: 1fr 0.5fr 2fr 0.5fr 1.5fr;
-    grid-template-areas:
-            "buttons-grid . clock-grid . logo";
+    grid-template-areas: "buttons-grid . clock-grid . logo";
 }
 
 @media (max-width: 990px) {
     #header-grid {
         border: 0;
         grid-area: header-grid;
-        /*background-color: #81c19d;*/
 
         display: grid;
         grid-row-gap: 15px;
@@ -36,17 +33,14 @@
     display: flex;
     justify-content: space-around;
     grid-area: buttons-grid;
-/*background-color: #a5a6c1;*/
-    background-color: rgba(255,255,255,0.5);
-    /*background-color: rgba(162, 214, 179, 0.8);*/
 }
 
-#buttons-grid button, #clock-grid button{
+#buttons-grid button, #clock-grid button {
     margin: 5px;
     flex-grow: 10;
 }
 
-#clock-grid span{
+#clock-grid span {
     max-width: 30%;
     font-size: 120%;
     margin: 5px;
@@ -61,13 +55,9 @@
     display: flex;
     justify-content: center;
     grid-area: clock-grid;
-/*background-color: #97a9c1;*/
-    background-color: rgba(255,255,255,0.5);
 }
 
 #logo {
-/*background-color: #c18977;*/
-    background-color: rgba(255,255,255,0.5);
     grid-area: logo;
     font-weight: bold;
     font-size: 370%;
@@ -81,15 +71,4 @@
     margin: 0;
     padding: 0;
     border: none;
-    background-color: transparent;
-}
-#logo select:hover {
-    background-color: inherit;
-}
-
-body{
-    background-image: url("../img/background.jpg");
-    background-repeat: no-repeat;
-    background-position: right top;
-    background-attachment: fixed;
 }

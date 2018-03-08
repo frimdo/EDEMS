@@ -2,7 +2,7 @@
 @import './style/tagsAndClasses.css';
 @import './style/header.css';
 @import './style/body.css';
-
+@import './style/classic-colortheme.css';
 
 #main-grid {
     border: 0;
