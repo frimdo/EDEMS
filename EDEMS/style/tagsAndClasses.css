@@ -41,7 +41,7 @@ div {
 
 button {
     background-color: #dedede;
-    border: 2px solid #333333;
+    border: 1px solid #333333;
     color: #2d2d2d;
 }
 
@@ -51,8 +51,8 @@ button:hover {
 
 button:disabled,
 button[disabled]{
-    border: 1px solid #999999;
-    background-color: #cccccc;
+    border: 0;
+    background-color: #9e9e9e;
     color: #666666;
 }
 
@@ -70,7 +70,7 @@ select {
 }
 
 .highlighted, .umem-highlighted {
-    color: #cccccc;
+    color: #cccccc !important;
     background-color: #707070 !important;
 }
 
@@ -84,13 +84,19 @@ select {
     font-size: 150%
 }
 
-.selectedRegister, .selectedPair {
-    border: 2px solid #2d2d2d;
-    background-color: #c8cbef;
+.selectedPair {
+    border: 1px solid #2d2d2d;
+    background-color: transparent;
+    /*background-color: rgba(104,134,193,1);*/
+}
+
+.selectedRegister{
+    border: 1px solid #2d2d2d;
+    background-color: rgba(104,134,193,1);
 }
 
 .selectedRegister:hover, .selectedPair:hover {
-    background-color: #c8cbef;
+    background-color: rgba(104,134,193,1);
 }
 
 .registerButton {
@@ -105,7 +111,7 @@ select {
 .pairBlock {
     font-size: 60%;
     margin-bottom: 8px;
-    height: 64px;
+    height: 62px;
 }
 
 .pairButton {
@@ -117,7 +123,7 @@ select {
 }
 
 .registerButton span {
-    color: #636363;
+    color: #4b4b4b;
 }
 
 .nameBlock {

@@ -362,11 +362,13 @@ gui.onclickSetup = function () {
   document.getElementById('AL2').onclick = function () {
     alu.doOperation(document.getElementById('aluSelect').selectedIndex + 1)
   }
+}
 
-  document.getElementById('advanced').onclick = function () {
-    global.advanced = !global.advanced
-    if(global.advanced){
-      $('#advanced').html('Basic')
+gui.onChangeSetup = function () {
+  document.getElementById('selectEdemsType').onchange = function () {
+    global.advanced = this.value
+    if(global.advanced == 'advanced'){
+      $('#logo span').html('advanced')
       $('#body-grid').addClass('advanced')
 
       $('#TMP0-pair').removeClass('hidden')
@@ -386,8 +388,8 @@ gui.onclickSetup = function () {
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
-    } else {
-      $('#advanced').html('Advanced')
+    } else if(global.advanced == 'basic') {
+      $('#logo span').html('basic')
       $('#body-grid').removeClass('advanced')
 
       $('#TMP0-pair').addClass('hidden')
@@ -409,9 +411,7 @@ gui.onclickSetup = function () {
       $('#M2C').addClass('hidden')
     }
   }
-}
 
-gui.onChangeSetup = function () {
   global.onMicrocodeChange = function () {
     var elements = document.getElementsByClassName('microcodeBlock')
     for (var i = 0; i < elements.length; i++) {

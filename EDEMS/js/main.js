@@ -40,7 +40,6 @@ $(document).ready(function () {
   gui.refresh()
 
   global.advanced = false
-  document.getElementById('advanced').onclick()
 
 
 

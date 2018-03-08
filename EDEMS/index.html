@@ -16,7 +16,7 @@
             <input type="file" id="file" name="file" enctype="multipart/form-data"/>
             <button type="button" id="import">Import</button>
             <button type="button" id="export">Export</button>
-            <button type="button" id="advanced">Advanced</button>
+            <!--<button type="button" id="advanced">Advanced</button>-->
         </div>
 
         <div id="clock-grid"  class="block">
@@ -27,7 +27,12 @@
         </div>
 
         <div id="logo"  class="block">
-            EDEMS
+            EDEMS<select id="selectEdemsType">
+                <option value="basic">basic</option>
+                <option value="advanced">advanced</option>
+                <option value="unreal">unreal</option>
+            </select>
+            <!--<span>advanced</span>-->
         </div>
     </div>
 
@@ -61,6 +66,7 @@
         <div id="memory-grid" class="block">
             <div class="nameBlock block">
                 Memory
+                <button id="compileMemory" type="button">compile</button>
             </div>
             <div class="insideBlock block">
                 <div id="memory-editor" class="block">.model small
