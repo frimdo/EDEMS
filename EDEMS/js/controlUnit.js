@@ -363,11 +363,8 @@ CU.uinstr.svw = function (operand1, operand2) {
 }
 
 CU.uinstr.jmp = function (operand) {
-  if (hex2num(operand) === 0) {
-    global.registerUPCH.valPair = 2047
-    return
-  }
-  global.registerUPCH.valPair = hex2num(operand) - 1
+  global.registerUPCH.valPair = hex2num(operand)
+  global.registerUPCH.decrPair()
 }
 
 CU.uinstr.setb = function (operand1, operand2) {

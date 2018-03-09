@@ -71,7 +71,7 @@ ALU.add = function () {
 }
 
 ALU.sub = function () {
-  global.dataBus.val = global.registerTMP0.dec - global.dataBus.dec
+  global.dataBus.val = global.dataBus.dec - global.registerTMP0.dec
 }
 
 ALU.neg = function () {

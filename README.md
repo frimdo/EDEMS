@@ -92,8 +92,8 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 
 ### Operations
 
-1. ADD - **ADD** numbers: DB = TMP + DB
-1. SUB - **SUB**stract: DB = TMP + TwosComplement(DB)
+1. ADD - **ADD** numbers: DB = DB + TMP
+1. SUB - **SUB**stract: DB = TwosComplement(DB) + TMP
 1. NEG - create **NEG**ative number: DB = TwosComplement(DB)
 1. NOT - bitwise **NOT** bits: DB = ~DB
 1. AND - bitwise **AND** bits: DB = DB && TMP
