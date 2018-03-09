@@ -126,12 +126,12 @@ body {
     background-color: #ffbd0a;
 }
 
-#memory-grid {
+#memory-grid, #compileMemory {
     background-color: #d32f2f;
     color: #fafafa;
 }
 
-#controlUnit-grid {
+#controlUnit-grid , #compileMicrocode {
     background-color: #9c27b0;
     color: #fafafa;
 }

@@ -226,6 +226,7 @@
 }
 
 #compileMemory, #compileMicrocode {
+    padding: 4px;
     position: relative;
     float: right;
     top: 40px;
