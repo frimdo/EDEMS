@@ -46,7 +46,7 @@ Rewriting only one of the registers is not recomanded, since you would jump to a
 
 UPCH
 
-|NA      |NA      |NA      |NA      |NA      | uPC[10]| uPC[9] | uPC[8]| 
+|NA      |NA      |NA      |NA      |NA      | uPC[10]| uPC[9] | uPC[8]|
 |--------|--------|--------|--------|--------|--------|--------|-------|
 |uPCH[7] |uPCH[6] |uPCH[5] |uPCH[4] |uPCH[3] |uPCH[2] |uPCH[1] |uPCH[0]|
 
