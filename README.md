@@ -46,15 +46,15 @@ Rewriting only one of the registers is not recomanded, since you would jump to a
 
 UPCH
 
-|NA      |NA      |NA      |NA      |NA      | uPC[10]| uPC[9] | uPC[8]|
-|--------|--------|--------|--------|--------|--------|--------|-------|
 |uPCH[7] |uPCH[6] |uPCH[5] |uPCH[4] |uPCH[3] |uPCH[2] |uPCH[1] |uPCH[0]|
+|--------|--------|--------|--------|--------|--------|--------|-------|
+|NA      |NA      |NA      |NA      |NA      | uPC[10]| uPC[9] | uPC[8]|
 
 UPCL
 
-|uPC[7]  |uPC[6]  |uPC[5]  |uPC[4]  |uPC[3]  |uPC[2]  |uPC[1]  |uPC[0] |
-|--------|--------|--------|--------|--------|--------|--------|-------|
 |uPCL[7] |uPCL[6] |uPCL[5] |uPCL[4] |uPCL[3] |uPCL[2] |uPCL[1] |uPCL[0]|
+|--------|--------|--------|--------|--------|--------|--------|-------|
+|uPC[7]  |uPC[6]  |uPC[5]  |uPC[4]  |uPC[3]  |uPC[2]  |uPC[1]  |uPC[0] |
 
 ### F register
 F register contains ALU flags. Those are:
