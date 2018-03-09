@@ -71,61 +71,61 @@ var ALU = {}
 
 ALU.doOperation = function (x) {
   switch (x) {
-    case 1:
+    case 0:
       ALU.add()
       break
-    case 2:
+    case 1:
       ALU.sub()
       break
-    case 3:
+    case 2:
       ALU.neg()
       break
-    case 4:
+    case 3:
       ALU.not()
       break
-    case 5:
+    case 4:
       ALU.and()
       break
-    case 6:
+    case 5:
       ALU.orr()
       break
-    case 7:
+    case 6:
       ALU.xor()
       break
-    case 8:
+    case 7:
       ALU.shr()
       break
-    case 9:
+    case 8:
       ALU.shl()
       break
-    case 10:
+    case 9:
       ALU.ror()
       break
-    case 11:
+    case 10:
       ALU.rol()
       break
-    case 12:
+    case 11:
       ALU.rcr()
       break
-    case 13:
+    case 12:
       ALU.rcl()
       break
-    case 14:
+    case 13:
       ALU.asr()
       break
-    case 15:
+    case 14:
       ALU.asl()
       break
-    case 16:
+    case 15:
       ALU.bsr()
       break
-    case 17:
+    case 16:
       ALU.bsl()
       break
-    case 18:
+    case 17:
       ALU.equ()
       break
-    case 19:
+    case 18:
       ALU.oop()
       break
     default:

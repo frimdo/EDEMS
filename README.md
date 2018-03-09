@@ -92,25 +92,27 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 
 ### Operations
 
-1. ADD - **ADD** numbers: DB = DB + TMP
-1. SUB - **SUB**stract: DB = TwosComplement(DB) + TMP
-1. NEG - create **NEG**ative number: DB = TwosComplement(DB)
-1. NOT - bitwise **NOT** bits: DB = ~DB
-1. AND - bitwise **AND** bits: DB = DB && TMP
-1. ORR - bitwise **OR** bits: DB = DB || TMP
-1. XOR - bitwise **XOR** bits: DB = DB ^ TMP
-1. SHR - **SH**ift **R**ight DB
-1. SHL - **SH**ift **L**eft
-1. ROR - **RO**tate **R**ight DB
-1. ROL - **RO**tate **L**eft 
-1. RCR - **R**otate **R**ight through **C**arry DB
-1. RCL - **R**otate **L**eft through **C**arry
-1. ASR - **A**rithmetic **S**hift **R**ight
-1. ASL - **A**rithmetic **S**hift **L**eft
-1. BSR - **B**CD **S**hift **R**ight
-1. BSL - **B**CD **S**hift **L**eft
-1. EQU - compare if **EQU**al to zero: DB = DB == 0
-1. OOP - Do **O**peration defined by **OP** register.
+| name | number | operation description                               |
+|------|--------|-----------------------------------------------------|
+|ADD   |0       | **ADD** numbers: DB = DB + TMP                      |
+|SUB   |1       | **SUB**stract: DB = TwosComplement(DB) + TMP        |
+|NEG   |2       | create **NEG**ative number: DB = TwosComplement(DB) |
+|NOT   |3       | bitwise **NOT** bits: DB = ~DB                      |
+|AND   |4       | bitwise **AND** bits: DB = DB && TMP                |
+|ORR   |5       | bitwise **OR** bits: DB = DB &#124;&#124; TMP       |
+|XOR   |6       | bitwise **XOR** bits: DB = DB ^ TMP                 |
+|SHR   |7       | **SH**ift **R**ight DB                              |
+|SHL   |8       | **SH**ift **L**eft                                  |
+|ROR   |9       | **RO**tate **R**ight DB                             |
+|ROL   |10      | **RO**tate **L**eft                                 |
+|RCR   |11      | **R**otate **R**ight through **C**arry DB           |
+|RCL   |12      | **R**otate **L**eft through **C**arry               |
+|ASR   |13      | **A**rithmetic **S**hift **R**ight                  |
+|ASL   |14      | **A**rithmetic **S**hift **L**eft                   |
+|BSR   |15      | **B**CD **S**hift **R**ight                         |
+|BSL   |16      | **B**CD **S**hift **L**eft                          |
+|EQU   |17      | compare if **EQU**al to zero: DB = DB == 0          |
+|OOP   |18      | Do **O**peration defined by **OP** register.        |
 
 
 ## uInstructon set
