@@ -537,6 +537,9 @@ gui.onclickSetup = function () {
       console.log(code)
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
+      for (let i = 0; i<code.length ; i++){
+        highlight('#microcode' + i)
+      }
     } catch (Error) {
       alert(Error)
     }
@@ -1039,6 +1042,13 @@ gui.onChangeSetup = function () {
       $('#instructionRegister').removeClass('highlighted')
     }, 500)
   }
+}
+
+function highlight(what){
+  $(what).addClass('highlighted')
+  setTimeout(function () {
+    $(what).removeClass('highlighted')
+  }, 500)
 }
 
 module.exports = gui
