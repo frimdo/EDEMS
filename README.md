@@ -6,14 +6,14 @@ EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 
 
 | #   | ------------ | #   | ------------ |
 |-----|--------------|-----|--------------|
-| R07 | F            | R06 | A            |
-| R00 | B            | R03 | C            |
-| R01 | D            | R04 | E            |
-| R02 | S            | R05 | P            |
-| R08 | PCH          | R09 | PCL          |
-| R10 | TMP0         | R13 | OP           |
-| R11 | TMP1         | R14 | TMP2         |
-| R12 | UPCH         | R15 | UPCL         |
+| R00 | F            | R04 | A            |
+| R01 | B            | R05 | C            |
+| R02 | D            | R06 | E            |
+| R03 | S            | R07 | P            |
+| R08 | PCH          | R12 | PCL          |
+| R09 | TMP0         | R13 | OP           |
+| R10 | TMP1         | R14 | TMP2         |
+| R11 | UPCH         | R15 | UPCL         |
 
 Registers 0-7 are user-addressable registers, 8-15 are microcode-only-addressable registers.
 
@@ -143,7 +143,6 @@ O is operand, and number next to it says how many bits it takes. For example `CO
 | `DB>O`           | 0x7F1 | move value from **DB** to **O**P. |
 | `END`            | 0x7F2 | **END** of microinstruction. Signal for control unit to fetch another instruction. |
 | `JMP + O11`      | 0x??? | write operand to uPC, effectively **J**u**MP**ing in microcode. opcode is 0x800 + address|
-| `HLT`            | 0x7F3 | stop simulator. |
 | `READ`           | 0x7F4 | **READ** from memory. |
 | `WRT`            | 0x7F5 | **WR**i**T**e to memory. |
 | `SETB + O4 + O4` | 0x3?? | **SET** **B**yte defined by first operand in register defined by second operand. |

@@ -32,7 +32,7 @@ gui.refresh = function () {
   document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
-  document.getElementById("freq").value = global.freq
+  document.getElementById('freq').value = global.freq
 }
 
 gui.DrawMemoryTable = function () {
@@ -47,15 +47,13 @@ gui.DrawMemoryTable = function () {
   gui.memoryData.push(newline + '</tr>')
 
   // Creating other rows
-    for (i = 0; i < (global.memory.length); i += 8) {
-    newline = '<th><div id=y-offset-memory' + i + ' class="memory-table-descr">'+i.toString(16)+'</div></th>'
+  for (i = 0; i < (global.memory.length); i += 8) {
+    newline = '<th><div id=y-offset-memory' + i + ' class="memory-table-descr">' + i.toString(16) + '</div></th>'
     for (var y = 0; y < 8; y++) {
       newline = newline + '<th><div id=memory' + (i + y) + ' class="memoryBlock">...</div></th>'
     }
     gui.memoryData.push(newline + '</tr>')
   }
-
-
 
   gui.MemoryTable = new Clusterize({
     rows: gui.memoryData,
@@ -63,7 +61,7 @@ gui.DrawMemoryTable = function () {
     contentId: 'contentArea-memory',
     rows_in_block: 8,
     callbacks: {
-      clusterChanged: function() {
+      clusterChanged: function () {
         var value
         var elements = document.getElementsByClassName('memoryBlock')
         for (var i = 0; i < elements.length; i++) {
@@ -80,15 +78,15 @@ gui.DrawMemoryTable = function () {
 }
 
 gui.DrawMemoryEditor = function () {
-  global.memoryEditor = ace.edit('memory-editor');
-  global.memoryEditor.getSession().setMode('ace/mode/assembly_x86');
-  global.memoryEditor.setTheme('ace/theme/solarized_dark');
+  global.memoryEditor = ace.edit('memory-editor')
+  global.memoryEditor.getSession().setMode('ace/mode/assembly_x86')
+  global.memoryEditor.setTheme('ace/theme/solarized_dark')
 }
 
 gui.DrawMicrocodeEditor = function () {
-  global.microcodeEditor = ace.edit('microcode-editor');
-  global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly');
-  global.microcodeEditor.setTheme('ace/theme/solarized_dark');
+  global.microcodeEditor = ace.edit('microcode-editor')
+  global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
+  global.microcodeEditor.setTheme('ace/theme/solarized_dark')
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -104,7 +102,7 @@ gui.DrawMicrocodeTable = function () {
 
   // Creating other rows
   for (i = 0; i < (global.microcode.length); i += 8) {
-    newline = '<th><div id=y-offset-microcode' + i + ' class="microcode-table-descr">'+i.toString(16)+'</div></th>'
+    newline = '<th><div id=y-offset-microcode' + i + ' class="microcode-table-descr">' + i.toString(16) + '</div></th>'
     for (var y = 0; y < 8; y++) {
       newline = newline + '<th><div id=microcode' + (i + y) + ' class="microcodeBlock">...</div></th>'
     }
@@ -135,16 +133,16 @@ gui.onclickSetup = function () {
   document.getElementById('compileMicrocode').onclick = function () {
     try {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
-    } catch(Error) {
+      console.log(code)
+      Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
+      global.onMicrocodeChange()
+    } catch (Error) {
       alert(Error)
     }
-    console.log(code)
-    Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
-    global.onMicrocodeChange()
   }
 
   document.getElementById('decr').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
     var array = []
@@ -153,7 +151,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       CU.uinstr.decb(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
@@ -162,7 +160,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('incr').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
     var array = []
@@ -171,7 +169,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       CU.uinstr.incb(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
@@ -180,7 +178,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('D2R').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       CU.uinstr.db2o()
       return
     }
@@ -190,7 +188,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       CU.uinstr.db2r(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
@@ -198,7 +196,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('R2D').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       CU.uinstr.o2db()
       return
     }
@@ -208,7 +206,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       CU.uinstr.r2db(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
@@ -216,7 +214,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('W2A').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
     var array = []
@@ -225,7 +223,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       CU.uinstr.r2ab(global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]))
       return
     }
@@ -234,7 +232,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('A2W').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
     var array = []
@@ -243,7 +241,7 @@ gui.onclickSetup = function () {
       array.push(elements[i].id)
     }
     var pair = document.getElementsByClassName('selectedPair')[0]
-    if (pair === undefined){
+    if (pair === undefined) {
       return
     }
     CU.uinstr.ab2w(global.register(pair.id.split('-')[0]))
@@ -251,7 +249,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('svr').onclick = function () {
-    if(document.getElementsByClassName('OPSelected')[0] !== undefined){
+    if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
     var svr = $('#svr')
@@ -264,11 +262,11 @@ gui.onclickSetup = function () {
 
   document.getElementById('OP-button').onclick = function () {
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
-      if ($(this).hasClass('selectedRegister')){
+      if ($(this).hasClass('selectedRegister')) {
         $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
         $(this).addClass('OPSelected')
         return
-      } else if ($(this).hasClass('OPSelected')){
+      } else if ($(this).hasClass('OPSelected')) {
         $(this).removeClass('OPSelected').addClass('selectedRegister')
       }
       $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
@@ -290,68 +288,67 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('F-button').onclick =
-  document.getElementById('A-button').onclick =
-  document.getElementById('B-button').onclick =
-  document.getElementById('C-button').onclick =
-  document.getElementById('D-button').onclick =
-  document.getElementById('E-button').onclick =
-  document.getElementById('S-button').onclick =
-  document.getElementById('P-button').onclick =
-  document.getElementById('PCH-button').onclick =
-  document.getElementById('PCL-button').onclick =
-  document.getElementById('TMP0-button').onclick =
-  document.getElementById('TMP1-button').onclick =
-  document.getElementById('TMP2-button').onclick =
-  document.getElementById('UPCH-button').onclick =
-  document.getElementById('UPCL-button').onclick = function () {
-    if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
-      $(this).addClass('selectedRegister')
-   } else {                                 // SVR button pressed
-      var pair = document.getElementsByClassName('selectedPair')[0]
-      if (pair !== undefined) {
-        return
-      } else {
-        CU.uinstr.svr(
-          global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]),
-          global.register(this.id.split('-')[0])
-        )
-      }
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
-      $('#svr').removeClass('svrSelected')
-      $(this).addClass('selectedRegister')
-    }
-  }
-
+    document.getElementById('A-button').onclick =
+      document.getElementById('B-button').onclick =
+        document.getElementById('C-button').onclick =
+          document.getElementById('D-button').onclick =
+            document.getElementById('E-button').onclick =
+              document.getElementById('S-button').onclick =
+                document.getElementById('P-button').onclick =
+                  document.getElementById('PCH-button').onclick =
+                    document.getElementById('PCL-button').onclick =
+                      document.getElementById('TMP0-button').onclick =
+                        document.getElementById('TMP1-button').onclick =
+                          document.getElementById('TMP2-button').onclick =
+                            document.getElementById('UPCH-button').onclick =
+                              document.getElementById('UPCL-button').onclick = function () {
+                                if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
+                                  $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
+                                  $(this).addClass('selectedRegister')
+                                } else {                                 // SVR button pressed
+                                  var pair = document.getElementsByClassName('selectedPair')[0]
+                                  if (pair !== undefined) {
+                                    return
+                                  } else {
+                                    CU.uinstr.svr(
+                                      global.register(document.getElementsByClassName('selectedRegister')[0].id.split('-')[0]),
+                                      global.register(this.id.split('-')[0])
+                                    )
+                                  }
+                                  $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+                                  $('#svr').removeClass('svrSelected')
+                                  $(this).addClass('selectedRegister')
+                                }
+                              }
 
   document.getElementById('F-pair').onclick =
-  document.getElementById('B-pair').onclick =
-  document.getElementById('D-pair').onclick =
-  document.getElementById('S-pair').onclick =
-  document.getElementById('PCH-pair').onclick =
-  document.getElementById('TMP0-pair').onclick =
-  document.getElementById('TMP1-pair').onclick =
-  document.getElementById('UPCH-pair').onclick = function () {
-    if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
-      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
-      $(this).addClass('selectedPair')
-      $(this).siblings().addClass('selectedRegister')
-   } else {                                 // SVR button pressed
-      var pair = document.getElementsByClassName('selectedPair')[0]
-      if (pair === undefined) {
-        return
-      } else {
-        CU.uinstr.svw(
-          global.register(document.getElementsByClassName('selectedPair')[0].id.split('-')[0]),
-          global.register(this.id.split('-')[0])
-        )
-        $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
-        $('#svr').removeClass('svrSelected')
-        $(this).addClass('selectedPair')
-        $(this).siblings().addClass('selectedRegister')
-      }
-    }
-  }
+    document.getElementById('B-pair').onclick =
+      document.getElementById('D-pair').onclick =
+        document.getElementById('S-pair').onclick =
+          document.getElementById('PCH-pair').onclick =
+            document.getElementById('TMP0-pair').onclick =
+              document.getElementById('TMP1-pair').onclick =
+                document.getElementById('UPCH-pair').onclick = function () {
+                  if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
+                    $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair').removeClass('OPSelected')
+                    $(this).addClass('selectedPair')
+                    $(this).siblings().addClass('selectedRegister')
+                  } else {                                 // SVR button pressed
+                    var pair = document.getElementsByClassName('selectedPair')[0]
+                    if (pair === undefined) {
+                      return
+                    } else {
+                      CU.uinstr.svw(
+                        global.register(document.getElementsByClassName('selectedPair')[0].id.split('-')[0]),
+                        global.register(this.id.split('-')[0])
+                      )
+                      $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
+                      $('#svr').removeClass('svrSelected')
+                      $(this).addClass('selectedPair')
+                      $(this).siblings().addClass('selectedRegister')
+                    }
+                  }
+                }
 
   document.getElementById('ustep-btn').onclick = function () {
     clock.ustep()
@@ -381,7 +378,7 @@ gui.onclickSetup = function () {
 gui.onChangeSetup = function () {
   document.getElementById('selectEdemsType').onchange = function () {
     global.advanced = this.value
-    if(global.advanced == 'advanced'){
+    if (global.advanced == 'advanced') {
       $('#logo span').html('advanced')
       $('#body-grid').addClass('advanced')
 
@@ -402,7 +399,7 @@ gui.onChangeSetup = function () {
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
-    } else if(global.advanced == 'basic') {
+    } else if (global.advanced == 'basic') {
       $('#logo span').html('basic')
       $('#body-grid').removeClass('advanced')
 
@@ -439,9 +436,8 @@ gui.onChangeSetup = function () {
 
     // Scroll to changed element
     document.getElementById('scrollArea-memory').scrollTop =
-      document.getElementById('contentArea-memory').
-      getElementsByTagName('tr')[3].scrollHeight
-      * ((global.addressBus.dec/8)-5)
+      document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
+      * ((global.addressBus.dec / 8) - 5)
 
     // Fill values to table
     var value
@@ -459,7 +455,6 @@ gui.onChangeSetup = function () {
     setTimeout(function () {
       $('#memory' + global.addressBus.dec).removeClass('highlighted')
     }, 500)
-
 
   }
 
@@ -644,7 +639,5 @@ gui.onChangeSetup = function () {
     }, 500)
   }
 }
-
-
 
 module.exports = gui

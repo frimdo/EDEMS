@@ -7,7 +7,6 @@ var clock = require('./clock.js')
 var alu = require('./alu.js')
 var uComp = require('./microcodeCompiler.js')
 
-
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
 
 $(document).ready(function () {
@@ -21,7 +20,6 @@ $(document).ready(function () {
   window.alu = alu
 
   LS.initGlobals()
-
 
   $('#microcode0').text(global.microcode[0] = '601')
   $('#microcode1').text(global.microcode[1] = '501')
@@ -42,6 +40,6 @@ $(document).ready(function () {
   global.advanced = false
 })
 
-window.onbeforeunload = function() {
+window.onbeforeunload = function () {
   LS.storeGlobals()
 }

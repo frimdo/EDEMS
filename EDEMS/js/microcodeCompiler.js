@@ -5,7 +5,7 @@ var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
   var output = []
-  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '6', '3', '4', '5', '9', '13', '14', '15']
+  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -225,6 +225,9 @@ microcodeCompiler.compile = function (input) {
       case (''):
         break
       default:
+        if (line[0].substring(0, 1) === ';') {
+          break
+        }
         throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
     }
   }
