@@ -1013,16 +1013,16 @@ gui.onChangeSetup = function () {
 
   document.getElementById('IdataBus').onchange = function () {
     var tmp = document.getElementById('IdataBus').value
-    if (tmp.length == 4 || tmp.length == 2) {
-      if (tmp.length == 2) {
-        tmp = '0x' + tmp
-      }
+    try {
       try {
+        global.dataBus.val = +tmp
+        return
+      } catch (x){
         global.dataBus.val = tmp
-      } catch (x) {
-        global.dataBus.val = global.dataBus.dec
+        return
       }
-      return
+    } catch (x){
+      global.dataBus.val = global.dataBus.dec
     }
 
     $('#EdataBus').addClass('failed')
