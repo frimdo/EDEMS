@@ -92,7 +92,6 @@ CU.doUInstruction = function () {
   } catch (err) {
     console.log('CU:', err)
   }
-
   global.registerUPCH.incrPair()
 }
 
@@ -116,7 +115,7 @@ CU.decode = function (opcode) {
     case '0':
       return {Name: 'ALU', operand1: opcode.substring(1, 3)}
     case '8':
-      return {Name: 'JMP', operand1: opcode.substring(1, 3)}
+      return {Name: 'JMP', operand1: (hex2num(opcode.substring(0, 3)) - 2048).toString(16)}
     case '7':
       switch (opcode.charAt(1)) {
         case '0':
@@ -364,6 +363,10 @@ CU.uinstr.svw = function (operand1, operand2) {
 }
 
 CU.uinstr.jmp = function (operand) {
+  if (hex2num(operand) === 0) {
+    global.registerUPCH.valPair = 2047
+    return
+  }
   global.registerUPCH.valPair = hex2num(operand) - 1
 }
 
