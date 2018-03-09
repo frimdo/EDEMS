@@ -16,6 +16,9 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
           caseInsensitive: true },
+        { token: 'string.assembly',
+          regex: '\\b(?:ADD|SUB|NEG|NOT|AND|ORR|XOR|SHR|SHL|ROR|ROL|RCR|RCL|ASR|ASL|BSR|BSL|EQU|OOP)\\b',
+          caseInsensitive: true },
         { token: 'constant.character.decimal.assembly',
           regex: '\\b[0-9]+\\b' },
         { token: 'constant.character.hexadecimal.assembly',
@@ -2328,9 +2331,32 @@ microcodeCompiler.compile = function (input) {
         }
         break
       case ('ALU'):
-        output.push('000')
-        console.log(line[0], 'This uInstruction is not implemented yet.')
-        //TODO: implementovat
+        operations = {
+          'ADD': 0,
+          'SUB': 1,
+          'NEG': 2,
+          'NOT': 3,
+          'AND': 4,
+          'ORR': 5,
+          'XOR': 6,
+          'SHR': 7,
+          'SHL': 8,
+          'ROR': 9,
+          'ROL': 10,
+          'RCR': 11,
+          'RCL': 12,
+          'ASR': 13,
+          'ASL': 14,
+          'BSR': 15,
+          'BSL': 16,
+          'EQU': 17,
+          'OOP': 18
+        }
+        try {
+          output.push('00' + operations[line[1]])
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + 'is not valid ALU operation.')
+        }
         break
       case ('R>DB'):
         try {

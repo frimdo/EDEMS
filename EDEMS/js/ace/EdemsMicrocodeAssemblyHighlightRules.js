@@ -8,12 +8,16 @@ define(function(require, exports, module) {
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
 
+
     this.$rules = { start:
         [ { token: 'keyword.control.assembly',
           regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
           caseInsensitive: true },
           { token: 'variable.parameter.register.assembly',
             regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
+            caseInsensitive: true },
+          { token: 'string.assembly',
+            regex: '\\b(?:ADD|SUB|NEG|NOT|AND|ORR|XOR|SHR|SHL|ROR|ROL|RCR|RCL|ASR|ASL|BSR|BSL|EQU|OOP)\\b',
             caseInsensitive: true },
           { token: 'constant.character.decimal.assembly',
             regex: '\\b[0-9]+\\b' },
