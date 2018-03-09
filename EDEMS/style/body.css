@@ -248,7 +248,7 @@
     //flex-grow: 1;
 }
 
-#aluSelect, #spacer {
+#aluSelect, .spacer {
     flex-grow: 1;
 }
 
