@@ -99,14 +99,13 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 1. AND - bitwise **AND** bits: DB = DB && TMP
 1. ORR - bitwise **OR** bits: DB = DB || TMP
 1. XOR - bitwise **XOR** bits: DB = DB ^ TMP
-1. RSH - **R**ight **SH**ift DB
-1. RRO - **R**ight **RO**tate DB
-1. RRC - **R**ight **R**otate through **C**arry DB
+1. SHR - **SH**ift **R**ight DB
+1. SHL - **SH**ift **L**eft
+1. ROR - **RO**tate **R**ight DB
+1. ROL - **RO**tate **L**eft 
+1. RCR - **R**otate **R**ight through **C**arry DB
+1. RCL - **R**otate **L**eft through **C**arry
 1. ASR - **A**rithmetic **S**hift **R**ight
-1. LSH - **L**eft **SH**ift
-1. LRO - **L**eft **RO**tate
-1. LRC - **L**eft **R**otate through **C**arry
-1. ASL - **A**rithmetic **S**hift **L**eft
 1. ASL - **A**rithmetic **S**hift **L**eft
 1. BSR - **B**CD **S**hift **R**ight
 1. BSL - **B**CD **S**hift **L**eft

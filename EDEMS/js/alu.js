@@ -26,22 +26,22 @@ ALU.doOperation = function (x) {
       ALU.xor()
       break
     case 8:
-      ALU.rsh()
+      ALU.shr()
       break
     case 9:
-      ALU.lsh()
+      ALU.shl()
       break
     case 10:
-      ALU.rro()
+      ALU.ror()
       break
     case 11:
-      ALU.lro()
+      ALU.rol()
       break
     case 12:
-      ALU.rrc()
+      ALU.rcr()
       break
     case 13:
-      ALU.lrc()
+      ALU.rcl()
       break
     case 14:
       ALU.asr()
@@ -94,17 +94,17 @@ ALU.xor = function () {
   global.dataBus.val = global.dataBus.dec ^ global.registerTMP0.dec
 }
 
-ALU.rsh = function () {
+ALU.shr = function () {
   global.dataBus.val = global.dataBus.dec >>> 1
 }
 
-ALU.rro = function () {
+ALU.ror = function () {
   var tmp = global.dataBus.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
   global.dataBus.val = '0b' + tmp.charAt(7) + tmp.substring(0, 7)
 }
 
-ALU.rrc = function () {
+ALU.rcr = function () {
   var tmp = global.dataBus.bin
   var F = global.registerF.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
@@ -118,17 +118,17 @@ ALU.asr = function () {
   global.dataBus.val = '0b' + tmp.charAt(0) + tmp.substring(0, 7)
 }
 
-ALU.lsh = function () {
+ALU.shl = function () {
   global.dataBus.val = global.dataBus.dec << 1
 }
 
-ALU.lro = function () {
+ALU.rol = function () {
   var tmp = global.dataBus.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
   global.dataBus.val = '0b' + tmp.substring(1, 8) + tmp.charAt(0)
 }
 
-ALU.lrc = function () {
+ALU.rcl = function () {
   var tmp = global.dataBus.bin
   var F = global.registerF.bin
   tmp = '0'.repeat(8 - tmp.length) + tmp
