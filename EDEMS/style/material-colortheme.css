@@ -136,6 +136,10 @@ body {
     color: #fafafa;
 }
 
+#compileMicrocode:hover {
+    background-color: #a631ba;
+}
+
 #registers-grid {
     background-color: #1976d2;
     color: #fafafa;
@@ -214,4 +218,15 @@ body {
 
 .failed {
     background-color: #F44336 !important;
+}
+
+.F-viewer-NameBlock{
+    background-color: #00600f;
+    border: 1px solid #00600f;
+}
+
+.F-viewer-ValueBlock{
+    background-color: #6abf69;
+    border: 1px solid #6abf69;
+    color: #000000;
 }

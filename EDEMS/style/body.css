@@ -238,3 +238,21 @@
 #EdataBus, #addressBus {
     font-size: 120%;
 }
+
+#alu-grid .insideBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+#alu-grid .insideBlock div {
+    //flex-grow: 1;
+}
+
+#aluSelect, #spacer {
+    flex-grow: 1;
+}
+
+
+#F-viewer table {
+    height: auto;
+}
