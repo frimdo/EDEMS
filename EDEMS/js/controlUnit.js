@@ -189,7 +189,7 @@ CU.uinstr.end = function () {
 }
 
 CU.uinstr.rd = function () {
-  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
+  global.dataBus.val = global.memory[global.addressBus.dec]
 }
 
 CU.uinstr.wt = function () {
