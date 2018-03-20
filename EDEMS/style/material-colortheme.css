@@ -140,6 +140,10 @@ body {
     background-color: #a631ba;
 }
 
+#IR {
+    background-color: #6a0080;
+}
+
 #registers-grid {
     background-color: #1976d2;
     color: #fafafa;

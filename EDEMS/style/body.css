@@ -235,6 +235,10 @@
     z-index: 100;
 }
 
+#compileMicrocode {
+    top: 80px;
+}
+
 #EdataBus, #addressBus {
     font-size: 120%;
 }
@@ -255,4 +259,9 @@
 
 #F-viewer table {
     height: auto;
+}
+
+#IR {
+    margin-bottom: 3px;
+    font-size: 90%;
 }

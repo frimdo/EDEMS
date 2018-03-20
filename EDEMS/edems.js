@@ -134,6 +134,17 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
+  if (global.dataBus.dec === 0){
+    global.registerF.setBit(1)
+  } else {
+    global.registerF.resBit(1)
+  }
+  if (global.dataBus.dec > 127){
+    global.registerF.setBit(2)
+  }
+  else {
+    global.registerF.resBit(2)
+  }
 }
 
 ALU.add = function () {
@@ -778,7 +789,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('AL2').onclick = function () {
-    alu.doOperation(document.getElementById('aluSelect').selectedIndex + 1)
+    alu.doOperation(document.getElementById('aluSelect').selectedIndex)
   }
 }
 

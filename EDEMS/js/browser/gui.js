@@ -374,7 +374,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('AL2').onclick = function () {
-    alu.doOperation(document.getElementById('aluSelect').selectedIndex + 1)
+    alu.doOperation(document.getElementById('aluSelect').selectedIndex)
   }
 }
 
