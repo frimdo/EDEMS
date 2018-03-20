@@ -181,19 +181,19 @@ CU.uinstr.db2o = function () {
 }
 
 CU.uinstr.end = function () {
-  console.log('This Microinstruction is not implemented yet!')
   global.registerPCH.incrPair()
-  global.instructionRegister.val = global.memory[global.registerPCH.decPair]
-  global.registerUPCH.valPair = 0 //neco jinyho nez 0
-  // TODO: dopsat
+  global.addressBus.val = global.registerPCH.decPair
+  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
+  global.instructionRegister.val = global.dataBus.dec
+  global.registerUPCH.valPair = global.instructionRegister.dec
 }
 
 CU.uinstr.rd = function () {
-  global.dataBus.val = global.memory[global.addressBus.dec]
+  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
 }
 
 CU.uinstr.wt = function () {
-  global.memory[global.addressBus.dec] = global.dataBus.dec
+  global.memory[global.addressBus.dec] = global.dataBus.hex
   global.onMemoryChange()
 }
 
