@@ -133,7 +133,6 @@ gui.onclickSetup = function () {
   document.getElementById('compileMicrocode').onclick = function () {
     try {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
-      console.log(code)
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
       for (let i = 0; i<code.length ; i++){

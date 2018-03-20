@@ -548,7 +548,6 @@ gui.onclickSetup = function () {
   document.getElementById('compileMicrocode').onclick = function () {
     try {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
-      console.log(code)
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
       for (let i = 0; i<code.length ; i++){
@@ -2039,6 +2038,7 @@ CU.uinstr.end = function () {
   global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
   global.instructionRegister.val = global.dataBus.dec
   global.registerUPCH.valPair = global.instructionRegister.dec
+  global.registerUPCH.decrPair()
 }
 
 CU.uinstr.rd = function () {
@@ -2401,7 +2401,6 @@ microcodeCompiler.compile = function (input) {
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
     .split('\n')
-  console.log(input)
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
     switch (line[0]) {

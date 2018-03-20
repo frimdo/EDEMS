@@ -10,7 +10,6 @@ microcodeCompiler.compile = function (input) {
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
     .split('\n')
-  console.log(input)
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
     switch (line[0]) {

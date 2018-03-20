@@ -186,6 +186,7 @@ CU.uinstr.end = function () {
   global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
   global.instructionRegister.val = global.dataBus.dec
   global.registerUPCH.valPair = global.instructionRegister.dec
+  global.registerUPCH.decrPair()
 }
 
 CU.uinstr.rd = function () {
