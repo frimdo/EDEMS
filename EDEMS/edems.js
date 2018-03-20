@@ -885,6 +885,69 @@ gui.onChangeSetup = function () {
   }
 
   global.registerF.onChange = function () {
+    var newValue = global.registerF.bin
+    newValue =('0'.repeat(8 - newValue.length) + newValue).split('')
+
+
+    if($('.F-viewer7').text() !== newValue[0]){
+      $('.F-viewer7').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer7').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer6').text() !== newValue[1]){
+      $('.F-viewer6').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer6').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer5').text() !== newValue[2]){
+      $('.F-viewer5').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer5').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer4').text() !== newValue[3]){
+      $('.F-viewer4').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer4').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer3').text() !== newValue[4]){
+      $('.F-viewer3').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer3').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer2').text() !== newValue[5]){
+      $('.F-viewer2').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer2').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer1').text() !== newValue[6]){
+      $('.F-viewer1').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer1').removeClass('highlighted')
+      }, 500)
+    }
+    if($('.F-viewer0').text() !== newValue[7]){
+      $('.F-viewer0').addClass('highlighted')
+      setTimeout(function () {
+        $('.F-viewer0').removeClass('highlighted')
+      }, 500)
+    }
+
+    $('.F-viewer7').text(newValue[0])
+    $('.F-viewer6').text(newValue[1])
+    $('.F-viewer5').text(newValue[2])
+    $('.F-viewer4').text(newValue[3])
+    $('.F-viewer3').text(newValue[4])
+    $('.F-viewer2').text(newValue[5])
+    $('.F-viewer1').text(newValue[6])
+    $('.F-viewer0').text(newValue[7])
+
+
     $('#registerF').text('0x' + global.registerF.hex).addClass('highlighted')
     setTimeout(function () {
       $('#registerF').removeClass('highlighted')
@@ -993,8 +1056,8 @@ gui.onChangeSetup = function () {
     // Scroll to changed element
     document.getElementById('scrollArea-microcode').scrollTop =
       document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
+        * ((global.registerUPCH.decPair / 8) - 5)
 
-      * ((global.registerUPCH.decPair / 8) - 5)
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
