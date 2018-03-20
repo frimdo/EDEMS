@@ -104,32 +104,57 @@ end start
                 <button id="compileMicrocode" type="button">compile</button>
             </div>
             <div class="insideBlock">
-                <div id="microcode-editor">COOP 0x12
-R>DB A
-R>AB A
-W>AB B
-ALU ADD
-DB>R OP
-AB>W TMP1
-INCB A
-DECB F
+                <div id="microcode-editor">;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
+COOP 0x0
+; load high address
 INCW PCH
-DECW F
-JOI PCL
-JON tmp0
-JOFI C
-JOFN D
-C>DB 0x1
-SVR E F
-SVW S D
-O>DB
-DB>O
-END
-JMP 0b101
+W>AB PCH
 RD
+DB>R TMP1
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load value to register
+W>AB TMP1
+RD
+DB>R op
+END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ST
+COOP 0x0
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load value to register
+W>AB TMP1
+R>DB op
 WT
-SETB F 2
-RETB B 0b101
+END
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ADD
+COOP 0x0
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load value to register
+W>AB TMP1
+R>DB op
+WT
+END
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
                     <table>

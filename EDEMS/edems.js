@@ -976,6 +976,11 @@ gui.onChangeSetup = function () {
   }
 
   global.registerUPCL.onChange = function () {
+        // Scroll to changed element
+    document.getElementById('scrollArea-microcode').scrollTop =
+      document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
+      * ((global.registerUPCH.decPair / 8) - 5)
+
     $('#registerUPCL').text('0x' + global.registerUPCL.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
@@ -985,6 +990,11 @@ gui.onChangeSetup = function () {
   }
 
   global.registerUPCH.onChange = function () {
+    // Scroll to changed element
+    document.getElementById('scrollArea-microcode').scrollTop =
+      document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
+
+      * ((global.registerUPCH.decPair / 8) - 5)
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')

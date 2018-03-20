@@ -206,7 +206,6 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 - `|DEC 3b what|` - **dec**rement 1B register.
 - `|TST| + |addrH| + |addrL|` - **t**e**st** if value on 2B address is zero, next instruction is skipped.
 - `|TSTF 3b which|` - **t**e**st** if nth bit of **F** register is zero, next instruction is skipped.
-- `|HLT|` - **H**a**lt** (stop) the simulator. Every unknown opcode is HLT.
 - `|JMP| + |where|` - relative **j**u**mp** to address. (operand is added to PC)
 
 <!--
