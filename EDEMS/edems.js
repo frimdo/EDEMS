@@ -417,6 +417,7 @@ var $ = require('jquery')
 var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
 var uCompiler = require('../microcodeCompiler.js')
+var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
@@ -545,6 +546,39 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+  document.getElementById('compileMemory').onclick = function () {
+    try {
+
+
+      var code = mCompiler.compile(global.memoryEditor.getValue())
+      Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
+
+/*
+      var elements = document.getElementsByClassName('memoryBlock')
+      for (var i = 0; i < elements.length; i++) {
+        elements.item(i).innerHTML = global.memory[+elements.item(i).id.replace('memory', '')]
+      }
+*/
+
+      // Fill values to table
+      var value
+      var elements = document.getElementsByClassName('memoryBlock')
+      for (var i = 0; i < elements.length; i++) {
+        value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+        elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+      }
+
+
+
+      //global.onMemoryChange()
+      for (let i = 0; i<code.length ; i++){
+        highlight('#memory' + i)
+      }
+    } catch (Error) {
+      alert(Error)
+    }
+  }
+
   document.getElementById('compileMicrocode').onclick = function () {
     try {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
@@ -1139,7 +1173,7 @@ function highlight(what){
 
 module.exports = gui
 
-},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -2351,6 +2385,7 @@ var CU = require('./controlUnit.js')
 var clock = require('./clock.js')
 var alu = require('./alu.js')
 var uComp = require('./microcodeCompiler.js')
+var mComp = require('./memoryCompiler.js')
 
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
 
@@ -2388,7 +2423,34 @@ $(document).ready(function () {
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
-},{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js":[function(require,module,exports){
+},{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js":[function(require,module,exports){
+var global = require('./globals.js')
+var BinNumber = require('./binNumber.js')
+
+var memoryCompiler = {}
+
+memoryCompiler.compile = function (input) {
+  var output = []
+
+  input = input.toUpperCase()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
+  for (var i = 0; i < input.length; i++) {
+    var line = input[i].trim().split(' ')
+    if (line[0].match(/^[0-9]{2}$/)) {
+      output.push(line[0])
+    } else {
+      throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
+    }
+  }
+  return output
+}
+
+module.exports = memoryCompiler
+
+
+},{"./binNumber.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/binNumber.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js":[function(require,module,exports){
 var global = require('./globals.js')
 var BinNumber = require('./binNumber.js')
 

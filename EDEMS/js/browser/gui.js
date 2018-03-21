@@ -2,6 +2,7 @@ var $ = require('jquery')
 var global = require('../globals.js')
 var Clusterize = require('clusterize.js')
 var uCompiler = require('../microcodeCompiler.js')
+var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
@@ -130,6 +131,39 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+  document.getElementById('compileMemory').onclick = function () {
+    try {
+
+
+      var code = mCompiler.compile(global.memoryEditor.getValue())
+      Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
+
+/*
+      var elements = document.getElementsByClassName('memoryBlock')
+      for (var i = 0; i < elements.length; i++) {
+        elements.item(i).innerHTML = global.memory[+elements.item(i).id.replace('memory', '')]
+      }
+*/
+
+      // Fill values to table
+      var value
+      var elements = document.getElementsByClassName('memoryBlock')
+      for (var i = 0; i < elements.length; i++) {
+        value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+        elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+      }
+
+
+
+      //global.onMemoryChange()
+      for (let i = 0; i<code.length ; i++){
+        highlight('#memory' + i)
+      }
+    } catch (Error) {
+      alert(Error)
+    }
+  }
+
   document.getElementById('compileMicrocode').onclick = function () {
     try {
       var code = uCompiler.compile(global.microcodeEditor.getValue())

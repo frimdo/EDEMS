@@ -6,6 +6,7 @@ var CU = require('./controlUnit.js')
 var clock = require('./clock.js')
 var alu = require('./alu.js')
 var uComp = require('./microcodeCompiler.js')
+var mComp = require('./memoryCompiler.js')
 
 /* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
 
