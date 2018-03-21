@@ -41,6 +41,8 @@ $(document).ready(function () {
   global.advanced = false
 })
 
+/*
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
+*/
