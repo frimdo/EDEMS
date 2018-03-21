@@ -69,21 +69,9 @@
                 <button id="compileMemory" type="button">compile</button>
             </div>
             <div class="insideBlock">
-                <div id="memory-editor">.model small
-.stack 100h
-
-.data
-msg	db	'Hello world!$'
-
-.code
-start:
-mov	ah, 09h   ; Display the message
-lea	dx, msg
-int	21h
-mov	ax, 4C00h  ; Terminate
-int	21h
-
-end start
+                <div id="memory-editor">12
+13
+14
                 </div>
                 <div id="scrollArea-memory" class="clusterize-scroll">
                     <table>

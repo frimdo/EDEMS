@@ -250,7 +250,7 @@ microcodeCompiler.compile = function (input) {
         if (line[0].substring(0, 1) === ';') {
           break
         }
-        throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
     }
   }
   return output

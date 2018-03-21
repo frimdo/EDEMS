@@ -14,8 +14,10 @@ memoryCompiler.compile = function (input) {
     var line = input[i].trim().split(' ')
     if (line[0].match(/^[0-9]{2}$/)) {
       output.push(line[0])
+    } else if (line[0] === '' || line[0].substring(0, 1) === ';')  {
+      //NOP
     } else {
-      throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
+      throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
     }
   }
   return output

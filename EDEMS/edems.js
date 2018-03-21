@@ -1,4 +1,57 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
+ace.define("ace/mode/EdemsMemoryAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
+
+  var EdemsMemoryAssemblyHighlightRules = function() {
+    // regexp must not have capturing parentheses. Use (?:) instead.
+    // regexps are ordered -> the first match is used
+
+
+    this.$rules = { start:
+        [ { token: 'keyword.control.assembly',
+          regex: '^[0-9]{2}$',
+          caseInsensitive: true },
+          { token: 'comment.assembly', regex: ';.*$' } ]
+    };
+
+    this.normalizeRules();
+  };
+
+  EdemsMemoryAssemblyHighlightRules.metaData = { fileTypes: [ 'asm' ],
+    name: 'Edems Memory Assembly',
+    scopeName: 'source.assembly' };
+
+
+  oop.inherits(EdemsMemoryAssemblyHighlightRules, TextHighlightRules);
+
+exports.EdemsMemoryAssemblyHighlightRules = EdemsMemoryAssemblyHighlightRules;
+});
+
+ace.define("ace/mode/EdemsMemoryAssembly",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/EdemsMemoryAssemblyHighlightRules","ace/mode/folding/coffee"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextMode = acequire("./text").Mode;
+var EdemsMemoryAssemblyHighlightRules = acequire("./EdemsMemoryAssemblyHighlightRules").EdemsMemoryAssemblyHighlightRules;
+
+var Mode = function() {
+    this.HighlightRules = EdemsMemoryAssemblyHighlightRules;
+    this.$behaviour = this.$defaultBehaviour;
+};
+oop.inherits(Mode, TextMode);
+
+(function() {
+    this.lineCommentStart = ";";
+    this.$id = "ace/mode/EdemsMemoryAssembly";
+}).call(Mode.prototype);
+
+exports.Mode = Mode;
+});
+
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
 ace.define("ace/mode/EdemsMicrocodeAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
 
@@ -421,6 +474,7 @@ var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
+require('../ace/EdemsMemoryAssembly')
 require('brace/theme/solarized_dark')
 require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
@@ -495,7 +549,7 @@ gui.DrawMemoryTable = function () {
 
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
-  global.memoryEditor.getSession().setMode('ace/mode/assembly_x86')
+  global.memoryEditor.getSession().setMode('ace/mode/EdemsMemoryAssembly')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
 }
 
@@ -549,16 +603,8 @@ gui.onclickSetup = function () {
   document.getElementById('compileMemory').onclick = function () {
     try {
 
-
       var code = mCompiler.compile(global.memoryEditor.getValue())
       Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
-
-/*
-      var elements = document.getElementsByClassName('memoryBlock')
-      for (var i = 0; i < elements.length; i++) {
-        elements.item(i).innerHTML = global.memory[+elements.item(i).id.replace('memory', '')]
-      }
-*/
 
       // Fill values to table
       var value
@@ -568,10 +614,8 @@ gui.onclickSetup = function () {
         elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
       }
 
-
-
       //global.onMemoryChange()
-      for (let i = 0; i<code.length ; i++){
+      for (let i = 0; i < code.length; i++) {
         highlight('#memory' + i)
       }
     } catch (Error) {
@@ -1173,7 +1217,7 @@ function highlight(what){
 
 module.exports = gui
 
-},{"../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -2440,8 +2484,10 @@ memoryCompiler.compile = function (input) {
     var line = input[i].trim().split(' ')
     if (line[0].match(/^[0-9]{2}$/)) {
       output.push(line[0])
+    } else if (line[0] === '' || line[0].substring(0, 1) === ';')  {
+      //NOP
     } else {
-      throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
+      throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
     }
   }
   return output
@@ -2703,7 +2749,7 @@ microcodeCompiler.compile = function (input) {
         if (line[0].substring(0, 1) === ';') {
           break
         }
-        throw SyntaxError('Error on line: ' + (i + 1) + line[0] + ' is not a valid keyword.')
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
     }
   }
   return output
