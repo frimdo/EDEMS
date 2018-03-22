@@ -637,6 +637,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('decr').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
@@ -655,6 +656,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('incr').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
@@ -673,6 +675,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('D2R').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       CU.uinstr.db2o()
       return
@@ -691,6 +694,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('R2D').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       CU.uinstr.o2db()
       return
@@ -709,6 +713,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('W2A').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
@@ -727,6 +732,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('A2W').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
@@ -744,6 +750,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('svr').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (document.getElementsByClassName('OPSelected')[0] !== undefined) {
       return
     }
@@ -756,6 +763,7 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('OP-button').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
       if ($(this).hasClass('selectedRegister')) {
         $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
@@ -846,10 +854,12 @@ gui.onclickSetup = function () {
                 }
 
   document.getElementById('ustep-btn').onclick = function () {
+    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
     clock.ustep()
   }
 
   document.getElementById('urun-btn').onclick = function () {
+    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
     clock.urun()
   }
 
@@ -858,14 +868,17 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('WRT').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     CU.uinstr.wt()
   }
 
   document.getElementById('REA').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     CU.uinstr.rd()
   }
 
   document.getElementById('AL2').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
     alu.doOperation(document.getElementById('aluSelect').selectedIndex)
   }
 }
@@ -943,13 +956,12 @@ gui.onChangeSetup = function () {
     }
 
     // Highlight changed element
+
     setTimeout(function () { // Delay for clusterize to render object
       $('.highlighted').removeClass('highlighted')
       $('#memory' + global.addressBus.dec).addClass('highlighted')
     }, 50)
-    setTimeout(function () {
-      $('#memory' + global.addressBus.dec).removeClass('highlighted')
-    }, 500)
+
 
   }
 
@@ -967,9 +979,6 @@ gui.onChangeSetup = function () {
 
   global.registerA.onChange = function () {
     $('#registerA').text('0x' + global.registerA.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerA').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerF.onChange = function () {
@@ -979,51 +988,27 @@ gui.onChangeSetup = function () {
 
     if($('.F-viewer7').text() !== newValue[0]){
       $('.F-viewer7').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer7').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer6').text() !== newValue[1]){
       $('.F-viewer6').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer6').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer5').text() !== newValue[2]){
       $('.F-viewer5').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer5').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer4').text() !== newValue[3]){
       $('.F-viewer4').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer4').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer3').text() !== newValue[4]){
       $('.F-viewer3').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer3').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer2').text() !== newValue[5]){
       $('.F-viewer2').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer2').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer1').text() !== newValue[6]){
       $('.F-viewer1').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer1').removeClass('highlighted')
-      }, 500)
     }
     if($('.F-viewer0').text() !== newValue[7]){
       $('.F-viewer0').addClass('highlighted')
-      setTimeout(function () {
-        $('.F-viewer0').removeClass('highlighted')
-      }, 500)
     }
 
     $('.F-viewer7').text(newValue[0])
@@ -1037,93 +1022,54 @@ gui.onChangeSetup = function () {
 
 
     $('#registerF').text('0x' + global.registerF.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerF').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerC.onChange = function () {
     $('#registerC').text('0x' + global.registerC.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerC').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerB.onChange = function () {
     $('#registerB').text('0x' + global.registerB.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerB').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerE.onChange = function () {
     $('#registerE').text('0x' + global.registerE.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerE').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerD.onChange = function () {
     $('#registerD').text('0x' + global.registerD.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerD').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerP.onChange = function () {
     $('#registerP').text('0x' + global.registerP.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerP').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerS.onChange = function () {
     $('#registerS').text('0x' + global.registerS.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerS').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerPCL.onChange = function () {
     $('#registerPCL').text('0x' + global.registerPCL.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerPCL').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerPCH.onChange = function () {
     $('#registerPCH').text('0x' + global.registerPCH.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerPCH').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerOP.onChange = function () {
     $('#registerOP').text('0x' + global.registerOP.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerOP').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerTMP0.onChange = function () {
     $('#registerTMP0').text('0x' + global.registerTMP0.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerTMP0').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerTMP2.onChange = function () {
     $('#registerTMP2').text('0x' + global.registerTMP2.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerTMP2').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerTMP1.onChange = function () {
     $('#registerTMP1').text('0x' + global.registerTMP1.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#registerTMP1').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerUPCL.onChange = function () {
@@ -1135,9 +1081,6 @@ gui.onChangeSetup = function () {
     $('#registerUPCL').text('0x' + global.registerUPCL.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
-    setTimeout(function () {
-      $('#registerUPCL').removeClass('highlighted')
-    }, 500)
   }
 
   global.registerUPCH.onChange = function () {
@@ -1149,30 +1092,18 @@ gui.onChangeSetup = function () {
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
-    setTimeout(function () {
-      $('#registerUPCH').removeClass('highlighted')
-    }, 500)
   }
 
   global.addressBus.onChange = function () {
     $('#addressBus').text('0x' + global.addressBus.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#addressBus').removeClass('highlighted')
-    }, 500)
     $('.mem-highlighted').removeClass('mem-highlighted')
     $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
   }
 
   global.dataBus.onChange = function () {
     $('#EdataBus').text('0x' + global.dataBus.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#EdataBus').removeClass('highlighted')
-    }, 500)
     document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
     $('#IdataBus').addClass('highlighted')
-    setTimeout(function () {
-      $('#IdataBus').removeClass('highlighted')
-    }, 500)
   }
 
   document.getElementById('IdataBus').onchange = function () {
@@ -1202,17 +1133,11 @@ gui.onChangeSetup = function () {
 
   global.instructionRegister.onChange = function () {
     $('#instructionRegister').text('0x' + global.instructionRegister.hex).addClass('highlighted')
-    setTimeout(function () {
-      $('#instructionRegister').removeClass('highlighted')
-    }, 500)
   }
 }
 
 function highlight(what){
   $(what).addClass('highlighted')
-  setTimeout(function () {
-    $(what).removeClass('highlighted')
-  }, 500)
 }
 
 module.exports = gui
@@ -1933,8 +1858,11 @@ var alu = require('./alu.js')
 
 var CU = {}
 
+CU.beforeUintruction = function () {}
+
 CU.doUInstruction = function () {
   try {
+    CU.beforeUintruction()
     var opcode = CU.decode(global.microcode[global.registerUPCH.decPair])
     console.log(opcode)
     switch (opcode.Name) {

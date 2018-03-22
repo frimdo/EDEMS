@@ -3,8 +3,11 @@ var alu = require('./alu.js')
 
 var CU = {}
 
+CU.beforeUintruction = function () {}
+
 CU.doUInstruction = function () {
   try {
+    CU.beforeUintruction()
     var opcode = CU.decode(global.microcode[global.registerUPCH.decPair])
     console.log(opcode)
     switch (opcode.Name) {
