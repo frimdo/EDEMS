@@ -7,8 +7,6 @@ global.onMicrocodeChange = function () { return 0}
 global.memory = new Array(65536)
 global.onMemoryChange = function () { return 0}
 
-global.instructionRegister = new BinNumber(0)
-
 global.dataBus = new BinNumber(0)
 global.addressBus = new BinNumber(0, 16)
 
@@ -28,6 +26,8 @@ global.registerTMP2 = new BinNumber(0)
 global.registerTMP1 = new BinNumber(0, 8, global.registerTMP2)
 global.registerUPCL = new BinNumber(0)
 global.registerUPCH = new BinNumber(0, 3, global.registerUPCL, 3)
+
+global.instructionRegister = new BinNumber(0)
 
 global.freq = 10
 

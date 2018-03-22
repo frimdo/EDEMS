@@ -96,6 +96,7 @@ CU.doUInstruction = function () {
     console.log('CU:', err)
   }
   global.registerUPCH.incrPair()
+  return(opcode.Name)
 }
 
 CU.decode = function (opcode) {

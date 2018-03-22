@@ -14,6 +14,17 @@ clock.urun = function () {
   clock.running = setInterval(CU.doUInstruction, (1 / global.freq) * 1000)
 }
 
+clock.step = function () {
+  clearTimeout(clock.running)
+
+  clock.running = setInterval(function() {
+    if (CU.doUInstruction() === "END"){
+      clearTimeout(clock.running)
+    }
+
+  }, (1 / global.freq) * 1000)
+}
+
 clock.stop = function () {
   clearTimeout(clock.running)
 }

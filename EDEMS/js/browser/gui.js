@@ -132,6 +132,7 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+
   document.getElementById('compileMemory').onclick = function () {
     try {
 
@@ -145,6 +146,10 @@ gui.onclickSetup = function () {
         value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
         elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
       }
+
+      document.getElementById('scrollArea-memory').scrollTop =
+        document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
+        * ((global.addressBus.dec / 8) - 5)
 
       //global.onMemoryChange()
       for (let i = 0; i < code.length; i++) {
@@ -160,9 +165,13 @@ gui.onclickSetup = function () {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
-      for (let i = 0; i<code.length ; i++){
+      document.getElementById('scrollArea-microcode').scrollTop = 0
+      for (let i = 0; i < code.length; i++) {
         highlight('#microcode' + i)
       }
+
+
+
     } catch (Error) {
       alert(Error)
     }
@@ -384,6 +393,24 @@ gui.onclickSetup = function () {
                     }
                   }
                 }
+
+  document.getElementById('rst-btn').onclick = function () {
+    global.registerUPCH.valPair = 65535
+    global.addressBus.val = 0
+    global.dataBus.val = 0
+    global.microcode[global.microcode.length -1] = "7F2"
+    global.onMicrocodeChange()
+    global.registerPCH.valPair = "0xffff"
+    document.getElementById('scrollArea-microcode').scrollTop = 0
+    clock.step()
+    $('.highlighted').removeClass('highlighted')
+  }
+
+  document.getElementById('step-btn').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
+    CU.beforeUintruction = function(){}
+    clock.step()
+  }
 
   document.getElementById('ustep-btn').onclick = function () {
     CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}

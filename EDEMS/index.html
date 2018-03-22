@@ -20,6 +20,8 @@
         </div>
 
         <div id="clock-grid" class="block">
+            <button type="button" id="rst-btn">RST</button>
+            <button type="button" id="step-btn">Step</button>
             <button type="button" id="ustep-btn">uStep</button>
             <button type="button" id="urun-btn">uRun</button>
             <button type="button" id="stop-btn">Stop</button>
@@ -69,9 +71,14 @@
                 <button id="compileMemory" type="button">compile</button>
             </div>
             <div class="insideBlock">
-                <div id="memory-editor">12
-13
-14
+                <div id="memory-editor">04
+06
+00
+01
+07
+00
+42
+24
                 </div>
                 <div id="scrollArea-memory" class="clusterize-scroll">
                     <table>
@@ -95,57 +102,53 @@
                 <div type="button" id="IR">IR
                     <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
                 </div>
-                <div id="microcode-editor">;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
+                <div id="microcode-editor">JMP 0x8 ;F
+JMP 0x8 ;B
+JMP 0x8 ;D
+JMP 0x8 ;S
+JMP 0x8 ;A
+JMP 0x8 ;C
+JMP 0x8 ;E
+JMP 0x8 ;P
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
 COOP 0x0
-; load high address
-INCW PCH
-W>AB PCH
-RD
-DB>R TMP1
 ; load low address
 INCW PCH
 W>AB PCH
 RD
 DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
 ; load value to register
 W>AB TMP1
 RD
 DB>R op
 END
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ST
 COOP 0x0
-; load high address
-INCW PCH
-W>AB PCH
-RD
-DB>R TMP1
 ; load low address
 INCW PCH
 W>AB PCH
 RD
 DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
 ; load value to register
 W>AB TMP1
 R>DB op
 WT
 END
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ADD
-COOP 0x0
-; load high address
-INCW PCH
-W>AB PCH
-RD
-DB>R TMP1
-; load low address
-INCW PCH
-W>AB PCH
-RD
-DB>R TMP2
-; load value to register
-W>AB TMP1
-R>DB op
-WT
-END
+
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
                     <table>

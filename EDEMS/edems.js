@@ -600,6 +600,7 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+
   document.getElementById('compileMemory').onclick = function () {
     try {
 
@@ -613,6 +614,10 @@ gui.onclickSetup = function () {
         value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
         elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
       }
+
+      document.getElementById('scrollArea-memory').scrollTop =
+        document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
+        * ((global.addressBus.dec / 8) - 5)
 
       //global.onMemoryChange()
       for (let i = 0; i < code.length; i++) {
@@ -628,9 +633,13 @@ gui.onclickSetup = function () {
       var code = uCompiler.compile(global.microcodeEditor.getValue())
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
-      for (let i = 0; i<code.length ; i++){
+      document.getElementById('scrollArea-microcode').scrollTop = 0
+      for (let i = 0; i < code.length; i++) {
         highlight('#microcode' + i)
       }
+
+
+
     } catch (Error) {
       alert(Error)
     }
@@ -852,6 +861,24 @@ gui.onclickSetup = function () {
                     }
                   }
                 }
+
+  document.getElementById('rst-btn').onclick = function () {
+    global.registerUPCH.valPair = 65535
+    global.addressBus.val = 0
+    global.dataBus.val = 0
+    global.microcode[global.microcode.length -1] = "7F2"
+    global.onMicrocodeChange()
+    global.registerPCH.valPair = "0xffff"
+    document.getElementById('scrollArea-microcode').scrollTop = 0
+    clock.step()
+    $('.highlighted').removeClass('highlighted')
+  }
+
+  document.getElementById('step-btn').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
+    CU.beforeUintruction = function(){}
+    clock.step()
+  }
 
   document.getElementById('ustep-btn').onclick = function () {
     CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
@@ -1847,6 +1874,18 @@ clock.urun = function () {
   clock.running = setInterval(CU.doUInstruction, (1 / global.freq) * 1000)
 }
 
+clock.step = function () {
+  clearTimeout(clock.running)
+
+  clock.running = setInterval(function() {
+    console.log("step called")
+    if (CU.doUInstruction() === "END"){
+      clearTimeout(clock.running)
+    }
+
+  }, (1 / global.freq) * 1000)
+}
+
 clock.stop = function () {
   clearTimeout(clock.running)
 }
@@ -1951,6 +1990,7 @@ CU.doUInstruction = function () {
     console.log('CU:', err)
   }
   global.registerUPCH.incrPair()
+  return(opcode.Name)
 }
 
 CU.decode = function (opcode) {
@@ -2246,8 +2286,6 @@ global.onMicrocodeChange = function () { return 0}
 global.memory = new Array(65536)
 global.onMemoryChange = function () { return 0}
 
-global.instructionRegister = new BinNumber(0)
-
 global.dataBus = new BinNumber(0)
 global.addressBus = new BinNumber(0, 16)
 
@@ -2267,6 +2305,8 @@ global.registerTMP2 = new BinNumber(0)
 global.registerTMP1 = new BinNumber(0, 8, global.registerTMP2)
 global.registerUPCL = new BinNumber(0)
 global.registerUPCH = new BinNumber(0, 3, global.registerUPCL, 3)
+
+global.instructionRegister = new BinNumber(0)
 
 global.freq = 10
 
