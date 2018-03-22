@@ -126,7 +126,7 @@ DB>R TMP1
 ; load value to register
 W>AB TMP1
 RD
-DB>R op
+DB>R OP
 END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ST
@@ -141,13 +141,31 @@ INCW PCH
 W>AB PCH
 RD
 DB>R TMP1
-; load value to register
+; store value to register
 W>AB TMP1
-R>DB op
+R>DB OP
 WT
 END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ADD
+COOP 0x0
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+                    ; add value to register
+                    W>AB TMP1
+                    RD
+                    DB>R TMP1
+                    R>DB OP
+                    ALU 0
+                    END
 
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">

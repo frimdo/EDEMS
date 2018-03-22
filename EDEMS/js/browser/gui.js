@@ -135,6 +135,7 @@ gui.onclickSetup = function () {
 
   document.getElementById('compileMemory').onclick = function () {
     try {
+      $('.highlighted').removeClass('highlighted')
 
       var code = mCompiler.compile(global.memoryEditor.getValue())
       Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
@@ -162,6 +163,8 @@ gui.onclickSetup = function () {
 
   document.getElementById('compileMicrocode').onclick = function () {
     try {
+      $('.highlighted').removeClass('highlighted')
+
       var code = uCompiler.compile(global.microcodeEditor.getValue())
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
@@ -395,14 +398,13 @@ gui.onclickSetup = function () {
                 }
 
   document.getElementById('rst-btn').onclick = function () {
-    global.registerUPCH.valPair = 65535
     global.addressBus.val = 0
     global.dataBus.val = 0
-    global.microcode[global.microcode.length -1] = "7F2"
-    global.onMicrocodeChange()
-    global.registerPCH.valPair = "0xffff"
+    global.instructionRegister.val = '0x' + global.memory[0]
+    global.registerUPCH.valPair = global.instructionRegister.dec
+    global.registerPCH.valPair = 0
     document.getElementById('scrollArea-microcode').scrollTop = 0
-    clock.step()
+
     $('.highlighted').removeClass('highlighted')
   }
 
