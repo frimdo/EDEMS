@@ -1880,7 +1880,6 @@ clock.step = function () {
   clearTimeout(clock.running)
 
   clock.running = setInterval(function() {
-    console.log("step called")
     if (CU.doUInstruction() === "END"){
       clearTimeout(clock.running)
     }
@@ -2515,10 +2514,13 @@ microcodeCompiler.compile = function (input) {
           'EQU': 17,
           'OOP': 18
         }
+        if (operations[line[1]] === undefined){
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
+        }
         try {
           output.push('00' + operations[line[1]])
         } catch (err) {
-          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + 'is not valid ALU operation.')
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         break
       case ('R>DB'):
