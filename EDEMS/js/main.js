@@ -19,6 +19,8 @@ $(document).ready(function () {
   window.CU = CU
   window.clock = clock
   window.alu = alu
+  window.uComp = uComp
+  window.mComp = mComp
 
   LS.initGlobals()
 

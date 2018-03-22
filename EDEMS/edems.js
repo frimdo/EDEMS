@@ -83,6 +83,9 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
         { token: 'constant.character.binary.assembly',
           regex: '\\b0b[0-1]+\\b',
           caseInsensitive: true },
+        { token : "string", // pre-compiler directives
+          regex : "\\.def.*",
+          caseInsensitive: true },
         { token: 'comment.assembly', regex: ';.*$' } ]
   };
 
@@ -2411,6 +2414,8 @@ $(document).ready(function () {
   window.CU = CU
   window.clock = clock
   window.alu = alu
+  window.uComp = uComp
+  window.mComp = mComp
 
   LS.initGlobals()
 
@@ -2717,6 +2722,16 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+      case ('.DEF'):
+        if(line[1] === undefined || line[1].length === 0){
+          throw SyntaxError('Error on line ' + (i + 1) + ': keyword not defined')
+        }
+        var keyword = line[1]
+        if(line[2] === undefined || line[2].length ===0){
+          microcodeCompiler.assemblyKeywords.push({keyword: keyword})
+        } else {
+          microcodeCompiler.assemblyKeywords.push({keyword: keyword, operand: line[2]})
+        }
       case (''):
         break
       default:
@@ -2749,6 +2764,8 @@ function parseNumber (input, bits) {
   }
   return output.dec
 }
+
+microcodeCompiler.assemblyKeywords = []
 
 module.exports = microcodeCompiler
 

@@ -11,7 +11,7 @@ define(function(require, exports, module) {
 
     this.$rules = { start:
         [ { token: 'keyword.control.assembly',
-          regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
+          regex: '\\b(?:DEF|COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
           caseInsensitive: true },
           { token: 'variable.parameter.register.assembly',
             regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
@@ -29,6 +29,9 @@ define(function(require, exports, module) {
             caseInsensitive: true },
           { token: 'constant.character.binary.assembly',
             regex: '\\b0b[0-1]+\\b',
+            caseInsensitive: true },
+          { token: 'keyword.macro.assembly',
+            regex: '\\b(?:DEF)\\b',
             caseInsensitive: true },
           { token: 'comment.assembly', regex: ';.*$' } ]
     };

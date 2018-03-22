@@ -29,6 +29,9 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
         { token: 'constant.character.binary.assembly',
           regex: '\\b0b[0-1]+\\b',
           caseInsensitive: true },
+        { token : "string", // pre-compiler directives
+          regex : "\\.def.*",
+          caseInsensitive: true },
         { token: 'comment.assembly', regex: ';.*$' } ]
   };
 

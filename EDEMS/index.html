@@ -102,14 +102,82 @@
                 <div type="button" id="IR">IR
                     <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
                 </div>
-                <div id="microcode-editor">JMP 0x8 ;F
-JMP 0x8 ;B
-JMP 0x8 ;D
-JMP 0x8 ;S
-JMP 0x8 ;A
-JMP 0x8 ;C
-JMP 0x8 ;E
-JMP 0x8 ;P
+                <div id="microcode-editor">;;;;;;;;;;;;;;;;;;;;; Jump directives
+.DEF LDF 2b
+JMP 0x3E
+.DEF LDB 2b
+JMP 0x3E
+.DEF LDD 2b
+JMP 0x3E
+.DEF LDS 2b
+JMP 0x3E
+.DEF LDA 2b
+JMP 0x3E
+.DEF LDC 2b
+JMP 0x3E
+.DEF LDE 2b
+JMP 0x3E
+.DEF LDP 2b
+JMP 0x3E
+
+JMP 0x4B ;DEF STF 2b
+JMP 0x4B ;DEF STB 2b
+JMP 0x4B ;DEF STD 2b
+JMP 0x4B ;DEF STS 2b
+JMP 0x4B ;DEF STA 2b
+JMP 0x4B ;DEF STC 2b
+JMP 0x4B ;DEF STE 2b
+JMP 0x4B ;DEF STP 2b
+
+JMP 0x58 ;DEF ADDF 2b
+JMP 0x58 ;DEF ADDB 2b
+JMP 0x58 ;DEF ADDD 2b
+JMP 0x58 ;DEF ADDS 2b
+JMP 0x58 ;DEF ADDA 2b
+JMP 0x58 ;DEF ADDC 2b
+JMP 0x58 ;DEF ADDE 2b
+JMP 0x58 ;DEF ADDP 2b
+
+JMP 0x68 ;DEF INCF
+JMP 0x68 ;DEF INCB
+JMP 0x68 ;DEF INCD
+JMP 0x68 ;DEF INCS
+JMP 0x68 ;DEF INCA
+JMP 0x68 ;DEF INCC
+JMP 0x68 ;DEF INCE
+JMP 0x68 ;DEF INCP
+
+JMP 0x8 ;DEF INCWF
+JMP 0x8 ;DEF INCWB
+JMP 0x8 ;DEF INCWD
+JMP 0x8 ;DEF INCWS
+
+JMP 0x8 ;DEF DECF
+JMP 0x8 ;DEF DECB
+JMP 0x8 ;DEF DECD
+JMP 0x8 ;DEF DECS
+JMP 0x8 ;DEF DECA
+JMP 0x8 ;DEF DECC
+JMP 0x8 ;DEF DECE
+JMP 0x8 ;DEF DECP
+
+JMP 0x8 ;DEF DECWF
+JMP 0x8 ;DEF DECWB
+JMP 0x8 ;DEF DECWD
+JMP 0x8 ;DEF DECWS
+
+JMP 0x8 ;DEF TSTFC
+JMP 0x8 ;DEF TSTFZ
+JMP 0x8 ;DEF TSTFN
+JMP 0x8 ;DEF TSTFV
+JMP 0x8 ;DEF TSTFP
+JMP 0x8 ;DEF TSTFH
+JMP 0x8 ;DEF TSTFQ
+JMP 0x8 ;DEF TSTFX
+
+JMP 0x8 ;DEF TST 2b
+
+JMP 0x8 ;DEF JMP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
 COOP 0x0
@@ -159,13 +227,15 @@ INCW PCH
 W>AB PCH
 RD
 DB>R TMP1
-                    ; add value to register
-                    W>AB TMP1
-                    RD
-                    DB>R TMP1
-                    R>DB OP
-                    ALU ADD
-                    END
+; add value to register
+W>AB TMP1
+RD
+DB>R TMP1
+
+R>DB OP
+ALU ADD
+DB>R OP
+END
 
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
