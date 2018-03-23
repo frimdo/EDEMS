@@ -248,15 +248,28 @@ microcodeCompiler.compile = function (input) {
         }
         break
       case ('.DEF'):
-        if(line[1] === undefined || line[1].length === 0){
+
+        var byte = 2048
+        try {
+          byte += parseNumber(line[1], 11)
+          console.log(byte)
+          byte = byte.toString(16)
+          console.log(byte)
+        } catch (err) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
+        }
+
+        if(line[2] === undefined || line[2].length === 0){
           throw SyntaxError('Error on line ' + (i + 1) + ': keyword not defined')
         }
-        var keyword = line[1]
-        if(line[2] === undefined || line[2].length ===0){
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword})
+        var keyword = line[2]
+        if(line[3] === undefined || line[3].length ===0){
+          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte})
         } else {
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, operand: line[2]})
+          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte, operand: line[2]})
         }
+        output.push(byte)
+        break
       case (''):
         break
       default:
@@ -286,6 +299,9 @@ function parseNumber (input, bits) {
       console.log(err)
       throw SyntaxError(input + ' is not a valid number')
     }
+  }
+  if (isNaN(output.dec)) {
+    throw SyntaxError(input + ' is not a valid number')
   }
   return output.dec
 }
