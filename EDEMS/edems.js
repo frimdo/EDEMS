@@ -2479,6 +2479,7 @@ var BinNumber = require('./binNumber.js')
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
+  microcodeCompiler.assemblyKeywords = []
   var output = []
   var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
 
@@ -2727,9 +2728,7 @@ microcodeCompiler.compile = function (input) {
         var byte = 2048
         try {
           byte += parseNumber(line[1], 11)
-          console.log(byte)
           byte = byte.toString(16)
-          console.log(byte)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
@@ -2740,8 +2739,10 @@ microcodeCompiler.compile = function (input) {
         var keyword = line[2]
         if(line[3] === undefined || line[3].length ===0){
           microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte})
+        } else if(line[3].match(/[0-9]+B/g) === null) {
+          throw SyntaxError('Error on line '+ (i + 1) + ': ' + line[3] + ' is wrong number of operands.')
         } else {
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte, operand: line[2]})
+          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte, operand: line[3]})
         }
         output.push(byte)
         break

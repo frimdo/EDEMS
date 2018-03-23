@@ -249,7 +249,7 @@
 }
 
 #alu-grid .insideBlock div {
-    //flex-grow: 1;
+    /*flex-grow: 1;*/
 }
 
 #aluSelect, .spacer {
