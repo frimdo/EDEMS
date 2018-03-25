@@ -1,77 +1,92 @@
 (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
-ace.define("ace/mode/EdemsMemoryAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
-"use strict";
+ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (acequire, exports, module) {
+  'use strict'
 
-var oop = acequire("../lib/oop");
-var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
+  var oop = acequire('../lib/oop')
+  var TextHighlightRules = acequire('./text_highlight_rules').TextHighlightRules
 
-
-
-  var EdemsMemoryAssemblyHighlightRules = function() {
+  var EdemsMemoryAssemblyHighlightRules = function () {
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
-    var keywords = ""
-    for(let i = 0; i<uComp.assemblyKeywords.length; i++){
-      keywords += "|" + uComp.assemblyKeywords[i].keyword
+    var keywords = ''
+    for (let i = 0; i < uComp.assemblyKeywords.length; i++) {
+      keywords += '|' + uComp.assemblyKeywords[i].keyword
     }
-    if(keywords === ""){
-      keywords = "|(?!.*)"
+    if (keywords === '') {
+      keywords = '|(?!.*)'
     }
 
-    this.$rules = { start:
-        [ { token: 'keyword.control.assembly',
-          regex: '\\b(?:' + keywords.substring(1,keywords.length) + ')\\b',
-          caseInsensitive: true },
+    this.$rules = {
+      start:
+        [{
+          token: 'keyword.control.assembly',
+          regex: '\\b(?:' + keywords.substring(1, keywords.length) + ')\\b',
+          caseInsensitive: true
+        },
           /*{ token: 'keyword.control.assembly',
           regex: '^[0-9]{2}$',
           caseInsensitive: true },*/
-          { token: 'constant.character.decimal.assembly',
-            regex: '\\b[0-9]+\\b' },
-          { token: 'constant.character.hexadecimal.assembly',
+          {
+            token: 'constant.character.decimal.assembly',
+            regex: '\\b[0-9]+\\b'
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
             regex: '\\b0x[A-F0-9]+\\b',
-            caseInsensitive: true },
-          { token: 'constant.character.hexadecimal.assembly',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
             regex: '\\b[A-F0-9]+h\\b',
-            caseInsensitive: true },
-          { token: 'constant.character.binary.assembly',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.binary.assembly',
             regex: '\\b0b[0-1]+\\b',
-            caseInsensitive: true },
-          { token: 'comment.assembly', regex: ';.*$' } ]
-    };
+            caseInsensitive: true
+          },
+          {
+            token: 'string', // pre-compiler directives
+            regex: '\\.org.*',
+            caseInsensitive: true
+          },
+          {token: 'comment.assembly', regex: ';.*$'}]
+    }
 
-    this.normalizeRules();
-  };
+    this.normalizeRules()
+  }
 
-  EdemsMemoryAssemblyHighlightRules.metaData = { fileTypes: [ 'asm' ],
+  EdemsMemoryAssemblyHighlightRules.metaData = {
+    fileTypes: ['asm'],
     name: 'Edems Memory Assembly',
-    scopeName: 'source.assembly' };
+    scopeName: 'source.assembly'
+  }
 
+  oop.inherits(EdemsMemoryAssemblyHighlightRules, TextHighlightRules)
 
-  oop.inherits(EdemsMemoryAssemblyHighlightRules, TextHighlightRules);
+  exports.EdemsMemoryAssemblyHighlightRules = EdemsMemoryAssemblyHighlightRules
+})
 
-exports.EdemsMemoryAssemblyHighlightRules = EdemsMemoryAssemblyHighlightRules;
-});
+ace.define('ace/mode/EdemsMemoryAssembly', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text', 'ace/mode/EdemsMemoryAssemblyHighlightRules', 'ace/mode/folding/coffee'], function (acequire, exports, module) {
+  'use strict'
 
-ace.define("ace/mode/EdemsMemoryAssembly",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/EdemsMemoryAssemblyHighlightRules","ace/mode/folding/coffee"], function(acequire, exports, module) {
-"use strict";
+  var oop = acequire('../lib/oop')
+  var TextMode = acequire('./text').Mode
+  var EdemsMemoryAssemblyHighlightRules = acequire('./EdemsMemoryAssemblyHighlightRules').EdemsMemoryAssemblyHighlightRules
 
-var oop = acequire("../lib/oop");
-var TextMode = acequire("./text").Mode;
-var EdemsMemoryAssemblyHighlightRules = acequire("./EdemsMemoryAssemblyHighlightRules").EdemsMemoryAssemblyHighlightRules;
+  var Mode = function () {
+    this.HighlightRules = EdemsMemoryAssemblyHighlightRules
+    this.$behaviour = this.$defaultBehaviour
+  }
+  oop.inherits(Mode, TextMode);
 
-var Mode = function() {
-    this.HighlightRules = EdemsMemoryAssemblyHighlightRules;
-    this.$behaviour = this.$defaultBehaviour;
-};
-oop.inherits(Mode, TextMode);
+  (function () {
+    this.lineCommentStart = ';'
+    this.$id = 'ace/mode/EdemsMemoryAssembly'
+  }).call(Mode.prototype)
 
-(function() {
-    this.lineCommentStart = ";";
-    this.$id = "ace/mode/EdemsMemoryAssembly";
-}).call(Mode.prototype);
-
-exports.Mode = Mode;
-});
+  exports.Mode = Mode
+})
 
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
 ace.define("ace/mode/EdemsMicrocodeAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
@@ -576,7 +591,7 @@ gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
   global.memoryEditor.getSession().setMode({
-    path: "ace/mode/EdemsMemoryAssembly",
+    path: 'ace/mode/EdemsMemoryAssembly',
     v: Date.now()
   })
 }
@@ -634,7 +649,15 @@ gui.onclickSetup = function () {
       $('.highlighted').removeClass('highlighted')
 
       var code = mCompiler.compile(global.memoryEditor.getValue())
-      Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
+      var orgs = Object.getOwnPropertyNames(code)
+
+      for (var i = 0; i < orgs.length; i++) {
+        Array.prototype.splice.apply(global.memory, [parseInt(orgs[i]), code[orgs[i]].length].concat(code[orgs[i]]))
+
+        for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
+          highlight('#memory' + y)
+        }
+      }
 
       // Fill values to table
       var value
@@ -648,10 +671,6 @@ gui.onclickSetup = function () {
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
 
-      //global.onMemoryChange()
-      for (let i = 0; i < code.length; i++) {
-        highlight('#memory' + i)
-      }
     } catch (Error) {
       alert(Error)
     }
@@ -670,7 +689,7 @@ gui.onclickSetup = function () {
       }
 
       global.memoryEditor.getSession().setMode({
-        path: "ace/mode/EdemsMemoryAssembly",
+        path: 'ace/mode/EdemsMemoryAssembly',
         v: Date.now()
       })
 
@@ -909,17 +928,17 @@ gui.onclickSetup = function () {
 
   document.getElementById('step-btn').onclick = function () {
     $('.highlighted').removeClass('highlighted')
-    CU.beforeUintruction = function(){}
+    CU.beforeUintruction = function () {}
     clock.step()
   }
 
   document.getElementById('ustep-btn').onclick = function () {
-    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
+    CU.beforeUintruction = function () { $('.highlighted').removeClass('highlighted')}
     clock.ustep()
   }
 
   document.getElementById('urun-btn').onclick = function () {
-    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
+    CU.beforeUintruction = function () { $('.highlighted').removeClass('highlighted')}
     clock.urun()
   }
 
@@ -1022,7 +1041,6 @@ gui.onChangeSetup = function () {
       $('#memory' + global.addressBus.dec).addClass('highlighted')
     }, 50)
 
-
   }
 
   document.getElementById('freq').onchange = function () {
@@ -1043,31 +1061,30 @@ gui.onChangeSetup = function () {
 
   global.registerF.onChange = function () {
     var newValue = global.registerF.bin
-    newValue =('0'.repeat(8 - newValue.length) + newValue).split('')
+    newValue = ('0'.repeat(8 - newValue.length) + newValue).split('')
 
-
-    if($('.F-viewer7').text() !== newValue[0]){
+    if ($('.F-viewer7').text() !== newValue[0]) {
       $('.F-viewer7').addClass('highlighted')
     }
-    if($('.F-viewer6').text() !== newValue[1]){
+    if ($('.F-viewer6').text() !== newValue[1]) {
       $('.F-viewer6').addClass('highlighted')
     }
-    if($('.F-viewer5').text() !== newValue[2]){
+    if ($('.F-viewer5').text() !== newValue[2]) {
       $('.F-viewer5').addClass('highlighted')
     }
-    if($('.F-viewer4').text() !== newValue[3]){
+    if ($('.F-viewer4').text() !== newValue[3]) {
       $('.F-viewer4').addClass('highlighted')
     }
-    if($('.F-viewer3').text() !== newValue[4]){
+    if ($('.F-viewer3').text() !== newValue[4]) {
       $('.F-viewer3').addClass('highlighted')
     }
-    if($('.F-viewer2').text() !== newValue[5]){
+    if ($('.F-viewer2').text() !== newValue[5]) {
       $('.F-viewer2').addClass('highlighted')
     }
-    if($('.F-viewer1').text() !== newValue[6]){
+    if ($('.F-viewer1').text() !== newValue[6]) {
       $('.F-viewer1').addClass('highlighted')
     }
-    if($('.F-viewer0').text() !== newValue[7]){
+    if ($('.F-viewer0').text() !== newValue[7]) {
       $('.F-viewer0').addClass('highlighted')
     }
 
@@ -1079,7 +1096,6 @@ gui.onChangeSetup = function () {
     $('.F-viewer2').text(newValue[5])
     $('.F-viewer1').text(newValue[6])
     $('.F-viewer0').text(newValue[7])
-
 
     $('#registerF').text('0x' + global.registerF.hex).addClass('highlighted')
   }
@@ -1133,7 +1149,7 @@ gui.onChangeSetup = function () {
   }
 
   global.registerUPCL.onChange = function () {
-        // Scroll to changed element
+    // Scroll to changed element
     document.getElementById('scrollArea-microcode').scrollTop =
       document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
       * ((global.registerUPCH.decPair / 8) - 5)
@@ -1147,7 +1163,7 @@ gui.onChangeSetup = function () {
     // Scroll to changed element
     document.getElementById('scrollArea-microcode').scrollTop =
       document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
-        * ((global.registerUPCH.decPair / 8) - 5)
+      * ((global.registerUPCH.decPair / 8) - 5)
 
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
@@ -1172,11 +1188,11 @@ gui.onChangeSetup = function () {
       try {
         global.dataBus.val = +tmp
         return
-      } catch (x){
+      } catch (x) {
         global.dataBus.val = tmp
         return
       }
-    } catch (x){
+    } catch (x) {
       global.dataBus.val = global.dataBus.dec
     }
 
@@ -1196,7 +1212,7 @@ gui.onChangeSetup = function () {
   }
 }
 
-function highlight(what){
+function highlight (what) {
   $(what).addClass('highlighted')
 }
 
@@ -2461,19 +2477,16 @@ $(document).ready(function () {
   gui.onChangeSetup()
   gui.refresh()
 
-
   document.getElementById('compileMicrocode').onclick()
-
-
 
   global.advanced = false
 })
 
-
+/*
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
-
+*/
 },{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js":[function(require,module,exports){
 var global = require('./globals.js')
 var BinNumber = require('./binNumber.js')
@@ -2481,7 +2494,10 @@ var BinNumber = require('./binNumber.js')
 var memoryCompiler = {}
 
 memoryCompiler.compile = function (input) {
-  var output = []
+  var output = {'0': []}
+  var pointer = '0'
+  var instruction = {}
+  var operand
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -2489,15 +2505,53 @@ memoryCompiler.compile = function (input) {
 
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
-    if (line[0].match(/^[0-9]{2}$/)) {
-      output.push(line[0])
-    } else if (line[0] === '' || line[0].substring(0, 1) === ';')  {
-      //NOP
+
+    if (line[0] === '.ORG') {
+      output[line[1].toString()] = []
+      pointer = line[1].toString()
+    } else if (line[0] === '') {
     } else {
-      throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+      instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
+      if (instruction === undefined) {
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+      }
+
+      output[pointer].push(instruction.address)
+
+      if (instruction.operand !== undefined) {
+        operand = parseNumber(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
+        while (operand.length > 0) {
+          output[pointer].push(operand.slice(-2))
+          operand = operand.slice(0, -2)
+        }
+      }
     }
   }
   return output
+}
+
+function parseNumber (input, bits) {
+  input = input.toLowerCase()
+  var output = {}
+  if (isNaN(input)) {
+    try {
+      output = new BinNumber(input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  } else if (input) {
+    try {
+      output = new BinNumber(+input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  }
+  if (isNaN(output.dec)) {
+    throw SyntaxError(input + ' is not a valid number')
+  }
+  return output.hex
 }
 
 module.exports = memoryCompiler
@@ -2551,7 +2605,7 @@ microcodeCompiler.compile = function (input) {
           'EQU': 17,
           'OOP': 18
         }
-        if (operations[line[1]] === undefined){
+        if (operations[line[1]] === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         try {
@@ -2764,16 +2818,23 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
 
-        if(line[2] === undefined || line[2].length === 0){
+        if (line[2] === undefined || line[2].length === 0) {
           throw SyntaxError('Error on line ' + (i + 1) + ': keyword not defined')
         }
         var keyword = line[2]
-        if(line[3] === undefined || line[3].length ===0){
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte})
-        } else if(line[3].match(/[0-9]+B/g) === null) {
-          throw SyntaxError('Error on line '+ (i + 1) + ': ' + line[3] + ' is wrong number of operands.')
+        if (line[3] === undefined || line[3].length === 0) {
+          microcodeCompiler.assemblyKeywords.push({
+            keyword: keyword,
+            address: microcodeCompiler.assemblyKeywords.length
+          })
+        } else if (line[3].match(/[0-9]+B/g) === null) {
+          throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[3] + ' is wrong number of operands.')
         } else {
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte, operand: line[3]})
+          microcodeCompiler.assemblyKeywords.push({
+            keyword: keyword,
+            address: microcodeCompiler.assemblyKeywords.length,
+            operand: line[3]
+          })
         }
         output.push(byte)
         break

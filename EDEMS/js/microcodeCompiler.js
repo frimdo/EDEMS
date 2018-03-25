@@ -45,7 +45,7 @@ microcodeCompiler.compile = function (input) {
           'EQU': 17,
           'OOP': 18
         }
-        if (operations[line[1]] === undefined){
+        if (operations[line[1]] === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         try {
@@ -258,16 +258,23 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
 
-        if(line[2] === undefined || line[2].length === 0){
+        if (line[2] === undefined || line[2].length === 0) {
           throw SyntaxError('Error on line ' + (i + 1) + ': keyword not defined')
         }
         var keyword = line[2]
-        if(line[3] === undefined || line[3].length ===0){
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte})
-        } else if(line[3].match(/[0-9]+B/g) === null) {
-          throw SyntaxError('Error on line '+ (i + 1) + ': ' + line[3] + ' is wrong number of operands.')
+        if (line[3] === undefined || line[3].length === 0) {
+          microcodeCompiler.assemblyKeywords.push({
+            keyword: keyword,
+            address: microcodeCompiler.assemblyKeywords.length
+          })
+        } else if (line[3].match(/[0-9]+B/g) === null) {
+          throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[3] + ' is wrong number of operands.')
         } else {
-          microcodeCompiler.assemblyKeywords.push({keyword: keyword, address: byte, operand: line[3]})
+          microcodeCompiler.assemblyKeywords.push({
+            keyword: keyword,
+            address: microcodeCompiler.assemblyKeywords.length,
+            operand: line[3]
+          })
         }
         output.push(byte)
         break

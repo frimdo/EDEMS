@@ -4,7 +4,10 @@ var BinNumber = require('./binNumber.js')
 var memoryCompiler = {}
 
 memoryCompiler.compile = function (input) {
-  var output = []
+  var output = {'0': []}
+  var pointer = '0'
+  var instruction = {}
+  var operand
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -12,15 +15,53 @@ memoryCompiler.compile = function (input) {
 
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
-    if (line[0].match(/^[0-9]{2}$/)) {
-      output.push(line[0])
-    } else if (line[0] === '' || line[0].substring(0, 1) === ';')  {
-      //NOP
+
+    if (line[0] === '.ORG') {
+      output[line[1].toString()] = []
+      pointer = line[1].toString()
+    } else if (line[0] === '') {
     } else {
-      throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+      instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
+      if (instruction === undefined) {
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+      }
+
+      output[pointer].push(instruction.address)
+
+      if (instruction.operand !== undefined) {
+        operand = parseNumber(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
+        while (operand.length > 0) {
+          output[pointer].push(operand.slice(-2))
+          operand = operand.slice(0, -2)
+        }
+      }
     }
   }
   return output
+}
+
+function parseNumber (input, bits) {
+  input = input.toLowerCase()
+  var output = {}
+  if (isNaN(input)) {
+    try {
+      output = new BinNumber(input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  } else if (input) {
+    try {
+      output = new BinNumber(+input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  }
+  if (isNaN(output.dec)) {
+    throw SyntaxError(input + ' is not a valid number')
+  }
+  return output.hex
 }
 
 module.exports = memoryCompiler

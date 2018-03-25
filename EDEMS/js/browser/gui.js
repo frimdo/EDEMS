@@ -83,7 +83,7 @@ gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
   global.memoryEditor.getSession().setMode({
-    path: "ace/mode/EdemsMemoryAssembly",
+    path: 'ace/mode/EdemsMemoryAssembly',
     v: Date.now()
   })
 }
@@ -141,7 +141,15 @@ gui.onclickSetup = function () {
       $('.highlighted').removeClass('highlighted')
 
       var code = mCompiler.compile(global.memoryEditor.getValue())
-      Array.prototype.splice.apply(global.memory, [0, code.length].concat(code))
+      var orgs = Object.getOwnPropertyNames(code)
+
+      for (var i = 0; i < orgs.length; i++) {
+        Array.prototype.splice.apply(global.memory, [parseInt(orgs[i]), code[orgs[i]].length].concat(code[orgs[i]]))
+
+        for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
+          highlight('#memory' + y)
+        }
+      }
 
       // Fill values to table
       var value
@@ -155,10 +163,6 @@ gui.onclickSetup = function () {
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
 
-      //global.onMemoryChange()
-      for (let i = 0; i < code.length; i++) {
-        highlight('#memory' + i)
-      }
     } catch (Error) {
       alert(Error)
     }
@@ -177,7 +181,7 @@ gui.onclickSetup = function () {
       }
 
       global.memoryEditor.getSession().setMode({
-        path: "ace/mode/EdemsMemoryAssembly",
+        path: 'ace/mode/EdemsMemoryAssembly',
         v: Date.now()
       })
 
@@ -416,17 +420,17 @@ gui.onclickSetup = function () {
 
   document.getElementById('step-btn').onclick = function () {
     $('.highlighted').removeClass('highlighted')
-    CU.beforeUintruction = function(){}
+    CU.beforeUintruction = function () {}
     clock.step()
   }
 
   document.getElementById('ustep-btn').onclick = function () {
-    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
+    CU.beforeUintruction = function () { $('.highlighted').removeClass('highlighted')}
     clock.ustep()
   }
 
   document.getElementById('urun-btn').onclick = function () {
-    CU.beforeUintruction = function(){ $('.highlighted').removeClass('highlighted')}
+    CU.beforeUintruction = function () { $('.highlighted').removeClass('highlighted')}
     clock.urun()
   }
 
@@ -529,7 +533,6 @@ gui.onChangeSetup = function () {
       $('#memory' + global.addressBus.dec).addClass('highlighted')
     }, 50)
 
-
   }
 
   document.getElementById('freq').onchange = function () {
@@ -550,31 +553,30 @@ gui.onChangeSetup = function () {
 
   global.registerF.onChange = function () {
     var newValue = global.registerF.bin
-    newValue =('0'.repeat(8 - newValue.length) + newValue).split('')
+    newValue = ('0'.repeat(8 - newValue.length) + newValue).split('')
 
-
-    if($('.F-viewer7').text() !== newValue[0]){
+    if ($('.F-viewer7').text() !== newValue[0]) {
       $('.F-viewer7').addClass('highlighted')
     }
-    if($('.F-viewer6').text() !== newValue[1]){
+    if ($('.F-viewer6').text() !== newValue[1]) {
       $('.F-viewer6').addClass('highlighted')
     }
-    if($('.F-viewer5').text() !== newValue[2]){
+    if ($('.F-viewer5').text() !== newValue[2]) {
       $('.F-viewer5').addClass('highlighted')
     }
-    if($('.F-viewer4').text() !== newValue[3]){
+    if ($('.F-viewer4').text() !== newValue[3]) {
       $('.F-viewer4').addClass('highlighted')
     }
-    if($('.F-viewer3').text() !== newValue[4]){
+    if ($('.F-viewer3').text() !== newValue[4]) {
       $('.F-viewer3').addClass('highlighted')
     }
-    if($('.F-viewer2').text() !== newValue[5]){
+    if ($('.F-viewer2').text() !== newValue[5]) {
       $('.F-viewer2').addClass('highlighted')
     }
-    if($('.F-viewer1').text() !== newValue[6]){
+    if ($('.F-viewer1').text() !== newValue[6]) {
       $('.F-viewer1').addClass('highlighted')
     }
-    if($('.F-viewer0').text() !== newValue[7]){
+    if ($('.F-viewer0').text() !== newValue[7]) {
       $('.F-viewer0').addClass('highlighted')
     }
 
@@ -586,7 +588,6 @@ gui.onChangeSetup = function () {
     $('.F-viewer2').text(newValue[5])
     $('.F-viewer1').text(newValue[6])
     $('.F-viewer0').text(newValue[7])
-
 
     $('#registerF').text('0x' + global.registerF.hex).addClass('highlighted')
   }
@@ -640,7 +641,7 @@ gui.onChangeSetup = function () {
   }
 
   global.registerUPCL.onChange = function () {
-        // Scroll to changed element
+    // Scroll to changed element
     document.getElementById('scrollArea-microcode').scrollTop =
       document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
       * ((global.registerUPCH.decPair / 8) - 5)
@@ -654,7 +655,7 @@ gui.onChangeSetup = function () {
     // Scroll to changed element
     document.getElementById('scrollArea-microcode').scrollTop =
       document.getElementById('contentArea-microcode').getElementsByTagName('tr')[3].scrollHeight
-        * ((global.registerUPCH.decPair / 8) - 5)
+      * ((global.registerUPCH.decPair / 8) - 5)
 
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
@@ -679,11 +680,11 @@ gui.onChangeSetup = function () {
       try {
         global.dataBus.val = +tmp
         return
-      } catch (x){
+      } catch (x) {
         global.dataBus.val = tmp
         return
       }
-    } catch (x){
+    } catch (x) {
       global.dataBus.val = global.dataBus.dec
     }
 
@@ -703,7 +704,7 @@ gui.onChangeSetup = function () {
   }
 }
 
-function highlight(what){
+function highlight (what) {
   $(what).addClass('highlighted')
 }
 

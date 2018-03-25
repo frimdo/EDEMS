@@ -38,15 +38,13 @@ $(document).ready(function () {
   gui.onChangeSetup()
   gui.refresh()
 
-
   document.getElementById('compileMicrocode').onclick()
-
-
 
   global.advanced = false
 })
 
-
+/*
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
+*/
