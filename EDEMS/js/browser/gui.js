@@ -81,8 +81,11 @@ gui.DrawMemoryTable = function () {
 
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
-  global.memoryEditor.getSession().setMode('ace/mode/EdemsMemoryAssembly')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
+  global.memoryEditor.getSession().setMode({
+    path: "ace/mode/EdemsMemoryAssembly",
+    v: Date.now()
+  })
 }
 
 gui.DrawMicrocodeEditor = function () {
@@ -173,7 +176,10 @@ gui.onclickSetup = function () {
         highlight('#microcode' + i)
       }
 
-
+      global.memoryEditor.getSession().setMode({
+        path: "ace/mode/EdemsMemoryAssembly",
+        v: Date.now()
+      })
 
     } catch (Error) {
       alert(Error)

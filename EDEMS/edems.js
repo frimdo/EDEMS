@@ -5,15 +5,37 @@ ace.define("ace/mode/EdemsMemoryAssemblyHighlightRules",["require","exports","mo
 var oop = acequire("../lib/oop");
 var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
 
+
+
   var EdemsMemoryAssemblyHighlightRules = function() {
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
-
+    var keywords = ""
+    for(let i = 0; i<uComp.assemblyKeywords.length; i++){
+      keywords += "|" + uComp.assemblyKeywords[i].keyword
+    }
+    if(keywords === ""){
+      keywords = "|(?!.*)"
+    }
 
     this.$rules = { start:
         [ { token: 'keyword.control.assembly',
-          regex: '^[0-9]{2}$',
+          regex: '\\b(?:' + keywords.substring(1,keywords.length) + ')\\b',
           caseInsensitive: true },
+          /*{ token: 'keyword.control.assembly',
+          regex: '^[0-9]{2}$',
+          caseInsensitive: true },*/
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b[0-9]+\\b' },
+          { token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b0x[A-F0-9]+\\b',
+            caseInsensitive: true },
+          { token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b[A-F0-9]+h\\b',
+            caseInsensitive: true },
+          { token: 'constant.character.binary.assembly',
+            regex: '\\b0b[0-1]+\\b',
+            caseInsensitive: true },
           { token: 'comment.assembly', regex: ';.*$' } ]
     };
 
@@ -552,8 +574,11 @@ gui.DrawMemoryTable = function () {
 
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
-  global.memoryEditor.getSession().setMode('ace/mode/EdemsMemoryAssembly')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
+  global.memoryEditor.getSession().setMode({
+    path: "ace/mode/EdemsMemoryAssembly",
+    v: Date.now()
+  })
 }
 
 gui.DrawMicrocodeEditor = function () {
@@ -644,7 +669,10 @@ gui.onclickSetup = function () {
         highlight('#microcode' + i)
       }
 
-
+      global.memoryEditor.getSession().setMode({
+        path: "ace/mode/EdemsMemoryAssembly",
+        v: Date.now()
+      })
 
     } catch (Error) {
       alert(Error)
@@ -2403,8 +2431,6 @@ var alu = require('./alu.js')
 var uComp = require('./microcodeCompiler.js')
 var mComp = require('./memoryCompiler.js')
 
-/* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
-
 $(document).ready(function () {
   document.getElementById('file').style.display = 'none'
 
@@ -2434,6 +2460,11 @@ $(document).ready(function () {
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
+
+
+  document.getElementById('compileMicrocode').onclick()
+
+
 
   global.advanced = false
 })

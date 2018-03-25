@@ -8,8 +8,6 @@ var alu = require('./alu.js')
 var uComp = require('./microcodeCompiler.js')
 var mComp = require('./memoryCompiler.js')
 
-/* document.getElementsByClassName('selectedRegister')[0].id.split('-') */
-
 $(document).ready(function () {
   document.getElementById('file').style.display = 'none'
 
@@ -39,6 +37,11 @@ $(document).ready(function () {
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
+
+
+  document.getElementById('compileMicrocode').onclick()
+
+
 
   global.advanced = false
 })
