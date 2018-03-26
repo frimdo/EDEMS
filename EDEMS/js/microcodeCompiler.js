@@ -6,7 +6,7 @@ var microcodeCompiler = {}
 microcodeCompiler.compile = function (input) {
   microcodeCompiler.assemblyKeywords = []
   var output = []
-  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
+  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')

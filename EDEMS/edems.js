@@ -1931,7 +1931,7 @@ clock.step = function () {
       clearTimeout(clock.running)
     }
 
-  }, (1 / global.freq) * 1000)
+  }, 1)
 }
 
 clock.stop = function () {
@@ -2006,6 +2006,7 @@ CU.doUInstruction = function () {
         break
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
+        console.log("DB>R", opcode.operand1)
         break
       case 'W>AB ':
         CU.uinstr.w2ab(opcode.operand1)
@@ -2507,8 +2508,8 @@ memoryCompiler.compile = function (input) {
     var line = input[i].trim().split(' ')
 
     if (line[0] === '.ORG') {
-      output[line[1].toString()] = []
-      pointer = line[1].toString()
+      output[parseNumber(line[1],8).toString()] = []
+      pointer = parseNumber(line[1],8).toString()
     } else if (line[0] === '') {
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
@@ -2516,11 +2517,11 @@ memoryCompiler.compile = function (input) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
       }
 
-      output[pointer].push(instruction.address)
+      output[pointer].push(instruction.address.toString(16))
 
       if (instruction.operand !== undefined) {
         try {
-          operand = parseNumber(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
+          operand = parseHEX(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
         }catch (x){
           throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
         }
@@ -2534,7 +2535,7 @@ memoryCompiler.compile = function (input) {
   return output
 }
 
-function parseNumber (input, bits) {
+function parseHEX (input, bits) {
   input = input.toLowerCase()
   var output = {}
   if (isNaN(input)) {
@@ -2558,6 +2559,30 @@ function parseNumber (input, bits) {
   return output.hex
 }
 
+function parseNumber (input, bits) {
+  input = input.toLowerCase()
+  var output = {}
+  if (isNaN(input)) {
+    try {
+      output = new BinNumber(input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  } else if (input) {
+    try {
+      output = new BinNumber(+input, bits)
+    } catch (err) {
+      console.log(err)
+      throw SyntaxError(input + ' is not a valid number')
+    }
+  }
+  if (isNaN(output.dec)) {
+    throw SyntaxError(input + ' is not a valid number')
+  }
+  return output.dec
+}
+
 module.exports = memoryCompiler
 
 
@@ -2570,7 +2595,7 @@ var microcodeCompiler = {}
 microcodeCompiler.compile = function (input) {
   microcodeCompiler.assemblyKeywords = []
   var output = []
-  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'OP', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
+  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')

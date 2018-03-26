@@ -22,7 +22,7 @@ clock.step = function () {
       clearTimeout(clock.running)
     }
 
-  }, (1 / global.freq) * 1000)
+  }, 1)
 }
 
 clock.stop = function () {

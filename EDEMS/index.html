@@ -71,8 +71,16 @@
                 <button id="compileMemory" type="button">compile</button>
             </div>
             <div class="insideBlock">
-                <div id="memory-editor">.org 12
+                <div id="memory-editor">
 LDA 0x12
+ADDA 0x13
+INCA
+DECA
+INCWD
+DECWD
+STA 0x14
+.org 0x11
+LDA 0x0101
 <!--
 00
 01
@@ -104,69 +112,69 @@ LDA 0x12
                     <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
                 </div>
                 <div id="microcode-editor">;;;;;;;;;;;;;;;;;;;;; Jump directives
-.DEF 0x3E LDF 2B
-.DEF 0x3E LDB 2B
-.DEF 0x3E LDD 2B
-.DEF 0x3E LDS 2B
-.DEF 0x3E LDA 2B
-.DEF 0x3E LDC 2B
-.DEF 0x3E LDE 2B
-.DEF 0x3E LDP 2B
+.DEF 0x3A LDF 2B
+.DEF 0x3A LDB 2B
+.DEF 0x3A LDD 2B
+.DEF 0x3A LDS 2B
+.DEF 0x3A LDA 2B
+.DEF 0x3A LDC 2B
+.DEF 0x3A LDE 2B
+.DEF 0x3A LDP 2B
 
-.DEF 0x4B STF 2B
-.DEF 0x4B STB 2B
-.DEF 0x4B STD 2B
-.DEF 0x4B STS 2B
-.DEF 0x4B STA 2B
-.DEF 0x4B STC 2B
-.DEF 0x4B STE 2B
-.DEF 0x4B STP 2B
+.DEF 0x47 STF 2B
+.DEF 0x47 STB 2B
+.DEF 0x47 STD 2B
+.DEF 0x47 STS 2B
+.DEF 0x47 STA 2B
+.DEF 0x47 STC 2B
+.DEF 0x47 STE 2B
+.DEF 0x47 STP 2B
 
-.DEF 0x58 ADDF 2B
-.DEF 0x58 ADDB 2B
-.DEF 0x58 ADDD 2B
-.DEF 0x58 ADDS 2B
-.DEF 0x58 ADDA 2B
-.DEF 0x58 ADDC 2B
-.DEF 0x58 ADDE 2B
-.DEF 0x58 ADDP 2B
+.DEF 0x54 ADDF 2B
+.DEF 0x54 ADDB 2B
+.DEF 0x54 ADDD 2B
+.DEF 0x54 ADDS 2B
+.DEF 0x54 ADDA 2B
+.DEF 0x54 ADDC 2B
+.DEF 0x54 ADDE 2B
+.DEF 0x54 ADDP 2B
 
-.DEF 0x68 INCF
-.DEF 0x68 INCB
-.DEF 0x68 INCD
-.DEF 0x68 INCS
-.DEF 0x68 INCA
-.DEF 0x68 INCC
-.DEF 0x68 INCE
-.DEF 0x68 INCP
+.DEF 0x64 INCF
+.DEF 0x64 INCB
+.DEF 0x64 INCD
+.DEF 0x64 INCS
+.DEF 0x64 INCA
+.DEF 0x64 INCC
+.DEF 0x64 INCE
+.DEF 0x64 INCP
 
-.DEF 0x8 INCWF
-.DEF 0x8 INCWB
-.DEF 0x8 INCWD
-.DEF 0x8 INCWS
+.DEF 0x67 INCWF
+.DEF 0x67 INCWB
+.DEF 0x67 INCWD
+.DEF 0x67 INCWS
 
-.DEF 0x8 DECF
-.DEF 0x8 DECB
-.DEF 0x8 DECD
-.DEF 0x8 DECS
-.DEF 0x8 DECA
-.DEF 0x8 DECC
-.DEF 0x8 DECE
-.DEF 0x8 DECP
+.DEF 0x6A DECF
+.DEF 0x6A DECB
+.DEF 0x6A DECD
+.DEF 0x6A DECS
+.DEF 0x6A DECA
+.DEF 0x6A DECC
+.DEF 0x6A DECE
+.DEF 0x6A DECP
 
-.DEF 0x8 DECWF
-.DEF 0x8 DECWB
-.DEF 0x8 DECWD
-.DEF 0x8 DECWS
+.DEF 0x6D DECWF
+.DEF 0x6D DECWB
+.DEF 0x6D DECWD
+.DEF 0x6D DECWS
 
-.DEF 0x8 TSTFC
-.DEF 0x8 TSTFZ
-.DEF 0x8 TSTFN
-.DEF 0x8 TSTFV
-.DEF 0x8 TSTFP
-.DEF 0x8 TSTFH
-.DEF 0x8 TSTFQ
-.DEF 0x8 TSTFX
+.DEF 0x6G TSTFC
+.DEF 0x6G TSTFZ
+.DEF 0x6G TSTFN
+.DEF 0x6G TSTFV
+.DEF 0x6G TSTFP
+.DEF 0x6G TSTFH
+.DEF 0x6G TSTFQ
+.DEF 0x6G TSTFX
 
 .DEF 0x8 TST 2b
 
@@ -191,7 +199,7 @@ DB>R OP
 END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ST
-COOP 0x0
+COOP 0x08
 ; load low address
 INCW PCH
 W>AB PCH
@@ -209,7 +217,7 @@ WT
 END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ADD
-COOP 0x0
+COOP 0x10
 ; load low address
 INCW PCH
 W>AB PCH
@@ -223,13 +231,32 @@ DB>R TMP1
 ; add value to register
 W>AB TMP1
 RD
-DB>R TMP1
+DB>R TMP0
 
 R>DB OP
 ALU ADD
 DB>R OP
 END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INC
+COOP 0x18
+INCB op
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INCW
+COOP 0x20
+INCW op
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DEC
+COOP 0x24
+DECB op
+end
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DECW
+COOP 0x2C
+DECW op
+end
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
                     <table>

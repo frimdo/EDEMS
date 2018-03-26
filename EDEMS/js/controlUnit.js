@@ -64,6 +64,7 @@ CU.doUInstruction = function () {
         break
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
+        console.log("DB>R", opcode.operand1)
         break
       case 'W>AB ':
         CU.uinstr.w2ab(opcode.operand1)
