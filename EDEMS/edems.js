@@ -2519,7 +2519,11 @@ memoryCompiler.compile = function (input) {
       output[pointer].push(instruction.address)
 
       if (instruction.operand !== undefined) {
-        operand = parseNumber(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
+        try {
+          operand = parseNumber(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
+        }catch (x){
+          throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
+        }
         while (operand.length > 0) {
           output[pointer].push(operand.slice(-2))
           operand = operand.slice(0, -2)
