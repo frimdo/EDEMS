@@ -2006,7 +2006,6 @@ CU.doUInstruction = function () {
         break
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
-        console.log("DB>R", opcode.operand1)
         break
       case 'W>AB ':
         CU.uinstr.w2ab(opcode.operand1)
@@ -2227,7 +2226,6 @@ CU.uinstr.decb = function (operand) {
 }
 
 CU.uinstr.decw = function (operand) {
-  console.log("decw: ", operand)
   operand = hex2num(operand)
   if(operand === 13){
     global.register(global.registerOP.dec).decrPair()
@@ -2253,6 +2251,7 @@ CU.uinstr.jon = function (operand) {
   operand = hex2num(operand)
   if(operand === 13){
     if (global.register(global.registerOP.dec).dec !== 0) {
+      console.log("jon: ", global.register(global.registerOP.dec).dec, "!== 0")
       global.registerUPCH.incrPair()
     }
     return
@@ -2479,6 +2478,8 @@ $(document).ready(function () {
   gui.refresh()
 
   document.getElementById('compileMicrocode').onclick()
+  document.getElementById('compileMemory').onclick()
+  document.getElementById('rst-btn').onclick()
 
   global.advanced = false
 })

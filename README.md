@@ -233,13 +233,6 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 
 
 
-keyword: "LDF",   hex: "0x00", address: 0,  operand: "2B", 
-keyword: "STF",   hex: "0x08", address: 8,  operand: "2B", 
-keyword: "ADDF",  hex: "0x10", address: 16, operand: "2B", 
-keyword: "INCF",  hex: "0x18", address: 24,  
-keyword: "INCWF", hex: "0x20", address: 32,   
-keyword: "DECF",  hex: "0x24", address: 36,  
-keyword: "DECWF", hex: "0x2C", address: 44,  
 keyword: "TSTFC", hex: "0x30", address: 48,  
 keyword: "TST",   hex: "0x38", address: 56, operand: "2B" ,
 keyword: "JMP",   hex: "0x39", address: 57,

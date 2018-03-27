@@ -112,73 +112,82 @@ LDA 0x0101
                     <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
                 </div>
                 <div id="microcode-editor">;;;;;;;;;;;;;;;;;;;;; Jump directives
-.DEF 0x3A LDF 2B
-.DEF 0x3A LDB 2B
-.DEF 0x3A LDD 2B
-.DEF 0x3A LDS 2B
-.DEF 0x3A LDA 2B
-.DEF 0x3A LDC 2B
-.DEF 0x3A LDE 2B
-.DEF 0x3A LDP 2B
+.DEF 0x41 LDF 2B
+.DEF 0x41 LDB 2B
+.DEF 0x41 LDD 2B
+.DEF 0x41 LDS 2B
+.DEF 0x41 LDA 2B
+.DEF 0x41 LDC 2B
+.DEF 0x41 LDE 2B
+.DEF 0x41 LDP 2B
 
-.DEF 0x47 STF 2B
-.DEF 0x47 STB 2B
-.DEF 0x47 STD 2B
-.DEF 0x47 STS 2B
-.DEF 0x47 STA 2B
-.DEF 0x47 STC 2B
-.DEF 0x47 STE 2B
-.DEF 0x47 STP 2B
+.DEF 0x4E STF 2B
+.DEF 0x4E STB 2B
+.DEF 0x4E STD 2B
+.DEF 0x4E STS 2B
+.DEF 0x4E STA 2B
+.DEF 0x4E STC 2B
+.DEF 0x4E STE 2B
+.DEF 0x4E STP 2B
 
-.DEF 0x54 ADDF 2B
-.DEF 0x54 ADDB 2B
-.DEF 0x54 ADDD 2B
-.DEF 0x54 ADDS 2B
-.DEF 0x54 ADDA 2B
-.DEF 0x54 ADDC 2B
-.DEF 0x54 ADDE 2B
-.DEF 0x54 ADDP 2B
+.DEF 0x5B ADDF 2B
+.DEF 0x5B ADDB 2B
+.DEF 0x5B ADDD 2B
+.DEF 0x5B ADDS 2B
+.DEF 0x5B ADDA 2B
+.DEF 0x5B ADDC 2B
+.DEF 0x5B ADDE 2B
+.DEF 0x5B ADDP 2B
 
-.DEF 0x64 INCF
-.DEF 0x64 INCB
-.DEF 0x64 INCD
-.DEF 0x64 INCS
-.DEF 0x64 INCA
-.DEF 0x64 INCC
-.DEF 0x64 INCE
-.DEF 0x64 INCP
+.DEF 0x6B INCF
+.DEF 0x6B INCB
+.DEF 0x6B INCD
+.DEF 0x6B INCS
+.DEF 0x6B INCA
+.DEF 0x6B INCC
+.DEF 0x6B INCE
+.DEF 0x6B INCP
 
-.DEF 0x67 INCWF
-.DEF 0x67 INCWB
-.DEF 0x67 INCWD
-.DEF 0x67 INCWS
+.DEF 0x6E INCWF
+.DEF 0x6E INCWB
+.DEF 0x6E INCWD
+.DEF 0x6E INCWS
 
-.DEF 0x6A DECF
-.DEF 0x6A DECB
-.DEF 0x6A DECD
-.DEF 0x6A DECS
-.DEF 0x6A DECA
-.DEF 0x6A DECC
-.DEF 0x6A DECE
-.DEF 0x6A DECP
+.DEF 0x71 DECF
+.DEF 0x71 DECB
+.DEF 0x71 DECD
+.DEF 0x71 DECS
+.DEF 0x71 DECA
+.DEF 0x71 DECC
+.DEF 0x71 DECE
+.DEF 0x71 DECP
 
-.DEF 0x6D DECWF
-.DEF 0x6D DECWB
-.DEF 0x6D DECWD
-.DEF 0x6D DECWS
+.DEF 0x74 DECWF
+.DEF 0x74 DECWB
+.DEF 0x74 DECWD
+.DEF 0x74 DECWS
 
-.DEF 0x6G TSTFC
-.DEF 0x6G TSTFZ
-.DEF 0x6G TSTFN
-.DEF 0x6G TSTFV
-.DEF 0x6G TSTFP
-.DEF 0x6G TSTFH
-.DEF 0x6G TSTFQ
-.DEF 0x6G TSTFX
+.DEF 0x77 JMP 2B
 
-.DEF 0x8 TST 2b
+.DEF 0x82 JPIFC 2B
+.DEF 0x82 JPIFZ 2B
+.DEF 0x82 JPIFN 2B
+.DEF 0x82 JPIFV 2B
+.DEF 0x82 JPIFP 2B
+.DEF 0x82 JPIFH 2B
+.DEF 0x82 JPIFQ 2B
+.DEF 0x82 JPIFX 2B
 
-.DEF 0x8 JMP
+.DEF 0x86 JPIF 2B
+.DEF 0x86 JPIB 2B
+.DEF 0x86 JPID 2B
+.DEF 0x86 JPIS 2B
+.DEF 0x86 JPIA 2B
+.DEF 0x86 JPIC 2B
+.DEF 0x86 JPIE 2B
+.DEF 0x86 JPIP 2B
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
 COOP 0x0
@@ -241,22 +250,49 @@ END
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INC
 COOP 0x18
 INCB op
-end
+END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INCW
 COOP 0x20
 INCW op
-end
+END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DEC
 COOP 0x24
 DECB op
-end
+END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DECW
 COOP 0x2C
 DECW op
-end
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R PCH
+SVR PCL TMP1
+DECW PCH
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+COOP 0x31
+JOFN OP
+JMP 0x77
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+COOP 0x39
+JON OP
+JMP 0x77
+END
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
                     <table>

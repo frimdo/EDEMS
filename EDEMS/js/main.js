@@ -39,6 +39,8 @@ $(document).ready(function () {
   gui.refresh()
 
   document.getElementById('compileMicrocode').onclick()
+  document.getElementById('compileMemory').onclick()
+  document.getElementById('rst-btn').onclick()
 
   global.advanced = false
 })
