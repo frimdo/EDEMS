@@ -937,6 +937,7 @@ gui.onclickSetup = function () {
                 }
 
   document.getElementById('rst-btn').onclick = function () {
+    clock.stop()
     global.addressBus.val = 0
     global.dataBus.val = 0
     global.instructionRegister.val = '0x' + global.memory[0]
