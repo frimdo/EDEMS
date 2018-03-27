@@ -163,6 +163,8 @@ gui.onclickSetup = function () {
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
 
+      document.getElementById('rst-btn').onclick()
+
     } catch (Error) {
       alert(Error)
     }

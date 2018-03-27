@@ -47,7 +47,7 @@ ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 
           },
           {
             token: 'string', // pre-compiler directives
-            regex: '\\.org.*',
+            regex: '\\.org.*|\\.const.*',
             caseInsensitive: true
           },
           {token: 'comment.assembly', regex: ';.*$'}]
@@ -670,6 +670,8 @@ gui.onclickSetup = function () {
       document.getElementById('scrollArea-memory').scrollTop =
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
+
+      document.getElementById('rst-btn').onclick()
 
     } catch (Error) {
       alert(Error)
@@ -2509,8 +2511,18 @@ memoryCompiler.compile = function (input) {
     var line = input[i].trim().split(' ')
 
     if (line[0] === '.ORG') {
-      output[parseNumber(line[1],8).toString()] = []
-      pointer = parseNumber(line[1],8).toString()
+      try {
+        output[parseNumber(line[1], 8).toString()] = []
+        pointer = parseNumber(line[1], 8).toString()
+      } catch (x) {
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
+      }
+    } else if (line[0] === '.CONST') {
+      try {
+        output[pointer].push(parseNumber(line[1], 8))
+      } catch (x) {
+        throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
+      }
     } else if (line[0] === '') {
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])

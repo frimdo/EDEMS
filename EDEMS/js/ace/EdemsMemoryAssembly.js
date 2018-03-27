@@ -46,7 +46,7 @@ ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 
           },
           {
             token: 'string', // pre-compiler directives
-            regex: '\\.org.*',
+            regex: '\\.org.*|\\.const.*',
             caseInsensitive: true
           },
           {token: 'comment.assembly', regex: ';.*$'}]
