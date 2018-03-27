@@ -86,12 +86,14 @@ gui.DrawMemoryEditor = function () {
     path: 'ace/mode/EdemsMemoryAssembly',
     v: Date.now()
   })
+  global.memoryEditor.setValue(window.localStorage.getItem('memoryValue'))
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor')
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
   global.microcodeEditor.setTheme('ace/theme/solarized_dark')
+  global.microcodeEditor.setValue(window.localStorage.getItem('microcodeValue'))
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -138,7 +140,7 @@ gui.onclickSetup = function () {
 
   document.getElementById('compileMemory').onclick = function () {
     try {
-      $('.highlighted').removeClass('highlighted')
+      document.getElementById('rst-btn').onclick()
 
       var code = mCompiler.compile(global.memoryEditor.getValue())
       var orgs = Object.getOwnPropertyNames(code)
@@ -148,6 +150,7 @@ gui.onclickSetup = function () {
 
         for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
+          console.log('highlight #memory' + y)
         }
       }
 
@@ -163,7 +166,9 @@ gui.onclickSetup = function () {
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
 
-      document.getElementById('rst-btn').onclick()
+      global.instructionRegister.val = '0x' + global.memory[0]
+
+      document.getElementById('scrollArea-microcode').scrollTop = 0
 
     } catch (Error) {
       alert(Error)

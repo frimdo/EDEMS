@@ -37,6 +37,7 @@ $(document).ready(function () {
   document.getElementById('rst-btn').onclick()
 
   global.advanced = false
+
 })
 
 

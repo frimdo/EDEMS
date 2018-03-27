@@ -594,12 +594,14 @@ gui.DrawMemoryEditor = function () {
     path: 'ace/mode/EdemsMemoryAssembly',
     v: Date.now()
   })
+  global.memoryEditor.setValue(window.localStorage.getItem('memoryValue'))
 }
 
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor')
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
   global.microcodeEditor.setTheme('ace/theme/solarized_dark')
+  global.microcodeEditor.setValue(window.localStorage.getItem('microcodeValue'))
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -646,7 +648,7 @@ gui.onclickSetup = function () {
 
   document.getElementById('compileMemory').onclick = function () {
     try {
-      $('.highlighted').removeClass('highlighted')
+      document.getElementById('rst-btn').onclick()
 
       var code = mCompiler.compile(global.memoryEditor.getValue())
       var orgs = Object.getOwnPropertyNames(code)
@@ -656,6 +658,7 @@ gui.onclickSetup = function () {
 
         for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
+          console.log('highlight #memory' + y)
         }
       }
 
@@ -671,7 +674,9 @@ gui.onclickSetup = function () {
         document.getElementById('contentArea-memory').getElementsByTagName('tr')[3].scrollHeight
         * ((global.addressBus.dec / 8) - 5)
 
-      document.getElementById('rst-btn').onclick()
+      global.instructionRegister.val = '0x' + global.memory[0]
+
+      document.getElementById('scrollArea-microcode').scrollTop = 0
 
     } catch (Error) {
       alert(Error)
@@ -1233,6 +1238,7 @@ LS.storeGlobals = function () {
 
 LS.storeMicrocode = function () {
   window.localStorage.setItem('microcode', global.microcode.toString())
+  window.localStorage.setItem('microcodeValue', global.microcodeEditor.getValue())
 }
 
 LS.storeMemory = function () {
@@ -1241,6 +1247,7 @@ LS.storeMemory = function () {
     tmp[i] = parseInt(global.memory[i], 10).toString(16)
   }
   window.localStorage.setItem('memory', tmp.toString())
+  window.localStorage.setItem('memoryValue', global.memoryEditor.getValue())
 }
 
 LS.storeRegisters = function () {
@@ -1340,6 +1347,189 @@ LS.initGlobals = function () {
     window.localStorage.setItem('freq', '1')
     global.freq = window.localStorage.getItem('freq')
   }
+  if (window.localStorage.getItem('microcodeValue') === null) {
+    window.localStorage.setItem('microcodeValue',`;;;;;;;;;;;;;;;;;;;;; Jump directives
+.DEF 0x41 LDF 2B
+.DEF 0x41 LDB 2B
+.DEF 0x41 LDD 2B
+.DEF 0x41 LDS 2B
+.DEF 0x41 LDA 2B
+.DEF 0x41 LDC 2B
+.DEF 0x41 LDE 2B
+.DEF 0x41 LDP 2B
+
+.DEF 0x4E STF 2B
+.DEF 0x4E STB 2B
+.DEF 0x4E STD 2B
+.DEF 0x4E STS 2B
+.DEF 0x4E STA 2B
+.DEF 0x4E STC 2B
+.DEF 0x4E STE 2B
+.DEF 0x4E STP 2B
+
+.DEF 0x5B ADDF 2B
+.DEF 0x5B ADDB 2B
+.DEF 0x5B ADDD 2B
+.DEF 0x5B ADDS 2B
+.DEF 0x5B ADDA 2B
+.DEF 0x5B ADDC 2B
+.DEF 0x5B ADDE 2B
+.DEF 0x5B ADDP 2B
+
+.DEF 0x6B INCF
+.DEF 0x6B INCB
+.DEF 0x6B INCD
+.DEF 0x6B INCS
+.DEF 0x6B INCA
+.DEF 0x6B INCC
+.DEF 0x6B INCE
+.DEF 0x6B INCP
+
+.DEF 0x6E INCWF
+.DEF 0x6E INCWB
+.DEF 0x6E INCWD
+.DEF 0x6E INCWS
+
+.DEF 0x71 DECF
+.DEF 0x71 DECB
+.DEF 0x71 DECD
+.DEF 0x71 DECS
+.DEF 0x71 DECA
+.DEF 0x71 DECC
+.DEF 0x71 DECE
+.DEF 0x71 DECP
+
+.DEF 0x74 DECWF
+.DEF 0x74 DECWB
+.DEF 0x74 DECWD
+.DEF 0x74 DECWS
+
+.DEF 0x77 JMP 2B
+
+.DEF 0x82 JPIFC 2B
+.DEF 0x82 JPIFZ 2B
+.DEF 0x82 JPIFN 2B
+.DEF 0x82 JPIFV 2B
+.DEF 0x82 JPIFP 2B
+.DEF 0x82 JPIFH 2B
+.DEF 0x82 JPIFQ 2B
+.DEF 0x82 JPIFX 2B
+
+.DEF 0x86 JPIF 2B
+.DEF 0x86 JPIB 2B
+.DEF 0x86 JPID 2B
+.DEF 0x86 JPIS 2B
+.DEF 0x86 JPIA 2B
+.DEF 0x86 JPIC 2B
+.DEF 0x86 JPIE 2B
+.DEF 0x86 JPIP 2B
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; LD
+COOP 0x0
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; load value to register
+W>AB TMP1
+RD
+DB>R OP
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ST
+COOP 0x08
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; store value to register
+W>AB TMP1
+R>DB OP
+WT
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; ADD
+COOP 0x10
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP2
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; add value to register
+W>AB TMP1
+RD
+DB>R TMP0
+
+R>DB OP
+ALU ADD
+DB>R OP
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INC
+COOP 0x18
+INCB op
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; INCW
+COOP 0x20
+INCW op
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DEC
+COOP 0x24
+DECB op
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; DECW
+COOP 0x2C
+DECW op
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
+; load low address
+INCW PCH
+W>AB PCH
+RD
+DB>R TMP1
+; load high address
+INCW PCH
+W>AB PCH
+RD
+DB>R PCH
+SVR PCL TMP1
+DECW PCH
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+COOP 0x31
+JOFN OP
+JMP 0x77
+END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+COOP 0x39
+JON OP
+JMP 0x77
+END`)}
   if (window.localStorage.getItem('microcode') === null) {
     window.localStorage.setItem('microcode', `
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
@@ -1380,7 +1570,9 @@ LS.initGlobals = function () {
   if (global.microcode.length !== 2048) {
     throw RangeError('localStorage microcode is wrong size!')
   }
-
+  if (window.localStorage.getItem('memoryValue') === null) {
+    window.localStorage.setItem('memoryValue', '')
+  }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -2478,6 +2670,7 @@ $(document).ready(function () {
   document.getElementById('rst-btn').onclick()
 
   global.advanced = false
+
 })
 
 
