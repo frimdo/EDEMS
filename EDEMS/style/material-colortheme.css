@@ -137,6 +137,11 @@ body {
     border-color: #9a0007;
     color: #fafafa;
 }
+#memory-btns button:hover,
+#memory-btns label:hover{
+    background-color: #a40a11;
+    border-color: #a40a11;
+}
 
 #controlUnit-grid {
     background-color: #9c27b0;
@@ -148,6 +153,12 @@ body {
     background-color: #6a0080;
     border-color: #6a0080;
     color: #fafafa;
+}
+
+#microcode-btns button:hover,
+#microcode-btns label:hover{
+    background-color: #740a8a;
+    border-color: #740a8a;
 }
 
 #compileMicrocode:hover {
