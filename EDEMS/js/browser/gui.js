@@ -137,7 +137,28 @@ gui.DrawMicrocodeTable = function () {
   gui.MemoryTable.refresh(gui.microcodeData)
 }
 
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+}
+
 gui.onclickSetup = function () {
+
+
+  document.getElementById('saveMicrocode').onclick = function () {
+    download('microcode.asm', global.microcodeEditor.getValue())
+  }
+
+  document.getElementById('saveMemory').onclick = function () {
+    download('main.asm', global.memoryEditor.getValue())
+  }
 
   document.getElementById('eraseMemory').onclick = function () {
     LS.storeGlobals()
