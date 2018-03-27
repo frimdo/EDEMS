@@ -9,7 +9,8 @@ var uComp = require('./microcodeCompiler.js')
 var mComp = require('./memoryCompiler.js')
 
 $(document).ready(function () {
-  document.getElementById('file').style.display = 'none'
+  document.getElementById('import').style.display = 'none'
+  document.getElementById('export').style.display = 'none'
 
   window.global = global
   window.LS = LS
@@ -35,6 +36,8 @@ $(document).ready(function () {
   document.getElementById('rst-btn').onclick()
 
   global.advanced = false
+
+
 
 })
 

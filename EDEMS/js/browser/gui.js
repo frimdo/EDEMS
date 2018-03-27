@@ -67,12 +67,23 @@ gui.DrawMemoryTable = function () {
       clusterChanged: function () {
         var value
         var elements = document.getElementsByClassName('memoryBlock')
-        for (var i = 0; i < elements.length; i++) {
-          value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
-          elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+        try {
+          for (var i = 0; i < elements.length; i++) {
+            value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+            elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+          }
+          $('.mem-highlighted').removeClass('mem-highlighted')
+          $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
+        }catch (x) {
+          window.localStorage.removeItem('memory')
+          LS.initGlobals()
+          for (var i = 0; i < elements.length; i++) {
+            value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+            elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+          }
+          $('.mem-highlighted').removeClass('mem-highlighted')
+          $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
         }
-        $('.mem-highlighted').removeClass('mem-highlighted')
-        $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
       }
     }
   })
@@ -137,20 +148,32 @@ gui.DrawMicrocodeTable = function () {
   gui.MemoryTable.refresh(gui.microcodeData)
 }
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-}
-
 gui.onclickSetup = function () {
+  document.getElementById('loadMemory').onchange = function (event) {
+    var input = event.target
+    try {
+      var reader = new FileReader()
+      reader.onload = function () {
+        global.memoryEditor.setValue(reader.result)
+      }
+      reader.readAsText(input.files[0])
+    } catch (x) {
+      alert('Wrong file.')
+    }
+  }
 
+  document.getElementById('loadMicrocode').onchange = function (event) {
+    var input = event.target
+    try {
+      var reader = new FileReader()
+      reader.onload = function () {
+        global.microcodeEditor.setValue(reader.result)
+      }
+      reader.readAsText(input.files[0])
+    } catch (x) {
+      alert('Wrong file.')
+    }
+  }
 
   document.getElementById('saveMicrocode').onclick = function () {
     download('microcode.asm', global.microcodeEditor.getValue())
@@ -745,6 +768,20 @@ gui.onChangeSetup = function () {
   global.instructionRegister.onChange = function () {
     $('#instructionRegister').text('0x' + global.instructionRegister.hex).addClass('highlighted')
   }
+}
+
+
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
 }
 
 function highlight (what) {

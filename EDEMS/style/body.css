@@ -240,7 +240,10 @@
     top: 80px;
 }
 */
-#memory-btns button, #microcode-btns button {
+#memory-btns button,
+#microcode-btns button,
+#memory-btns label,
+#microcode-btns label {
     flex-grow: 1;
     font-size: 80%;
     justify-content: space-between;

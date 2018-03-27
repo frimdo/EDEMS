@@ -14,10 +14,9 @@
     <div id="header-grid">
 
         <div id="buttons-grid" class="block">
-            <input type="file" id="file" name="file" enctype="multipart/form-data"/>
             <button type="button" id="import">Import</button>
             <button type="button" id="export">Export</button>
-            <!--<button type="button" id="advanced">Advanced</button>-->
+            <button type="button" onclick=location.href="mailto:xfriml02@stud.feec.vutbr.cz?subject=Edems%20feedback" ><i class="fas fa-envelope-open"></i> Feedback</button>
         </div>
 
         <div id="clock-grid" class="block">
@@ -35,9 +34,8 @@
             EDEMS<select id="selectEdemsType">
             <option value="advanced" selected>advanced</option>
             <option value="basic">basic</option>
-            <option value="unreal">unreal</option>
+            <!--<option value="unreal">unreal</option>-->
         </select>
-            <!--<span>advanced</span>-->
         </div>
     </div>
 
@@ -88,7 +86,8 @@
                     <button id="compileMemory" type="button"><i class="fa fa-cogs"></i></button>
                     <button id="eraseMemory" type="button"><i class="fa fa-eraser"></i></button>
                     <button id="saveMemory" type="button"><i class="fa fa-download"></i></button>
-                    <button id="loadMemory" type="button"><i class="fa fa-upload"></i></button>
+                    <input id="loadMemory" type="file"></i></input>
+                    <label for="loadMemory"><i class="fa fa-upload"></i></label>
                 </div>
                 <div id="scrollArea-memory" class="clusterize-scroll">
                     <table>
@@ -117,7 +116,8 @@
                     <button id="compileMicrocode" type="button"><i class="fa fa-cogs"></i></button>
                     <button id="eraseMicrocode" type="button"><i class="fa fa-eraser"></i></button>
                     <button id="saveMicrocode" type="button"><i class="fa fa-download"></i></button>
-                    <button id="loadMicrocode" type="button"><i class="fa fa-upload"></i></button>
+                    <input id="loadMicrocode" type="file"></i></input>
+                    <label for="loadMicrocode"><i class="fa fa-upload"></i></label>
                 </div>
                 <div id="scrollArea-microcode" class="clusterize-scroll">
                     <table>
@@ -305,7 +305,6 @@
             Address Bus
             <div id="addressBus">placeholder</div>
         </div>
-
     </div>
 </div>
 </body>

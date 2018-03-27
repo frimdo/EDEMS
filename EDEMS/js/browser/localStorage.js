@@ -343,7 +343,28 @@ END`)}
     throw RangeError('localStorage microcode is wrong size!')
   }
   if (window.localStorage.getItem('memoryValue') === null) {
-    window.localStorage.setItem('memoryValue', '')
+    window.localStorage.setItem('memoryValue', `;code definition
+lda 0x20 ;load number one
+inca
+
+ldb 0x21 ;laod number two
+incb
+
+adda 0x22
+addb 0x22
+
+sta 0x23
+stb 0x24
+
+jmp 0x14
+
+;variable definitions
+.org 0x20
+.const 0x1 ;number one
+.const 0b1 ;number two
+.const 0x12 ;number to add
+.const 0xff ;output variable one
+.const 0xff ;output variable two`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `

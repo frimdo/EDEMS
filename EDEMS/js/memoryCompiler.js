@@ -30,6 +30,7 @@ memoryCompiler.compile = function (input) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
     } else if (line[0] === '') {
+    } else if (line[0].substring(0, 1) === ';') {
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
       if (instruction === undefined) {

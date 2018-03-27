@@ -575,12 +575,23 @@ gui.DrawMemoryTable = function () {
       clusterChanged: function () {
         var value
         var elements = document.getElementsByClassName('memoryBlock')
-        for (var i = 0; i < elements.length; i++) {
-          value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
-          elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+        try {
+          for (var i = 0; i < elements.length; i++) {
+            value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+            elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+          }
+          $('.mem-highlighted').removeClass('mem-highlighted')
+          $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
+        }catch (x) {
+          window.localStorage.removeItem('memory')
+          LS.initGlobals()
+          for (var i = 0; i < elements.length; i++) {
+            value = global.memory[+elements.item(i).id.replace('memory', '')].toString(16)
+            elements.item(i).innerHTML = '0'.repeat(2 - value.length) + value
+          }
+          $('.mem-highlighted').removeClass('mem-highlighted')
+          $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
         }
-        $('.mem-highlighted').removeClass('mem-highlighted')
-        $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
       }
     }
   })
@@ -645,20 +656,32 @@ gui.DrawMicrocodeTable = function () {
   gui.MemoryTable.refresh(gui.microcodeData)
 }
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-}
-
 gui.onclickSetup = function () {
+  document.getElementById('loadMemory').onchange = function (event) {
+    var input = event.target
+    try {
+      var reader = new FileReader()
+      reader.onload = function () {
+        global.memoryEditor.setValue(reader.result)
+      }
+      reader.readAsText(input.files[0])
+    } catch (x) {
+      alert('Wrong file.')
+    }
+  }
 
+  document.getElementById('loadMicrocode').onchange = function (event) {
+    var input = event.target
+    try {
+      var reader = new FileReader()
+      reader.onload = function () {
+        global.microcodeEditor.setValue(reader.result)
+      }
+      reader.readAsText(input.files[0])
+    } catch (x) {
+      alert('Wrong file.')
+    }
+  }
 
   document.getElementById('saveMicrocode').onclick = function () {
     download('microcode.asm', global.microcodeEditor.getValue())
@@ -1255,6 +1278,20 @@ gui.onChangeSetup = function () {
   }
 }
 
+
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+}
+
 function highlight (what) {
   $(what).addClass('highlighted')
 }
@@ -1607,7 +1644,28 @@ END`)}
     throw RangeError('localStorage microcode is wrong size!')
   }
   if (window.localStorage.getItem('memoryValue') === null) {
-    window.localStorage.setItem('memoryValue', '')
+    window.localStorage.setItem('memoryValue', `;code definition
+lda 0x20 ;load number one
+inca
+
+ldb 0x21 ;laod number two
+incb
+
+adda 0x22
+addb 0x22
+
+sta 0x23
+stb 0x24
+
+jmp 0x14
+
+;variable definitions
+.org 0x20
+.const 0x1 ;number one
+.const 0b1 ;number two
+.const 0x12 ;number to add
+.const 0xff ;output variable one
+.const 0xff ;output variable two`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
@@ -2678,7 +2736,8 @@ var uComp = require('./microcodeCompiler.js')
 var mComp = require('./memoryCompiler.js')
 
 $(document).ready(function () {
-  document.getElementById('file').style.display = 'none'
+  document.getElementById('import').style.display = 'none'
+  document.getElementById('export').style.display = 'none'
 
   window.global = global
   window.LS = LS
@@ -2704,6 +2763,8 @@ $(document).ready(function () {
   document.getElementById('rst-btn').onclick()
 
   global.advanced = false
+
+
 
 })
 
@@ -2745,6 +2806,7 @@ memoryCompiler.compile = function (input) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
     } else if (line[0] === '') {
+    } else if (line[0].substring(0, 1) === ';') {
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
       if (instruction === undefined) {
