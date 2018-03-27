@@ -658,7 +658,6 @@ gui.onclickSetup = function () {
 
         for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
-          console.log('highlight #memory' + y)
         }
       }
 
@@ -2653,9 +2652,7 @@ $(document).ready(function () {
   window.uComp = uComp
   window.mComp = mComp
 
-  console.log(global.memory)
   LS.initGlobals()
-  console.log(global.memory)
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
@@ -2706,7 +2703,7 @@ memoryCompiler.compile = function (input) {
       }
     } else if (line[0] === '.CONST') {
       try {
-        output[pointer].push(parseNumber(line[1], 8))
+        output[pointer].push(parseHEX(line[1], 8))
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }

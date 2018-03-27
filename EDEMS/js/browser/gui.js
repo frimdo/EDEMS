@@ -150,7 +150,6 @@ gui.onclickSetup = function () {
 
         for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
-          console.log('highlight #memory' + y)
         }
       }
 

@@ -25,7 +25,7 @@ memoryCompiler.compile = function (input) {
       }
     } else if (line[0] === '.CONST') {
       try {
-        output[pointer].push(parseNumber(line[1], 8))
+        output[pointer].push(parseHEX(line[1], 8))
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }

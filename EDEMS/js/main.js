@@ -20,9 +20,7 @@ $(document).ready(function () {
   window.uComp = uComp
   window.mComp = mComp
 
-  console.log(global.memory)
   LS.initGlobals()
-  console.log(global.memory)
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()

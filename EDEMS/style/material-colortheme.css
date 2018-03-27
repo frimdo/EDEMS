@@ -126,13 +126,25 @@ body {
     background-color: #ffbd0a;
 }
 
-#memory-grid, #compileMemory {
+#memory-grid{
     background-color: #d32f2f;
     color: #fafafa;
 }
 
-#controlUnit-grid , #compileMicrocode {
+#memory-btns button{
+    background-color: #9a0007;
+    border-color: #9a0007;
+    color: #fafafa;
+}
+
+#controlUnit-grid {
     background-color: #9c27b0;
+    color: #fafafa;
+}
+
+#microcode-btns button{
+    background-color: #6a0080;
+    border-color: #6a0080;
     color: #fafafa;
 }
 
