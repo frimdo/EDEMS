@@ -4,6 +4,7 @@ var Clusterize = require('clusterize.js')
 var uCompiler = require('../microcodeCompiler.js')
 var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
+var LS = require('./localStorage.js')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
 require('../ace/EdemsMemoryAssembly')
@@ -137,6 +138,20 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+
+  document.getElementById('eraseMemory').onclick = function () {
+    LS.storeGlobals()
+    window.localStorage.removeItem('memory')
+    LS.initGlobals()
+    global.onMemoryChange()
+  }
+
+  document.getElementById('eraseMicrocode').onclick = function () {
+    LS.storeGlobals()
+    window.localStorage.removeItem('microcode')
+    LS.initGlobals()
+    global.onMicrocodeChange()
+  }
 
   document.getElementById('compileMemory').onclick = function () {
     try {

@@ -512,6 +512,7 @@ var Clusterize = require('clusterize.js')
 var uCompiler = require('../microcodeCompiler.js')
 var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
+var LS = require('./localStorage.js')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
 require('../ace/EdemsMemoryAssembly')
@@ -645,6 +646,20 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+
+  document.getElementById('eraseMemory').onclick = function () {
+    LS.storeGlobals()
+    window.localStorage.removeItem('memory')
+    LS.initGlobals()
+    global.onMemoryChange()
+  }
+
+  document.getElementById('eraseMicrocode').onclick = function () {
+    LS.storeGlobals()
+    window.localStorage.removeItem('microcode')
+    LS.initGlobals()
+    global.onMicrocodeChange()
+  }
 
   document.getElementById('compileMemory').onclick = function () {
     try {
@@ -1224,7 +1239,7 @@ function highlight (what) {
 
 module.exports = gui
 
-},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
