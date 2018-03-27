@@ -2461,15 +2461,9 @@ $(document).ready(function () {
   window.uComp = uComp
   window.mComp = mComp
 
+  console.log(global.memory)
   LS.initGlobals()
-
-  $('#microcode0').text(global.microcode[0] = '601')
-  $('#microcode1').text(global.microcode[1] = '501')
-  $('#microcode2').text(global.microcode[2] = '79A')
-  $('#microcode3').text(global.microcode[3] = '503')
-  $('#microcode4').text(global.microcode[4] = '001')
-  $('#microcode5').text(global.microcode[5] = '796')
-  $('#microcode6').text(global.microcode[6] = '804')
+  console.log(global.memory)
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
@@ -2486,11 +2480,11 @@ $(document).ready(function () {
   global.advanced = false
 })
 
-/*
+
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
-*/
+
 },{"./alu.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js","./browser/gui.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/gui.js","./browser/localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","./clock.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/clock.js","./controlUnit.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/controlUnit.js","./globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","./memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","./microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js":[function(require,module,exports){
 var global = require('./globals.js')
 var BinNumber = require('./binNumber.js')
@@ -2530,7 +2524,8 @@ memoryCompiler.compile = function (input) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
       }
 
-      output[pointer].push(instruction.address.toString(16))
+      var instructionAddress = instruction.address.toString(16)
+      output[pointer].push('0'.repeat(2 - instructionAddress.length) + instructionAddress)
 
       if (instruction.operand !== undefined) {
         try {

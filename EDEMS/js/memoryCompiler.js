@@ -36,7 +36,8 @@ memoryCompiler.compile = function (input) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
       }
 
-      output[pointer].push(instruction.address.toString(16))
+      var instructionAddress = instruction.address.toString(16)
+      output[pointer].push('0'.repeat(2 - instructionAddress.length) + instructionAddress)
 
       if (instruction.operand !== undefined) {
         try {

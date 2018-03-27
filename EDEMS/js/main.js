@@ -20,15 +20,9 @@ $(document).ready(function () {
   window.uComp = uComp
   window.mComp = mComp
 
+  console.log(global.memory)
   LS.initGlobals()
-
-  $('#microcode0').text(global.microcode[0] = '601')
-  $('#microcode1').text(global.microcode[1] = '501')
-  $('#microcode2').text(global.microcode[2] = '79A')
-  $('#microcode3').text(global.microcode[3] = '503')
-  $('#microcode4').text(global.microcode[4] = '001')
-  $('#microcode5').text(global.microcode[5] = '796')
-  $('#microcode6').text(global.microcode[6] = '804')
+  console.log(global.memory)
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
@@ -45,8 +39,7 @@ $(document).ready(function () {
   global.advanced = false
 })
 
-/*
+
 window.onbeforeunload = function () {
   LS.storeGlobals()
 }
-*/
