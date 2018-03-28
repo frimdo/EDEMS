@@ -1,0 +1,245 @@
+<html>
+<link rel="stylesheet" href="markdown_style.css">
+    <body>
+
+<h1 id="edems-user-manual">EDEMS user manual</h1>
+<p>This manual should help you using edems simulator. Note, that this simulator is in beta version, so there are some bugs expected. If you find some, please contact author using feedback button.</p>
+<h2 id="explanation-image">Explanation image</h2>
+<figure>
+<img src="./GUI_notes.png" alt="gui_notes" /><figcaption>gui_notes</figcaption>
+</figure>
+<h3 id="explanation-of-actions">Explanation of actions</h3>
+<p>TODO</p>
+<h2 id="control-unit">Control Unit</h2>
+<h3 id="supported-uinstructions">Supported uInstructions</h3>
+<p>uInstructions are 2B wide. Opcode usually is 12b with 1 4b operad, but there are some exceptions (JMP is 4b opcode with 11b operand). OP register is addressing register. When used in most microinstructions, containing value is used as address of another register instead.</p>
+<p>O is operand, and number next to it says how many bits it takes. For example <code>COOP</code> instruction is 8bit opcode and 8bit operand.</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 11%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>name</th>
+<th>opcode</th>
+<th>operation description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>COOP + O8</code></td>
+<td>0x6??</td>
+<td><strong>CO</strong>unt <strong>OP</strong> register value. OP=IR-o1.</td>
+</tr>
+<tr class="even">
+<td><code>ALU + O5</code></td>
+<td>0x0??</td>
+<td><strong>ALU</strong> does operation defined by operand. For example 0x01 is ADD, 0X02 is SUB,…</td>
+</tr>
+<tr class="odd">
+<td><code>R&gt;DB + O4</code></td>
+<td>0x7C?</td>
+<td>move value from <strong>R</strong>egister defined by operand to <strong>D</strong>ata <strong>B</strong>uss.</td>
+</tr>
+<tr class="even">
+<td><code>R&gt;AB + O4</code></td>
+<td>0x7B?</td>
+<td>move value from <strong>R</strong>egister defined by operand to 8 least significant bits of <strong>A</strong>ddress <strong>B</strong>uss, nulling 8MSB.</td>
+</tr>
+<tr class="odd">
+<td><code>W&gt;AB + O4</code></td>
+<td>0x7A?</td>
+<td>move <strong>W</strong>ord value (16b) from register pair defined by address of high register of pair defined by operand to <strong>A</strong>ddress <strong>B</strong>uss.</td>
+</tr>
+<tr class="even">
+<td><code>DB&gt;R + O4</code></td>
+<td>0x79?</td>
+<td>move value from <strong>D</strong>ata <strong>B</strong>us to <strong>R</strong>egister.</td>
+</tr>
+<tr class="odd">
+<td><code>AB&gt;W + O4</code></td>
+<td>0x78?</td>
+<td>move value from <strong>A</strong>ddress <strong>B</strong>us to <strong>W</strong>ord pair of register defined by operand. (address of high register of pair)</td>
+</tr>
+<tr class="even">
+<td><code>INCB + O4</code></td>
+<td>0x77?</td>
+<td><strong>INC</strong>rement <strong>B</strong>yte value in register defined by operand.</td>
+</tr>
+<tr class="odd">
+<td><code>DECB + O4</code></td>
+<td>0x76?</td>
+<td><strong>DEC</strong>rement <strong>B</strong>yte value in register defined by operand.</td>
+</tr>
+<tr class="even">
+<td><code>INCW + O4</code></td>
+<td>0x75?</td>
+<td><strong>INC</strong>rement <strong>W</strong>ord value in register defined by operand. (address of high register of pair)</td>
+</tr>
+<tr class="odd">
+<td><code>DECW + O4</code></td>
+<td>0x74?</td>
+<td><strong>DEC</strong>rement <strong>W</strong>ord value in register defined by operand. (address of high register of pair)</td>
+</tr>
+<tr class="even">
+<td><code>JOI + O4</code></td>
+<td>0x73?</td>
+<td><strong>J</strong>ump <strong>O</strong>ver next microinstruction if value in register defined by operand <strong>I</strong>s 0x00.</td>
+</tr>
+<tr class="odd">
+<td><code>JON + O4</code></td>
+<td>0x72?</td>
+<td><strong>J</strong>ump <strong>O</strong>ver next microinstruction if value in register defined by operand is <strong>N</strong>ot 0x00.</td>
+</tr>
+<tr class="even">
+<td><code>JOFI + O4</code></td>
+<td>0x71?</td>
+<td><strong>J</strong>ump <strong>O</strong>ver next microinstruction if value in F[operand] <strong>I</strong>s 0b. uO acts as normal register for this microinstruction.</td>
+</tr>
+<tr class="odd">
+<td><code>JOFN + O4</code></td>
+<td>0x70?</td>
+<td><strong>J</strong>ump <strong>O</strong>ver next microinstruction if value in F[operand] is <strong>N</strong>ot 0b. uO acts as normal register for this microinstruction.</td>
+</tr>
+<tr class="even">
+<td><code>C&gt;DB + O8</code></td>
+<td>0x5??</td>
+<td>move operand as <strong>C</strong>onstant to <strong>DB</strong></td>
+</tr>
+<tr class="odd">
+<td><code>SVR + O4 + O4</code></td>
+<td>0x1??</td>
+<td><strong>S</strong>witch <strong>V</strong>alues in <strong>R</strong>egisters defined by first and second operands.</td>
+</tr>
+<tr class="even">
+<td><code>SVW + O4 + O4</code></td>
+<td>0x2??</td>
+<td><strong>S</strong>witch <strong>V</strong>alues in <strong>W</strong>ord register pair defined by first and second operands. (address of high register of pair)</td>
+</tr>
+<tr class="odd">
+<td><code>O&gt;DB</code></td>
+<td>0x7F0</td>
+<td>move value from <strong>O</strong>P to <strong>DB</strong>.</td>
+</tr>
+<tr class="even">
+<td><code>DB&gt;O</code></td>
+<td>0x7F1</td>
+<td>move value from <strong>DB</strong> to <strong>O</strong>P.</td>
+</tr>
+<tr class="odd">
+<td><code>END</code></td>
+<td>0x7F2</td>
+<td><strong>END</strong> of microinstruction. Signal for control unit to fetch another instruction.</td>
+</tr>
+<tr class="even">
+<td><code>JMP + O11</code></td>
+<td>0x???</td>
+<td>write operand to uPC, effectively <strong>J</strong>u<strong>MP</strong>ing in microcode. opcode is 0x800 + address</td>
+</tr>
+<tr class="odd">
+<td><code>READ</code></td>
+<td>0x7F4</td>
+<td><strong>READ</strong> from memory.</td>
+</tr>
+<tr class="even">
+<td><code>WRT</code></td>
+<td>0x7F5</td>
+<td><strong>WR</strong>i<strong>T</strong>e to memory.</td>
+</tr>
+<tr class="odd">
+<td><code>SETB + O4 + O4</code></td>
+<td>0x3??</td>
+<td><strong>SET</strong> <strong>B</strong>yte defined by first operand in register defined by second operand.</td>
+</tr>
+<tr class="even">
+<td><code>RETB + O4 + O4</code></td>
+<td>0X4??</td>
+<td><strong>R</strong>es<strong>ET</strong> <strong>B</strong>yte defined by first operand in register defined by second operand.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="other-supported-keywords">Other supported keywords</h3>
+<h4 id="def"><code>.DEF</code></h4>
+<p>This pseudo-microinstruction is used to define instructions. It has up to three arguments. First argument is address of first microinstruction of instruction, second argument is name of instruction and third is optional, defining how many bytes of argument the instruction takes. #### Constants Constants can be in: - Binary format <code>0b10010</code> - Hexadecimal format <code>0x12</code> - Decimal format <code>18</code> #### Comments Comment sign is <code>;</code></p>
+<h2 id="memory">Memory</h2>
+<h3 id="supported-pseudoinstructions">Supported pseudoinstructions</h3>
+<ul>
+<li><code>.org</code> - defines starting address to place binary to</li>
+<li><code>.const</code> - place constant to memory</li>
+</ul>
+<h2 id="default-instruction-set">Default instruction set</h2>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 11%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>keyword</th>
+<th>argument</th>
+<th>operation description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LD{reg}</td>
+<td>address</td>
+<td><strong>l</strong>oa<strong>d</strong> from address to register.</td>
+</tr>
+<tr class="even">
+<td>ST{reg}</td>
+<td>address</td>
+<td><strong>st</strong>ore from register to address.</td>
+</tr>
+<tr class="odd">
+<td>ADD{reg}</td>
+<td>address</td>
+<td><strong>add</strong> value from address to register. (result saved in the register)</td>
+</tr>
+<tr class="even">
+<td>ADD{reg}</td>
+<td>address</td>
+<td><strong>add</strong> value from address to register. (result saved in the register)</td>
+</tr>
+<tr class="odd">
+<td>INCW{reg}</td>
+<td>none</td>
+<td><strong>inc</strong>rement register pair.</td>
+</tr>
+<tr class="even">
+<td>INC{reg}</td>
+<td>none</td>
+<td><strong>inc</strong>rement register.</td>
+</tr>
+<tr class="odd">
+<td>DECW{reg}</td>
+<td>none</td>
+<td><strong>dec</strong>rement register pair.</td>
+</tr>
+<tr class="even">
+<td>DEC{reg}</td>
+<td>none</td>
+<td><strong>dec</strong>rement register.</td>
+</tr>
+<tr class="odd">
+<td>JMP</td>
+<td>address</td>
+<td><strong>j</strong>u<strong>mp</strong> to address.</td>
+</tr>
+<tr class="even">
+<td>JPIF{flag}</td>
+<td>address</td>
+<td><strong>j</strong>um<strong>p</strong> to address <strong>i</strong>f flag is zero.</td>
+</tr>
+<tr class="odd">
+<td>JPI{reg}</td>
+<td>address</td>
+<td><strong>j</strong>um<strong>p</strong> to address <strong>i</strong>f register is zero.</td>
+</tr>
+</tbody>
+</table>
+    </body>
+</html>
