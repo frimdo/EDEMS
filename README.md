@@ -1,3 +1,4 @@
+note: this file is deprecated. Update is on a way.
 # EDEMS
 Educational DEmonstrative Microprocessor Simulator
 
