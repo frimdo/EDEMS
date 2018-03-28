@@ -344,7 +344,7 @@ module.exports = ALU
 class BinNumber {
   constructor (val, bits = 8, paired = undefined) {
     this.bits = bits
-    this.maximum = (2 ** bits) - 1
+    this.maximum = (Math.pow(2, bits)) - 1
     this.pair = paired
     if (typeof val === 'number') {
       this.val = val
@@ -482,7 +482,7 @@ class BinNumber {
   }
 
   setBit (num) {
-    if (2 ** (num + 1) > this.maximum) {
+    if (Math.pow(2, (num + 1)) > this.maximum) {
       throw new RangeError('BinNumber - setBit: Argument num too big.')
     }
     this.value |= 1 << num
@@ -491,7 +491,7 @@ class BinNumber {
   }
 
   resBit (num) {
-    if (2 ** (num + 1) > this.maximum) {
+    if (Math.pow(2, (num + 1)) > this.maximum) {
       throw new RangeError('BinNumber - resBit: argument num too big')
     }
     this.value &= ~(1 << num)
