@@ -657,6 +657,8 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
+
+
   document.getElementById('loadMemory').onchange = function (event) {
     var input = event.target
     try {
@@ -798,6 +800,12 @@ gui.onclickSetup = function () {
       return
     }
     CU.uinstr.incw(global.register(pair.id.split('-')[0]))
+    return
+  }
+
+  document.getElementById('M2C').onclick = function () {
+    $('.highlighted').removeClass('highlighted')
+    CU.uinstr.end()
     return
   }
 
