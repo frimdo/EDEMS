@@ -2,6 +2,8 @@ note: this file is deprecated. Update is on a way.
 # EDEMS
 Educational DEmonstrative Microprocessor Simulator
 
+![img](./documents/GUI.png)
+
 ## EDEMS  registers
 EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
 
