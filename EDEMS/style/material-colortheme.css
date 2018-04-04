@@ -200,8 +200,6 @@ body {
     border: none;
     padding: 4px;
     color: #000000;
-    -webkit-appearance: none;
-    -moz-appearance: none;
 }
 
 #aluSelect:hover {
@@ -242,7 +240,7 @@ body {
 
 .highlighted, .umem-highlighted {
     color: #fafafa !important;
-    background-color: rgba(0,0,0,0.3) !important;
+    background-color: #1976d2 !important;
 }
 
 .failed {

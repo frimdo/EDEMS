@@ -898,7 +898,6 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('OP-button').onclick = function () {
-    $('.highlighted').removeClass('highlighted')
     if (!$('#svr').hasClass('svrSelected')) { // SVR button not pressed
       if ($(this).hasClass('selectedRegister')) {
         $('#registers-grid').find('button').removeClass('selectedRegister').removeClass('selectedPair')
