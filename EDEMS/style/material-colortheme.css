@@ -239,7 +239,7 @@ body {
 }
 
 .highlighted, .umem-highlighted {
-    color: #fafafa !important;
+    color: #000000 !important;
     background-color: #1976d2 !important;
 }
 
