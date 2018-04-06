@@ -238,10 +238,17 @@ body {
     background-color: #ff9800;
 }
 
-.highlighted, .umem-highlighted {
+.umem-highlighted {
     color: #000000 !important;
     background-color: #1976d2 !important;
 }
+
+.highlighted {
+    color: #fafafa !important;
+    background-color: rgba(0,0,0,0.3) !important;
+}
+
+
 
 .failed {
     background-color: #F44336 !important;
