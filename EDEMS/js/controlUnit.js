@@ -309,7 +309,6 @@ CU.uinstr.jon = function (operand) {
   operand = hex2num(operand)
   if(operand === 13){
     if (global.register(global.registerOP.dec).dec !== 0) {
-      console.log("jon: ", global.register(global.registerOP.dec).dec, "!== 0")
       global.registerUPCH.incrPair()
     }
     return
