@@ -96,7 +96,7 @@ CU.doUInstruction = function () {
     console.log('CU:', err)
   }
   global.registerUPCH.incrPair()
-  return(opcode.Name)
+  return (opcode.Name)
 }
 
 CU.decode = function (opcode) {
@@ -187,14 +187,14 @@ CU.uinstr.db2o = function () {
 CU.uinstr.end = function () {
   global.registerPCH.incrPair()
   global.addressBus.val = global.registerPCH.decPair
-  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
+  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
   global.instructionRegister.val = global.dataBus.dec
   global.registerUPCH.valPair = global.instructionRegister.dec
   global.registerUPCH.decrPair()
 }
 
 CU.uinstr.rd = function () {
-  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
+  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
 }
 
 CU.uinstr.wt = function () {
@@ -204,7 +204,7 @@ CU.uinstr.wt = function () {
 
 CU.uinstr.alu = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     alu.doOperation(global.registerOP.dec)
     return
   }
@@ -213,7 +213,7 @@ CU.uinstr.alu = function (operand) {
 
 CU.uinstr.r2db = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.dataBus.val = global.register(global.registerOP.dec).dec
     return
   }
@@ -222,7 +222,7 @@ CU.uinstr.r2db = function (operand) {
 
 CU.uinstr.r2ab = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.addressBus.val = global.register(global.registerOP.dec).dec
     return
   }
@@ -231,7 +231,7 @@ CU.uinstr.r2ab = function (operand) {
 
 CU.uinstr.w2ab = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.addressBus.val = global.register(global.registerOP.dec).decPair
     return
   }
@@ -240,7 +240,7 @@ CU.uinstr.w2ab = function (operand) {
 
 CU.uinstr.db2r = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).val = global.dataBus.dec
     return
   }
@@ -249,7 +249,7 @@ CU.uinstr.db2r = function (operand) {
 
 CU.uinstr.ab2w = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).valPair = global.addressBus.dec
     return
   }
@@ -258,7 +258,7 @@ CU.uinstr.ab2w = function (operand) {
 
 CU.uinstr.incb = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).incr()
     return
   }
@@ -267,7 +267,7 @@ CU.uinstr.incb = function (operand) {
 
 CU.uinstr.incw = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).incrPair()
     return
   }
@@ -276,7 +276,7 @@ CU.uinstr.incw = function (operand) {
 
 CU.uinstr.decb = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).decr()
     return
   }
@@ -285,7 +285,7 @@ CU.uinstr.decb = function (operand) {
 
 CU.uinstr.decw = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).decrPair()
     return
   }
@@ -294,7 +294,7 @@ CU.uinstr.decw = function (operand) {
 
 CU.uinstr.joi = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     if (global.register(global.registerOP.dec).dec === 0) {
       global.registerUPCH.incrPair()
     }
@@ -307,7 +307,7 @@ CU.uinstr.joi = function (operand) {
 
 CU.uinstr.jon = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     if (global.register(global.registerOP.dec).dec !== 0) {
       global.registerUPCH.incrPair()
     }
@@ -321,7 +321,7 @@ CU.uinstr.jon = function (operand) {
 CU.uinstr.jofi = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
-  if(hex2num(operand) === 13) {
+  if (hex2num(operand) === 13) {
     if (F.charAt(global.register(global.registerOP.dec).dec) === '0') {
       global.registerUPCH.incrPair()
     }
@@ -335,7 +335,7 @@ CU.uinstr.jofi = function (operand) {
 CU.uinstr.jofn = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
-  if(hex2num(operand) === 13) {
+  if (hex2num(operand) === 13) {
     if (F.charAt(global.register(global.registerOP.dec).dec) !== '0') {
       global.registerUPCH.incrPair()
     }

@@ -227,12 +227,12 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
-  if (global.dataBus.dec === 0){
+  if (global.dataBus.dec === 0) {
     global.registerF.setBit(1)
   } else {
     global.registerF.resBit(1)
   }
-  if (global.dataBus.dec > 127){
+  if (global.dataBus.dec > 127) {
     global.registerF.setBit(2)
   }
   else {
@@ -576,7 +576,7 @@ gui.DrawMemoryTable = function () {
           }
           $('.mem-highlighted').removeClass('mem-highlighted')
           $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
-        }catch (x) {
+        } catch (x) {
           window.localStorage.removeItem('memory')
           LS.initGlobals()
           for (var i = 0; i < elements.length; i++) {
@@ -645,7 +645,6 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
-
 
   document.getElementById('loadMemory').onchange = function (event) {
     var input = event.target
@@ -1275,17 +1274,15 @@ gui.onChangeSetup = function () {
   }
 }
 
+function download (filename, text) {
+  var element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute('download', filename)
 
+  element.style.display = 'none'
+  document.body.appendChild(element)
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
+  element.click()
 
 }
 
@@ -1444,8 +1441,7 @@ LS.initGlobals = function () {
   global.freq = window.localStorage.getItem('freq')
 
   if (window.localStorage.getItem('microcodeValue') === null) {
-    window.localStorage.setItem('microcodeValue',`
-;;;;;;;;;;;;;;;;;;;;; Jump directives
+    window.localStorage.setItem('microcodeValue', `;;;;;;;;;;;;;;;;;;;;; Jump directives
 .DEF 0x61 LDF 2B
 .DEF 0x61 LDB 2B
 .DEF 0x61 LDD 2B
@@ -1752,7 +1748,8 @@ DB>R TMP0
 R>DB OP
 ALU XOR
 DB>R OP
-END`)}
+END`)
+  }
   if (window.localStorage.getItem('microcode') === null) {
     window.localStorage.setItem('microcode', `
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
@@ -1794,7 +1791,17 @@ END`)}
     throw RangeError('localStorage microcode is wrong size!')
   }
   if (window.localStorage.getItem('memoryValue') === null) {
-    window.localStorage.setItem('memoryValue', `;code definition
+    window.localStorage.setItem('memoryValue', `;variable definitions
+.org 0x20
+.const 0x1 ;number one
+.const 0b1 ;number two
+.const 0x12 ;number to add
+.const 0xff ;output variable one
+.const 0xff ;output variable two
+
+
+;code definition
+.org 0x00
 lda 0x20 ;load number one
 inca
 
@@ -1807,15 +1814,7 @@ addb 0x22
 sta 0x23
 stb 0x24
 
-jmp 0x14
-
-;variable definitions
-.org 0x20
-.const 0x1 ;number one
-.const 0b1 ;number two
-.const 0x12 ;number to add
-.const 0xff ;output variable one
-.const 0xff ;output variable two`)
+jmp 0x14`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
@@ -2364,8 +2363,8 @@ clock.urun = function () {
 clock.step = function () {
   clearTimeout(clock.running)
 
-  clock.running = setInterval(function() {
-    if (CU.doUInstruction() === "END"){
+  clock.running = setInterval(function () {
+    if (CU.doUInstruction() === 'END') {
       clearTimeout(clock.running)
     }
 
@@ -2476,7 +2475,7 @@ CU.doUInstruction = function () {
     console.log('CU:', err)
   }
   global.registerUPCH.incrPair()
-  return(opcode.Name)
+  return (opcode.Name)
 }
 
 CU.decode = function (opcode) {
@@ -2567,14 +2566,14 @@ CU.uinstr.db2o = function () {
 CU.uinstr.end = function () {
   global.registerPCH.incrPair()
   global.addressBus.val = global.registerPCH.decPair
-  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
+  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
   global.instructionRegister.val = global.dataBus.dec
   global.registerUPCH.valPair = global.instructionRegister.dec
   global.registerUPCH.decrPair()
 }
 
 CU.uinstr.rd = function () {
-  global.dataBus.val = '0x' +  global.memory[global.addressBus.dec]
+  global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
 }
 
 CU.uinstr.wt = function () {
@@ -2584,7 +2583,7 @@ CU.uinstr.wt = function () {
 
 CU.uinstr.alu = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     alu.doOperation(global.registerOP.dec)
     return
   }
@@ -2593,7 +2592,7 @@ CU.uinstr.alu = function (operand) {
 
 CU.uinstr.r2db = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.dataBus.val = global.register(global.registerOP.dec).dec
     return
   }
@@ -2602,7 +2601,7 @@ CU.uinstr.r2db = function (operand) {
 
 CU.uinstr.r2ab = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.addressBus.val = global.register(global.registerOP.dec).dec
     return
   }
@@ -2611,7 +2610,7 @@ CU.uinstr.r2ab = function (operand) {
 
 CU.uinstr.w2ab = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.addressBus.val = global.register(global.registerOP.dec).decPair
     return
   }
@@ -2620,7 +2619,7 @@ CU.uinstr.w2ab = function (operand) {
 
 CU.uinstr.db2r = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).val = global.dataBus.dec
     return
   }
@@ -2629,7 +2628,7 @@ CU.uinstr.db2r = function (operand) {
 
 CU.uinstr.ab2w = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).valPair = global.addressBus.dec
     return
   }
@@ -2638,7 +2637,7 @@ CU.uinstr.ab2w = function (operand) {
 
 CU.uinstr.incb = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).incr()
     return
   }
@@ -2647,7 +2646,7 @@ CU.uinstr.incb = function (operand) {
 
 CU.uinstr.incw = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).incrPair()
     return
   }
@@ -2656,7 +2655,7 @@ CU.uinstr.incw = function (operand) {
 
 CU.uinstr.decb = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).decr()
     return
   }
@@ -2665,7 +2664,7 @@ CU.uinstr.decb = function (operand) {
 
 CU.uinstr.decw = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     global.register(global.registerOP.dec).decrPair()
     return
   }
@@ -2674,7 +2673,7 @@ CU.uinstr.decw = function (operand) {
 
 CU.uinstr.joi = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     if (global.register(global.registerOP.dec).dec === 0) {
       global.registerUPCH.incrPair()
     }
@@ -2687,7 +2686,7 @@ CU.uinstr.joi = function (operand) {
 
 CU.uinstr.jon = function (operand) {
   operand = hex2num(operand)
-  if(operand === 13){
+  if (operand === 13) {
     if (global.register(global.registerOP.dec).dec !== 0) {
       global.registerUPCH.incrPair()
     }
@@ -2701,7 +2700,7 @@ CU.uinstr.jon = function (operand) {
 CU.uinstr.jofi = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
-  if(hex2num(operand) === 13) {
+  if (hex2num(operand) === 13) {
     if (F.charAt(global.register(global.registerOP.dec).dec) === '0') {
       global.registerUPCH.incrPair()
     }
@@ -2715,7 +2714,7 @@ CU.uinstr.jofi = function (operand) {
 CU.uinstr.jofn = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
-  if(hex2num(operand) === 13) {
+  if (hex2num(operand) === 13) {
     if (F.charAt(global.register(global.registerOP.dec).dec) !== '0') {
       global.registerUPCH.incrPair()
     }
@@ -2899,7 +2898,6 @@ $(document).ready(function () {
 
   LS.initGlobals()
 
-
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
@@ -2913,12 +2911,7 @@ $(document).ready(function () {
   document.getElementById('compileMemory').onclick()
   document.getElementById('rst-btn').onclick()
 
-
-
-
-
 })
-
 
 window.onbeforeunload = function () {
   LS.storeGlobals()
@@ -2970,7 +2963,7 @@ memoryCompiler.compile = function (input) {
       if (instruction.operand !== undefined) {
         try {
           operand = parseHEX(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
-        }catch (x){
+        } catch (x) {
           throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
         }
         while (operand.length > 0) {

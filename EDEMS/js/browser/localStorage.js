@@ -146,8 +146,7 @@ LS.initGlobals = function () {
   global.freq = window.localStorage.getItem('freq')
 
   if (window.localStorage.getItem('microcodeValue') === null) {
-    window.localStorage.setItem('microcodeValue',`
-;;;;;;;;;;;;;;;;;;;;; Jump directives
+    window.localStorage.setItem('microcodeValue', `;;;;;;;;;;;;;;;;;;;;; Jump directives
 .DEF 0x61 LDF 2B
 .DEF 0x61 LDB 2B
 .DEF 0x61 LDD 2B
@@ -454,7 +453,8 @@ DB>R TMP0
 R>DB OP
 ALU XOR
 DB>R OP
-END`)}
+END`)
+  }
   if (window.localStorage.getItem('microcode') === null) {
     window.localStorage.setItem('microcode', `
 000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,
@@ -496,7 +496,17 @@ END`)}
     throw RangeError('localStorage microcode is wrong size!')
   }
   if (window.localStorage.getItem('memoryValue') === null) {
-    window.localStorage.setItem('memoryValue', `;code definition
+    window.localStorage.setItem('memoryValue', `;variable definitions
+.org 0x20
+.const 0x1 ;number one
+.const 0b1 ;number two
+.const 0x12 ;number to add
+.const 0xff ;output variable one
+.const 0xff ;output variable two
+
+
+;code definition
+.org 0x00
 lda 0x20 ;load number one
 inca
 
@@ -509,15 +519,7 @@ addb 0x22
 sta 0x23
 stb 0x24
 
-jmp 0x14
-
-;variable definitions
-.org 0x20
-.const 0x1 ;number one
-.const 0b1 ;number two
-.const 0x12 ;number to add
-.const 0xff ;output variable one
-.const 0xff ;output variable two`)
+jmp 0x14`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `

@@ -17,8 +17,8 @@ clock.urun = function () {
 clock.step = function () {
   clearTimeout(clock.running)
 
-  clock.running = setInterval(function() {
-    if (CU.doUInstruction() === "END"){
+  clock.running = setInterval(function () {
+    if (CU.doUInstruction() === 'END') {
       clearTimeout(clock.running)
     }
 

@@ -68,7 +68,7 @@ gui.DrawMemoryTable = function () {
           }
           $('.mem-highlighted').removeClass('mem-highlighted')
           $('#memory' + global.addressBus.dec).addClass('mem-highlighted')
-        }catch (x) {
+        } catch (x) {
           window.localStorage.removeItem('memory')
           LS.initGlobals()
           for (var i = 0; i < elements.length; i++) {
@@ -137,7 +137,6 @@ gui.DrawMicrocodeTable = function () {
 }
 
 gui.onclickSetup = function () {
-
 
   document.getElementById('loadMemory').onchange = function (event) {
     var input = event.target
@@ -767,17 +766,15 @@ gui.onChangeSetup = function () {
   }
 }
 
+function download (filename, text) {
+  var element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute('download', filename)
 
+  element.style.display = 'none'
+  document.body.appendChild(element)
 
-function download(filename, text) {
-  var element = document.createElement('a');
-  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
+  element.click()
 
 }
 

@@ -23,7 +23,6 @@ $(document).ready(function () {
 
   LS.initGlobals()
 
-
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
@@ -37,12 +36,7 @@ $(document).ready(function () {
   document.getElementById('compileMemory').onclick()
   document.getElementById('rst-btn').onclick()
 
-
-
-
-
 })
-
 
 window.onbeforeunload = function () {
   LS.storeGlobals()
