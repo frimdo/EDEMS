@@ -23,6 +23,7 @@ $(document).ready(function () {
 
   LS.initGlobals()
 
+
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
@@ -31,11 +32,12 @@ $(document).ready(function () {
   gui.onChangeSetup()
   gui.refresh()
 
+  document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()
   document.getElementById('rst-btn').onclick()
 
-  global.advanced = false
+
 
 
 

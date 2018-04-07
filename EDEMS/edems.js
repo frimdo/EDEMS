@@ -1302,6 +1302,8 @@ LS.storeGlobals = function () {
   LS.storeMicrocode()
   LS.storeMemory()
   LS.storeRegisters()
+  window.localStorage.setItem('freq', global.freq)
+  window.localStorage.setItem('advanced', global.advanced)
 }
 
 LS.storeMicrocode = function () {
@@ -1339,82 +1341,106 @@ LS.storeRegisters = function () {
 
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 LS.initGlobals = function () {
+  if (window.localStorage.getItem('advanced') === null) {
+    window.localStorage.setItem('advanced', 'false')
+  }
+  global.advaced = window.localStorage.getItem('advanced')
+
   if (window.localStorage.getItem('registerF') === null) {
     window.localStorage.setItem('registerF', '00')
-    global.registerF.val = '0x' + window.localStorage.getItem('0x' + 'registerF')
   }
+  global.registerF.val = '0x' + window.localStorage.getItem('registerF')
+
   if (window.localStorage.getItem('registerA') === null) {
     window.localStorage.setItem('registerA', '00')
-    global.registerA.val = '0x' + window.localStorage.getItem('0x' + 'registerA')
   }
+  global.registerA.val = '0x' + window.localStorage.getItem('registerA')
+
   if (window.localStorage.getItem('registerB') === null) {
     window.localStorage.setItem('registerB', '00')
-    global.registerB.val = '0x' + window.localStorage.getItem('0x' + 'registerB')
   }
+  global.registerB.val = '0x' + window.localStorage.getItem('registerB')
+
   if (window.localStorage.getItem('registerC') === null) {
     window.localStorage.setItem('registerC', '00')
-    global.registerC.val = '0x' + window.localStorage.getItem('0x' + 'registerC')
   }
+  global.registerC.val = '0x' + window.localStorage.getItem('registerC')
+
   if (window.localStorage.getItem('registerD') === null) {
     window.localStorage.setItem('registerD', '00')
-    global.registerD.val = '0x' + window.localStorage.getItem('0x' + 'registerD')
   }
+  global.registerD.val = '0x' + window.localStorage.getItem('registerD')
+
   if (window.localStorage.getItem('registerE') === null) {
     window.localStorage.setItem('registerE', '00')
-    global.registerE.val = '0x' + window.localStorage.getItem('registerE')
   }
+  global.registerE.val = '0x' + window.localStorage.getItem('registerE')
+
   if (window.localStorage.getItem('registerS') === null) {
     window.localStorage.setItem('registerS', '00')
-    global.registerS.val = '0x' + window.localStorage.getItem('registerS')
   }
+  global.registerS.val = '0x' + window.localStorage.getItem('registerS')
+
   if (window.localStorage.getItem('registerP') === null) {
     window.localStorage.setItem('registerP', '00')
-    global.registerP.val = '0x' + window.localStorage.getItem('registerP')
   }
+  global.registerP.val = '0x' + window.localStorage.getItem('registerP')
+
   if (window.localStorage.getItem('registerPCH') === null) {
     window.localStorage.setItem('registerPCH', '00')
-    global.registerPCH.val = '0x' + window.localStorage.getItem('registerPCH')
   }
+  global.registerPCH.val = '0x' + window.localStorage.getItem('registerPCH')
+
   if (window.localStorage.getItem('registerPCL') === null) {
     window.localStorage.setItem('registerPCL', '00')
-    global.registerF.val = '0x' + window.localStorage.getItem('registerF')
   }
+  global.registerF.val = '0x' + window.localStorage.getItem('registerF')
+
   if (window.localStorage.getItem('registerTMP0') === null) {
     window.localStorage.setItem('registerTMP0', '00')
-    global.registerTMP0.val = '0x' + window.localStorage.getItem('registerTMP0')
   }
+  global.registerTMP0.val = '0x' + window.localStorage.getItem('registerTMP0')
+
   if (window.localStorage.getItem('registerOP') === null) {
     window.localStorage.setItem('registerOP', '00')
-    global.registerOP.val = '0x' + window.localStorage.getItem('registerOP')
   }
+  global.registerOP.val = '0x' + window.localStorage.getItem('registerOP')
+
   if (window.localStorage.getItem('registerTMP1') === null) {
     window.localStorage.setItem('registerTMP1', '00')
-    global.registerTMP1.val = '0x' + window.localStorage.getItem('registerTMP1')
   }
+  global.registerTMP1.val = '0x' + window.localStorage.getItem('registerTMP1')
+
   if (window.localStorage.getItem('registerTMP2') === null) {
     window.localStorage.setItem('registerTMP2', '00')
-    global.registerTMP2.val = '0x' + window.localStorage.getItem('registerTMP2')
   }
+  global.registerTMP2.val = '0x' + window.localStorage.getItem('registerTMP2')
+
   if (window.localStorage.getItem('registerUPCH') === null) {
     window.localStorage.setItem('registerUPCH', '00')
-    global.registerUPCH.val = '0x' + window.localStorage.getItem('registerUPCH')
   }
+  global.registerUPCH.val = '0x' + window.localStorage.getItem('registerUPCH')
+
   if (window.localStorage.getItem('registerUPCL') === null) {
     window.localStorage.setItem('registerUPCL', '00')
-    global.registerUPCL.val = '0x' + window.localStorage.getItem('registerUPCL')
   }
+  global.registerUPCL.val = '0x' + window.localStorage.getItem('registerUPCL')
+
   if (window.localStorage.getItem('DB') === null) {
     window.localStorage.setItem('DB', '00')
-    global.DB = window.localStorage.getItem('DB')
   }
+  global.DB = window.localStorage.getItem('DB')
+
   if (window.localStorage.getItem('AB') === null) {
     window.localStorage.setItem('AB', '00')
-    global.AB = window.localStorage.getItem('AB')
   }
+  global.AB = window.localStorage.getItem('AB')
+
   if (window.localStorage.getItem('freq') === null) {
     window.localStorage.setItem('freq', '1')
-    global.freq = window.localStorage.getItem('freq')
   }
+  global.freq = window.localStorage.getItem('freq')
+
   if (window.localStorage.getItem('microcodeValue') === null) {
     window.localStorage.setItem('microcodeValue',`
 ;;;;;;;;;;;;;;;;;;;;; Jump directives
@@ -2871,6 +2897,7 @@ $(document).ready(function () {
 
   LS.initGlobals()
 
+
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
   gui.DrawMicrocodeTable()
@@ -2879,11 +2906,12 @@ $(document).ready(function () {
   gui.onChangeSetup()
   gui.refresh()
 
+  document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()
   document.getElementById('rst-btn').onclick()
 
-  global.advanced = false
+
 
 
 
