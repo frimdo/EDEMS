@@ -685,6 +685,7 @@ gui.onclickSetup = function () {
     LS.storeGlobals()
     window.localStorage.removeItem('memory')
     LS.initGlobals()
+    $('.highlighted').removeClass('highlighted')
     global.onMemoryChange()
   }
 
@@ -692,6 +693,7 @@ gui.onclickSetup = function () {
     LS.storeGlobals()
     window.localStorage.removeItem('microcode')
     LS.initGlobals()
+    $('.highlighted').removeClass('highlighted')
     global.onMicrocodeChange()
   }
 
