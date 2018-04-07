@@ -550,13 +550,7 @@ gui.DrawMemoryTable = function () {
 
   gui.memoryData = []
 
-  // Creating x-offset row
-  var newline = '<tr><th><div class="memory-table-descr">0x</div></th>'
-  for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-memory' + i + ' class="memory-table-descr">0' + i + '</div></th>'
-  }
-  gui.memoryData.push(newline + '</tr>')
-
+  var newline = ''
   // Creating other rows
   for (i = 0; i < (global.memory.length); i += 8) {
     newline = '<th><div id=y-offset-memory' + i + ' class="memory-table-descr">' + i.toString(16) + '</div></th>'
@@ -620,13 +614,7 @@ gui.DrawMicrocodeTable = function () {
 
   gui.microcodeData = []
 
-  // Creating x-offset row
-  var newline = '<tr><th><div class="microcode-table-descr">0x</div></th>'
-  for (var i = 0; i < 8; i++) {
-    newline = newline + '<th><div id=x-offset-microcode' + i + ' class="microcode-table-descr">0' + i + '</div></th>'
-  }
-  gui.microcodeData.push(newline + '</tr>')
-
+  var newline = ''
   // Creating other rows
   for (i = 0; i < (global.microcode.length); i += 8) {
     newline = '<th><div id=y-offset-microcode' + i + ' class="microcode-table-descr">' + i.toString(16) + '</div></th>'

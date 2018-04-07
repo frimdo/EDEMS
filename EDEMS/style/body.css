@@ -217,7 +217,7 @@
 }
 
 #scrollArea-memory, #scrollArea-microcode {
-    flex-grow: 1;
+    display: flex;
 }
 
 #memory-editor, #microcode-editor {

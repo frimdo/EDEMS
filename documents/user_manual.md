@@ -60,18 +60,22 @@ Comment sign is `;`
 
 ## Default instruction set
 
-| keyword             | argument | operation description                    |
-|------------------|--------|------------------------------------------|
-|LD{reg}|   address|  **l**oa**d** from  address to register.|
-|ST{reg}|   address|  **st**ore from  register to  address.|
-|ADD{reg}|  address|  **add**  value from  address to  register. (result saved in the register)|
-|ADD{reg}|  address|  **add**  value from  address to  register. (result saved in the register)|
-|INCW{reg}| none   |  **inc**rement  register pair.|
-|INC{reg}|  none   |  **inc**rement  register.|
-|DECW{reg}| none   |  **dec**rement  register pair.|
-|DEC{reg}|  none   |  **dec**rement  register.|
-|JMP|       address|  **j**u**mp** to address.|
-|JPIF{flag}|address|  **j**um**p** to address **i**f flag is zero.|
-|JPI{reg}|  address|  **j**um**p** to address **i**f register is zero.|
+|keyword   | argument |cycles| operation description                    |
+|----------|----------|------|------------------------------------|
+|LD{reg}   | address  | 14   |**l**oa**d** from  address to register.|
+|ST{reg}   | address  | 14   |**st**ore from  register to  address.|
+|ADD{reg}  | address  | 17   |**add**  value from  address to  register. (result saved in the register)|
+|INC{reg}  | none     | 4    |**inc**rement  register.|
+|INCW{reg} | none     | 4    |**inc**rement  register pair.|
+|DEC{reg}  | none     | 4    |**dec**rement  register.|
+|DECW{reg} | none     | 4    |**dec**rement  register pair.|
+|JMP       | address  | 12   |**j**u**mp** to address.|
+|JPIF{flag}| address  | 6-15 |**j**um**p** to address **i**f flag is zero.|
+|JPI{reg}  | address  | 6-15 |**j**um**p** to address **i**f register is zero.|
+|SUB{reg}  | address  | 17   |**sub**tract  value from  address to  register. (result saved in the register)|
+|AND{reg}  | address  | 17   |logical **and** operation of value from address and register. (result saved in the register)|
+|OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|
+|XOR{reg}  | address  | 17   |logical **xor** operation of value from address and register. (result saved in the register)|
+
 
 
