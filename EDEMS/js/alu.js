@@ -64,12 +64,12 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
-  if (global.dataBus.dec === 0){
+  if (global.dataBus.dec === 0) {
     global.registerF.setBit(1)
   } else {
     global.registerF.resBit(1)
   }
-  if (global.dataBus.dec > 127){
+  if (global.dataBus.dec > 127) {
     global.registerF.setBit(2)
   }
   else {

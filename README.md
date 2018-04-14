@@ -199,18 +199,22 @@ Instructions use two, one or zero operands. Microcode can operate with "microope
 LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |addrH| + |addrL|`. every `| |` block means 8bit value. This means that this operation has 8b opcode and two 8b operands. The last 3 bits of opcode defines save location of load action (000b - B, 111b - F, 101b - P).
 
 ### instructions
-- `|LD 3b where| + |addrH| + |addrL|` - **l**oa**d** from 2B address to 8 bit register.
-- `|ST 3b what| + |addrH| + |addrL|` - **st**ore from 1B register to 2B address.
-- `|ADD 3b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 1B register. (result saved in the register)
-- `|ADD 2b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 2B register. (result saved in the register)
-- `|INCW 2b what|` - **inc**rement 2B register.
-- `|INC 3b what|` - **inc**rement 1B register.
-- `|DECW 2b what|` - **dec**rement 2B register.
-- `|DEC 3b what|` - **dec**rement 1B register.
-- `|TST| + |addrH| + |addrL|` - **t**e**st** if value on 2B address is zero, next instruction is skipped.
-- `|TSTF 3b which|` - **t**e**st** if nth bit of **F** register is zero, next instruction is skipped.
-- `|JMP| + |where|` - relative **j**u**mp** to address. (operand is added to PC)
-
+|keyword   | argument |cycles| operation description                    |
+|----------|----------|------|------------------------------------|
+|LD{reg}   | address  | 14   |**l**oa**d** from  address to register.|
+|ST{reg}   | address  | 14   |**st**ore from  register to  address.|
+|ADD{reg}  | address  | 17   |**add**  value from  address to  register. (result saved in the register)|
+|INC{reg}  | none     | 4    |**inc**rement  register.|
+|INCW{reg} | none     | 4    |**inc**rement  register pair.|
+|DEC{reg}  | none     | 4    |**dec**rement  register.|
+|DECW{reg} | none     | 4    |**dec**rement  register pair.|
+|JMP       | address  | 12   |**j**u**mp** to address.|
+|JPIF{flag}| address  | 6-15 |**j**um**p** to address **i**f flag is zero.|
+|JPI{reg}  | address  | 6-15 |**j**um**p** to address **i**f register is zero.|
+|SUB{reg}  | address  | 17   |**sub**tract  value from  address to  register. (result saved in the register)|
+|AND{reg}  | address  | 17   |logical **and** operation of value from address and register. (result saved in the register)|
+|OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|
+|XOR{reg}  | address  | 17   |logical **xor** operation of value from address and register. (result saved in the register)|
 <!--
 
 ## complete instruction set

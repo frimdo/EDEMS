@@ -43,7 +43,7 @@ memoryCompiler.compile = function (input) {
       if (instruction.operand !== undefined) {
         try {
           operand = parseHEX(line[1], 8 * parseInt(instruction.operand.substring(0, instruction.operand.length - 1)))
-        }catch (x){
+        } catch (x) {
           throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
         }
         while (operand.length > 0) {
