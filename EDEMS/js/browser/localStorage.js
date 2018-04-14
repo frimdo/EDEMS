@@ -886,7 +886,7 @@ jmp 0x14
   if (global.memory.length !== 65536) {
     throw RangeError('localStorage microcode is wrong size!')
   }
-  for (let i = 0; i < 65536; i++) {
+  for (var i = 0; i < 65536; i++) {
     global.memory[i] = parseInt(global.memory[i], 16).toString(10)
   }
 }
