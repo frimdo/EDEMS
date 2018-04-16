@@ -217,7 +217,7 @@
 }
 
 #scrollArea-memory, #scrollArea-microcode {
-    flex-grow: 1;
+    display: flex;
 }
 
 #memory-editor, #microcode-editor {
@@ -278,4 +278,17 @@
 #IR {
     margin-bottom: 3px;
     font-size: 90%;
+}
+
+#selectEdemsType, #aluSelect {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+
+
+    background: url(../img/arrow.png) no-repeat 95% 50%;
+    background-size: 15px 10px;
+
 }

@@ -65,10 +65,8 @@
 }
 
 #logo select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     font-size: 50%;
-    width: 40%;
+    width: 35%;
     margin: 0;
     padding: 0;
     border: none;

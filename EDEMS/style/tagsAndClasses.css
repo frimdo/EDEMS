@@ -138,3 +138,8 @@ select {
     border: 1px solid #2d2d2d;
     padding: 2px 0 2px 0;
 }
+
+.descr-table {
+    padding-right: 8px;
+}
+
