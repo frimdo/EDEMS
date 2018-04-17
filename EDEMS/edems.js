@@ -1,4 +1,4 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
 ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (acequire, exports, module) {
   'use strict'
 
@@ -1045,6 +1045,19 @@ gui.onChangeSetup = function () {
       $('#PCH-button').prop('disabled', false)
       $('#PCL-button').prop('disabled', false)
 
+      $('#REA').prop('disabled', false)
+      $('#WRT').prop('disabled', false)
+      $('#M2C').prop('disabled', false)
+      $('#R2D').prop('disabled', false)
+      $('#D2R').prop('disabled', false)
+      $('#W2A').prop('disabled', false)
+      $('#A2W').prop('disabled', false)
+      $('#AL2').prop('disabled', false)
+
+      $('#incr').removeClass('hidden')
+      $('#decr').removeClass('hidden')
+      $('#svr').removeClass('hidden')
+
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
@@ -1065,6 +1078,19 @@ gui.onChangeSetup = function () {
       $('#PCH-pair').prop('disabled', true)
       $('#PCH-button').prop('disabled', true)
       $('#PCL-button').prop('disabled', true)
+
+      $('#REA').prop('disabled', true)
+      $('#WRT').prop('disabled', true)
+      $('#M2C').prop('disabled', true)
+      $('#R2D').prop('disabled', true)
+      $('#D2R').prop('disabled', true)
+      $('#W2A').prop('disabled', true)
+      $('#A2W').prop('disabled', true)
+      $('#AL2').prop('disabled', true)
+
+      $('#incr').addClass('hidden')
+      $('#decr').addClass('hidden')
+      $('#svr').addClass('hidden')
 
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
@@ -1340,10 +1366,13 @@ LS.storeRegisters = function () {
 
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 LS.initGlobals = function () {
+  console.log("advanced: ", window.localStorage.getItem('advanced'))
   if (window.localStorage.getItem('advanced') === null) {
-    window.localStorage.setItem('advanced', 'false')
+    window.localStorage.setItem('advanced', 'basic')
   }
-  global.advaced = window.localStorage.getItem('advanced')
+  console.log("advanced: ", window.localStorage.getItem('advanced'))
+  global.advanced = window.localStorage.getItem('advanced')
+  console.log("advanced: ", global.advanced)
 
   if (window.localStorage.getItem('registerF') === null) {
     window.localStorage.setItem('registerF', '00')
@@ -1805,7 +1834,7 @@ END`)
 lda 0x20 ;load number one
 inca
 
-ldb 0x21 ;laod number two
+ldb 0x21 ;load number two
 incb
 
 adda 0x22

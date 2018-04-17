@@ -17,11 +17,11 @@
   "license": "GPL-3.0",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "browserify": "^16.0.0",
+    "browserify": "^16.2.0",
     "browserify-notify": "^1.1.2",
-    "jest": "^22.2.2",
+    "jest": "^22.4.3",
     "uglify-js": "^3.3.16",
-    "watchify": "^3.10.0"
+    "watchify": "^3.11.0"
   },
   "dependencies": {
     "brace": "^0.11.1",

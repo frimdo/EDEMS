@@ -45,10 +45,13 @@ LS.storeRegisters = function () {
 
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 LS.initGlobals = function () {
+  console.log("advanced: ", window.localStorage.getItem('advanced'))
   if (window.localStorage.getItem('advanced') === null) {
-    window.localStorage.setItem('advanced', 'false')
+    window.localStorage.setItem('advanced', 'basic')
   }
-  global.advaced = window.localStorage.getItem('advanced')
+  console.log("advanced: ", window.localStorage.getItem('advanced'))
+  global.advanced = window.localStorage.getItem('advanced')
+  console.log("advanced: ", global.advanced)
 
   if (window.localStorage.getItem('registerF') === null) {
     window.localStorage.setItem('registerF', '00')

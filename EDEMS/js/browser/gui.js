@@ -537,6 +537,19 @@ gui.onChangeSetup = function () {
       $('#PCH-button').prop('disabled', false)
       $('#PCL-button').prop('disabled', false)
 
+      $('#REA').prop('disabled', false)
+      $('#WRT').prop('disabled', false)
+      $('#M2C').prop('disabled', false)
+      $('#R2D').prop('disabled', false)
+      $('#D2R').prop('disabled', false)
+      $('#W2A').prop('disabled', false)
+      $('#A2W').prop('disabled', false)
+      $('#AL2').prop('disabled', false)
+
+      $('#incr').removeClass('hidden')
+      $('#decr').removeClass('hidden')
+      $('#svr').removeClass('hidden')
+
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
@@ -557,6 +570,19 @@ gui.onChangeSetup = function () {
       $('#PCH-pair').prop('disabled', true)
       $('#PCH-button').prop('disabled', true)
       $('#PCL-button').prop('disabled', true)
+
+      $('#REA').prop('disabled', true)
+      $('#WRT').prop('disabled', true)
+      $('#M2C').prop('disabled', true)
+      $('#R2D').prop('disabled', true)
+      $('#D2R').prop('disabled', true)
+      $('#W2A').prop('disabled', true)
+      $('#A2W').prop('disabled', true)
+      $('#AL2').prop('disabled', true)
+
+      $('#incr').addClass('hidden')
+      $('#decr').addClass('hidden')
+      $('#svr').addClass('hidden')
 
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
