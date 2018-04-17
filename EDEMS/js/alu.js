@@ -64,12 +64,28 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
-  if (global.dataBus.dec === 0) {
+
+
+}
+
+function countCarry (before, after) {
+  if (before === after) {
+    global.registerF.resBit(1)
+  } else {
+    global.registerF.setBit(1)
+  }
+}
+
+function countZero (input) {
+  if (input === 0) {
     global.registerF.setBit(1)
   } else {
     global.registerF.resBit(1)
   }
-  if (global.dataBus.dec > 127) {
+}
+
+function countNegative (input) {
+  if (input > 127) {
     global.registerF.setBit(2)
   }
   else {
@@ -77,7 +93,38 @@ ALU.doOperation = function (x) {
   }
 }
 
+//If the sum of two positive numbers yields a negative result, the sum has overflowed.
+//If the sum of two negative numbers yields a positive result, the sum has overflowed.
+function countOverflow (operand1, operand2, result) {
+  if (operand1 > 127 && operand2 > 127 && result <= 127) {
+    global.registerF.setBit(3)
+  } else if (operand1 <= 127 && operand2 <= 127 && result > 127) {
+    global.registerF.setBit(3)
+  } else {
+    global.registerF.resBit(3)
+  }
+}
+
+//parity odd = 1, even = 0
+function countParity (input) {
+  input = input.toString(2)
+  if (input.match(/1/g).length % 2) {
+    global.registerF.resBit(4)
+  } else {
+    global.registerF.setBit(4)
+  }
+}
+
+function countHalfCarry (before, after) {
+  if (((before >> 4) & 1) === ((after >> 4) & 1)) {
+    global.registerF.resBit(5)
+  } else {
+    global.registerF.setBit(5)
+  }
+}
+
 ALU.add = function () {
+  var tmp = global.dataBus.dec
   global.dataBus.val = global.registerTMP0.dec + global.dataBus.dec
 }
 
@@ -160,13 +207,19 @@ ALU.equ = function () {
 }
 
 ALU.bsr = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var DBL = global.dataBus.dec & 15
+
+  global.dataBus.val = (global.dataBus.dec & 240) | (global.registerTMP0.dec & 15)
+
+  global.registerTMP0.val = (global.registerTMP0.dec >> 4) | (DBL << 4)
 }
 
 ALU.bsl = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var DBL = global.dataBus.dec & 15
+
+  global.dataBus.val = (global.dataBus.dec & 240) | (global.registerTMP0.dec >> 4)
+
+  global.registerTMP0.val = (global.registerTMP0.dec << 4) | DBL
 }
 
 ALU.oop = function () {
