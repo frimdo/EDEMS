@@ -143,3 +143,47 @@ select {
     padding-right: 8px;
 }
 
+.frequency {
+    max-width: 30%;
+    font-size: 120%;
+    margin: 5px;
+    flex-grow: 1;
+}
+
+.tooltip {
+    position: relative;
+
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+
+
+    opacity: 0;
+    transition: opacity 0.3s;
+    transition-delay: 1s;
+}
+.tooltiptext {
+    white-space: nowrap;
+
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+
+    background-color: black;
+    color: #fff;
+    font-size: medium;
+    font-weight: bold;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -30px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

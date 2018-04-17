@@ -229,6 +229,17 @@ body {
 .pairButton[disabled],
 .registerButton:disabled,
 .registerButton[disabled] {
+    background-color: transparent;
+    border: transparent;
+    color: #000000;
+}
+
+.pairBlock .flowButton:disabled,
+.pairBlock .flowButton[disabled],
+.pairBlock .pairButton:disabled,
+.pairBlock .pairButton[disabled],
+.pairBlock .registerButton:disabled,
+.pairBlock .registerButton[disabled] {
     background-color: #757575;
     border: 1px solid #757575;
     color: #000000;

@@ -40,13 +40,6 @@
     flex-grow: 10;
 }
 
-#clock-grid span {
-    max-width: 30%;
-    font-size: 120%;
-    margin: 5px;
-    flex-grow: 1;
-}
-
 #freq {
     max-width: 50%;
     height: 100%;

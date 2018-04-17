@@ -24,12 +24,33 @@
 
         <div id="clock-grid" class="block">
 
-            <button type="button" id="step-btn"><i class="fa fa-fast-forward"></i></button>
-            <button type="button" id="ustep-btn"><i class="fa fa-step-forward"></i></button>
-            <button type="button" id="urun-btn"><i class="fa fa-play"></i></button>
-            <button type="button" id="stop-btn"><i class="fa fa-pause"></i></button>
-            <button type="button" id="rst-btn"><i class="fa fa-stop"></i></button>
-            <span>f: <input type="number" id="freq" title="freq" min="1" max="500"> Hz</span>
+
+            <button type="button" id="step-btn" class="tooltip">
+                <i class="fa fa-fast-forward">
+                    <span class="tooltiptext">Step</span>
+                </i>
+            </button>
+            <button type="button" id="ustep-btn" class="tooltip">
+                <i class="fa fa-step-forward">
+                    <span class="tooltiptext">Microstep</span>
+                </i>
+            </button>
+            <button type="button" id="urun-btn" class="tooltip">
+                <i class="fa fa-play">
+                    <span class="tooltiptext">Run</span>
+                </i>
+            </button>
+            <button type="button" id="stop-btn" class="tooltip">
+                <i class="fa fa-pause">
+                    <span class="tooltiptext">Pause</span>
+                </i>
+            </button>
+            <button type="button" id="rst-btn" class="tooltip">
+                <i class="fa fa-stop">
+                    <span class="tooltiptext">Stop</span>
+                </i>
+            </button>
+            <span class="frequency">f: <input type="number" id="freq" title="freq" min="1" max="500"> Hz</span>
 
         </div>
 
@@ -45,16 +66,16 @@
     <div id="body-grid" class="advanced">
 
         <button type="button" class="flowButton" id="D2D" disabled><i class="fas fa-arrows-alt-h"></i></button>
-        <button type="button" class="flowButton" id="REA"><i class="fas fa-arrow-up"></i></button>
-        <button type="button" class="flowButton" id="WRT"><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton" id="M2C"><i class="fas fa-arrow-right"></i></button>
+        <button type="button" class="flowButton tooltip" id="REA"><i class="fas fa-arrow-up"></i><span class="tooltiptext">RD</span></button>
+        <button type="button" class="flowButton tooltip" id="WRT"><i class="fas fa-arrow-down"></i><span class="tooltiptext">WRT</span></button>
+        <button type="button" class="flowButton tooltip" id="M2C"><i class="fas fa-arrow-right"><span class="tooltiptext">END</span></i></button>
         <button type="button" class="flowButton" id="A2M" disabled><i class="fas fa-arrow-up"></i></button>
         <button type="button" class="flowButton" id="C2D" disabled><i class="fas fa-arrow-up"></i></button>
-        <button type="button" class="flowButton" id="R2D"><i class="fas fa-arrow-up"></i></button>
-        <button type="button" class="flowButton" id="D2R"><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton" id="W2A"><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton" id="A2W"><i class="fas fa-arrow-up"></i></button>
-        <button type="button" class="flowButton" id="AL2"><i class="fas fa-arrow-up"></i></button>
+        <button type="button" class="flowButton tooltip" id="R2D"><i class="fas fa-arrow-up"></i><span class="tooltiptext">D&ltR</span></button>
+        <button type="button" class="flowButton tooltip" id="D2R"><i class="fas fa-arrow-down"></i><span class="tooltiptext">D&gtR</span></button>
+        <button type="button" class="flowButton tooltip" id="W2A"><i class="fas fa-arrow-down"></i><span class="tooltiptext">A&ltR / A&ltW</span></button>
+        <button type="button" class="flowButton tooltip" id="A2W"><i class="fas fa-arrow-up"></i><span class="tooltiptext">A&gtW</span></button>
+        <button type="button" class="flowButton tooltip" id="AL2"><i class="fas fa-arrow-up"></i><span class="tooltiptext">ALU</span></button>
         <button type="button" class="flowButton" id="D2L" disabled><i class="fas fa-arrow-down"></i></button>
         <button type="button" class="flowButton" id="RAL" disabled><i class="fas fa-arrow-right"></i></button>
         <button type="button" class="flowButton" id="ALR" disabled><i class="fas fa-arrow-left"></i></button>
@@ -86,11 +107,11 @@
                     LDA 0x0101
                 </div>
                 <div id="memory-btns">
-                    <button id="compileMemory" type="button"><i class="fa fa-cogs"></i></button>
-                    <button id="eraseMemory" type="button"><i class="fa fa-eraser"></i></button>
-                    <button id="saveMemory" type="button"><i class="fa fa-download"></i></button>
+                    <button id="compileMemory" type="button" class="tooltip"><i class="fa fa-cogs"></i><span class="tooltiptext">Compile</span></button>
+                    <button id="eraseMemory" type="button" class="tooltip"><i class="fa fa-eraser"></i><span class="tooltiptext">Erase</span></button>
+                    <button id="saveMemory" type="button" class="tooltip"><i class="fa fa-download"></i><span class="tooltiptext">Save</span></button>
                     <input id="loadMemory" type="file"></i></input>
-                    <label for="loadMemory"><i class="fa fa-upload"></i></label>
+                    <label for="loadMemory" class="tooltip"><i class="fa fa-upload"></i><span class="tooltiptext">Load</span></label>
                 </div>
                 <div class="descr-table">
                     <table>
@@ -150,11 +171,11 @@
                 <div id="microcode-editor">
                 </div>
                 <div id="microcode-btns">
-                    <button id="compileMicrocode" type="button"><i class="fa fa-cogs"></i></button>
-                    <button id="eraseMicrocode" type="button"><i class="fa fa-eraser"></i></button>
-                    <button id="saveMicrocode" type="button"><i class="fa fa-download"></i></button>
+                    <button id="compileMicrocode" type="button" class="tooltip"><i class="fa fa-cogs"></i><span class="tooltiptext">Compile</span></button>
+                    <button id="eraseMicrocode" type="button" class="tooltip"><i class="fa fa-eraser"></i><span class="tooltiptext">Erase</span></button>
+                    <button id="saveMicrocode" type="button" class="tooltip"><i class="fa fa-download"></i><span class="tooltiptext">Save</span></button>
                     <input id="loadMicrocode" type="file"></i></input>
-                    <label for="loadMicrocode"><i class="fa fa-upload"></i></label>
+                    <label for="loadMicrocode" class="tooltip"><i class="fa fa-upload"></i><span class="tooltiptext">Load</span></label>
                 </div>
 
                 <div class="descr-table">
@@ -205,9 +226,9 @@
 
         <div id=registers-grid class="block">
             <div class="nameBlock">Registers
-                <button type="button" id="incr">++</button>
-                <button type="button" id="decr">--</button>
-                <button type="button" id="svr"><i class="fas fa-retweet"></i></button>
+                <button type="button" id="incr" class="tooltip">++<span class="tooltiptext">INCR/INCW</span></button>
+                <button type="button" id="decr" class="tooltip">--<span class="tooltiptext">DECR/DECW</span></button>
+                <button type="button" id="svr" class="tooltip"><i class="fas fa-retweet"></i><span class="tooltiptext">SVR/SVW</span></button>
             </div>
             <div class="insideBlock">
                 <div class="pairBlock">
@@ -314,57 +335,66 @@
                 <div class="spacer"></div>
                 <div id="F-viewer">
                     F register
+
+                    <!--
+                        <button type="button" id="step-btn" class="tooltip">
+                            <i class="fa fa-fast-forward">
+                                <span class="tooltiptext">Step</span>
+                            </i>
+                        </button>
+                    -->
+
                     <table>
                         <tr>
                             <th>
-                                <div class="F-viewer-NameBlock">X</div>
+                                <div class="F-viewer-NameBlock tooltip">X<span class="tooltiptext">X</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">Q</div>
+                                <div class="F-viewer-NameBlock tooltip">Q<span class="tooltiptext">Q</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">H</div>
+                                <div class="F-viewer-NameBlock tooltip">H<span class="tooltiptext">Half carry</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">P</div>
+                                <div class="F-viewer-NameBlock tooltip">P<span class="tooltiptext">Parity</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">V</div>
+                                <div class="F-viewer-NameBlock tooltip">V<span class="tooltiptext">Overflow</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">N</div>
+                                <div class="F-viewer-NameBlock tooltip">N<span class="tooltiptext">Negative</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">Z</div>
+                                <div class="F-viewer-NameBlock tooltip">Z<span class="tooltiptext">Zero</span></div>
                             </th>
                             <th>
-                                <div class="F-viewer-NameBlock">C</div>
+                                <div class="F-viewer-NameBlock tooltip">C<span class="tooltiptext">Carry</span></div>
                             </th>
                         </tr>
                         <tr>
                             <td>
-                                <div class="F-viewer7 F-viewer-ValueBlock">1</div>
+                                <div class="F-viewer7 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">X</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer6 F-viewer-ValueBlock">0</div>
+                                <div class="F-viewer6 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Q</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer5 F-viewer-ValueBlock">1</div>
+                                <div class="F-viewer5 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Half carry</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer4 F-viewer-ValueBlock">0</div>
+                                <div class="F-viewer4 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Parity</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer3 F-viewer-ValueBlock">1</div>
+                                <div class="F-viewer3 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Overflow</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer2 F-viewer-ValueBlock">0</div>
+                                <div class="F-viewer2 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Negative</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer1 F-viewer-ValueBlock">1</div>
+                                <div class="F-viewer1 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Zero</span></div>
                             </td>
                             <td>
-                                <div class="F-viewer0 F-viewer-ValueBlock">0</div>
+                                <div class="F-viewer0 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Carry</span></div>
                             </td>
                         </tr>
                     </table>
