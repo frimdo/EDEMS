@@ -510,7 +510,7 @@ END`)
 lda 0x20 ;load number one
 inca
 
-ldb 0x21 ;laod number two
+ldb 0x21 ;load number two
 incb
 
 adda 0x22
