@@ -8,7 +8,7 @@ ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
     var keywords = ''
-    for (let i = 0; i < uComp.assemblyKeywords.length; i++) {
+    for (var i = 0; i < uComp.assemblyKeywords.length; i++) {
       keywords += '|' + uComp.assemblyKeywords[i].keyword
     }
     if (keywords === '') {

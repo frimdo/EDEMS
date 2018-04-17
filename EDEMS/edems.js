@@ -9,7 +9,7 @@ ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
     var keywords = ''
-    for (let i = 0; i < uComp.assemblyKeywords.length; i++) {
+    for (var i = 0; i < uComp.assemblyKeywords.length; i++) {
       keywords += '|' + uComp.assemblyKeywords[i].keyword
     }
     if (keywords === '') {
@@ -706,7 +706,7 @@ gui.onclickSetup = function () {
       for (var i = 0; i < orgs.length; i++) {
         Array.prototype.splice.apply(global.memory, [parseInt(orgs[i]), code[orgs[i]].length].concat(code[orgs[i]]))
 
-        for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
+        for (var y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
         }
       }
@@ -740,7 +740,7 @@ gui.onclickSetup = function () {
       Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
       global.onMicrocodeChange()
       document.getElementById('scrollArea-microcode').scrollTop = 0
-      for (let i = 0; i < code.length; i++) {
+      for (var i = 0; i < code.length; i++) {
         highlight('#microcode' + i)
       }
 
@@ -2336,7 +2336,7 @@ jmp 0x14`)
   if (global.memory.length !== 65536) {
     throw RangeError('localStorage microcode is wrong size!')
   }
-  for (let i = 0; i < 65536; i++) {
+  for (var i = 0; i < 65536; i++) {
     global.memory[i] = parseInt(global.memory[i], 16).toString(10)
   }
 }
