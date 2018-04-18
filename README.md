@@ -70,7 +70,7 @@ F register contains ALU flags. Those are:
 - Z - zero
 - N - Negative
 - V - Two's complement overflow
-- P - Parity (1 if parity odd)
+          - P - Parity (1 if parity odd)
 - H - Half carry
 - Q - Sticky bit 
 - X - not operated by ALU, usage defined by instruction set/user.
@@ -99,28 +99,29 @@ ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow 
 
 ### Operations
 
-| name | number | operation description                               |
-|------|--------|-----------------------------------------------------|
-|ADD   |0       | **ADD** numbers: DB = DB + TMP                      |
-|SUB   |1       | **SUB**stract: DB = TwosComplement(DB) + TMP        |
-|NEG   |2       | create **NEG**ative number: DB = TwosComplement(DB) |
-|NOT   |3       | bitwise **NOT** bits: DB = ~DB                      |
-|AND   |4       | bitwise **AND** bits: DB = DB && TMP                |
-|ORR   |5       | bitwise **OR** bits: DB = DB &#124;&#124; TMP       |
-|XOR   |6       | bitwise **XOR** bits: DB = DB ^ TMP                 |
-|SHR   |7       | **SH**ift **R**ight DB                              |
-|SHL   |8       | **SH**ift **L**eft                                  |
-|ROR   |9       | **RO**tate **R**ight DB                             |
-|ROL   |10      | **RO**tate **L**eft                                 |
-|RCR   |11      | **R**otate **R**ight through **C**arry DB           |
-|RCL   |12      | **R**otate **L**eft through **C**arry               |
-|ASR   |13      | **A**rithmetic **S**hift **R**ight                  |
-|ASL   |14      | **A**rithmetic **S**hift **L**eft                   |
-|BSR   |15      | **B**CD **S**hift **R**ight                         |
-|BSL   |16      | **B**CD **S**hift **L**eft                          |
-|EQU   |17      | compare if **EQU**al to zero: DB = DB == 0          |
-|OOP   |18      | Do **O**peration defined by **OP** register.        |
+| name | number | operation description                               | X           | Q           | H           | P           | V           | N           | Z           | C           |
+|------|--------|-----------------------------------------------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------| 
+|ADD   |0       | **ADD** numbers: DB = DB + TMP                      | -           | -           |&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|
+|SUB   |1       | **SUB**stract: DB = TwosComplement(DB) + TMP        | -           | -           |&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|
+|NEG   |2       | create **NEG**ative number: DB = TwosComplement(DB) | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|NOT   |3       | bitwise **NOT** bits: DB = ~DB                      | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|AND   |4       | bitwise **AND** bits: DB = DB && TMP                | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ORR   |5       | bitwise **OR** bits: DB = DB &#124;&#124; TMP       | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|XOR   |6       | bitwise **XOR** bits: DB = DB ^ TMP                 | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|SHR   |7       | **SH**ift **R**ight DB                              | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|SHL   |8       | **SH**ift **L**eft                                  | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ROR   |9       | **RO**tate **R**ight DB                             | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ROL   |10      | **RO**tate **L**eft                                 | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|RCR   |11      | **R**otate **R**ight through **C**arry DB           | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;|&updownarrow;|
+|RCL   |12      | **R**otate **L**eft through **C**arry               | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;|&updownarrow;|
+|ASR   |13      | **A**rithmetic **S**hift **R**ight                  | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ASL   |14      | **A**rithmetic **S**hift **L**eft                   | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|BSR   |15      | **B**CD **S**hift **R**ight                         | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|BSL   |16      | **B**CD **S**hift **L**eft                          | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|EQU   |17      | compare if **EQU**al to zero: DB = DB == 0          | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|OOP   |18      | Do **O**peration defined by **OP** register.        | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
 
+&updownarrow;
 
 ## uInstructon set
 uInstructions are 2B wide. Opcode usually is 12b with 1 4b operad, but there are some exceptions (JMP is 4b opcode with 11b operand). OP register is addressing register. When used in most microinstructions, containing value is used as address of another register instead.

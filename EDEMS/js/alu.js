@@ -64,17 +64,19 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
-
-
+  countZero(global.dataBus.dec)
+  countNegative(global.dataBus.dec)
+  countParity(global.dataBus.dec)
 }
 
-function countCarry (before, after) {
-  if (before === after) {
-    global.registerF.resBit(1)
+function countCarry (input) {
+  if (((input >> 8) & 1) === 1) {
+    global.registerF.setBit(0)
   } else {
-    global.registerF.setBit(1)
+    global.registerF.resBit(0)
   }
 }
+
 
 function countZero (input) {
   if (input === 0) {
@@ -108,7 +110,9 @@ function countOverflow (operand1, operand2, result) {
 //parity odd = 1, even = 0
 function countParity (input) {
   input = input.toString(2)
-  if (input.match(/1/g).length % 2) {
+  if (input.match(/1/g) === null) {
+    global.registerF.resBit(4)
+  } else if(input.match(/1/g).length % 2) {
     global.registerF.resBit(4)
   } else {
     global.registerF.setBit(4)
@@ -124,12 +128,19 @@ function countHalfCarry (before, after) {
 }
 
 ALU.add = function () {
-  var tmp = global.dataBus.dec
-  global.dataBus.val = global.registerTMP0.dec + global.dataBus.dec
+  var result = global.registerTMP0.dec + global.dataBus.dec
+  countOverflow(global.registerTMP0.dec, global.dataBus.dec, result & 255)
+  countHalfCarry(global.dataBus.dec, result)
+  global.dataBus.val = result
+  countCarry(result)
 }
 
 ALU.sub = function () {
-  global.dataBus.val = global.dataBus.dec - global.registerTMP0.dec
+  var result = global.dataBus.dec - global.registerTMP0.dec
+  countOverflow(global.registerTMP0.dec, -global.dataBus.dec, result & 255)
+  countHalfCarry(global.dataBus.dec, result)
+  global.dataBus.val = result
+  countCarry(result)
 }
 
 ALU.neg = function () {
