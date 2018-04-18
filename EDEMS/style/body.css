@@ -47,7 +47,7 @@
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
     #body-grid.advanced {
         grid-area: body-grid;
         max-height: 90vh;
