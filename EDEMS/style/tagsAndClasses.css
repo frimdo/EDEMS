@@ -187,3 +187,7 @@ select {
     visibility: visible;
     opacity: 1;
 }
+
+.upload-btn {
+    padding-top: 3px;
+}
