@@ -84,13 +84,22 @@ body {
     background-color: #52c7b8;
     border: none;
 }
-#buttons-grid, #clock-grid, #logo {
+#clock-grid{
     background-color: #009688;
 }
 
-#buttons-grid button, #clock-grid button, #logo button, #logo span, #logo select {
+#buttons-grid, #logo {
+    box-shadow: none;
+}
+
+#clock-grid button, #logo button, #logo span, #logo select {
     color: #000000;
     background-color: #52c7b8;
+}
+
+#buttons-grid button {
+    color: #000000;
+    background-color: #009688;
 }
 
 #buttons-grid button:hover, #clock-grid button:hover{
@@ -230,7 +239,7 @@ body {
 .registerButton:disabled,
 .registerButton[disabled] {
     background-color: transparent;
-    border: transparent;
+    border: trans;
     color: #000000;
 }
 

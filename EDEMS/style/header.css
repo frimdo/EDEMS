@@ -38,6 +38,7 @@
 #buttons-grid button, #clock-grid button {
     margin: 5px;
     flex-grow: 10;
+    flex-basis: 0;
 }
 
 #freq {
