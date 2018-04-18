@@ -206,12 +206,12 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 |ST{reg}   | address  | 14   |**st**ore from  register to  address.|
 |ADD{reg}  | address  | 17   |**add**  value from  address to  register. (result saved in the register)|
 |INC{reg}  | none     | 4    |**inc**rement  register.|
-|INCW{reg} | none     | 4    |**inc**rement  register pair.|
+|INC{reg*} | none     | 4    |**inc**rement  register pair.|
 |DEC{reg}  | none     | 4    |**dec**rement  register.|
-|DECW{reg} | none     | 4    |**dec**rement  register pair.|
-|JMP       | address  | 12   |**j**u**mp** to address.|
-|JPIF{flag}| address  | 6-15 |**j**um**p** to address **i**f flag is zero.|
-|JPI{reg}  | address  | 6-15 |**j**um**p** to address **i**f register is zero.|
+|DEC{reg*} | none     | 4    |**dec**rement  register pair.|
+|JP       | address  | 12   |**j**u**mp** to address.|
+|JPF{flag}| address  | 6-15 |**j**um**p** to address **i**f flag is zero.|
+|JP{reg}  | address  | 6-15 |**j**um**p** to address **i**f register is zero.|
 |SUB{reg}  | address  | 17   |**sub**tract  value from  address to  register. (result saved in the register)|
 |AND{reg}  | address  | 17   |logical **and** operation of value from address and register. (result saved in the register)|
 |OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|

@@ -183,10 +183,10 @@ LS.initGlobals = function () {
 .DEF 0x8B INCE
 .DEF 0x8B INCP
 
-.DEF 0x8E INCWF
-.DEF 0x8E INCWB
-.DEF 0x8E INCWD
-.DEF 0x8E INCWS
+.DEF 0x8E INCFA
+.DEF 0x8E INCBC
+.DEF 0x8E INCDE
+.DEF 0x8E INCSP
 
 .DEF 0x91 DECF
 .DEF 0x91 DECB
@@ -197,30 +197,30 @@ LS.initGlobals = function () {
 .DEF 0x91 DECE
 .DEF 0x91 DECP
 
-.DEF 0x94 DECWF
-.DEF 0x94 DECWB
-.DEF 0x94 DECWD
-.DEF 0x94 DECWS
+.DEF 0x94 DECFA
+.DEF 0x94 DECBC
+.DEF 0x94 DECDE
+.DEF 0x94 DECSP
 
-.DEF 0x97 JMP 2B
+.DEF 0x97 JP 2B
 
-.DEF 0xA2 JPIFC 2B
-.DEF 0xA2 JPIFZ 2B
-.DEF 0xA2 JPIFN 2B
-.DEF 0xA2 JPIFV 2B
-.DEF 0xA2 JPIFP 2B
-.DEF 0xA2 JPIFH 2B
-.DEF 0xA2 JPIFQ 2B
-.DEF 0xA2 JPIFX 2B
+.DEF 0xA2 JPFC 2B
+.DEF 0xA2 JPFZ 2B
+.DEF 0xA2 JPFN 2B
+.DEF 0xA2 JPFV 2B
+.DEF 0xA2 JPFP 2B
+.DEF 0xA2 JPFH 2B
+.DEF 0xA2 JPFQ 2B
+.DEF 0xA2 JPFX 2B
 
-.DEF 0xA8 JPIF 2B
-.DEF 0xA8 JPIB 2B
-.DEF 0xA8 JPID 2B
-.DEF 0xA8 JPIS 2B
-.DEF 0xA8 JPIA 2B
-.DEF 0xA8 JPIC 2B
-.DEF 0xA8 JPIE 2B
-.DEF 0xA8 JPIP 2B
+.DEF 0xA8 JPF 2B
+.DEF 0xA8 JPB 2B
+.DEF 0xA8 JPD 2B
+.DEF 0xA8 JPS 2B
+.DEF 0xA8 JPA 2B
+.DEF 0xA8 JPC 2B
+.DEF 0xA8 JPE 2B
+.DEF 0xA8 JPP 2B
 
 .DEF 0xAE SUBF 2B
 .DEF 0xAE SUBB 2B
@@ -336,7 +336,7 @@ COOP 0x2C
 DECW op
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JP
 ; load low address
 INCW PCH
 AB<W PCH
@@ -351,7 +351,7 @@ SVR PCL TMP1
 DECW PCH
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPF{flag}
 COOP 0x31
 JOFN OP
 JMP 0x97
@@ -359,7 +359,7 @@ INCW PCH
 INCW PCH
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JP{reg}
 COOP 0x39
 JON OP
 JMP 0x97
@@ -519,7 +519,7 @@ addb 0x22
 sta 0x23
 stb 0x24
 
-jmp 0x14`)
+jp 0x14`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
