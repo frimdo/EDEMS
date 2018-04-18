@@ -718,6 +718,8 @@ gui.onChangeSetup = function () {
 
   global.registerTMP0.onChange = function () {
     $('#registerTMP0').text('0x' + global.registerTMP0.hex).addClass('highlighted')
+    $('.TMP0-view').text('0x' + global.registerTMP0.hex).addClass('highlighted')
+    $('.TMP0-view-bin').text('0b' + global.registerTMP0.bin).addClass('highlighted')
   }
 
   global.registerTMP2.onChange = function () {
@@ -758,6 +760,8 @@ gui.onChangeSetup = function () {
 
   global.dataBus.onChange = function () {
     $('#EdataBus').text('0x' + global.dataBus.hex).addClass('highlighted')
+    $('.dataBus-view').text('0x' + global.dataBus.hex).addClass('highlighted')
+    $('.dataBus-view-bin').text('0b' + global.dataBus.bin).addClass('highlighted')
     document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
     $('#IdataBus').addClass('highlighted')
   }

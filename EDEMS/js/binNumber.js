@@ -79,7 +79,8 @@ class BinNumber {
   }
 
   get bin () {
-    return parseInt(this.value, 10).toString(2)
+    var value = parseInt(this.value, 10).toString(2)
+    return '0'.repeat(this.bits - value.length) + value
   }
 
   get binPair () {

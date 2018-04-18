@@ -274,15 +274,15 @@ body {
     background-color: #F44336 !important;
 }
 
-.F-viewer-NameBlock{
+.viewer-NameBlock{
     background-color: #00600f;
 }
 
-.F-viewer-ValueBlock{
+.viewer-ValueBlock{
     background-color: #6abf69;
     color: #000000;
 }
 
-.F-viewer-NameBlock, .F-viewer-ValueBlock {
+.viewer-NameBlock, .viewer-ValueBlock {
     border-color: #388e3c;
 }

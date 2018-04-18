@@ -184,22 +184,22 @@ select {
     padding-top: 3px;
 }
 
-.F-viewer-table {
+.viewer-table {
     display: flex;
     flex-wrap: wrap;
 }
 
-.F-viewer-table>div{
+.viewer-table>div{
     flex-grow: 1;
     display: flex;
 }
 
-.F-viewer-table>div>span{
+.viewer-table>div>span{
     width: 25%;
     flex-grow: 1;
 }
 
-.F-viewer-NameBlock, .F-viewer-ValueBlock{
+.viewer-NameBlock, .viewer-ValueBlock{
     border: 2px solid #2d2d2d;
     padding: 2px 3px 2px 3px;
 }
