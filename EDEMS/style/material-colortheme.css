@@ -276,11 +276,13 @@ body {
 
 .F-viewer-NameBlock{
     background-color: #00600f;
-    border: 1px solid #00600f;
 }
 
 .F-viewer-ValueBlock{
     background-color: #6abf69;
-    border: 1px solid #6abf69;
     color: #000000;
+}
+
+.F-viewer-NameBlock, .F-viewer-ValueBlock {
+    border-color: #388e3c;
 }

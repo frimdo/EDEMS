@@ -129,10 +129,7 @@ select {
     min-width: 34.55px;
 }
 
-.F-viewer-NameBlock, .F-viewer-ValueBlock{
-    border: 1px solid #2d2d2d;
-    padding: 2px 0 2px 0;
-}
+
 
 .descr-table {
     padding-right: 8px;
@@ -185,4 +182,24 @@ select {
 
 .upload-btn {
     padding-top: 3px;
+}
+
+.F-viewer-table {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.F-viewer-table>div{
+    flex-grow: 1;
+    display: flex;
+}
+
+.F-viewer-table>div>span{
+    width: 25%;
+    flex-grow: 1;
+}
+
+.F-viewer-NameBlock, .F-viewer-ValueBlock{
+    border: 2px solid #2d2d2d;
+    padding: 2px 3px 2px 3px;
 }

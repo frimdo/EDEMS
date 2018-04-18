@@ -70,16 +70,24 @@
     <div id="body-grid" class="advanced">
 
         <button type="button" class="flowButton" id="D2D" disabled><i class="fas fa-arrows-alt-h"></i></button>
-        <button type="button" class="flowButton tooltip" id="REA"><i class="fas fa-arrow-down"></i><span class="tooltiptext">RD</span></button>
-        <button type="button" class="flowButton tooltip" id="WRT"><i class="fas fa-arrow-up"></i><span class="tooltiptext">WRT</span></button>
-        <button type="button" class="flowButton tooltip" id="M2C"><i class="fas fa-arrow-right"><span class="tooltiptext">END</span></i></button>
+        <button type="button" class="flowButton tooltip" id="REA"><i class="fas fa-arrow-down"></i><span
+                class="tooltiptext">RD</span></button>
+        <button type="button" class="flowButton tooltip" id="WRT"><i class="fas fa-arrow-up"></i><span
+                class="tooltiptext">WRT</span></button>
+        <button type="button" class="flowButton tooltip" id="M2C"><i class="fas fa-arrow-right"><span
+                class="tooltiptext">END</span></i></button>
         <button type="button" class="flowButton" id="A2M" disabled><i class="fas fa-arrow-down"></i></button>
         <button type="button" class="flowButton" id="C2D" disabled><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton tooltip" id="R2D"><i class="fas fa-arrow-down"></i><span class="tooltiptext">D&ltR</span></button>
-        <button type="button" class="flowButton tooltip" id="D2R"><i class="fas fa-arrow-up"></i><span class="tooltiptext">D&gtR</span></button>
-        <button type="button" class="flowButton tooltip" id="W2A"><i class="fas fa-arrow-up"></i><span class="tooltiptext">A&ltR / A&ltW</span></button>
-        <button type="button" class="flowButton tooltip" id="A2W"><i class="fas fa-arrow-down"></i><span class="tooltiptext">A&gtW</span></button>
-        <button type="button" class="flowButton tooltip" id="AL2"><i class="fas fa-arrow-down"></i><span class="tooltiptext">ALU</span></button>
+        <button type="button" class="flowButton tooltip" id="R2D"><i class="fas fa-arrow-down"></i><span
+                class="tooltiptext">D&ltR</span></button>
+        <button type="button" class="flowButton tooltip" id="D2R"><i class="fas fa-arrow-up"></i><span
+                class="tooltiptext">D&gtR</span></button>
+        <button type="button" class="flowButton tooltip" id="W2A"><i class="fas fa-arrow-up"></i><span
+                class="tooltiptext">A&ltR / A&ltW</span></button>
+        <button type="button" class="flowButton tooltip" id="A2W"><i class="fas fa-arrow-down"></i><span
+                class="tooltiptext">A&gtW</span></button>
+        <button type="button" class="flowButton tooltip" id="AL2"><i class="fas fa-arrow-down"></i><span
+                class="tooltiptext">ALU</span></button>
         <button type="button" class="flowButton" id="D2L" disabled><i class="fas fa-arrow-up"></i></button>
         <button type="button" class="flowButton" id="RAL" disabled><i class="fas fa-arrow-right"></i></button>
         <button type="button" class="flowButton" id="ALR" disabled><i class="fas fa-arrow-left"></i></button>
@@ -111,11 +119,15 @@
                     LDA 0x0101
                 </div>
                 <div id="memory-btns">
-                    <button id="compileMemory" type="button" class="tooltip"><i class="fa fa-cogs"></i><span class="tooltiptext">Compile</span></button>
-                    <button id="eraseMemory" type="button" class="tooltip"><i class="fa fa-eraser"></i><span class="tooltiptext">Erase</span></button>
-                    <button id="saveMemory" type="button" class="tooltip"><i class="fa fa-download"></i><span class="tooltiptext">Save</span></button>
+                    <button id="compileMemory" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
+                            class="tooltiptext">Compile</span></button>
+                    <button id="eraseMemory" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
+                            class="tooltiptext">Erase</span></button>
+                    <button id="saveMemory" type="button" class="tooltip"><i class="fa fa-download"></i><span
+                            class="tooltiptext">Save</span></button>
                     <input id="loadMemory" type="file"></i></input>
-                    <label for="loadMemory" class="upload-btn tooltip"><i class="fa fa-upload"></i><span class="tooltiptext">Load</span></label>
+                    <label for="loadMemory" class="upload-btn tooltip"><i class="fa fa-upload"></i><span
+                            class="tooltiptext">Load</span></label>
                 </div>
                 <div class="descr-table">
                     <table>
@@ -175,11 +187,15 @@
                 <div id="microcode-editor">
                 </div>
                 <div id="microcode-btns">
-                    <button id="compileMicrocode" type="button" class="tooltip"><i class="fa fa-cogs"></i><span class="tooltiptext">Compile</span></button>
-                    <button id="eraseMicrocode" type="button" class="tooltip"><i class="fa fa-eraser"></i><span class="tooltiptext">Erase</span></button>
-                    <button id="saveMicrocode" type="button" class="tooltip"><i class="fa fa-download"></i><span class="tooltiptext">Save</span></button>
+                    <button id="compileMicrocode" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
+                            class="tooltiptext">Compile</span></button>
+                    <button id="eraseMicrocode" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
+                            class="tooltiptext">Erase</span></button>
+                    <button id="saveMicrocode" type="button" class="tooltip"><i class="fa fa-download"></i><span
+                            class="tooltiptext">Save</span></button>
                     <input id="loadMicrocode" type="file"></i></input>
-                    <label for="loadMicrocode" class="upload-btn tooltip"><i class="fa fa-upload"></i><span class="tooltiptext">Load</span></label>
+                    <label for="loadMicrocode" class="upload-btn tooltip"><i class="fa fa-upload"></i><span
+                            class="tooltiptext">Load</span></label>
                 </div>
 
                 <div class="descr-table">
@@ -232,7 +248,8 @@
             <div class="nameBlock">Registers
                 <button type="button" id="incr" class="tooltip">++<span class="tooltiptext">INCR/INCW</span></button>
                 <button type="button" id="decr" class="tooltip">--<span class="tooltiptext">DECR/DECW</span></button>
-                <button type="button" id="svr" class="tooltip"><i class="fas fa-retweet"></i><span class="tooltiptext">SVR/SVW</span></button>
+                <button type="button" id="svr" class="tooltip"><i class="fas fa-retweet"></i><span class="tooltiptext">SVR/SVW</span>
+                </button>
             </div>
             <div class="insideBlock">
                 <div class="pairBlock">
@@ -348,60 +365,50 @@
                         </button>
                     -->
 
-                    <table>
-                        <tr>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">X<span class="tooltiptext">X</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">Q<span class="tooltiptext">Q</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">H<span class="tooltiptext">Half carry</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">P<span class="tooltiptext">Parity</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">V<span class="tooltiptext">Overflow</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">N<span class="tooltiptext">Negative</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">Z<span class="tooltiptext">Zero</span></div>
-                            </th>
-                            <th>
-                                <div class="F-viewer-NameBlock tooltip">C<span class="tooltiptext">Carry</span></div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="F-viewer7 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">X</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer6 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Q</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer5 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Half carry</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer4 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Parity</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer3 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Overflow</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer2 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Negative</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer1 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Zero</span></div>
-                            </td>
-                            <td>
-                                <div class="F-viewer0 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Carry</span></div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class=F-viewer-table>
+                        <div>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">X<span class="tooltiptext">X</span></div>
+                              <div class="F-viewer7 F-viewer-ValueBlock tooltip">1<span
+                                      class="tooltiptext">X</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">Q<span class="tooltiptext">Q</span></div>
+                              <div class="F-viewer6 F-viewer-ValueBlock tooltip">0<span
+                                      class="tooltiptext">Q</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">H<span class="tooltiptext">Half carry</span></div>
+                              <div class="F-viewer5 F-viewer-ValueBlock tooltip">1<span
+                                      class="tooltiptext">Half carry</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">P<span class="tooltiptext">Parity</span></div>
+                              <div class="F-viewer4 F-viewer-ValueBlock tooltip">0<span
+                                      class="tooltiptext">Parity</span></div>
+                            </span>
+                        </div>
+                        <div>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">V<span class="tooltiptext">Overflow</span></div>
+                              <div class="F-viewer3 F-viewer-ValueBlock tooltip">1<span
+                                      class="tooltiptext">Overflow</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">N<span class="tooltiptext">Negative</span></div>
+                              <div class="F-viewer2 F-viewer-ValueBlock tooltip">0<span
+                                      class="tooltiptext">Negative</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">Z<span class="tooltiptext">Zero</span></div>
+                              <div class="F-viewer1 F-viewer-ValueBlock tooltip">1<span class="tooltiptext">Zero</span></div>
+                            </span>
+                            <span>
+                              <div class="F-viewer-NameBlock tooltip">C<span class="tooltiptext">Carry</span></div>
+                              <div class="F-viewer0 F-viewer-ValueBlock tooltip">0<span class="tooltiptext">Carry</span></div>
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="spacer"></div>
             </div>
