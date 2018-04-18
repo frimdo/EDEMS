@@ -54,21 +54,21 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         break
-      case ('R>DB'):
+      case ('DB<R'):
         try {
           output.push('7C' + global.register(line[1]))
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('R>AB'):
+      case ('AB<R'):
         try {
           output.push('7B' + global.register(line[1]))
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('W>AB'):
+      case ('AB<W'):
         if (lowRegisters.includes(line[1])) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
@@ -157,7 +157,7 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('C>DB'):
+      case ('DB<C'):
         var byte = 1280
         try {
           byte += parseNumber(line[1], 8)
@@ -198,7 +198,7 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('O>DB'):
+      case ('DB<O'):
         output.push('7F0')
         break
       case ('DB>O'):

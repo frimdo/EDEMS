@@ -26,7 +26,7 @@ CU.doUInstruction = function () {
       case 'JMP':
         CU.uinstr.jmp(opcode.operand1)
         break
-      case 'C>DB':
+      case 'DB<C':
         CU.uinstr.c2db(opcode.operand1)
         break
       case 'COOP':
@@ -65,16 +65,16 @@ CU.doUInstruction = function () {
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
         break
-      case 'W>AB ':
+      case 'AB<W ':
         CU.uinstr.w2ab(opcode.operand1)
         break
-      case 'R>AB ':
+      case 'AB<R ':
         CU.uinstr.r2ab(opcode.operand1)
         break
-      case 'R>DB ':
+      case 'DB<R ':
         CU.uinstr.r2db(opcode.operand1)
         break
-      case 'O>DB':
+      case 'DB<O':
         CU.uinstr.o2db()
         break
       case 'DB>O':
@@ -113,7 +113,7 @@ CU.decode = function (opcode) {
     case '4':
       return {Name: 'RETB', operand1: opcode.charAt(1), operand2: opcode.charAt(2)}
     case '5':
-      return {Name: 'C>DB', operand1: opcode.substring(1, 3)}
+      return {Name: 'DB<C', operand1: opcode.substring(1, 3)}
     case '6':
       return {Name: 'COOP', operand1: opcode.substring(1, 3)}
     case '0':
@@ -143,15 +143,15 @@ CU.decode = function (opcode) {
         case '9':
           return {Name: 'DB>R ', operand1: opcode.charAt(2)}
         case 'A':
-          return {Name: 'W>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<W ', operand1: opcode.charAt(2)}
         case 'B':
-          return {Name: 'R>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<R ', operand1: opcode.charAt(2)}
         case 'C':
-          return {Name: 'R>DB ', operand1: opcode.charAt(2)}
+          return {Name: 'DB<R ', operand1: opcode.charAt(2)}
         case 'F':
           switch (opcode.charAt(2)) {
             case '0':
-              return {Name: 'O>DB'}
+              return {Name: 'DB<O'}
             case '1':
               return {Name: 'DB>O'}
             case '2':

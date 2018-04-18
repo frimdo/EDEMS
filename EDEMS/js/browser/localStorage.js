@@ -262,16 +262,16 @@ LS.initGlobals = function () {
 COOP 0x0
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R OP
 END
@@ -280,17 +280,17 @@ END
 COOP 0x08
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; store value to register
-W>AB TMP1
-R>DB OP
+AB<W TMP1
+DB<R OP
 WT
 END
 
@@ -298,20 +298,20 @@ END
 COOP 0x10
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ADD
 DB>R OP
 END
@@ -339,12 +339,12 @@ END
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R PCH
 SVR PCL TMP1
@@ -371,20 +371,20 @@ END
 COOP 0x41
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU SUB
 DB>R OP
 END
@@ -393,20 +393,20 @@ END
 COOP 0x49
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU AND
 DB>R OP
 END
@@ -415,20 +415,20 @@ END
 COOP 0x51
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ORR
 DB>R OP
 END
@@ -437,20 +437,20 @@ END
 COOP 0x59
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU XOR
 DB>R OP
 END`)

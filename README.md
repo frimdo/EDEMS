@@ -132,9 +132,9 @@ O is operand, and number next to it says how many bits it takes. For example `CO
 |------------------|--------|------------------------------------------|
 | `COOP + O8`      | 0x6?? | **CO**unt **OP** register value. OP=IR-o1. |
 | `ALU + O5`       | 0x0?? | **ALU** does operation defined by operand. For example 0x01 is ADD, 0X02 is SUB,... |
-| `R>DB + O4`      | 0x7C? | move value from **R**egister defined by operand to **D**ata **B**uss. |
-| `R>AB + O4`      | 0x7B? | move value from **R**egister defined by operand to 8 least significant bits of **A**ddress **B**uss, nulling 8MSB. |
-| `W>AB + O4`      | 0x7A? | move **W**ord value (16b) from register pair defined by address of high register of pair defined by operand to **A**ddress **B**uss. |
+| `DB<R + O4`      | 0x7C? | move value from **R**egister defined by operand to **D**ata **B**uss. |
+| `AB<R + O4`      | 0x7B? | move value from **R**egister defined by operand to 8 least significant bits of **A**ddress **B**uss, nulling 8MSB. |
+| `AB<W + O4`      | 0x7A? | move **W**ord value (16b) from register pair defined by address of high register of pair defined by operand to **A**ddress **B**uss. |
 | `DB>R + O4`      | 0x79? | move value from **D**ata **B**us to **R**egister. |
 | `AB>W + O4`      | 0x78? | move value from **A**ddress **B**us to **W**ord pair of register defined by operand. (address of high register of pair) |
 | `INCB + O4`      | 0x77? | **INC**rement **B**yte value in register defined by operand. |
@@ -145,10 +145,10 @@ O is operand, and number next to it says how many bits it takes. For example `CO
 | `JON + O4`       | 0x72? | **J**ump **O**ver next microinstruction if value in register defined by operand is **N**ot 0x00. |
 | `JOFI + O4`      | 0x71? | **J**ump **O**ver next microinstruction if value in F[operand] **I**s 0b. uO acts as normal register for this microinstruction. |
 | `JOFN + O4`      | 0x70? | **J**ump **O**ver next microinstruction if value in F[operand] is **N**ot 0b. uO acts as normal register for this microinstruction. |
-| `C>DB + O8`      | 0x5?? | move operand as **C**onstant to **DB** |
+| `DB<C + O8`      | 0x5?? | move operand as **C**onstant to **DB** |
 | `SVR + O4 + O4`  | 0x1?? | **S**witch **V**alues in **R**egisters defined by first and second operands. |
 | `SVW + O4 + O4`  | 0x2?? | **S**witch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair) |
-| `O>DB`           | 0x7F0 | move value from **O**P to **DB**. |
+| `DB<O`           | 0x7F0 | move value from **O**P to **DB**. |
 | `DB>O`           | 0x7F1 | move value from **DB** to **O**P. |
 | `END`            | 0x7F2 | **END** of microinstruction. Signal for control unit to fetch another instruction. |
 | `JMP + O11`      | 0x??? | write operand to uPC, effectively **J**u**MP**ing in microcode. opcode is 0x800 + address|

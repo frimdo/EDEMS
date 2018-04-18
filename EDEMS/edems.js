@@ -101,7 +101,7 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'keyword.control.assembly',
-        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
+        regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
         caseInsensitive: true },
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
@@ -1647,16 +1647,16 @@ LS.initGlobals = function () {
 COOP 0x0
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R OP
 END
@@ -1665,17 +1665,17 @@ END
 COOP 0x08
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; store value to register
-W>AB TMP1
-R>DB OP
+AB<W TMP1
+DB<R OP
 WT
 END
 
@@ -1683,20 +1683,20 @@ END
 COOP 0x10
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ADD
 DB>R OP
 END
@@ -1724,12 +1724,12 @@ END
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R PCH
 SVR PCL TMP1
@@ -1756,20 +1756,20 @@ END
 COOP 0x41
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU SUB
 DB>R OP
 END
@@ -1778,20 +1778,20 @@ END
 COOP 0x49
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU AND
 DB>R OP
 END
@@ -1800,20 +1800,20 @@ END
 COOP 0x51
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ORR
 DB>R OP
 END
@@ -1822,20 +1822,20 @@ END
 COOP 0x59
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU XOR
 DB>R OP
 END`)
@@ -2495,7 +2495,7 @@ CU.doUInstruction = function () {
       case 'JMP':
         CU.uinstr.jmp(opcode.operand1)
         break
-      case 'C>DB':
+      case 'DB<C':
         CU.uinstr.c2db(opcode.operand1)
         break
       case 'COOP':
@@ -2534,16 +2534,16 @@ CU.doUInstruction = function () {
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
         break
-      case 'W>AB ':
+      case 'AB<W ':
         CU.uinstr.w2ab(opcode.operand1)
         break
-      case 'R>AB ':
+      case 'AB<R ':
         CU.uinstr.r2ab(opcode.operand1)
         break
-      case 'R>DB ':
+      case 'DB<R ':
         CU.uinstr.r2db(opcode.operand1)
         break
-      case 'O>DB':
+      case 'DB<O':
         CU.uinstr.o2db()
         break
       case 'DB>O':
@@ -2582,7 +2582,7 @@ CU.decode = function (opcode) {
     case '4':
       return {Name: 'RETB', operand1: opcode.charAt(1), operand2: opcode.charAt(2)}
     case '5':
-      return {Name: 'C>DB', operand1: opcode.substring(1, 3)}
+      return {Name: 'DB<C', operand1: opcode.substring(1, 3)}
     case '6':
       return {Name: 'COOP', operand1: opcode.substring(1, 3)}
     case '0':
@@ -2612,15 +2612,15 @@ CU.decode = function (opcode) {
         case '9':
           return {Name: 'DB>R ', operand1: opcode.charAt(2)}
         case 'A':
-          return {Name: 'W>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<W ', operand1: opcode.charAt(2)}
         case 'B':
-          return {Name: 'R>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<R ', operand1: opcode.charAt(2)}
         case 'C':
-          return {Name: 'R>DB ', operand1: opcode.charAt(2)}
+          return {Name: 'DB<R ', operand1: opcode.charAt(2)}
         case 'F':
           switch (opcode.charAt(2)) {
             case '0':
-              return {Name: 'O>DB'}
+              return {Name: 'DB<O'}
             case '1':
               return {Name: 'DB>O'}
             case '2':
@@ -3174,21 +3174,21 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         break
-      case ('R>DB'):
+      case ('DB<R'):
         try {
           output.push('7C' + global.register(line[1]))
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('R>AB'):
+      case ('AB<R'):
         try {
           output.push('7B' + global.register(line[1]))
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('W>AB'):
+      case ('AB<W'):
         if (lowRegisters.includes(line[1])) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
@@ -3277,7 +3277,7 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('C>DB'):
+      case ('DB<C'):
         var byte = 1280
         try {
           byte += parseNumber(line[1], 8)
@@ -3318,7 +3318,7 @@ microcodeCompiler.compile = function (input) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('O>DB'):
+      case ('DB<O'):
         output.push('7F0')
         break
       case ('DB>O'):
