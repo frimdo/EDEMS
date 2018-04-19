@@ -1,17 +1,470 @@
-<html>
-<link rel="stylesheet" href="markdown_style.css">
-    <body>
-
-<h1 id="edems-user-manual">EDEMS user manual</h1>
-<p>This manual should help you using edems simulator. Note, that this simulator is in beta version, so there are some bugs expected. If you find some, please contact author using feedback button.</p>
+<head>
+    <link rel="stylesheet" type="text/css" href="markdown_style.css">
+</head>
+<body>
+    <p>note: this file is deprecated. Update is on a way.</p>
+<h1>EDEMS - Educational DEmonstrative Microprocessor Simulator</h1>
 <h2 id="explanation-image">Explanation image</h2>
 <figure>
 <img src="./GUI_notes.png" alt="gui_notes" /><figcaption>gui_notes</figcaption>
 </figure>
-<h3 id="explanation-of-actions">Explanation of actions</h3>
-<p>TODO</p>
-<h2 id="control-unit">Control Unit</h2>
-<h3 id="supported-uinstructions">Supported uInstructions</h3>
+<h2 id="edems-registers">EDEMS registers</h2>
+<p>EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.</p>
+<table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>----</th>
+<th>#</th>
+<th>----</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>R00</td>
+<td>F</td>
+<td>R04</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>R01</td>
+<td>B</td>
+<td>R05</td>
+<td>C</td>
+</tr>
+<tr class="odd">
+<td>R02</td>
+<td>D</td>
+<td>R06</td>
+<td>E</td>
+</tr>
+<tr class="even">
+<td>R03</td>
+<td>S</td>
+<td>R07</td>
+<td>P</td>
+</tr>
+<tr class="odd">
+<td>R08</td>
+<td>PCH</td>
+<td>R12</td>
+<td>PCL</td>
+</tr>
+<tr class="even">
+<td>R09</td>
+<td>TMP0</td>
+<td>R13</td>
+<td>OP</td>
+</tr>
+<tr class="odd">
+<td>R10</td>
+<td>TMP1</td>
+<td>R14</td>
+<td>TMP2</td>
+</tr>
+<tr class="even">
+<td>R11</td>
+<td>UPCH</td>
+<td>R15</td>
+<td>UPCL</td>
+</tr>
+</tbody>
+</table>
+<p>Registers 0-7 are user-addressable registers, 8-15 are microcode-only-addressable registers.</p>
+<p>All registers, except PC(Program Counter) could theoretically be used as general purpose registers, but some bytes of F(flags) is rewrited after almost every ALU operation. SP is used by stack pointer instructions.</p>
+<h3 id="a-b-c-d-e-s-p">A, B, C, D, E, S, P</h3>
+<p>Those registers can be used as general purpose 8b registers.</p>
+<h3 id="bc-de-sp">BC, DE, SP</h3>
+<p>Those 8b register pairs can be used as general purpose 16b registers.</p>
+<h3 id="tmp0-tmp1-tmp2">TMP0, TMP1, TMP2</h3>
+<p>General purpose registers for microcode.</p>
+<h3 id="tmp1tmp2">TMP1TMP2</h3>
+<p>register pair can be used as general purpose 16b register for microcode.</p>
+<h3 id="op">OP</h3>
+<p>Register for addressing of other registers.</p>
+<h3 id="pch-pcl">PCH, PCL</h3>
+<p>Program counter of microprocessor. Though not addressable for user, is visible and editable using jump instructions.</p>
+<h3 id="upcl-upch">UPCL, UPCH</h3>
+<p>High and low bits of microprogram counter. Since microprogram addresses are only 11b, 5MSB of uPCH is not used.</p>
+<p>Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use JMP instruction.</p>
+<p>UPCH</p>
+<table>
+<thead>
+<tr class="header">
+<th>uPCH[7]</th>
+<th>uPCH[6]</th>
+<th>uPCH[5]</th>
+<th>uPCH[4]</th>
+<th>uPCH[3]</th>
+<th>uPCH[2]</th>
+<th>uPCH[1]</th>
+<th>uPCH[0]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td>
+<td>uPC[10]</td>
+<td>uPC[9]</td>
+<td>uPC[8]</td>
+</tr>
+</tbody>
+</table>
+<p>UPCL</p>
+<table>
+<thead>
+<tr class="header">
+<th>uPCL[7]</th>
+<th>uPCL[6]</th>
+<th>uPCL[5]</th>
+<th>uPCL[4]</th>
+<th>uPCL[3]</th>
+<th>uPCL[2]</th>
+<th>uPCL[1]</th>
+<th>uPCL[0]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>uPC[7]</td>
+<td>uPC[6]</td>
+<td>uPC[5]</td>
+<td>uPC[4]</td>
+<td>uPC[3]</td>
+<td>uPC[2]</td>
+<td>uPC[1]</td>
+<td>uPC[0]</td>
+</tr>
+</tbody>
+</table>
+<h3 id="f-register">F register</h3>
+<p>F register contains ALU flags. Those are:</p>
+<table>
+<thead>
+<tr class="header">
+<th>X</th>
+<th>Q</th>
+<th>H</th>
+<th>P</th>
+<th>V</th>
+<th>N</th>
+<th>Z</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>F[7]</td>
+<td>F[6]</td>
+<td>F[5]</td>
+<td>F[4]</td>
+<td>F[3]</td>
+<td>F[2]</td>
+<td>F[1]</td>
+<td>F[0]</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>C - carry</li>
+<li>Z - zero</li>
+<li>N - Negative</li>
+<li>V - Two’s complement overflow - P - Parity (1 if parity odd)</li>
+<li>H - Half carry</li>
+<li>Q - Sticky bit</li>
+<li>X - not operated by ALU, usage defined by instruction set/user.</li>
+</ul>
+<h2 id="alu">ALU</h2>
+<pre><code>                           
+ |F[C]| |DB|     |TMP0| 
+   |     |        |   
+   V     V        |
+  |  MUX  |       |
+      |           |
+      V           V   
+  \---------\   /----/ 
+   \         \ /    /  
+    \              /----&gt;|F|
+     \    ALU     /    
+      \----------/     
+        |    |  
+        |    |  
+        V    V               
+     |F[C]| |DB|</code></pre>
+<p>ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow is written to C flag of F register. Other flags of F are modified too. C flag of F register can be used as input too.</p>
+<h3 id="operations">Operations</h3>
+<table>
+<thead>
+<tr class="header">
+<th>name</th>
+<th>number</th>
+<th>operation description</th>
+<th>X</th>
+<th>Q</th>
+<th>H</th>
+<th>P</th>
+<th>V</th>
+<th>N</th>
+<th>Z</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADD</td>
+<td>0</td>
+<td><strong>ADD</strong> numbers: DB = DB + TMP</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+</tr>
+<tr class="even">
+<td>SUB</td>
+<td>1</td>
+<td><strong>SUB</strong>stract: DB = TwosComplement(DB) + TMP</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+</tr>
+<tr class="odd">
+<td>NEG</td>
+<td>2</td>
+<td>create <strong>NEG</strong>ative number: DB = TwosComplement(DB)</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>NOT</td>
+<td>3</td>
+<td>bitwise <strong>NOT</strong> bits: DB = ~DB</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>AND</td>
+<td>4</td>
+<td>bitwise <strong>AND</strong> bits: DB = DB &amp;&amp; TMP</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>ORR</td>
+<td>5</td>
+<td>bitwise <strong>OR</strong> bits: DB = DB || TMP</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>XOR</td>
+<td>6</td>
+<td>bitwise <strong>XOR</strong> bits: DB = DB ^ TMP</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>SHR</td>
+<td>7</td>
+<td><strong>SH</strong>ift <strong>R</strong>ight DB</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>SHL</td>
+<td>8</td>
+<td><strong>SH</strong>ift <strong>L</strong>eft</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>ROR</td>
+<td>9</td>
+<td><strong>RO</strong>tate <strong>R</strong>ight DB</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>ROL</td>
+<td>10</td>
+<td><strong>RO</strong>tate <strong>L</strong>eft</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>RCR</td>
+<td>11</td>
+<td><strong>R</strong>otate <strong>R</strong>ight through <strong>C</strong>arry DB</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+</tr>
+<tr class="odd">
+<td>RCL</td>
+<td>12</td>
+<td><strong>R</strong>otate <strong>L</strong>eft through <strong>C</strong>arry</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>↕</td>
+</tr>
+<tr class="even">
+<td>ASR</td>
+<td>13</td>
+<td><strong>A</strong>rithmetic <strong>S</strong>hift <strong>R</strong>ight</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>ASL</td>
+<td>14</td>
+<td><strong>A</strong>rithmetic <strong>S</strong>hift <strong>L</strong>eft</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>BSR</td>
+<td>15</td>
+<td><strong>B</strong>CD <strong>S</strong>hift <strong>R</strong>ight</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>BSL</td>
+<td>16</td>
+<td><strong>B</strong>CD <strong>S</strong>hift <strong>L</strong>eft</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>EQU</td>
+<td>17</td>
+<td>compare if <strong>EQU</strong>al to zero: DB = DB == 0</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>OOP</td>
+<td>18</td>
+<td>Do <strong>O</strong>peration defined by <strong>OP</strong> register.</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>↕</td>
+<td>-</td>
+<td>↕</td>
+<td>↕</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>↕</p>
+<h2 id="uinstructon-set">uInstructon set</h2>
 <p>uInstructions are 2B wide. Opcode usually is 12b with 1 4b operad, but there are some exceptions (JMP is 4b opcode with 11b operand). OP register is addressing register. When used in most microinstructions, containing value is used as address of another register instead.</p>
 <p>O is operand, and number next to it says how many bits it takes. For example <code>COOP</code> instruction is 8bit opcode and 8bit operand.</p>
 <table>
@@ -39,17 +492,17 @@
 <td><strong>ALU</strong> does operation defined by operand. For example 0x01 is ADD, 0X02 is SUB,…</td>
 </tr>
 <tr class="odd">
-<td><code>R&gt;DB + O4</code></td>
+<td><code>DB&lt;R + O4</code></td>
 <td>0x7C?</td>
 <td>move value from <strong>R</strong>egister defined by operand to <strong>D</strong>ata <strong>B</strong>uss.</td>
 </tr>
 <tr class="even">
-<td><code>R&gt;AB + O4</code></td>
+<td><code>AB&lt;R + O4</code></td>
 <td>0x7B?</td>
 <td>move value from <strong>R</strong>egister defined by operand to 8 least significant bits of <strong>A</strong>ddress <strong>B</strong>uss, nulling 8MSB.</td>
 </tr>
 <tr class="odd">
-<td><code>W&gt;AB + O4</code></td>
+<td><code>AB&lt;W + O4</code></td>
 <td>0x7A?</td>
 <td>move <strong>W</strong>ord value (16b) from register pair defined by address of high register of pair defined by operand to <strong>A</strong>ddress <strong>B</strong>uss.</td>
 </tr>
@@ -104,7 +557,7 @@
 <td><strong>J</strong>ump <strong>O</strong>ver next microinstruction if value in F[operand] is <strong>N</strong>ot 0b. uO acts as normal register for this microinstruction.</td>
 </tr>
 <tr class="even">
-<td><code>C&gt;DB + O8</code></td>
+<td><code>DB&lt;C + O8</code></td>
 <td>0x5??</td>
 <td>move operand as <strong>C</strong>onstant to <strong>DB</strong></td>
 </tr>
@@ -119,7 +572,7 @@
 <td><strong>S</strong>witch <strong>V</strong>alues in <strong>W</strong>ord register pair defined by first and second operands. (address of high register of pair)</td>
 </tr>
 <tr class="odd">
-<td><code>O&gt;DB</code></td>
+<td><code>DB&lt;O</code></td>
 <td>0x7F0</td>
 <td>move value from <strong>O</strong>P to <strong>DB</strong>.</td>
 </tr>
@@ -163,23 +616,59 @@
 <h3 id="other-supported-keywords">Other supported keywords</h3>
 <h4 id="def"><code>.DEF</code></h4>
 <p>This pseudo-microinstruction is used to define instructions. It has up to three arguments. First argument is address of first microinstruction of instruction, second argument is name of instruction and third is optional, defining how many bytes of argument the instruction takes. #### Constants Constants can be in: - Binary format <code>0b10010</code> - Hexadecimal format <code>0x12</code> - Decimal format <code>18</code> #### Comments Comment sign is <code>;</code></p>
-<h2 id="memory">Memory</h2>
-<h3 id="supported-pseudoinstructions">Supported pseudoinstructions</h3>
-<ul>
-<li><code>.org</code> - defines starting address to place binary to</li>
-<li><code>.const</code> - place constant to memory</li>
-</ul>
-<h2 id="default-instruction-set">Default instruction set</h2>
+<!--
+## brainfuck
+used registers:
+
+- HL1 - Data pointer, initial value = `0x0010`
+- SP - Output pointer, initial value = `0xFFFF`
+- OP1 - Parenthesis counter, initial value = `0x00`
+
+### Initial memory map
+All of memory is filled with `0x00`
+
+```
+*********** - BC - IP(input pointer) - 0x0000
+*         *
+*         *
+*********** - DE - DP(data pointer) - 0x0010
+*         *
+*         *
+*         *
+*         *
+*         *
+*         *
+    ...
+*         *
+*         *
+*********** - SP - OP(output pointer) - 0xFFFF
+```
+### Instructions
+-  `>` - 0x3E Increment the data pointer (to point to the next cell to the right).
+-  `<` - 0x3C Decrement the data pointer (to point to the next cell to the left).
+-  `+` - 0x2B Increment (increase by one) the byte at the data pointer.
+-  `-` - 0x2D Decrement (decrease by one) the byte at the data pointer.
+-  `*` - 0x2A Output the byte at the data pointer.
+-  `,` - 0x2C Accept one byte of input, storing its value in the byte at the data pointer.
+-  `[` - 0x5B If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
+-  `]` - 0x5D If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
+- unknown - Any unknown opcode is skipped.
+-->
+<h2 id="minimal-instruction-set">minimal instruction set</h2>
+<p>Instructions use two, one or zero operands. Microcode can operate with “microoperands” that opcodes has coded inside. For example: LD loads 8b value from 16b address. Its definition is <code>|LDa16  (3b) where| + |addrH| + |addrL|</code>. every <code>| |</code> block means 8bit value. This means that this operation has 8b opcode and two 8b operands. The last 3 bits of opcode defines save location of load action (000b - B, 111b - F, 101b - P).</p>
+<h3 id="instructions">instructions</h3>
 <table>
 <colgroup>
-<col style="width: 26%" />
-<col style="width: 11%" />
-<col style="width: 61%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 9%" />
+<col style="width: 58%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th>keyword</th>
 <th>argument</th>
+<th>cycles</th>
 <th>operation description</th>
 </tr>
 </thead>
@@ -187,59 +676,92 @@
 <tr class="odd">
 <td>LD{reg}</td>
 <td>address</td>
+<td>14</td>
 <td><strong>l</strong>oa<strong>d</strong> from address to register.</td>
 </tr>
 <tr class="even">
 <td>ST{reg}</td>
 <td>address</td>
+<td>14</td>
 <td><strong>st</strong>ore from register to address.</td>
 </tr>
 <tr class="odd">
 <td>ADD{reg}</td>
 <td>address</td>
+<td>17</td>
 <td><strong>add</strong> value from address to register. (result saved in the register)</td>
-</tr>
-<tr class="even">
-<td>ADD{reg}</td>
-<td>address</td>
-<td><strong>add</strong> value from address to register. (result saved in the register)</td>
-</tr>
-<tr class="odd">
-<td>INCW{reg}</td>
-<td>none</td>
-<td><strong>inc</strong>rement register pair.</td>
 </tr>
 <tr class="even">
 <td>INC{reg}</td>
 <td>none</td>
+<td>4</td>
 <td><strong>inc</strong>rement register.</td>
 </tr>
 <tr class="odd">
-<td>DECW{reg}</td>
+<td>INC{reg*}</td>
 <td>none</td>
-<td><strong>dec</strong>rement register pair.</td>
+<td>4</td>
+<td><strong>inc</strong>rement register pair.</td>
 </tr>
 <tr class="even">
 <td>DEC{reg}</td>
 <td>none</td>
+<td>4</td>
 <td><strong>dec</strong>rement register.</td>
 </tr>
 <tr class="odd">
-<td>JMP</td>
-<td>address</td>
-<td><strong>j</strong>u<strong>mp</strong> to address.</td>
+<td>DEC{reg*}</td>
+<td>none</td>
+<td>4</td>
+<td><strong>dec</strong>rement register pair.</td>
 </tr>
 <tr class="even">
-<td>JPIF{flag}</td>
+<td>JP</td>
 <td>address</td>
-<td><strong>j</strong>um<strong>p</strong> to address <strong>i</strong>f flag is zero.</td>
+<td>12</td>
+<td><strong>j</strong>u<strong>mp</strong> to address.</td>
 </tr>
 <tr class="odd">
-<td>JPI{reg}</td>
+<td>JPF{flag}</td>
 <td>address</td>
+<td>6-15</td>
+<td><strong>j</strong>um<strong>p</strong> to address <strong>i</strong>f flag is zero.</td>
+</tr>
+<tr class="even">
+<td>JP{reg}</td>
+<td>address</td>
+<td>6-15</td>
 <td><strong>j</strong>um<strong>p</strong> to address <strong>i</strong>f register is zero.</td>
+</tr>
+<tr class="odd">
+<td>SUB{reg}</td>
+<td>address</td>
+<td>17</td>
+<td><strong>sub</strong>tract value from address to register. (result saved in the register)</td>
+</tr>
+<tr class="even">
+<td>AND{reg}</td>
+<td>address</td>
+<td>17</td>
+<td>logical <strong>and</strong> operation of value from address and register. (result saved in the register)</td>
+</tr>
+<tr class="odd">
+<td>OR{reg}</td>
+<td>address</td>
+<td>17</td>
+<td>logical <strong>or</strong> operation of value from address and register. (result saved in the register)</td>
+</tr>
+<tr class="even">
+<td>XOR{reg}</td>
+<td>address</td>
+<td>17</td>
+<td>logical <strong>xor</strong> operation of value from address and register. (result saved in the register)</td>
 </tr>
 </tbody>
 </table>
-    </body>
-</html>
+<h3 id="supported-pseudoinstructions">Supported pseudoinstructions</h3>
+<ul>
+<li><code>.org</code> - defines starting address to place binary to</li>
+<li><code>.const</code> - place constant to memory</li>
+</ul>
+</body>

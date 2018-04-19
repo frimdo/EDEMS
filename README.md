@@ -2,7 +2,9 @@ note: this file is deprecated. Update is on a way.
 # EDEMS
 Educational DEmonstrative Microprocessor Simulator
 
-![img](./documents/GUI.png)
+## Explanation image
+![gui_notes](./GUI_notes.png)
+
 
 ## EDEMS  registers
 EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
@@ -157,6 +159,18 @@ O is operand, and number next to it says how many bits it takes. For example `CO
 | `SETB + O4 + O4` | 0x3?? | **SET** **B**yte defined by first operand in register defined by second operand. |
 | `RETB + O4 + O4` | 0X4?? |  **R**es**ET** **B**yte defined by first operand in register defined by second operand. |
 
+### Other supported keywords
+#### `.DEF`
+This pseudo-microinstruction is used to define instructions. It has up to three arguments. First argument is address of first microinstruction of instruction, second argument is name of instruction and third is optional, defining how many bytes of argument the instruction takes.
+#### Constants
+Constants can be in:
+- Binary format `0b10010`
+- Hexadecimal format `0x12`
+- Decimal format `18`
+#### Comments
+Comment sign is `;`
+
+<!--
 ## brainfuck
 used registers:
 
@@ -193,6 +207,7 @@ All of memory is filled with `0x00`
 -  `[` - 0x5B If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
 -  `]` - 0x5D If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
 - unknown - Any unknown opcode is skipped.
+-->
 
 ## minimal instruction set
 
@@ -216,33 +231,7 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 |AND{reg}  | address  | 17   |logical **and** operation of value from address and register. (result saved in the register)|
 |OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|
 |XOR{reg}  | address  | 17   |logical **xor** operation of value from address and register. (result saved in the register)|
-<!--
 
-## complete instruction set
-
-### instructions
-- |LDa16 3b where| + |addrH| + |addrL| - load from 16b address to 8 bit register.
-- |LDa8 3b where| + |addr|
-- |STa16 3b what|
-- |STa8 3b what|
-- |ADDa16 3b where|
-- |ADDa8 3b where|
-- |INC16b 2b what|
-- |INC8b 3b what|
-- |DEC16b 2b what|
-- |DEC8b 3b what|
-- |TSTa16|
-- |TSTa8|
-- |TSTF 3b which|
-- ...
-
-
-
-
-
-
-keyword: "TSTFC", hex: "0x30", address: 48,  
-keyword: "TST",   hex: "0x38", address: 56, operand: "2B" ,
-keyword: "JMP",   hex: "0x39", address: 57,
-
--->
+### Supported pseudoinstructions
+- `.org` - defines starting address to place binary to
+- `.const` - place constant to memory
