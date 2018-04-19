@@ -1128,6 +1128,11 @@ gui.onChangeSetup = function () {
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
+
+      global.memoryEditor.resize()
+      global.microcodeEditor.resize()
+      global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
+      global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     } else if (global.advanced == 'basic') {
       $('#logo span').html('basic')
       $('#body-grid').removeClass('advanced')
@@ -1162,6 +1167,10 @@ gui.onChangeSetup = function () {
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
       $('#M2C').addClass('hidden')
+      global.memoryEditor.resize()
+      global.microcodeEditor.resize()
+      global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
+      global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     }
   }
 
