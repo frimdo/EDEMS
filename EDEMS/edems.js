@@ -609,6 +609,8 @@ gui.refresh = function () {
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
   document.getElementById('freq').value = global.freq
+  global.registerTMP0.onChange()
+  global.dataBus.onChange()
 }
 
 gui.DrawMemoryTable = function () {
