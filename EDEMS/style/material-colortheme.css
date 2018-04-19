@@ -239,7 +239,7 @@ body {
 .registerButton:disabled,
 .registerButton[disabled] {
     background-color: transparent;
-    border: trans;
+    border: transparent;
     color: #000000;
 }
 
