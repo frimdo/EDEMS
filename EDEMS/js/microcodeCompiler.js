@@ -4,25 +4,61 @@ var BinNumber = require('./binNumber.js')
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
-  microcodeCompiler.assemblyKeywords = []
   var output = []
-  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
+  var listing = ''
 
-  input = input.toUpperCase()
+  var pairs = {
+    FA: 'F',
+    F: 'F',
+    BC: 'B',
+    B: 'B',
+    DE: 'D',
+    D: 'D',
+    SP: 'S',
+    S: 'S',
+    PC: 'PCH',
+    PCH: 'PCH',
+    PCHPCL: 'PCH',
+    TMP0OP: 'TMP0',
+    TMPOP: 'TMP0',
+    TMP0: 'TMP0',
+    OP: 'OP',
+    TMP: 'TMP1',
+    TMP1TMP2: 'TMP1',
+    TMP1: 'TMP1',
+    UPC: 'UPCH',
+    UPCH: 'UPCH',
+    UPCHUPCL: 'UPCH'
+  }
+
+  var inputRaw = input
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
     .split('\n')
+  input = input
+    .toUpperCase()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
+    var address = '    '
+    var code = '   '
+
     switch (line[0]) {
       case ('COOP'):
         var byte = 1536
         try {
           byte += parseNumber(line[1], 8)
           output.push(byte.toString(16))
+
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
+
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('ALU'):
         operations = {
           'ADD': 0,
@@ -50,122 +86,172 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push('00' + operations[line[1]])
+
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         break
+
       case ('DB<R'):
         try {
           output.push('7C' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('AB<R'):
         try {
           output.push('7B' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('AB<W'):
-        if (lowRegisters.includes(line[1])) {
-          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not register pair name.')
         }
         try {
-          output.push('7A' + global.register(line[1]))
+          output.push('7A' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DB>R'):
         try {
           output.push('79' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('AB>W'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('78' + global.register(line[1]))
+          output.push('78' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('INCB'):
         try {
           output.push('77' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DECB'):
         try {
           output.push('76' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('INCW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('75' + global.register(line[1]))
+          output.push('75' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DECW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('74' + global.register(line[1]))
+          output.push('74' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOI'):
         try {
           output.push('73' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JON'):
         try {
           output.push('72' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOFI'):
         try {
           output.push('71' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOFN'):
         try {
           output.push('70' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DB<C'):
         var byte = 1280
         try {
           byte += parseNumber(line[1], 8)
           output.push(byte.toString(16))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('SVR'):
         var byte = '1'
         try {
@@ -175,53 +261,80 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte += global.register(line[2]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('SVW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister1 = pairs[line[1]]
+        if (highRegister1 === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         var byte = '2'
         try {
-          byte += global.register(line[1])
+          byte += global.register(highRegister1)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
-        if (lowRegisters.includes(line[1])) {
+
+        var highRegister2 = pairs[line[2]]
+        if (highRegister2 === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[2] + ' is low register of pair.')
         }
         try {
-          output.push(byte += global.register(line[2]))
+          output.push(byte += global.register(highRegister2))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DB<O'):
         output.push('7F0')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('DB>O'):
         output.push('7F1')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('END'):
         output.push('7F2')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('JMP'):
         var byte = 2048
         try {
           byte += parseNumber(line[1], 11)
           output.push(byte.toString(16))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('RD'):
         output.push('7F4')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('WT'):
         output.push('7F5')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('SETB'):
         var byte = '3'
         try {
@@ -231,10 +344,13 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte + parseNumber(line[2], 3))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('RETB'):
         var byte = '4'
         try {
@@ -244,10 +360,13 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte + parseNumber(line[2], 3))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('.DEF'):
 
         var byte = 2048
@@ -277,17 +396,29 @@ microcodeCompiler.compile = function (input) {
           })
         }
         output.push(byte)
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case (''):
         break
+
       default:
         if (line[0].substring(0, 1) === ';') {
           break
         }
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+
     }
+    listing = listing
+      + address
+      + ' '
+      + code
+      + ' '
+      + inputRaw[i]
+      + '\n'
   }
-  return output
+  return {output, listing}
 }
 
 function parseNumber (input, bits) {

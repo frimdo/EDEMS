@@ -132,7 +132,6 @@ gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug.setValue('Nothing to debug...')
 }
 
-
 gui.DrawMicrocodeTable = function () {
 
   gui.microcodeData = []
@@ -260,10 +259,10 @@ gui.onclickSetup = function () {
       $('.highlighted').removeClass('highlighted')
 
       var code = uCompiler.compile(global.microcodeEditor.getValue())
-      Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
+      Array.prototype.splice.apply(global.microcode, [0, code.output.length].concat(code.output))
       global.onMicrocodeChange()
       document.getElementById('scrollArea-microcode').scrollTop = 0
-      for (var i = 0; i < code.length; i++) {
+      for (var i = 0; i < code.output.length; i++) {
         highlight('#microcode' + i)
       }
 
@@ -275,6 +274,9 @@ gui.onclickSetup = function () {
     } catch (Error) {
       alert(Error)
     }
+
+    global.microcodeDebug.setValue(code.listing)
+    selectMicrocodeDebugLine(global.registerUPCH.decPair)
   }
 
   document.getElementById('decr').onclick = function () {
@@ -823,6 +825,7 @@ gui.onChangeSetup = function () {
     $('#registerUPCL').text('0x' + global.registerUPCL.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+    selectMicrocodeDebugLine(global.registerUPCH.decPair)
   }
 
   global.registerUPCH.onChange = function () {
@@ -834,6 +837,7 @@ gui.onChangeSetup = function () {
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+    selectMicrocodeDebugLine(global.registerUPCH.decPair)
   }
 
   global.addressBus.onChange = function () {
@@ -878,6 +882,25 @@ gui.onChangeSetup = function () {
   global.instructionRegister.onChange = function () {
     $('#instructionRegister').text('0x' + global.instructionRegister.hex).addClass('highlighted')
   }
+}
+
+function selectMicrocodeDebugLine(lineNumber){
+  lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
+
+  var lines = global.microcodeDebug.getValue()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n');
+
+  for(var i = 0;i < lines.length;i++){
+    if (lines[i].match(new RegExp("^" + lineNumber + '\\ .*$',"gm")) !== null ){
+      global.microcodeDebug.selection.moveCursorToPosition({row: i-1, column: 0});
+      global.microcodeDebug.selection.selectLine();
+      return
+    }
+  }
+  global.microcodeDebug.selection.moveCursorToPosition({row: 0, column: 0});
+  global.microcodeDebug.selection.selectLine();
+
 }
 
 function download (filename, text) {

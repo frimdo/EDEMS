@@ -9,7 +9,7 @@ CU.doUInstruction = function () {
   try {
     CU.beforeUintruction()
     var opcode = CU.decode(global.microcode[global.registerUPCH.decPair])
-    console.log(opcode)
+    //console.log(opcode)
     switch (opcode.Name) {
       case 'SVR':
         CU.uinstr.svr(opcode.operand1, opcode.operand2)

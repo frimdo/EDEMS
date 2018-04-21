@@ -1,13 +1,14 @@
 const ALU = require('./alu.js')
 const g = require('./globals.js')
 
+
 test('add', function () {
   g.registerTMP0.val = 5
   g.dataBus.val = 5
   ALU.add()
   expect(g.dataBus.dec).toBe(10)
 })
-
+/*
 test('sub', function () {
   g.registerTMP0.val = 10
   g.dataBus.val = 5
@@ -54,11 +55,13 @@ test('rsh', function () {
   expect(g.dataBus.bin).toBe('1010101')
 })
 
-/*test ('asr', function () {
+test ('asr', function () {
   g.dataBus.val = '0b10101010'
   ALU.asr()
   expect(g.dataBus.bin).toBe('11010101')
-})*/
+})
+*/
+/*
 
 test('lsh', function () {
   g.dataBus.val = '0b10101010'
@@ -83,3 +86,5 @@ test('equ', function () {
   ALU.equ()
   expect(g.dataBus.dec).toBe(1)
 })
+
+*/
