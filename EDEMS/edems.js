@@ -951,12 +951,14 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('eraseMemory').onclick = function () {
+
     LS.storeGlobals()
     window.localStorage.removeItem('memory')
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMemoryChange()
     document.getElementById('memoryDebug').onclick()
+    global.memoryDebug.setValue('')
   }
 
   document.getElementById('eraseMicrocode').onclick = function () {
@@ -966,6 +968,19 @@ gui.onclickSetup = function () {
     $('.highlighted').removeClass('highlighted')
     global.onMicrocodeChange()
     document.getElementById('microcodeDebug').onclick()
+    global.microcodeDebug.setValue('')
+
+    uCompiler.compile('')
+
+    global.memoryEditor.getSession().setMode({
+      path: 'ace/mode/EdemsMemoryAssembly',
+      v: Date.now()
+    })
+
+    global.memoryDebug.getSession().setMode({
+      path: 'ace/mode/EdemsMemoryAssemblyListing',
+      v: Date.now()
+    })
   }
 
   document.getElementById('compileMemory').onclick = function () {
@@ -1001,13 +1016,13 @@ gui.onclickSetup = function () {
 
       document.getElementById('scrollArea-microcode').scrollTop = 0
 
+      global.memoryDebug.setValue(output.listing)
+      selectMemoryDebugLine(global.registerPCH.decPair)
+      document.getElementById('memoryDebug').onclick()
+
     } catch (Error) {
       alert(Error)
     }
-
-    global.memoryDebug.setValue(output.listing)
-    selectMemoryDebugLine(global.registerPCH.decPair)
-    document.getElementById('memoryDebug').onclick()
   }
 
   document.getElementById('compileMicrocode').onclick = function () {
@@ -1032,13 +1047,13 @@ gui.onclickSetup = function () {
         v: Date.now()
       })
 
+      global.microcodeDebug.setValue(code.listing)
+      selectMicrocodeDebugLine(global.registerUPCH.decPair)
+      document.getElementById('microcodeDebug').onclick()
+
     } catch (Error) {
       alert(Error)
     }
-
-    global.microcodeDebug.setValue(code.listing)
-    selectMicrocodeDebugLine(global.registerUPCH.decPair)
-    document.getElementById('microcodeDebug').onclick()
   }
 
   document.getElementById('decr').onclick = function () {
@@ -3472,6 +3487,8 @@ var BinNumber = require('./binNumber.js')
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
+  microcodeCompiler.assemblyKeywords = []
+
   var output = []
   var listing = ''
 

@@ -4,6 +4,8 @@ var BinNumber = require('./binNumber.js')
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
+  microcodeCompiler.assemblyKeywords = []
+
   var output = []
   var listing = ''
 
