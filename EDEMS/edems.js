@@ -160,6 +160,80 @@ oop.inherits(Mode, TextMode);
 exports.Mode = Mode;
 });
 
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js":[function(require,module,exports){
+ace.define("ace/mode/EdemsMicrocodeAssemblyListingHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
+
+var EdemsMicrocodeAssemblyListingHighlightRules = function() {
+  // regexp must not have capturing parentheses. Use (?:) instead.
+  // regexps are ordered -> the first match is used
+
+  this.$rules = { start:
+      [ { token: 'constant.character.decimal.assembly',
+        regex: '\\b[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+        { token: 'keyword.control.assembly',
+        regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
+        caseInsensitive: true },
+        { token: 'variable.parameter.register.assembly',
+          regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
+          caseInsensitive: true },
+        { token: 'string.assembly',
+          regex: '\\b(?:ADD|SUB|NEG|NOT|AND|ORR|XOR|SHR|SHL|ROR|ROL|RCR|RCL|ASR|ASL|BSR|BSL|EQU|OOP)\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.decimal.assembly',
+          regex: '\\b[0-9]+\\b' },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b0x[A-F0-9]+\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b[A-F0-9]+h\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.binary.assembly',
+          regex: '\\b0b[0-1]+\\b',
+          caseInsensitive: true },
+        { token : "string", // pre-compiler directives
+          regex : "\\.def.*",
+          caseInsensitive: true },
+        { token: 'comment.assembly', regex: ';.*$' } ]
+  };
+
+  this.normalizeRules();
+};
+
+  EdemsMicrocodeAssemblyListingHighlightRules.metaData = { fileTypes: [ 'asm' ],
+    name: 'Edems Microcode Assembly',
+    scopeName: 'source.assembly' };
+
+
+  oop.inherits(EdemsMicrocodeAssemblyListingHighlightRules, TextHighlightRules);
+
+exports.EdemsMicrocodeAssemblyListingHighlightRules = EdemsMicrocodeAssemblyListingHighlightRules;
+});
+
+ace.define("ace/mode/EdemsMicrocodeAssemblyListing",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/EdemsMicrocodeAssemblyListingHighlightRules","ace/mode/folding/coffee"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextMode = acequire("./text").Mode;
+var EdemsMicrocodeAssemblyListingHighlightRules = acequire("./EdemsMicrocodeAssemblyListingHighlightRules").EdemsMicrocodeAssemblyListingHighlightRules;
+
+var Mode = function() {
+    this.HighlightRules = EdemsMicrocodeAssemblyListingHighlightRules;
+    this.$behaviour = this.$defaultBehaviour;
+};
+oop.inherits(Mode, TextMode);
+
+(function() {
+    this.lineCommentStart = ";";
+    this.$id = "ace/mode/EdemsMicrocodeAssemblyListing";
+}).call(Mode.prototype);
+
+exports.Mode = Mode;
+});
+
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/alu.js":[function(require,module,exports){
 var global = require('./globals.js')
 
@@ -580,6 +654,7 @@ var ace = require('brace')
 var LS = require('./localStorage.js')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
+require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
 require('brace/theme/solarized_dark')
 require('brace/theme/solarized_dark')
@@ -693,13 +768,10 @@ gui.DrawMicrocodeEditor = function () {
 
 gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug = ace.edit('microcode-debug')
+  global.microcodeDebug.getSession().setMode('ace/mode/EdemsMicrocodeAssemblyListing')
   global.microcodeDebug.setTheme('ace/theme/solarized_dark')
-  global.microcodeDebug.getSession().setMode({
-    path: 'ace/mode/EdemsmicrocodeAssembly',
-    v: Date.now()
-  })
   global.microcodeDebug.setOptions({
-    readOnly: true
+    readOnly: false
   })
   global.microcodeDebug.renderer.$cursorLayer.element.style.opacity=0
   global.microcodeDebug.setValue('Nothing to debug...')
@@ -781,6 +853,7 @@ gui.onclickSetup = function () {
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMemoryChange()
+    document.getElementById('memoryDebug').onclick()
   }
 
   document.getElementById('eraseMicrocode').onclick = function () {
@@ -789,6 +862,7 @@ gui.onclickSetup = function () {
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMicrocodeChange()
+    document.getElementById('microcodeDebug').onclick()
   }
 
   document.getElementById('compileMemory').onclick = function () {
@@ -825,6 +899,8 @@ gui.onclickSetup = function () {
     } catch (Error) {
       alert(Error)
     }
+
+    document.getElementById('memoryDebug').onclick()
   }
 
   document.getElementById('compileMicrocode').onclick = function () {
@@ -850,6 +926,7 @@ gui.onclickSetup = function () {
 
     global.microcodeDebug.setValue(code.listing)
     selectMicrocodeDebugLine(global.registerUPCH.decPair)
+    document.getElementById('microcodeDebug').onclick()
   }
 
   document.getElementById('decr').onclick = function () {
@@ -1471,9 +1548,6 @@ function selectMicrocodeDebugLine(lineNumber){
       return
     }
   }
-  global.microcodeDebug.selection.moveCursorToPosition({row: 0, column: 0});
-  global.microcodeDebug.selection.selectLine();
-
 }
 
 function download (filename, text) {
@@ -1494,7 +1568,7 @@ function highlight (what) {
 
 module.exports = gui
 
-},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../ace/EdemsMicrocodeAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -3113,7 +3187,7 @@ $(document).ready(function () {
   gui.refresh()
 
   document.getElementById('memorySource').onclick()
-  document.getElementById('microcodeSource').onclick()
+  document.getElementById('microcodeDebug').onclick()
   document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()
@@ -3650,9 +3724,9 @@ microcodeCompiler.compile = function (input) {
     }
     listing = listing
       + address
-      + ' '
+      + '  '
       + code
-      + ' '
+      + '  '
       + inputRaw[i]
       + '\n'
   }

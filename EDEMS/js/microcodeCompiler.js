@@ -412,9 +412,9 @@ microcodeCompiler.compile = function (input) {
     }
     listing = listing
       + address
-      + ' '
+      + '  '
       + code
-      + ' '
+      + '  '
       + inputRaw[i]
       + '\n'
   }

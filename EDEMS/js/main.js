@@ -36,7 +36,7 @@ $(document).ready(function () {
   gui.refresh()
 
   document.getElementById('memorySource').onclick()
-  document.getElementById('microcodeSource').onclick()
+  document.getElementById('microcodeDebug').onclick()
   document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()

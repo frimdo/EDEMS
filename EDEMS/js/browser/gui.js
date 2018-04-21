@@ -7,6 +7,7 @@ var ace = require('brace')
 var LS = require('./localStorage.js')
 require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
+require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
 require('brace/theme/solarized_dark')
 require('brace/theme/solarized_dark')
@@ -120,13 +121,10 @@ gui.DrawMicrocodeEditor = function () {
 
 gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug = ace.edit('microcode-debug')
+  global.microcodeDebug.getSession().setMode('ace/mode/EdemsMicrocodeAssemblyListing')
   global.microcodeDebug.setTheme('ace/theme/solarized_dark')
-  global.microcodeDebug.getSession().setMode({
-    path: 'ace/mode/EdemsmicrocodeAssembly',
-    v: Date.now()
-  })
   global.microcodeDebug.setOptions({
-    readOnly: true
+    readOnly: false
   })
   global.microcodeDebug.renderer.$cursorLayer.element.style.opacity=0
   global.microcodeDebug.setValue('Nothing to debug...')
@@ -208,6 +206,7 @@ gui.onclickSetup = function () {
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMemoryChange()
+    document.getElementById('memoryDebug').onclick()
   }
 
   document.getElementById('eraseMicrocode').onclick = function () {
@@ -216,6 +215,7 @@ gui.onclickSetup = function () {
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMicrocodeChange()
+    document.getElementById('microcodeDebug').onclick()
   }
 
   document.getElementById('compileMemory').onclick = function () {
@@ -252,6 +252,8 @@ gui.onclickSetup = function () {
     } catch (Error) {
       alert(Error)
     }
+
+    document.getElementById('memoryDebug').onclick()
   }
 
   document.getElementById('compileMicrocode').onclick = function () {
@@ -277,6 +279,7 @@ gui.onclickSetup = function () {
 
     global.microcodeDebug.setValue(code.listing)
     selectMicrocodeDebugLine(global.registerUPCH.decPair)
+    document.getElementById('microcodeDebug').onclick()
   }
 
   document.getElementById('decr').onclick = function () {
@@ -898,9 +901,6 @@ function selectMicrocodeDebugLine(lineNumber){
       return
     }
   }
-  global.microcodeDebug.selection.moveCursorToPosition({row: 0, column: 0});
-  global.microcodeDebug.selection.selectLine();
-
 }
 
 function download (filename, text) {
