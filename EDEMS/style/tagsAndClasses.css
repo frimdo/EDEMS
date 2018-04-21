@@ -203,3 +203,14 @@ select {
     border: 2px solid #2d2d2d;
     padding: 2px 3px 2px 3px;
 }
+
+.btns button,
+.btns label {
+    flex-grow: 1;
+    font-size: 80%;
+    justify-content: space-between;
+    margin: 0 5px 0 5px;
+}
+.btns{
+    display:flex;
+}

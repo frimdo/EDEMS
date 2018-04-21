@@ -114,7 +114,6 @@
     display: flex;
     flex-direction: column;
     padding: 5px;
-    overflow-y: auto;
     grid-area: MEM;
 }
 
@@ -122,7 +121,6 @@
     display: flex;
     flex-direction: column;
     padding: 5px;
-    overflow-y: auto;
     grid-area: COU;
 }
 
@@ -222,7 +220,7 @@
     display: flex;
 }
 
-#memory-editor, #microcode-editor {
+#memory-editor, #microcode-editor, #memory-debug, #microcode-debug {
     flex-grow: 1;
     margin-bottom: 2px;
 }
@@ -242,18 +240,6 @@
     top: 80px;
 }
 */
-#memory-btns button,
-#microcode-btns button,
-#memory-btns label,
-#microcode-btns label {
-    flex-grow: 1;
-    font-size: 80%;
-    justify-content: space-between;
-    margin: 0 5px 0 5px;
-}
-#memory-btns, #microcode-btns{
-    display:flex;
-}
 
 #EdataBus, #addressBus {
     font-size: 120%;

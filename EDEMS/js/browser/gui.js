@@ -97,12 +97,41 @@ gui.DrawMemoryEditor = function () {
   global.memoryEditor.setValue(window.localStorage.getItem('memoryValue'))
 }
 
+gui.DrawMemoryDebug = function () {
+  global.memoryDebug = ace.edit('memory-debug')
+  global.memoryDebug.setTheme('ace/theme/solarized_dark')
+  global.memoryDebug.getSession().setMode({
+    path: 'ace/mode/EdemsMemoryAssembly',
+    v: Date.now()
+  })
+  global.memoryDebug.setOptions({
+    readOnly: true
+  })
+  global.memoryDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.memoryDebug.setValue('Nothing to debug...')
+}
+
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor')
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
   global.microcodeEditor.setTheme('ace/theme/solarized_dark')
   global.microcodeEditor.setValue(window.localStorage.getItem('microcodeValue'))
 }
+
+gui.DrawMicrocodeDebug = function () {
+  global.microcodeDebug = ace.edit('microcode-debug')
+  global.microcodeDebug.setTheme('ace/theme/solarized_dark')
+  global.microcodeDebug.getSession().setMode({
+    path: 'ace/mode/EdemsmicrocodeAssembly',
+    v: Date.now()
+  })
+  global.microcodeDebug.setOptions({
+    readOnly: true
+  })
+  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.microcodeDebug.setValue('Nothing to debug...')
+}
+
 
 gui.DrawMicrocodeTable = function () {
 
@@ -515,6 +544,50 @@ gui.onclickSetup = function () {
   document.getElementById('AL2').onclick = function () {
     $('.highlighted').removeClass('highlighted')
     alu.doOperation(document.getElementById('aluSelect').selectedIndex)
+  }
+
+  document.getElementById('memorySource').onclick = function () {
+    $('#memorySource').addClass('highlighted-tab')
+    $('#memoryDebug').removeClass('highlighted-tab')
+    $('#memory-editor').removeClass('hidden')
+    $('#memory-btns').removeClass('hidden')
+    $('#memory-debug').addClass('hidden')
+    $('#memory-descr-table').addClass('hidden')
+    $('#scrollArea-memory').addClass('hidden')
+    global.memoryEditor.resize()
+  }
+
+  document.getElementById('memoryDebug').onclick = function () {
+    $('#memoryDebug').addClass('highlighted-tab')
+    $('#memorySource').removeClass('highlighted-tab')
+    $('#memory-editor').addClass('hidden')
+    $('#memory-btns').addClass('hidden')
+    $('#memory-debug').removeClass('hidden')
+    $('#memory-descr-table').removeClass('hidden')
+    $('#scrollArea-memory').removeClass('hidden')
+    global.memoryDebug.resize()
+  }
+
+  document.getElementById('microcodeSource').onclick = function () {
+    $('#microcodeSource').addClass('highlighted-tab')
+    $('#microcodeDebug').removeClass('highlighted-tab')
+    $('#microcode-editor').removeClass('hidden')
+    $('#microcode-btns').removeClass('hidden')
+    $('#microcode-debug').addClass('hidden')
+    $('#microcode-descr-table').addClass('hidden')
+    $('#scrollArea-microcode').addClass('hidden')
+    global.microcodeEditor.resize()
+  }
+
+  document.getElementById('microcodeDebug').onclick = function () {
+    $('#microcodeDebug').addClass('highlighted-tab')
+    $('#microcodeSource').removeClass('highlighted-tab')
+    $('#microcode-editor').addClass('hidden')
+    $('#microcode-btns').addClass('hidden')
+    $('#microcode-debug').removeClass('hidden')
+    $('#microcode-descr-table').removeClass('hidden')
+    $('#scrollArea-microcode').removeClass('hidden')
+    global.microcodeDebug.resize()
   }
 }
 

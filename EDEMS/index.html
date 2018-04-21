@@ -106,19 +106,20 @@
             <div class="nameBlock">
                 Memory
             </div>
+            <div id="memory-tabs" class="btns">
+                <button id="memorySource" type="button" class="tooltip">Source<span
+                        class="tooltiptext">Source view tab</span></button>
+                <button id="memoryDebug" type="tablinks" class="tooltip">Debug</i><span
+                        class="tooltiptext">Debug view tab</span></button>
+            </div>
             <div class="insideBlock">
                 <div id="memory-editor">
-                    LDA 0x12
-                    ADDA 0x13
-                    INCA
-                    DECA
-                    INCWD
-                    DECWD
-                    STA 0x14
-                    .org 0x11
-                    LDA 0x0101
+                    Editor loading...
                 </div>
-                <div id="memory-btns">
+                <div id="memory-debug">
+                    Editor loading...
+                </div>
+                <div id="memory-btns" class="btns">
                     <button id="compileMemory" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
                             class="tooltiptext">Compile</span></button>
                     <button id="eraseMemory" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
@@ -129,7 +130,7 @@
                     <label for="loadMemory" class="upload-btn tooltip"><i class="fa fa-upload"></i><span
                             class="tooltiptext">Load</span></label>
                 </div>
-                <div class="descr-table">
+                <div id="memory-descr-table" class="descr-table">
                     <table>
                         <tr>
                             <th>
@@ -184,9 +185,18 @@
                 <div type="button" id="IR">IR
                     <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
                 </div>
+                <div id="microcode-tabs" class="btns">
+                    <button id="microcodeSource" type="tablinks" class="tooltip">Source<span
+                            class="tooltiptext">Source view tab</span></button>
+                    <button id="microcodeDebug" type="tablinks" class="tooltip">Debug</i><span
+                            class="tooltiptext">Debug view tab</span></button>
+                </div>
                 <div id="microcode-editor">
                 </div>
-                <div id="microcode-btns">
+                <div id="microcode-debug">
+                </div>
+
+                <div id="microcode-btns" class="btns">
                     <button id="compileMicrocode" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
                             class="tooltiptext">Compile</span></button>
                     <button id="eraseMicrocode" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
@@ -198,7 +208,7 @@
                             class="tooltiptext">Load</span></label>
                 </div>
 
-                <div class="descr-table">
+                <div id="microcode-descr-table" class="descr-table">
                     <table>
                         <tr>
                             <th>

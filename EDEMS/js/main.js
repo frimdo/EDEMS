@@ -25,12 +25,18 @@ $(document).ready(function () {
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
+  gui.DrawMemoryDebug()
+
   gui.DrawMicrocodeTable()
   gui.DrawMicrocodeEditor()
+  gui.DrawMicrocodeDebug()
+
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
 
+  document.getElementById('memorySource').onclick()
+  document.getElementById('microcodeSource').onclick()
   document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()
