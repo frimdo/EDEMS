@@ -88,6 +88,109 @@ ace.define('ace/mode/EdemsMemoryAssembly', ['require', 'exports', 'module', 'ace
   exports.Mode = Mode
 })
 
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssemblyListing.js":[function(require,module,exports){
+ace.define('ace/mode/EdemsMemoryAssemblyListingHighlightRules', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (acequire, exports, module) {
+  'use strict'
+
+  var oop = acequire('../lib/oop')
+  var TextHighlightRules = acequire('./text_highlight_rules').TextHighlightRules
+
+  var EdemsMemoryAssemblyListingHighlightRules = function () {
+    // regexp must not have capturing parentheses. Use (?:) instead.
+    // regexps are ordered -> the first match is used
+    var keywords = ''
+    for (var i = 0; i < uComp.assemblyKeywords.length; i++) {
+      keywords += '|' + uComp.assemblyKeywords[i].keyword
+    }
+    if (keywords === '') {
+      keywords = '|(?!.*)'
+    }
+
+    this.$rules = {
+      start:
+        [ { token: 'comment.assembler',
+          regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\\b' },
+
+          { token: 'comment.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ ..\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'comment.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ ..\ \ ..\ \ [A-F0-9][A-F0-9]\\b' },
+          {
+            token: 'keyword.control.assembly',
+            regex: '\\b(?:' + keywords.substring(1, keywords.length) + ')\\b',
+            caseInsensitive: true
+          },
+          /*{ token: 'keyword.control.assembly',
+          regex: '^[0-9]{2}$',
+          caseInsensitive: true },*/
+          {
+            token: 'constant.character.decimal.assembly',
+            regex: '\\b[0-9]+\\b'
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b0x[A-F0-9]+\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b[A-F0-9]+h\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.binary.assembly',
+            regex: '\\b0b[0-1]+\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'string', // pre-compiler directives
+            regex: '\\.org.*|\\.const.*',
+            caseInsensitive: true
+          },
+          {token: 'comment.assembly', regex: ';.*$'}]
+    }
+
+    this.normalizeRules()
+  }
+
+  EdemsMemoryAssemblyListingHighlightRules.metaData = {
+    fileTypes: ['asm'],
+    name: 'Edems Memory Assembly',
+    scopeName: 'source.assembly'
+  }
+
+  oop.inherits(EdemsMemoryAssemblyListingHighlightRules, TextHighlightRules)
+
+  exports.EdemsMemoryAssemblyListingHighlightRules = EdemsMemoryAssemblyListingHighlightRules
+})
+
+ace.define('ace/mode/EdemsMemoryAssemblyListing', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text', 'ace/mode/EdemsMemoryAssemblyListingHighlightRules', 'ace/mode/folding/coffee'], function (acequire, exports, module) {
+  'use strict'
+
+  var oop = acequire('../lib/oop')
+  var TextMode = acequire('./text').Mode
+  var EdemsMemoryAssemblyListingHighlightRules = acequire('./EdemsMemoryAssemblyListingHighlightRules').EdemsMemoryAssemblyListingHighlightRules
+
+  var Mode = function () {
+    this.HighlightRules = EdemsMemoryAssemblyListingHighlightRules
+    this.$behaviour = this.$defaultBehaviour
+  }
+  oop.inherits(Mode, TextMode);
+
+  (function () {
+    this.lineCommentStart = ';'
+    this.$id = 'ace/mode/EdemsMemoryAssemblyListing'
+  }).call(Mode.prototype)
+
+  exports.Mode = Mode
+})
+
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
 ace.define("ace/mode/EdemsMicrocodeAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
@@ -173,7 +276,8 @@ var EdemsMicrocodeAssemblyListingHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'constant.character.decimal.assembly',
-        regex: '\\b[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+        regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+
         { token: 'keyword.control.assembly',
         regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
         caseInsensitive: true },
@@ -652,11 +756,10 @@ var uCompiler = require('../microcodeCompiler.js')
 var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 var LS = require('./localStorage.js')
-require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
 require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
-require('brace/theme/solarized_dark')
+require('../ace/EdemsMemoryAssemblyListing')
 require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
@@ -749,13 +852,13 @@ gui.DrawMemoryDebug = function () {
   global.memoryDebug = ace.edit('memory-debug')
   global.memoryDebug.setTheme('ace/theme/solarized_dark')
   global.memoryDebug.getSession().setMode({
-    path: 'ace/mode/EdemsMemoryAssembly',
+    path: 'ace/mode/EdemsMemoryAssemblyListing',
     v: Date.now()
   })
   global.memoryDebug.setOptions({
     readOnly: true
   })
-  global.memoryDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.memoryDebug.renderer.$cursorLayer.element.style.opacity = 0
   global.memoryDebug.setValue('Nothing to debug...')
 }
 
@@ -773,7 +876,7 @@ gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug.setOptions({
     readOnly: false
   })
-  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity = 0
   global.microcodeDebug.setValue('Nothing to debug...')
 }
 
@@ -869,7 +972,9 @@ gui.onclickSetup = function () {
     try {
       document.getElementById('rst-btn').onclick()
 
-      var code = mCompiler.compile(global.memoryEditor.getValue())
+      var output = mCompiler.compile(global.memoryEditor.getValue())
+      var code = output.output
+
       var orgs = Object.getOwnPropertyNames(code)
 
       for (var i = 0; i < orgs.length; i++) {
@@ -900,6 +1005,8 @@ gui.onclickSetup = function () {
       alert(Error)
     }
 
+    global.memoryDebug.setValue(output.listing)
+    selectMemoryDebugLine(global.registerPCH.decPair)
     document.getElementById('memoryDebug').onclick()
   }
 
@@ -917,6 +1024,11 @@ gui.onclickSetup = function () {
 
       global.memoryEditor.getSession().setMode({
         path: 'ace/mode/EdemsMemoryAssembly',
+        v: Date.now()
+      })
+
+      global.memoryDebug.getSession().setMode({
+        path: 'ace/mode/EdemsMemoryAssemblyListing',
         v: Date.now()
       })
 
@@ -1442,10 +1554,12 @@ gui.onChangeSetup = function () {
 
   global.registerPCL.onChange = function () {
     $('#registerPCL').text('0x' + global.registerPCL.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerPCH.onChange = function () {
     $('#registerPCH').text('0x' + global.registerPCH.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerOP.onChange = function () {
@@ -1534,17 +1648,33 @@ gui.onChangeSetup = function () {
   }
 }
 
-function selectMicrocodeDebugLine(lineNumber){
+function selectMicrocodeDebugLine (lineNumber) {
   lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
 
   var lines = global.microcodeDebug.getValue()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
-    .split('\n');
+    .split('\n')
 
-  for(var i = 0;i < lines.length;i++){
-    if (lines[i].match(new RegExp("^" + lineNumber + '\\ .*$',"gm")) !== null ){
-      global.microcodeDebug.selection.moveCursorToPosition({row: i-1, column: 0});
-      global.microcodeDebug.selection.selectLine();
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.microcodeDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.microcodeDebug.selection.selectLine()
+      return
+    }
+  }
+}
+
+function selectMemoryDebugLine (lineNumber) {
+  lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
+
+  var lines = global.memoryDebug.getValue()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.memoryDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.memoryDebug.selection.selectLine()
       return
     }
   }
@@ -1568,7 +1698,7 @@ function highlight (what) {
 
 module.exports = gui
 
-},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../ace/EdemsMicrocodeAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMemoryAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssemblyListing.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../ace/EdemsMicrocodeAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -3208,8 +3338,14 @@ var memoryCompiler = {}
 memoryCompiler.compile = function (input) {
   var output = {'0': []}
   var pointer = '0'
+
+  var listing = ''
   var instruction = {}
   var operand
+
+  var inputRaw = input
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -3217,6 +3353,8 @@ memoryCompiler.compile = function (input) {
 
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
+    var address = '    '
+    var code = ''
 
     if (line[0] === '.ORG') {
       try {
@@ -3225,14 +3363,19 @@ memoryCompiler.compile = function (input) {
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '.CONST') {
       try {
         output[pointer].push(parseHEX(line[1], 8))
+        address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '') {
+
     } else if (line[0].substring(0, 1) === ';') {
+
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
       if (instruction === undefined) {
@@ -3241,6 +3384,8 @@ memoryCompiler.compile = function (input) {
 
       var instructionAddress = instruction.address.toString(16)
       output[pointer].push('0'.repeat(2 - instructionAddress.length) + instructionAddress)
+      address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
+      code = ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
 
       if (instruction.operand !== undefined) {
         try {
@@ -3250,12 +3395,23 @@ memoryCompiler.compile = function (input) {
         }
         while (operand.length > 0) {
           output[pointer].push(operand.slice(-2))
+          code +=' ' + ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
           operand = operand.slice(0, -2)
         }
       }
     }
+
+    code =  code + ' '.repeat(8 - code.length)
+    listing = listing
+      + address
+      + '  '
+      + code
+      + '  '
+      + inputRaw[i]
+      + '\n'
   }
-  return output
+
+  return {output, listing}
 }
 
 function parseHEX (input, bits) {
@@ -24035,194 +24191,6 @@ exports.version = "1.2.9";
             })();
         
 module.exports = window.ace.acequire("ace/ace");
-},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js":[function(require,module,exports){
-ace.define("ace/mode/assembly_x86_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../lib/oop");
-var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
-
-var AssemblyX86HighlightRules = function() {
-
-    this.$rules = { start: 
-       [ { token: 'keyword.control.assembly',
-           regex: '\\b(?:aaa|aad|aam|aas|adc|add|addpd|addps|addsd|addss|addsubpd|addsubps|aesdec|aesdeclast|aesenc|aesenclast|aesimc|aeskeygenassist|and|andpd|andps|andnpd|andnps|arpl|blendpd|blendps|blendvpd|blendvps|bound|bsf|bsr|bswap|bt|btc|btr|bts|cbw|cwde|cdqe|clc|cld|cflush|clts|cmc|cmov(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|cmp|cmppd|cmpps|cmps|cnpsb|cmpsw|cmpsd|cmpsq|cmpss|cmpxchg|cmpxchg8b|cmpxchg16b|comisd|comiss|cpuid|crc32|cvtdq2pd|cvtdq2ps|cvtpd2dq|cvtpd2pi|cvtpd2ps|cvtpi2pd|cvtpi2ps|cvtps2dq|cvtps2pd|cvtps2pi|cvtsd2si|cvtsd2ss|cvts2sd|cvtsi2ss|cvtss2sd|cvtss2si|cvttpd2dq|cvtpd2pi|cvttps2dq|cvttps2pi|cvttps2dq|cvttps2pi|cvttsd2si|cvttss2si|cwd|cdq|cqo|daa|das|dec|div|divpd|divps|divsd|divss|dppd|dpps|emms|enter|extractps|f2xm1|fabs|fadd|faddp|fiadd|fbld|fbstp|fchs|fclex|fnclex|fcmov(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|fcom|fcmop|fcompp|fcomi|fcomip|fucomi|fucomip|fcos|fdecstp|fdiv|fdivp|fidiv|fdivr|fdivrp|fidivr|ffree|ficom|ficomp|fild|fincstp|finit|fnint|fist|fistp|fisttp|fld|fld1|fldl2t|fldl2e|fldpi|fldlg2|fldln2|fldz|fldcw|fldenv|fmul|fmulp|fimul|fnop|fpatan|fprem|fprem1|fptan|frndint|frstor|fsave|fnsave|fscale|fsin|fsincos|fsqrt|fst|fstp|fstcw|fnstcw|fstenv|fnstenv|fsts|fnstsw|fsub|fsubp|fisub|fsubr|fsubrp|fisubr|ftst|fucom|fucomp|fucompp|fxam|fxch|fxrstor|fxsave|fxtract|fyl2x|fyl2xp1|haddpd|haddps|husbpd|hsubps|idiv|imul|in|inc|ins|insb|insw|insd|insertps|int|into|invd|invplg|invpcid|iret|iretd|iretq|lahf|lar|lddqu|ldmxcsr|lds|les|lfs|lgs|lss|lea|leave|lfence|lgdt|lidt|llgdt|lmsw|lock|lods|lodsb|lodsw|lodsd|lodsq|lsl|ltr|maskmovdqu|maskmovq|maxpd|maxps|maxsd|maxss|mfence|minpd|minps|minsd|minss|monitor|mov|movapd|movaps|movbe|movd|movq|movddup|movdqa|movdqu|movq2q|movhlps|movhpd|movhps|movlhps|movlpd|movlps|movmskpd|movmskps|movntdqa|movntdq|movnti|movntpd|movntps|movntq|movq|movq2dq|movs|movsb|movsw|movsd|movsq|movsd|movshdup|movsldup|movss|movsx|movsxd|movupd|movups|movzx|mpsadbw|mul|mulpd|mulps|mulsd|mulss|mwait|neg|not|or|orpd|orps|out|outs|outsb|outsw|outsd|pabsb|pabsw|pabsd|packsswb|packssdw|packusdw|packuswbpaddb|paddw|paddd|paddq|paddsb|paddsw|paddusb|paddusw|palignr|pand|pandn|pause|pavgb|pavgw|pblendvb|pblendw|pclmulqdq|pcmpeqb|pcmpeqw|pcmpeqd|pcmpeqq|pcmpestri|pcmpestrm|pcmptb|pcmptgw|pcmpgtd|pcmpgtq|pcmpistri|pcmpisrm|pextrb|pextrd|pextrq|pextrw|phaddw|phaddd|phaddsw|phinposuw|phsubw|phsubd|phsubsw|pinsrb|pinsrd|pinsrq|pinsrw|pmaddubsw|pmadddwd|pmaxsb|pmaxsd|pmaxsw|pmaxsw|pmaxub|pmaxud|pmaxuw|pminsb|pminsd|pminsw|pminub|pminud|pminuw|pmovmskb|pmovsx|pmovzx|pmuldq|pmulhrsw|pmulhuw|pmulhw|pmulld|pmullw|pmuludw|pop|popa|popad|popcnt|popf|popfd|popfq|por|prefetch|psadbw|pshufb|pshufd|pshufhw|pshuflw|pshufw|psignb|psignw|psignd|pslldq|psllw|pslld|psllq|psraw|psrad|psrldq|psrlw|psrld|psrlq|psubb|psubw|psubd|psubq|psubsb|psubsw|psubusb|psubusw|test|ptest|punpckhbw|punpckhwd|punpckhdq|punpckhddq|punpcklbw|punpcklwd|punpckldq|punpckldqd|push|pusha|pushad|pushf|pushfd|pxor|prcl|rcr|rol|ror|rcpps|rcpss|rdfsbase|rdgsbase|rdmsr|rdpmc|rdrand|rdtsc|rdtscp|rep|repe|repz|repne|repnz|roundpd|roundps|roundsd|roundss|rsm|rsqrps|rsqrtss|sahf|sal|sar|shl|shr|sbb|scas|scasb|scasw|scasd|set(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|sfence|sgdt|shld|shrd|shufpd|shufps|sidt|sldt|smsw|sqrtpd|sqrtps|sqrtsd|sqrtss|stc|std|stmxcsr|stos|stosb|stosw|stosd|stosq|str|sub|subpd|subps|subsd|subss|swapgs|syscall|sysenter|sysexit|sysret|teset|ucomisd|ucomiss|ud2|unpckhpd|unpckhps|unpcklpd|unpcklps|vbroadcast|vcvtph2ps|vcvtp2sph|verr|verw|vextractf128|vinsertf128|vmaskmov|vpermilpd|vpermilps|vperm2f128|vtestpd|vtestps|vzeroall|vzeroupper|wait|fwait|wbinvd|wrfsbase|wrgsbase|wrmsr|xadd|xchg|xgetbv|xlat|xlatb|xor|xorpd|xorps|xrstor|xsave|xsaveopt|xsetbv|lzcnt|extrq|insertq|movntsd|movntss|vfmaddpd|vfmaddps|vfmaddsd|vfmaddss|vfmaddsubbpd|vfmaddsubps|vfmsubaddpd|vfmsubaddps|vfmsubpd|vfmsubps|vfmsubsd|vfnmaddpd|vfnmaddps|vfnmaddsd|vfnmaddss|vfnmsubpd|vfnmusbps|vfnmusbsd|vfnmusbss|cvt|xor|cli|sti|hlt|nop|lock|wait|enter|leave|ret|loop(?:n?e|n?z)?|call|j(?:mp|n?e|ge?|ae?|le?|be?|n?o|n?z))\\b',
-           caseInsensitive: true },
-         { token: 'variable.parameter.register.assembly',
-           regex: '\\b(?:CS|DS|ES|FS|GS|SS|RAX|EAX|RBX|EBX|RCX|ECX|RDX|EDX|RCX|RIP|EIP|IP|RSP|ESP|SP|RSI|ESI|SI|RDI|EDI|DI|RFLAGS|EFLAGS|FLAGS|R8-15|(?:Y|X)MM(?:[0-9]|10|11|12|13|14|15)|(?:A|B|C|D)(?:X|H|L)|CR(?:[0-4]|DR(?:[0-7]|TR6|TR7|EFER)))\\b',
-           caseInsensitive: true },
-         { token: 'constant.character.decimal.assembly',
-           regex: '\\b[0-9]+\\b' },
-         { token: 'constant.character.hexadecimal.assembly',
-           regex: '\\b0x[A-F0-9]+\\b',
-           caseInsensitive: true },
-         { token: 'constant.character.hexadecimal.assembly',
-           regex: '\\b[A-F0-9]+h\\b',
-           caseInsensitive: true },
-         { token: 'string.assembly', regex: /'([^\\']|\\.)*'/ },
-         { token: 'string.assembly', regex: /"([^\\"]|\\.)*"/ },
-         { token: 'support.function.directive.assembly',
-           regex: '^\\[',
-           push: 
-            [ { token: 'support.function.directive.assembly',
-                regex: '\\]$',
-                next: 'pop' },
-              { defaultToken: 'support.function.directive.assembly' } ] },
-         { token: 
-            [ 'support.function.directive.assembly',
-              'support.function.directive.assembly',
-              'entity.name.function.assembly' ],
-           regex: '(^struc)( )([_a-zA-Z][_a-zA-Z0-9]*)' },
-         { token: 'support.function.directive.assembly',
-           regex: '^endstruc\\b' },
-        { token: 
-            [ 'support.function.directive.assembly',
-              'entity.name.function.assembly',
-              'support.function.directive.assembly',
-              'constant.character.assembly' ],
-           regex: '^(%macro )([_a-zA-Z][_a-zA-Z0-9]*)( )([0-9]+)' },
-         { token: 'support.function.directive.assembly',
-           regex: '^%endmacro' },
-         { token: 
-            [ 'text',
-              'support.function.directive.assembly',
-              'text',
-              'entity.name.function.assembly' ],
-           regex: '(\\s*)(%define|%xdefine|%idefine|%undef|%assign|%defstr|%strcat|%strlen|%substr|%00|%0|%rotate|%rep|%endrep|%include|\\$\\$|\\$|%unmacro|%if|%elif|%else|%endif|%(?:el)?ifdef|%(?:el)?ifmacro|%(?:el)?ifctx|%(?:el)?ifidn|%(?:el)?ifidni|%(?:el)?ifid|%(?:el)?ifnum|%(?:el)?ifstr|%(?:el)?iftoken|%(?:el)?ifempty|%(?:el)?ifenv|%pathsearch|%depend|%use|%push|%pop|%repl|%arg|%stacksize|%local|%error|%warning|%fatal|%line|%!|%comment|%endcomment|__NASM_VERSION_ID__|__NASM_VER__|__FILE__|__LINE__|__BITS__|__OUTPUT_FORMAT__|__DATE__|__TIME__|__DATE_NUM__|_TIME__NUM__|__UTC_DATE__|__UTC_TIME__|__UTC_DATE_NUM__|__UTC_TIME_NUM__|__POSIX_TIME__|__PASS__|ISTRUC|AT|IEND|BITS 16|BITS 32|BITS 64|USE16|USE32|__SECT__|ABSOLUTE|EXTERN|GLOBAL|COMMON|CPU|FLOAT)\\b( ?)((?:[_a-zA-Z][_a-zA-Z0-9]*)?)',
-           caseInsensitive: true },
-          { token: 'support.function.directive.assembly',
-           regex: '\\b(?:d[bwdqtoy]|res[bwdqto]|equ|times|align|alignb|sectalign|section|ptr|byte|word|dword|qword|incbin)\\b',
-           caseInsensitive: true },
-         { token: 'entity.name.function.assembly', regex: '^\\s*%%[\\w.]+?:$' },
-         { token: 'entity.name.function.assembly', regex: '^\\s*%\\$[\\w.]+?:$' },
-         { token: 'entity.name.function.assembly', regex: '^[\\w.]+?:' },
-         { token: 'entity.name.function.assembly', regex: '^[\\w.]+?\\b' },
-         { token: 'comment.assembly', regex: ';.*$' } ] 
-    };
-    
-    this.normalizeRules();
-};
-
-AssemblyX86HighlightRules.metaData = { fileTypes: [ 'asm' ],
-      name: 'Assembly x86',
-      scopeName: 'source.assembly' };
-
-
-oop.inherits(AssemblyX86HighlightRules, TextHighlightRules);
-
-exports.AssemblyX86HighlightRules = AssemblyX86HighlightRules;
-});
-
-ace.define("ace/mode/folding/coffee",["require","exports","module","ace/lib/oop","ace/mode/folding/fold_mode","ace/range"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../../lib/oop");
-var BaseFoldMode = acequire("./fold_mode").FoldMode;
-var Range = acequire("../../range").Range;
-
-var FoldMode = exports.FoldMode = function() {};
-oop.inherits(FoldMode, BaseFoldMode);
-
-(function() {
-
-    this.getFoldWidgetRange = function(session, foldStyle, row) {
-        var range = this.indentationBlock(session, row);
-        if (range)
-            return range;
-
-        var re = /\S/;
-        var line = session.getLine(row);
-        var startLevel = line.search(re);
-        if (startLevel == -1 || line[startLevel] != "#")
-            return;
-
-        var startColumn = line.length;
-        var maxRow = session.getLength();
-        var startRow = row;
-        var endRow = row;
-
-        while (++row < maxRow) {
-            line = session.getLine(row);
-            var level = line.search(re);
-
-            if (level == -1)
-                continue;
-
-            if (line[level] != "#")
-                break;
-
-            endRow = row;
-        }
-
-        if (endRow > startRow) {
-            var endColumn = session.getLine(endRow).length;
-            return new Range(startRow, startColumn, endRow, endColumn);
-        }
-    };
-    this.getFoldWidget = function(session, foldStyle, row) {
-        var line = session.getLine(row);
-        var indent = line.search(/\S/);
-        var next = session.getLine(row + 1);
-        var prev = session.getLine(row - 1);
-        var prevIndent = prev.search(/\S/);
-        var nextIndent = next.search(/\S/);
-
-        if (indent == -1) {
-            session.foldWidgets[row - 1] = prevIndent!= -1 && prevIndent < nextIndent ? "start" : "";
-            return "";
-        }
-        if (prevIndent == -1) {
-            if (indent == nextIndent && line[indent] == "#" && next[indent] == "#") {
-                session.foldWidgets[row - 1] = "";
-                session.foldWidgets[row + 1] = "";
-                return "start";
-            }
-        } else if (prevIndent == indent && line[indent] == "#" && prev[indent] == "#") {
-            if (session.getLine(row - 2).search(/\S/) == -1) {
-                session.foldWidgets[row - 1] = "start";
-                session.foldWidgets[row + 1] = "";
-                return "";
-            }
-        }
-
-        if (prevIndent!= -1 && prevIndent < indent)
-            session.foldWidgets[row - 1] = "start";
-        else
-            session.foldWidgets[row - 1] = "";
-
-        if (indent < nextIndent)
-            return "start";
-        else
-            return "";
-    };
-
-}).call(FoldMode.prototype);
-
-});
-
-ace.define("ace/mode/assembly_x86",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/assembly_x86_highlight_rules","ace/mode/folding/coffee"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../lib/oop");
-var TextMode = acequire("./text").Mode;
-var AssemblyX86HighlightRules = acequire("./assembly_x86_highlight_rules").AssemblyX86HighlightRules;
-var FoldMode = acequire("./folding/coffee").FoldMode;
-
-var Mode = function() {
-    this.HighlightRules = AssemblyX86HighlightRules;
-    this.foldingRules = new FoldMode();
-    this.$behaviour = this.$defaultBehaviour;
-};
-oop.inherits(Mode, TextMode);
-
-(function() {
-    this.lineCommentStart = ";";
-    this.$id = "ace/mode/assembly_x86";
-}).call(Mode.prototype);
-
-exports.Mode = Mode;
-});
-
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js":[function(require,module,exports){
 ace.define("ace/theme/solarized_dark",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
 

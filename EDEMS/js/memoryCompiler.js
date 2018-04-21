@@ -6,8 +6,14 @@ var memoryCompiler = {}
 memoryCompiler.compile = function (input) {
   var output = {'0': []}
   var pointer = '0'
+
+  var listing = ''
   var instruction = {}
   var operand
+
+  var inputRaw = input
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -15,6 +21,8 @@ memoryCompiler.compile = function (input) {
 
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
+    var address = '    '
+    var code = ''
 
     if (line[0] === '.ORG') {
       try {
@@ -23,14 +31,19 @@ memoryCompiler.compile = function (input) {
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '.CONST') {
       try {
         output[pointer].push(parseHEX(line[1], 8))
+        address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '') {
+
     } else if (line[0].substring(0, 1) === ';') {
+
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
       if (instruction === undefined) {
@@ -39,6 +52,8 @@ memoryCompiler.compile = function (input) {
 
       var instructionAddress = instruction.address.toString(16)
       output[pointer].push('0'.repeat(2 - instructionAddress.length) + instructionAddress)
+      address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
+      code = ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
 
       if (instruction.operand !== undefined) {
         try {
@@ -48,12 +63,23 @@ memoryCompiler.compile = function (input) {
         }
         while (operand.length > 0) {
           output[pointer].push(operand.slice(-2))
+          code +=' ' + ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
           operand = operand.slice(0, -2)
         }
       }
     }
+
+    code =  code + ' '.repeat(8 - code.length)
+    listing = listing
+      + address
+      + '  '
+      + code
+      + '  '
+      + inputRaw[i]
+      + '\n'
   }
-  return output
+
+  return {output, listing}
 }
 
 function parseHEX (input, bits) {

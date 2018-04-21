@@ -10,7 +10,8 @@ var EdemsMicrocodeAssemblyListingHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'constant.character.decimal.assembly',
-        regex: '\\b[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+        regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+
         { token: 'keyword.control.assembly',
         regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
         caseInsensitive: true },

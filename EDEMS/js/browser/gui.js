@@ -5,11 +5,10 @@ var uCompiler = require('../microcodeCompiler.js')
 var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 var LS = require('./localStorage.js')
-require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
 require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
-require('brace/theme/solarized_dark')
+require('../ace/EdemsMemoryAssemblyListing')
 require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
@@ -102,13 +101,13 @@ gui.DrawMemoryDebug = function () {
   global.memoryDebug = ace.edit('memory-debug')
   global.memoryDebug.setTheme('ace/theme/solarized_dark')
   global.memoryDebug.getSession().setMode({
-    path: 'ace/mode/EdemsMemoryAssembly',
+    path: 'ace/mode/EdemsMemoryAssemblyListing',
     v: Date.now()
   })
   global.memoryDebug.setOptions({
     readOnly: true
   })
-  global.memoryDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.memoryDebug.renderer.$cursorLayer.element.style.opacity = 0
   global.memoryDebug.setValue('Nothing to debug...')
 }
 
@@ -126,7 +125,7 @@ gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug.setOptions({
     readOnly: false
   })
-  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity=0
+  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity = 0
   global.microcodeDebug.setValue('Nothing to debug...')
 }
 
@@ -222,7 +221,9 @@ gui.onclickSetup = function () {
     try {
       document.getElementById('rst-btn').onclick()
 
-      var code = mCompiler.compile(global.memoryEditor.getValue())
+      var output = mCompiler.compile(global.memoryEditor.getValue())
+      var code = output.output
+
       var orgs = Object.getOwnPropertyNames(code)
 
       for (var i = 0; i < orgs.length; i++) {
@@ -253,6 +254,8 @@ gui.onclickSetup = function () {
       alert(Error)
     }
 
+    global.memoryDebug.setValue(output.listing)
+    selectMemoryDebugLine(global.registerPCH.decPair)
     document.getElementById('memoryDebug').onclick()
   }
 
@@ -270,6 +273,11 @@ gui.onclickSetup = function () {
 
       global.memoryEditor.getSession().setMode({
         path: 'ace/mode/EdemsMemoryAssembly',
+        v: Date.now()
+      })
+
+      global.memoryDebug.getSession().setMode({
+        path: 'ace/mode/EdemsMemoryAssemblyListing',
         v: Date.now()
       })
 
@@ -795,10 +803,12 @@ gui.onChangeSetup = function () {
 
   global.registerPCL.onChange = function () {
     $('#registerPCL').text('0x' + global.registerPCL.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerPCH.onChange = function () {
     $('#registerPCH').text('0x' + global.registerPCH.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerOP.onChange = function () {
@@ -887,17 +897,33 @@ gui.onChangeSetup = function () {
   }
 }
 
-function selectMicrocodeDebugLine(lineNumber){
+function selectMicrocodeDebugLine (lineNumber) {
   lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
 
   var lines = global.microcodeDebug.getValue()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
-    .split('\n');
+    .split('\n')
 
-  for(var i = 0;i < lines.length;i++){
-    if (lines[i].match(new RegExp("^" + lineNumber + '\\ .*$',"gm")) !== null ){
-      global.microcodeDebug.selection.moveCursorToPosition({row: i-1, column: 0});
-      global.microcodeDebug.selection.selectLine();
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.microcodeDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.microcodeDebug.selection.selectLine()
+      return
+    }
+  }
+}
+
+function selectMemoryDebugLine (lineNumber) {
+  lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
+
+  var lines = global.memoryDebug.getValue()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.memoryDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.memoryDebug.selection.selectLine()
       return
     }
   }
