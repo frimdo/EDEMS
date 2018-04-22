@@ -1,4 +1,4 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js":[function(require,module,exports){
 ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (acequire, exports, module) {
   'use strict'
 
@@ -9,7 +9,7 @@ ace.define('ace/mode/EdemsMemoryAssemblyHighlightRules', ['require', 'exports', 
     // regexp must not have capturing parentheses. Use (?:) instead.
     // regexps are ordered -> the first match is used
     var keywords = ''
-    for (let i = 0; i < uComp.assemblyKeywords.length; i++) {
+    for (var i = 0; i < uComp.assemblyKeywords.length; i++) {
       keywords += '|' + uComp.assemblyKeywords[i].keyword
     }
     if (keywords === '') {
@@ -88,6 +88,109 @@ ace.define('ace/mode/EdemsMemoryAssembly', ['require', 'exports', 'module', 'ace
   exports.Mode = Mode
 })
 
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssemblyListing.js":[function(require,module,exports){
+ace.define('ace/mode/EdemsMemoryAssemblyListingHighlightRules', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (acequire, exports, module) {
+  'use strict'
+
+  var oop = acequire('../lib/oop')
+  var TextHighlightRules = acequire('./text_highlight_rules').TextHighlightRules
+
+  var EdemsMemoryAssemblyListingHighlightRules = function () {
+    // regexp must not have capturing parentheses. Use (?:) instead.
+    // regexps are ordered -> the first match is used
+    var keywords = ''
+    for (var i = 0; i < uComp.assemblyKeywords.length; i++) {
+      keywords += '|' + uComp.assemblyKeywords[i].keyword
+    }
+    if (keywords === '') {
+      keywords = '|(?!.*)'
+    }
+
+    this.$rules = {
+      start:
+        [ { token: 'comment.assembler',
+          regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'constant.character.decimal.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\\b' },
+
+          { token: 'comment.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ ..\ \ [A-F0-9][A-F0-9]\\b' },
+          { token: 'comment.assembly',
+            regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ ..\ \ ..\ \ [A-F0-9][A-F0-9]\\b' },
+          {
+            token: 'keyword.control.assembly',
+            regex: '\\b(?:' + keywords.substring(1, keywords.length) + ')\\b',
+            caseInsensitive: true
+          },
+          /*{ token: 'keyword.control.assembly',
+          regex: '^[0-9]{2}$',
+          caseInsensitive: true },*/
+          {
+            token: 'constant.character.decimal.assembly',
+            regex: '\\b[0-9]+\\b'
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b0x[A-F0-9]+\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.hexadecimal.assembly',
+            regex: '\\b[A-F0-9]+h\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'constant.character.binary.assembly',
+            regex: '\\b0b[0-1]+\\b',
+            caseInsensitive: true
+          },
+          {
+            token: 'string', // pre-compiler directives
+            regex: '\\.org.*|\\.const.*',
+            caseInsensitive: true
+          },
+          {token: 'comment.assembly', regex: ';.*$'}]
+    }
+
+    this.normalizeRules()
+  }
+
+  EdemsMemoryAssemblyListingHighlightRules.metaData = {
+    fileTypes: ['asm'],
+    name: 'Edems Memory Assembly',
+    scopeName: 'source.assembly'
+  }
+
+  oop.inherits(EdemsMemoryAssemblyListingHighlightRules, TextHighlightRules)
+
+  exports.EdemsMemoryAssemblyListingHighlightRules = EdemsMemoryAssemblyListingHighlightRules
+})
+
+ace.define('ace/mode/EdemsMemoryAssemblyListing', ['require', 'exports', 'module', 'ace/lib/oop', 'ace/mode/text', 'ace/mode/EdemsMemoryAssemblyListingHighlightRules', 'ace/mode/folding/coffee'], function (acequire, exports, module) {
+  'use strict'
+
+  var oop = acequire('../lib/oop')
+  var TextMode = acequire('./text').Mode
+  var EdemsMemoryAssemblyListingHighlightRules = acequire('./EdemsMemoryAssemblyListingHighlightRules').EdemsMemoryAssemblyListingHighlightRules
+
+  var Mode = function () {
+    this.HighlightRules = EdemsMemoryAssemblyListingHighlightRules
+    this.$behaviour = this.$defaultBehaviour
+  }
+  oop.inherits(Mode, TextMode);
+
+  (function () {
+    this.lineCommentStart = ';'
+    this.$id = 'ace/mode/EdemsMemoryAssemblyListing'
+  }).call(Mode.prototype)
+
+  exports.Mode = Mode
+})
+
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js":[function(require,module,exports){
 ace.define("ace/mode/EdemsMicrocodeAssemblyHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
 "use strict";
@@ -101,7 +204,7 @@ var EdemsMicrocodeAssemblyHighlightRules = function() {
 
   this.$rules = { start:
       [ { token: 'keyword.control.assembly',
-        regex: '\\b(?:COOP|ALU|R>DB|R>AB|W>AB|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|C>DB|SVR|SVW|O>DB|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
+        regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
         caseInsensitive: true },
         { token: 'variable.parameter.register.assembly',
           regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
@@ -155,6 +258,81 @@ oop.inherits(Mode, TextMode);
 (function() {
     this.lineCommentStart = ";";
     this.$id = "ace/mode/EdemsMicrocodeAssembly";
+}).call(Mode.prototype);
+
+exports.Mode = Mode;
+});
+
+},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js":[function(require,module,exports){
+ace.define("ace/mode/EdemsMicrocodeAssemblyListingHighlightRules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
+
+var EdemsMicrocodeAssemblyListingHighlightRules = function() {
+  // regexp must not have capturing parentheses. Use (?:) instead.
+  // regexps are ordered -> the first match is used
+
+  this.$rules = { start:
+      [ { token: 'constant.character.decimal.assembly',
+        regex: '\\b^[A-F0-9][A-F0-9][A-F0-9][A-F0-9]\ \ [A-F0-9][A-F0-9][A-F0-9]\\b' },
+
+        { token: 'keyword.control.assembly',
+        regex: '\\b(?:COOP|ALU|DB<R|AB<R|AB<W|DB>R|AB>W|INCB|DECB|INCW|DECW|JOI|JON|JOFI|JOFN|DB<C|SVR|SVW|DB<O|DB>O|END|JMP|RD|WT|SETB|RETB)\\b',
+        caseInsensitive: true },
+        { token: 'variable.parameter.register.assembly',
+          regex: '\\b(?:A|B|C|D|E|F|S|P|TMP0|TMP1|TMP2|OP|PCH|PCL|UPCH|UPCL)\\b',
+          caseInsensitive: true },
+        { token: 'string.assembly',
+          regex: '\\b(?:ADD|SUB|NEG|NOT|AND|ORR|XOR|SHR|SHL|ROR|ROL|RCR|RCL|ASR|ASL|BSR|BSL|EQU|OOP)\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.decimal.assembly',
+          regex: '\\b[0-9]+\\b' },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b0x[A-F0-9]+\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.hexadecimal.assembly',
+          regex: '\\b[A-F0-9]+h\\b',
+          caseInsensitive: true },
+        { token: 'constant.character.binary.assembly',
+          regex: '\\b0b[0-1]+\\b',
+          caseInsensitive: true },
+        { token : "string", // pre-compiler directives
+          regex : "\\.def.*",
+          caseInsensitive: true },
+        { token: 'comment.assembly', regex: ';.*$' } ]
+  };
+
+  this.normalizeRules();
+};
+
+  EdemsMicrocodeAssemblyListingHighlightRules.metaData = { fileTypes: [ 'asm' ],
+    name: 'Edems Microcode Assembly',
+    scopeName: 'source.assembly' };
+
+
+  oop.inherits(EdemsMicrocodeAssemblyListingHighlightRules, TextHighlightRules);
+
+exports.EdemsMicrocodeAssemblyListingHighlightRules = EdemsMicrocodeAssemblyListingHighlightRules;
+});
+
+ace.define("ace/mode/EdemsMicrocodeAssemblyListing",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/EdemsMicrocodeAssemblyListingHighlightRules","ace/mode/folding/coffee"], function(acequire, exports, module) {
+"use strict";
+
+var oop = acequire("../lib/oop");
+var TextMode = acequire("./text").Mode;
+var EdemsMicrocodeAssemblyListingHighlightRules = acequire("./EdemsMicrocodeAssemblyListingHighlightRules").EdemsMicrocodeAssemblyListingHighlightRules;
+
+var Mode = function() {
+    this.HighlightRules = EdemsMicrocodeAssemblyListingHighlightRules;
+    this.$behaviour = this.$defaultBehaviour;
+};
+oop.inherits(Mode, TextMode);
+
+(function() {
+    this.lineCommentStart = ";";
+    this.$id = "ace/mode/EdemsMicrocodeAssemblyListing";
 }).call(Mode.prototype);
 
 exports.Mode = Mode;
@@ -227,12 +405,30 @@ ALU.doOperation = function (x) {
     default:
       throw new RangeError('ALU.doOperation: Unknown ALU operation: ' + x)
   }
-  if (global.dataBus.dec === 0) {
+  countZero(global.dataBus.dec)
+  countNegative(global.dataBus.dec)
+  countParity(global.dataBus.dec)
+}
+
+function countCarry (input) {
+  if (((input >> 8) & 1) === 1) {
+    global.registerF.setBit(0)
+  } else {
+    global.registerF.resBit(0)
+  }
+}
+
+
+function countZero (input) {
+  if (input === 0) {
     global.registerF.setBit(1)
   } else {
     global.registerF.resBit(1)
   }
-  if (global.dataBus.dec > 127) {
+}
+
+function countNegative (input) {
+  if (input > 127) {
     global.registerF.setBit(2)
   }
   else {
@@ -240,12 +436,52 @@ ALU.doOperation = function (x) {
   }
 }
 
+//If the sum of two positive numbers yields a negative result, the sum has overflowed.
+//If the sum of two negative numbers yields a positive result, the sum has overflowed.
+function countOverflow (operand1, operand2, result) {
+  if (operand1 > 127 && operand2 > 127 && result <= 127) {
+    global.registerF.setBit(3)
+  } else if (operand1 <= 127 && operand2 <= 127 && result > 127) {
+    global.registerF.setBit(3)
+  } else {
+    global.registerF.resBit(3)
+  }
+}
+
+//parity odd = 1, even = 0
+function countParity (input) {
+  input = input.toString(2)
+  if (input.match(/1/g) === null) {
+    global.registerF.resBit(4)
+  } else if(input.match(/1/g).length % 2) {
+    global.registerF.resBit(4)
+  } else {
+    global.registerF.setBit(4)
+  }
+}
+
+function countHalfCarry (before, after) {
+  if (((before >> 4) & 1) === ((after >> 4) & 1)) {
+    global.registerF.resBit(5)
+  } else {
+    global.registerF.setBit(5)
+  }
+}
+
 ALU.add = function () {
-  global.dataBus.val = global.registerTMP0.dec + global.dataBus.dec
+  var result = global.registerTMP0.dec + global.dataBus.dec
+  countOverflow(global.registerTMP0.dec, global.dataBus.dec, result & 255)
+  countHalfCarry(global.dataBus.dec, result)
+  global.dataBus.val = result
+  countCarry(result)
 }
 
 ALU.sub = function () {
-  global.dataBus.val = global.dataBus.dec - global.registerTMP0.dec
+  var result = global.dataBus.dec - global.registerTMP0.dec
+  countOverflow(global.registerTMP0.dec, -global.dataBus.dec, result & 255)
+  countHalfCarry(global.dataBus.dec, result)
+  global.dataBus.val = result
+  countCarry(result)
 }
 
 ALU.neg = function () {
@@ -323,13 +559,19 @@ ALU.equ = function () {
 }
 
 ALU.bsr = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var DBL = global.dataBus.dec & 15
+
+  global.dataBus.val = (global.dataBus.dec & 240) | (global.registerTMP0.dec & 15)
+
+  global.registerTMP0.val = (global.registerTMP0.dec >> 4) | (DBL << 4)
 }
 
 ALU.bsl = function () {
-  console.log('This ALU operation is not implemented yet!')
-  // TODO: dopsat
+  var DBL = global.dataBus.dec & 15
+
+  global.dataBus.val = (global.dataBus.dec & 240) | (global.registerTMP0.dec >> 4)
+
+  global.registerTMP0.val = (global.registerTMP0.dec << 4) | DBL
 }
 
 ALU.oop = function () {
@@ -422,7 +664,8 @@ class BinNumber {
   }
 
   get bin () {
-    return parseInt(this.value, 10).toString(2)
+    var value = parseInt(this.value, 10).toString(2)
+    return '0'.repeat(this.bits - value.length) + value
   }
 
   get binPair () {
@@ -513,10 +756,10 @@ var uCompiler = require('../microcodeCompiler.js')
 var mCompiler = require('../memoryCompiler.js')
 var ace = require('brace')
 var LS = require('./localStorage.js')
-require('brace/mode/assembly_x86')
 require('../ace/EdemsMicrocodeAssembly')
+require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
-require('brace/theme/solarized_dark')
+require('../ace/EdemsMemoryAssemblyListing')
 require('brace/theme/solarized_dark')
 //var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
@@ -544,6 +787,8 @@ gui.refresh = function () {
   $('#addressBus').text('0x' + global.addressBus.hex)
   $('#instructionRegister').text('0x' + global.instructionRegister.hex)
   document.getElementById('freq').value = global.freq
+  global.registerTMP0.onChange()
+  global.dataBus.onChange()
 }
 
 gui.DrawMemoryTable = function () {
@@ -603,11 +848,36 @@ gui.DrawMemoryEditor = function () {
   global.memoryEditor.setValue(window.localStorage.getItem('memoryValue'))
 }
 
+gui.DrawMemoryDebug = function () {
+  global.memoryDebug = ace.edit('memory-debug')
+  global.memoryDebug.setTheme('ace/theme/solarized_dark')
+  global.memoryDebug.getSession().setMode({
+    path: 'ace/mode/EdemsMemoryAssemblyListing',
+    v: Date.now()
+  })
+  global.memoryDebug.setOptions({
+    readOnly: true
+  })
+  global.memoryDebug.renderer.$cursorLayer.element.style.opacity = 0
+  global.memoryDebug.setValue('Nothing to debug...')
+}
+
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor')
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
   global.microcodeEditor.setTheme('ace/theme/solarized_dark')
   global.microcodeEditor.setValue(window.localStorage.getItem('microcodeValue'))
+}
+
+gui.DrawMicrocodeDebug = function () {
+  global.microcodeDebug = ace.edit('microcode-debug')
+  global.microcodeDebug.getSession().setMode('ace/mode/EdemsMicrocodeAssemblyListing')
+  global.microcodeDebug.setTheme('ace/theme/solarized_dark')
+  global.microcodeDebug.setOptions({
+    readOnly: false
+  })
+  global.microcodeDebug.renderer.$cursorLayer.element.style.opacity = 0
+  global.microcodeDebug.setValue('Nothing to debug...')
 }
 
 gui.DrawMicrocodeTable = function () {
@@ -681,11 +951,14 @@ gui.onclickSetup = function () {
   }
 
   document.getElementById('eraseMemory').onclick = function () {
+
     LS.storeGlobals()
     window.localStorage.removeItem('memory')
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMemoryChange()
+    document.getElementById('memoryDebug').onclick()
+    global.memoryDebug.setValue('')
   }
 
   document.getElementById('eraseMicrocode').onclick = function () {
@@ -694,19 +967,35 @@ gui.onclickSetup = function () {
     LS.initGlobals()
     $('.highlighted').removeClass('highlighted')
     global.onMicrocodeChange()
+    document.getElementById('microcodeDebug').onclick()
+    global.microcodeDebug.setValue('')
+
+    uCompiler.compile('')
+
+    global.memoryEditor.getSession().setMode({
+      path: 'ace/mode/EdemsMemoryAssembly',
+      v: Date.now()
+    })
+
+    global.memoryDebug.getSession().setMode({
+      path: 'ace/mode/EdemsMemoryAssemblyListing',
+      v: Date.now()
+    })
   }
 
   document.getElementById('compileMemory').onclick = function () {
     try {
       document.getElementById('rst-btn').onclick()
 
-      var code = mCompiler.compile(global.memoryEditor.getValue())
+      var output = mCompiler.compile(global.memoryEditor.getValue())
+      var code = output.output
+
       var orgs = Object.getOwnPropertyNames(code)
 
       for (var i = 0; i < orgs.length; i++) {
         Array.prototype.splice.apply(global.memory, [parseInt(orgs[i]), code[orgs[i]].length].concat(code[orgs[i]]))
 
-        for (let y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
+        for (var y = parseInt(orgs[i]); y < parseInt(orgs[i]) + code[orgs[i]].length; y++) {
           highlight('#memory' + y)
         }
       }
@@ -727,6 +1016,10 @@ gui.onclickSetup = function () {
 
       document.getElementById('scrollArea-microcode').scrollTop = 0
 
+      global.memoryDebug.setValue(output.listing)
+      selectMemoryDebugLine(global.registerPCH.decPair)
+      document.getElementById('memoryDebug').onclick()
+
     } catch (Error) {
       alert(Error)
     }
@@ -737,10 +1030,10 @@ gui.onclickSetup = function () {
       $('.highlighted').removeClass('highlighted')
 
       var code = uCompiler.compile(global.microcodeEditor.getValue())
-      Array.prototype.splice.apply(global.microcode, [0, code.length].concat(code))
+      Array.prototype.splice.apply(global.microcode, [0, code.output.length].concat(code.output))
       global.onMicrocodeChange()
       document.getElementById('scrollArea-microcode').scrollTop = 0
-      for (let i = 0; i < code.length; i++) {
+      for (var i = 0; i < code.output.length; i++) {
         highlight('#microcode' + i)
       }
 
@@ -748,6 +1041,15 @@ gui.onclickSetup = function () {
         path: 'ace/mode/EdemsMemoryAssembly',
         v: Date.now()
       })
+
+      global.memoryDebug.getSession().setMode({
+        path: 'ace/mode/EdemsMemoryAssemblyListing',
+        v: Date.now()
+      })
+
+      global.microcodeDebug.setValue(code.listing)
+      selectMicrocodeDebugLine(global.registerUPCH.decPair)
+      document.getElementById('microcodeDebug').onclick()
 
     } catch (Error) {
       alert(Error)
@@ -1022,6 +1324,50 @@ gui.onclickSetup = function () {
     $('.highlighted').removeClass('highlighted')
     alu.doOperation(document.getElementById('aluSelect').selectedIndex)
   }
+
+  document.getElementById('memorySource').onclick = function () {
+    $('#memorySource').addClass('highlighted-tab')
+    $('#memoryDebug').removeClass('highlighted-tab')
+    $('#memory-editor').removeClass('hidden')
+    $('#memory-btns').removeClass('hidden')
+    $('#memory-debug').addClass('hidden')
+    $('#memory-descr-table').addClass('hidden')
+    $('#scrollArea-memory').addClass('hidden')
+    global.memoryEditor.resize()
+  }
+
+  document.getElementById('memoryDebug').onclick = function () {
+    $('#memoryDebug').addClass('highlighted-tab')
+    $('#memorySource').removeClass('highlighted-tab')
+    $('#memory-editor').addClass('hidden')
+    $('#memory-btns').addClass('hidden')
+    $('#memory-debug').removeClass('hidden')
+    $('#memory-descr-table').removeClass('hidden')
+    $('#scrollArea-memory').removeClass('hidden')
+    global.memoryDebug.resize()
+  }
+
+  document.getElementById('microcodeSource').onclick = function () {
+    $('#microcodeSource').addClass('highlighted-tab')
+    $('#microcodeDebug').removeClass('highlighted-tab')
+    $('#microcode-editor').removeClass('hidden')
+    $('#microcode-btns').removeClass('hidden')
+    $('#microcode-debug').addClass('hidden')
+    $('#microcode-descr-table').addClass('hidden')
+    $('#scrollArea-microcode').addClass('hidden')
+    global.microcodeEditor.resize()
+  }
+
+  document.getElementById('microcodeDebug').onclick = function () {
+    $('#microcodeDebug').addClass('highlighted-tab')
+    $('#microcodeSource').removeClass('highlighted-tab')
+    $('#microcode-editor').addClass('hidden')
+    $('#microcode-btns').addClass('hidden')
+    $('#microcode-debug').removeClass('hidden')
+    $('#microcode-descr-table').removeClass('hidden')
+    $('#scrollArea-microcode').removeClass('hidden')
+    global.microcodeDebug.resize()
+  }
 }
 
 gui.onChangeSetup = function () {
@@ -1045,9 +1391,29 @@ gui.onChangeSetup = function () {
       $('#PCH-button').prop('disabled', false)
       $('#PCL-button').prop('disabled', false)
 
+      $('#REA').prop('disabled', false)
+      $('#WRT').prop('disabled', false)
+      $('#M2C').prop('disabled', false)
+      $('#R2D').prop('disabled', false)
+      $('#D2R').prop('disabled', false)
+      $('#W2A').prop('disabled', false)
+      $('#A2W').prop('disabled', false)
+      $('#AL2').prop('disabled', false)
+
+      $('#incr').removeClass('hidden')
+      $('#decr').removeClass('hidden')
+      $('#svr').removeClass('hidden')
+
       $('#controlUnit-grid').removeClass('hidden')
       $('#C2D').removeClass('hidden')
       $('#M2C').removeClass('hidden')
+
+      global.memoryEditor.resize()
+      global.microcodeEditor.resize()
+      global.memoryDebug.resize()
+      global.microcodeDebug.resize()
+      global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
+      global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     } else if (global.advanced == 'basic') {
       $('#logo span').html('basic')
       $('#body-grid').removeClass('advanced')
@@ -1066,9 +1432,28 @@ gui.onChangeSetup = function () {
       $('#PCH-button').prop('disabled', true)
       $('#PCL-button').prop('disabled', true)
 
+      $('#REA').prop('disabled', true)
+      $('#WRT').prop('disabled', true)
+      $('#M2C').prop('disabled', true)
+      $('#R2D').prop('disabled', true)
+      $('#D2R').prop('disabled', true)
+      $('#W2A').prop('disabled', true)
+      $('#A2W').prop('disabled', true)
+      $('#AL2').prop('disabled', true)
+
+      $('#incr').addClass('hidden')
+      $('#decr').addClass('hidden')
+      $('#svr').addClass('hidden')
+
       $('#controlUnit-grid').addClass('hidden')
       $('#C2D').addClass('hidden')
       $('#M2C').addClass('hidden')
+      global.memoryEditor.resize()
+      global.microcodeEditor.resize()
+      global.memoryDebug.resize()
+      global.microcodeDebug.resize()
+      global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
+      global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     }
   }
 
@@ -1188,10 +1573,12 @@ gui.onChangeSetup = function () {
 
   global.registerPCL.onChange = function () {
     $('#registerPCL').text('0x' + global.registerPCL.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerPCH.onChange = function () {
     $('#registerPCH').text('0x' + global.registerPCH.hex).addClass('highlighted')
+    selectMemoryDebugLine(global.registerPCH.decPair)
   }
 
   global.registerOP.onChange = function () {
@@ -1200,6 +1587,8 @@ gui.onChangeSetup = function () {
 
   global.registerTMP0.onChange = function () {
     $('#registerTMP0').text('0x' + global.registerTMP0.hex).addClass('highlighted')
+    $('.TMP0-view').text('0x' + global.registerTMP0.hex).addClass('highlighted')
+    $('.TMP0-view-bin').text('0b' + global.registerTMP0.bin).addClass('highlighted')
   }
 
   global.registerTMP2.onChange = function () {
@@ -1219,6 +1608,7 @@ gui.onChangeSetup = function () {
     $('#registerUPCL').text('0x' + global.registerUPCL.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+    selectMicrocodeDebugLine(global.registerUPCH.decPair)
   }
 
   global.registerUPCH.onChange = function () {
@@ -1230,6 +1620,7 @@ gui.onChangeSetup = function () {
     $('#registerUPCH').text('0x' + global.registerUPCH.hex).addClass('highlighted')
     $('.umem-highlighted').removeClass('umem-highlighted')
     $('#microcode' + global.registerUPCH.decPair).addClass('umem-highlighted')
+    selectMicrocodeDebugLine(global.registerUPCH.decPair)
   }
 
   global.addressBus.onChange = function () {
@@ -1240,6 +1631,8 @@ gui.onChangeSetup = function () {
 
   global.dataBus.onChange = function () {
     $('#EdataBus').text('0x' + global.dataBus.hex).addClass('highlighted')
+    $('.dataBus-view').text('0x' + global.dataBus.hex).addClass('highlighted')
+    $('.dataBus-view-bin').text('0b' + global.dataBus.bin).addClass('highlighted')
     document.getElementById('IdataBus').value = '0x' + global.dataBus.hex
     $('#IdataBus').addClass('highlighted')
   }
@@ -1274,6 +1667,38 @@ gui.onChangeSetup = function () {
   }
 }
 
+function selectMicrocodeDebugLine (lineNumber) {
+  lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
+
+  var lines = global.microcodeDebug.getValue()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.microcodeDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.microcodeDebug.selection.selectLine()
+      return
+    }
+  }
+}
+
+function selectMemoryDebugLine (lineNumber) {
+  lineNumber = ('0000' + lineNumber.toString(16)).slice(-4)
+
+  var lines = global.memoryDebug.getValue()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].match(new RegExp('^' + lineNumber + '\\ .*$', 'gm')) !== null) {
+      global.memoryDebug.selection.moveCursorToPosition({row: i - 1, column: 0})
+      global.memoryDebug.selection.selectLine()
+      return
+    }
+  }
+}
+
 function download (filename, text) {
   var element = document.createElement('a')
   element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
@@ -1292,7 +1717,7 @@ function highlight (what) {
 
 module.exports = gui
 
-},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/mode/assembly_x86":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
+},{"../ace/EdemsMemoryAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssembly.js","../ace/EdemsMemoryAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMemoryAssemblyListing.js","../ace/EdemsMicrocodeAssembly":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssembly.js","../ace/EdemsMicrocodeAssemblyListing":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/ace/EdemsMicrocodeAssemblyListing.js","../globals.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/globals.js","../memoryCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/memoryCompiler.js","../microcodeCompiler.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/microcodeCompiler.js","./localStorage.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js","brace":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/index.js","brace/theme/solarized_dark":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js","clusterize.js":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/clusterize.js/clusterize.js","jquery":"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/jquery/dist/jquery.js"}],"/home/slune/tmp/thesis/EDEMS/EDEMS/js/browser/localStorage.js":[function(require,module,exports){
 var global = require('../globals.js')
 
 var LS = {}
@@ -1341,9 +1766,9 @@ LS.storeRegisters = function () {
 /* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 LS.initGlobals = function () {
   if (window.localStorage.getItem('advanced') === null) {
-    window.localStorage.setItem('advanced', 'false')
+    window.localStorage.setItem('advanced', 'basic')
   }
-  global.advaced = window.localStorage.getItem('advanced')
+  global.advanced = window.localStorage.getItem('advanced')
 
   if (window.localStorage.getItem('registerF') === null) {
     window.localStorage.setItem('registerF', '00')
@@ -1478,10 +1903,10 @@ LS.initGlobals = function () {
 .DEF 0x8B INCE
 .DEF 0x8B INCP
 
-.DEF 0x8E INCWF
-.DEF 0x8E INCWB
-.DEF 0x8E INCWD
-.DEF 0x8E INCWS
+.DEF 0x8E INCFA
+.DEF 0x8E INCBC
+.DEF 0x8E INCDE
+.DEF 0x8E INCSP
 
 .DEF 0x91 DECF
 .DEF 0x91 DECB
@@ -1492,30 +1917,30 @@ LS.initGlobals = function () {
 .DEF 0x91 DECE
 .DEF 0x91 DECP
 
-.DEF 0x94 DECWF
-.DEF 0x94 DECWB
-.DEF 0x94 DECWD
-.DEF 0x94 DECWS
+.DEF 0x94 DECFA
+.DEF 0x94 DECBC
+.DEF 0x94 DECDE
+.DEF 0x94 DECSP
 
-.DEF 0x97 JMP 2B
+.DEF 0x97 JP 2B
 
-.DEF 0xA2 JPIFC 2B
-.DEF 0xA2 JPIFZ 2B
-.DEF 0xA2 JPIFN 2B
-.DEF 0xA2 JPIFV 2B
-.DEF 0xA2 JPIFP 2B
-.DEF 0xA2 JPIFH 2B
-.DEF 0xA2 JPIFQ 2B
-.DEF 0xA2 JPIFX 2B
+.DEF 0xA2 JPFC 2B
+.DEF 0xA2 JPFZ 2B
+.DEF 0xA2 JPFN 2B
+.DEF 0xA2 JPFV 2B
+.DEF 0xA2 JPFP 2B
+.DEF 0xA2 JPFH 2B
+.DEF 0xA2 JPFQ 2B
+.DEF 0xA2 JPFX 2B
 
-.DEF 0xA8 JPIF 2B
-.DEF 0xA8 JPIB 2B
-.DEF 0xA8 JPID 2B
-.DEF 0xA8 JPIS 2B
-.DEF 0xA8 JPIA 2B
-.DEF 0xA8 JPIC 2B
-.DEF 0xA8 JPIE 2B
-.DEF 0xA8 JPIP 2B
+.DEF 0xA8 JPF 2B
+.DEF 0xA8 JPB 2B
+.DEF 0xA8 JPD 2B
+.DEF 0xA8 JPS 2B
+.DEF 0xA8 JPA 2B
+.DEF 0xA8 JPC 2B
+.DEF 0xA8 JPE 2B
+.DEF 0xA8 JPP 2B
 
 .DEF 0xAE SUBF 2B
 .DEF 0xAE SUBB 2B
@@ -1557,16 +1982,16 @@ LS.initGlobals = function () {
 COOP 0x0
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R OP
 END
@@ -1575,17 +2000,17 @@ END
 COOP 0x08
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; store value to register
-W>AB TMP1
-R>DB OP
+AB<W TMP1
+DB<R OP
 WT
 END
 
@@ -1593,20 +2018,20 @@ END
 COOP 0x10
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ADD
 DB>R OP
 END
@@ -1631,22 +2056,22 @@ COOP 0x2C
 DECW op
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JMP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JP
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R PCH
 SVR PCL TMP1
 DECW PCH
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPF{flag}
 COOP 0x31
 JOFN OP
 JMP 0x97
@@ -1654,7 +2079,7 @@ INCW PCH
 INCW PCH
 END
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JPIF
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; JP{reg}
 COOP 0x39
 JON OP
 JMP 0x97
@@ -1666,20 +2091,20 @@ END
 COOP 0x41
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU SUB
 DB>R OP
 END
@@ -1688,20 +2113,20 @@ END
 COOP 0x49
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU AND
 DB>R OP
 END
@@ -1710,20 +2135,20 @@ END
 COOP 0x51
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU ORR
 DB>R OP
 END
@@ -1732,20 +2157,20 @@ END
 COOP 0x59
 ; load low address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP2
 ; load high address
 INCW PCH
-W>AB PCH
+AB<W PCH
 RD
 DB>R TMP1
 ; add value to register
-W>AB TMP1
+AB<W TMP1
 RD
 DB>R TMP0
 
-R>DB OP
+DB<R OP
 ALU XOR
 DB>R OP
 END`)
@@ -1805,7 +2230,7 @@ END`)
 lda 0x20 ;load number one
 inca
 
-ldb 0x21 ;laod number two
+ldb 0x21 ;load number two
 incb
 
 adda 0x22
@@ -1814,7 +2239,7 @@ addb 0x22
 sta 0x23
 stb 0x24
 
-jmp 0x14`)
+jp 0x14`)
   }
   if (window.localStorage.getItem('memory') === null) {
     window.localStorage.setItem('memory', `
@@ -2336,7 +2761,7 @@ jmp 0x14`)
   if (global.memory.length !== 65536) {
     throw RangeError('localStorage microcode is wrong size!')
   }
-  for (let i = 0; i < 65536; i++) {
+  for (var i = 0; i < 65536; i++) {
     global.memory[i] = parseInt(global.memory[i], 16).toString(10)
   }
 }
@@ -2388,7 +2813,7 @@ CU.doUInstruction = function () {
   try {
     CU.beforeUintruction()
     var opcode = CU.decode(global.microcode[global.registerUPCH.decPair])
-    console.log(opcode)
+    //console.log(opcode)
     switch (opcode.Name) {
       case 'SVR':
         CU.uinstr.svr(opcode.operand1, opcode.operand2)
@@ -2405,7 +2830,7 @@ CU.doUInstruction = function () {
       case 'JMP':
         CU.uinstr.jmp(opcode.operand1)
         break
-      case 'C>DB':
+      case 'DB<C':
         CU.uinstr.c2db(opcode.operand1)
         break
       case 'COOP':
@@ -2444,16 +2869,16 @@ CU.doUInstruction = function () {
       case 'DB>R ':
         CU.uinstr.db2r(opcode.operand1)
         break
-      case 'W>AB ':
+      case 'AB<W ':
         CU.uinstr.w2ab(opcode.operand1)
         break
-      case 'R>AB ':
+      case 'AB<R ':
         CU.uinstr.r2ab(opcode.operand1)
         break
-      case 'R>DB ':
+      case 'DB<R ':
         CU.uinstr.r2db(opcode.operand1)
         break
-      case 'O>DB':
+      case 'DB<O':
         CU.uinstr.o2db()
         break
       case 'DB>O':
@@ -2492,7 +2917,7 @@ CU.decode = function (opcode) {
     case '4':
       return {Name: 'RETB', operand1: opcode.charAt(1), operand2: opcode.charAt(2)}
     case '5':
-      return {Name: 'C>DB', operand1: opcode.substring(1, 3)}
+      return {Name: 'DB<C', operand1: opcode.substring(1, 3)}
     case '6':
       return {Name: 'COOP', operand1: opcode.substring(1, 3)}
     case '0':
@@ -2522,15 +2947,15 @@ CU.decode = function (opcode) {
         case '9':
           return {Name: 'DB>R ', operand1: opcode.charAt(2)}
         case 'A':
-          return {Name: 'W>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<W ', operand1: opcode.charAt(2)}
         case 'B':
-          return {Name: 'R>AB ', operand1: opcode.charAt(2)}
+          return {Name: 'AB<R ', operand1: opcode.charAt(2)}
         case 'C':
-          return {Name: 'R>DB ', operand1: opcode.charAt(2)}
+          return {Name: 'DB<R ', operand1: opcode.charAt(2)}
         case 'F':
           switch (opcode.charAt(2)) {
             case '0':
-              return {Name: 'O>DB'}
+              return {Name: 'DB<O'}
             case '1':
               return {Name: 'DB>O'}
             case '2':
@@ -2900,12 +3325,18 @@ $(document).ready(function () {
 
   gui.DrawMemoryTable()
   gui.DrawMemoryEditor()
+  gui.DrawMemoryDebug()
+
   gui.DrawMicrocodeTable()
   gui.DrawMicrocodeEditor()
+  gui.DrawMicrocodeDebug()
+
   gui.onclickSetup()
   gui.onChangeSetup()
   gui.refresh()
 
+  document.getElementById('memorySource').onclick()
+  document.getElementById('microcodeDebug').onclick()
   document.getElementById('selectEdemsType').onchange()
   document.getElementById('compileMicrocode').onclick()
   document.getElementById('compileMemory').onclick()
@@ -2926,8 +3357,14 @@ var memoryCompiler = {}
 memoryCompiler.compile = function (input) {
   var output = {'0': []}
   var pointer = '0'
+
+  var listing = ''
   var instruction = {}
   var operand
+
+  var inputRaw = input
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
 
   input = input.toUpperCase()
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
@@ -2935,6 +3372,8 @@ memoryCompiler.compile = function (input) {
 
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
+    var address = '    '
+    var code = ''
 
     if (line[0] === '.ORG') {
       try {
@@ -2943,14 +3382,19 @@ memoryCompiler.compile = function (input) {
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '.CONST') {
       try {
         output[pointer].push(parseHEX(line[1], 8))
+        address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
       } catch (x) {
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[1] + ' is not a valid address.')
       }
+
     } else if (line[0] === '') {
+
     } else if (line[0].substring(0, 1) === ';') {
+
     } else {
       instruction = uComp.assemblyKeywords.find(x => x.keyword === line[0])
       if (instruction === undefined) {
@@ -2959,6 +3403,8 @@ memoryCompiler.compile = function (input) {
 
       var instructionAddress = instruction.address.toString(16)
       output[pointer].push('0'.repeat(2 - instructionAddress.length) + instructionAddress)
+      address = ('0000' + (+pointer + output[pointer].length - 1).toString(16)).slice(-4)
+      code = ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
 
       if (instruction.operand !== undefined) {
         try {
@@ -2968,12 +3414,23 @@ memoryCompiler.compile = function (input) {
         }
         while (operand.length > 0) {
           output[pointer].push(operand.slice(-2))
+          code +=' ' + ('00' + (output[pointer][output[pointer].length - 1])).slice(-2)
           operand = operand.slice(0, -2)
         }
       }
     }
+
+    code =  code + ' '.repeat(8 - code.length)
+    listing = listing
+      + address
+      + '  '
+      + code
+      + '  '
+      + inputRaw[i]
+      + '\n'
   }
-  return output
+
+  return {output, listing}
 }
 
 function parseHEX (input, bits) {
@@ -3035,24 +3492,62 @@ var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
   microcodeCompiler.assemblyKeywords = []
-  var output = []
-  var lowRegisters = ['A', 'C', 'E', 'P', 'PCL', 'TMP2', 'UPCL', '4', '5', '6', '7', '12', '13', '14', '15']
 
-  input = input.toUpperCase()
+  var output = []
+  var listing = ''
+
+  var pairs = {
+    FA: 'F',
+    F: 'F',
+    BC: 'B',
+    B: 'B',
+    DE: 'D',
+    D: 'D',
+    SP: 'S',
+    S: 'S',
+    PC: 'PCH',
+    PCH: 'PCH',
+    PCHPCL: 'PCH',
+    TMP0OP: 'TMP0',
+    TMPOP: 'TMP0',
+    TMP0: 'TMP0',
+    OP: 'OP',
+    TMP: 'TMP1',
+    TMP1TMP2: 'TMP1',
+    TMP1: 'TMP1',
+    UPC: 'UPCH',
+    UPCH: 'UPCH',
+    UPCHUPCL: 'UPCH'
+  }
+
+  var inputRaw = input
     .replace(/^[\s\n]+|[\s\n]+$/, '\n')
     .split('\n')
+  input = input
+    .toUpperCase()
+    .replace(/^[\s\n]+|[\s\n]+$/, '\n')
+    .split('\n')
+
   for (var i = 0; i < input.length; i++) {
     var line = input[i].trim().split(' ')
+    var address = '    '
+    var code = '   '
+
     switch (line[0]) {
       case ('COOP'):
         var byte = 1536
         try {
           byte += parseNumber(line[1], 8)
           output.push(byte.toString(16))
+
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
+
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('ALU'):
         operations = {
           'ADD': 0,
@@ -3080,122 +3575,172 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push('00' + operations[line[1]])
+
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not valid ALU operation.')
         }
         break
-      case ('R>DB'):
+
+      case ('DB<R'):
         try {
           output.push('7C' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('R>AB'):
+
+      case ('AB<R'):
         try {
           output.push('7B' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('W>AB'):
-        if (lowRegisters.includes(line[1])) {
-          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
+
+      case ('AB<W'):
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
+          throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is not register pair name.')
         }
         try {
-          output.push('7A' + global.register(line[1]))
+          output.push('7A' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DB>R'):
         try {
           output.push('79' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('AB>W'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('78' + global.register(line[1]))
+          output.push('78' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('INCB'):
         try {
           output.push('77' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DECB'):
         try {
           output.push('76' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('INCW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('75' + global.register(line[1]))
+          output.push('75' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('DECW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister = pairs[line[1]]
+        if (highRegister === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         try {
-          output.push('74' + global.register(line[1]))
+          output.push('74' + global.register(highRegister))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOI'):
         try {
           output.push('73' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JON'):
         try {
           output.push('72' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOFI'):
         try {
           output.push('71' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('JOFN'):
         try {
           output.push('70' + global.register(line[1]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('C>DB'):
+
+      case ('DB<C'):
         var byte = 1280
         try {
           byte += parseNumber(line[1], 8)
           output.push(byte.toString(16))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('SVR'):
         var byte = '1'
         try {
@@ -3205,53 +3750,80 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte += global.register(line[2]))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('SVW'):
-        if (lowRegisters.includes(line[1])) {
+        var highRegister1 = pairs[line[1]]
+        if (highRegister1 === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[1] + ' is low register of pair.')
         }
         var byte = '2'
         try {
-          byte += global.register(line[1])
+          byte += global.register(highRegister1)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
-        if (lowRegisters.includes(line[1])) {
+
+        var highRegister2 = pairs[line[2]]
+        if (highRegister2 === undefined) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + line[2] + ' is low register of pair.')
         }
         try {
-          output.push(byte += global.register(line[2]))
+          output.push(byte += global.register(highRegister2))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
-      case ('O>DB'):
+
+      case ('DB<O'):
         output.push('7F0')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('DB>O'):
         output.push('7F1')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('END'):
         output.push('7F2')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('JMP'):
         var byte = 2048
         try {
           byte += parseNumber(line[1], 11)
           output.push(byte.toString(16))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('RD'):
         output.push('7F4')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('WT'):
         output.push('7F5')
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case ('SETB'):
         var byte = '3'
         try {
@@ -3261,10 +3833,13 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte + parseNumber(line[2], 3))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('RETB'):
         var byte = '4'
         try {
@@ -3274,10 +3849,13 @@ microcodeCompiler.compile = function (input) {
         }
         try {
           output.push(byte + parseNumber(line[2], 3))
+          address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+          code = ('000' + (output[output.length - 1])).slice(-3)
         } catch (err) {
           throw SyntaxError('Error on line: ' + (i + 1) + ' ' + err.message)
         }
         break
+
       case ('.DEF'):
 
         var byte = 2048
@@ -3307,17 +3885,29 @@ microcodeCompiler.compile = function (input) {
           })
         }
         output.push(byte)
+        address = ('0000' + (output.length - 1).toString(16)).slice(-4)
+        code = ('000' + (output[output.length - 1])).slice(-3)
         break
+
       case (''):
         break
+
       default:
         if (line[0].substring(0, 1) === ';') {
           break
         }
         throw SyntaxError('Error on line ' + (i + 1) + ': ' + line[0] + ' is not a valid keyword.')
+
     }
+    listing = listing
+      + address
+      + '  '
+      + code
+      + '  '
+      + inputRaw[i]
+      + '\n'
   }
-  return output
+  return {output, listing}
 }
 
 function parseNumber (input, bits) {
@@ -23622,194 +24212,6 @@ exports.version = "1.2.9";
             })();
         
 module.exports = window.ace.acequire("ace/ace");
-},{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/mode/assembly_x86.js":[function(require,module,exports){
-ace.define("ace/mode/assembly_x86_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../lib/oop");
-var TextHighlightRules = acequire("./text_highlight_rules").TextHighlightRules;
-
-var AssemblyX86HighlightRules = function() {
-
-    this.$rules = { start: 
-       [ { token: 'keyword.control.assembly',
-           regex: '\\b(?:aaa|aad|aam|aas|adc|add|addpd|addps|addsd|addss|addsubpd|addsubps|aesdec|aesdeclast|aesenc|aesenclast|aesimc|aeskeygenassist|and|andpd|andps|andnpd|andnps|arpl|blendpd|blendps|blendvpd|blendvps|bound|bsf|bsr|bswap|bt|btc|btr|bts|cbw|cwde|cdqe|clc|cld|cflush|clts|cmc|cmov(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|cmp|cmppd|cmpps|cmps|cnpsb|cmpsw|cmpsd|cmpsq|cmpss|cmpxchg|cmpxchg8b|cmpxchg16b|comisd|comiss|cpuid|crc32|cvtdq2pd|cvtdq2ps|cvtpd2dq|cvtpd2pi|cvtpd2ps|cvtpi2pd|cvtpi2ps|cvtps2dq|cvtps2pd|cvtps2pi|cvtsd2si|cvtsd2ss|cvts2sd|cvtsi2ss|cvtss2sd|cvtss2si|cvttpd2dq|cvtpd2pi|cvttps2dq|cvttps2pi|cvttps2dq|cvttps2pi|cvttsd2si|cvttss2si|cwd|cdq|cqo|daa|das|dec|div|divpd|divps|divsd|divss|dppd|dpps|emms|enter|extractps|f2xm1|fabs|fadd|faddp|fiadd|fbld|fbstp|fchs|fclex|fnclex|fcmov(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|fcom|fcmop|fcompp|fcomi|fcomip|fucomi|fucomip|fcos|fdecstp|fdiv|fdivp|fidiv|fdivr|fdivrp|fidivr|ffree|ficom|ficomp|fild|fincstp|finit|fnint|fist|fistp|fisttp|fld|fld1|fldl2t|fldl2e|fldpi|fldlg2|fldln2|fldz|fldcw|fldenv|fmul|fmulp|fimul|fnop|fpatan|fprem|fprem1|fptan|frndint|frstor|fsave|fnsave|fscale|fsin|fsincos|fsqrt|fst|fstp|fstcw|fnstcw|fstenv|fnstenv|fsts|fnstsw|fsub|fsubp|fisub|fsubr|fsubrp|fisubr|ftst|fucom|fucomp|fucompp|fxam|fxch|fxrstor|fxsave|fxtract|fyl2x|fyl2xp1|haddpd|haddps|husbpd|hsubps|idiv|imul|in|inc|ins|insb|insw|insd|insertps|int|into|invd|invplg|invpcid|iret|iretd|iretq|lahf|lar|lddqu|ldmxcsr|lds|les|lfs|lgs|lss|lea|leave|lfence|lgdt|lidt|llgdt|lmsw|lock|lods|lodsb|lodsw|lodsd|lodsq|lsl|ltr|maskmovdqu|maskmovq|maxpd|maxps|maxsd|maxss|mfence|minpd|minps|minsd|minss|monitor|mov|movapd|movaps|movbe|movd|movq|movddup|movdqa|movdqu|movq2q|movhlps|movhpd|movhps|movlhps|movlpd|movlps|movmskpd|movmskps|movntdqa|movntdq|movnti|movntpd|movntps|movntq|movq|movq2dq|movs|movsb|movsw|movsd|movsq|movsd|movshdup|movsldup|movss|movsx|movsxd|movupd|movups|movzx|mpsadbw|mul|mulpd|mulps|mulsd|mulss|mwait|neg|not|or|orpd|orps|out|outs|outsb|outsw|outsd|pabsb|pabsw|pabsd|packsswb|packssdw|packusdw|packuswbpaddb|paddw|paddd|paddq|paddsb|paddsw|paddusb|paddusw|palignr|pand|pandn|pause|pavgb|pavgw|pblendvb|pblendw|pclmulqdq|pcmpeqb|pcmpeqw|pcmpeqd|pcmpeqq|pcmpestri|pcmpestrm|pcmptb|pcmptgw|pcmpgtd|pcmpgtq|pcmpistri|pcmpisrm|pextrb|pextrd|pextrq|pextrw|phaddw|phaddd|phaddsw|phinposuw|phsubw|phsubd|phsubsw|pinsrb|pinsrd|pinsrq|pinsrw|pmaddubsw|pmadddwd|pmaxsb|pmaxsd|pmaxsw|pmaxsw|pmaxub|pmaxud|pmaxuw|pminsb|pminsd|pminsw|pminub|pminud|pminuw|pmovmskb|pmovsx|pmovzx|pmuldq|pmulhrsw|pmulhuw|pmulhw|pmulld|pmullw|pmuludw|pop|popa|popad|popcnt|popf|popfd|popfq|por|prefetch|psadbw|pshufb|pshufd|pshufhw|pshuflw|pshufw|psignb|psignw|psignd|pslldq|psllw|pslld|psllq|psraw|psrad|psrldq|psrlw|psrld|psrlq|psubb|psubw|psubd|psubq|psubsb|psubsw|psubusb|psubusw|test|ptest|punpckhbw|punpckhwd|punpckhdq|punpckhddq|punpcklbw|punpcklwd|punpckldq|punpckldqd|push|pusha|pushad|pushf|pushfd|pxor|prcl|rcr|rol|ror|rcpps|rcpss|rdfsbase|rdgsbase|rdmsr|rdpmc|rdrand|rdtsc|rdtscp|rep|repe|repz|repne|repnz|roundpd|roundps|roundsd|roundss|rsm|rsqrps|rsqrtss|sahf|sal|sar|shl|shr|sbb|scas|scasb|scasw|scasd|set(?:n?e|ge?|ae?|le?|be?|n?o|n?z)|sfence|sgdt|shld|shrd|shufpd|shufps|sidt|sldt|smsw|sqrtpd|sqrtps|sqrtsd|sqrtss|stc|std|stmxcsr|stos|stosb|stosw|stosd|stosq|str|sub|subpd|subps|subsd|subss|swapgs|syscall|sysenter|sysexit|sysret|teset|ucomisd|ucomiss|ud2|unpckhpd|unpckhps|unpcklpd|unpcklps|vbroadcast|vcvtph2ps|vcvtp2sph|verr|verw|vextractf128|vinsertf128|vmaskmov|vpermilpd|vpermilps|vperm2f128|vtestpd|vtestps|vzeroall|vzeroupper|wait|fwait|wbinvd|wrfsbase|wrgsbase|wrmsr|xadd|xchg|xgetbv|xlat|xlatb|xor|xorpd|xorps|xrstor|xsave|xsaveopt|xsetbv|lzcnt|extrq|insertq|movntsd|movntss|vfmaddpd|vfmaddps|vfmaddsd|vfmaddss|vfmaddsubbpd|vfmaddsubps|vfmsubaddpd|vfmsubaddps|vfmsubpd|vfmsubps|vfmsubsd|vfnmaddpd|vfnmaddps|vfnmaddsd|vfnmaddss|vfnmsubpd|vfnmusbps|vfnmusbsd|vfnmusbss|cvt|xor|cli|sti|hlt|nop|lock|wait|enter|leave|ret|loop(?:n?e|n?z)?|call|j(?:mp|n?e|ge?|ae?|le?|be?|n?o|n?z))\\b',
-           caseInsensitive: true },
-         { token: 'variable.parameter.register.assembly',
-           regex: '\\b(?:CS|DS|ES|FS|GS|SS|RAX|EAX|RBX|EBX|RCX|ECX|RDX|EDX|RCX|RIP|EIP|IP|RSP|ESP|SP|RSI|ESI|SI|RDI|EDI|DI|RFLAGS|EFLAGS|FLAGS|R8-15|(?:Y|X)MM(?:[0-9]|10|11|12|13|14|15)|(?:A|B|C|D)(?:X|H|L)|CR(?:[0-4]|DR(?:[0-7]|TR6|TR7|EFER)))\\b',
-           caseInsensitive: true },
-         { token: 'constant.character.decimal.assembly',
-           regex: '\\b[0-9]+\\b' },
-         { token: 'constant.character.hexadecimal.assembly',
-           regex: '\\b0x[A-F0-9]+\\b',
-           caseInsensitive: true },
-         { token: 'constant.character.hexadecimal.assembly',
-           regex: '\\b[A-F0-9]+h\\b',
-           caseInsensitive: true },
-         { token: 'string.assembly', regex: /'([^\\']|\\.)*'/ },
-         { token: 'string.assembly', regex: /"([^\\"]|\\.)*"/ },
-         { token: 'support.function.directive.assembly',
-           regex: '^\\[',
-           push: 
-            [ { token: 'support.function.directive.assembly',
-                regex: '\\]$',
-                next: 'pop' },
-              { defaultToken: 'support.function.directive.assembly' } ] },
-         { token: 
-            [ 'support.function.directive.assembly',
-              'support.function.directive.assembly',
-              'entity.name.function.assembly' ],
-           regex: '(^struc)( )([_a-zA-Z][_a-zA-Z0-9]*)' },
-         { token: 'support.function.directive.assembly',
-           regex: '^endstruc\\b' },
-        { token: 
-            [ 'support.function.directive.assembly',
-              'entity.name.function.assembly',
-              'support.function.directive.assembly',
-              'constant.character.assembly' ],
-           regex: '^(%macro )([_a-zA-Z][_a-zA-Z0-9]*)( )([0-9]+)' },
-         { token: 'support.function.directive.assembly',
-           regex: '^%endmacro' },
-         { token: 
-            [ 'text',
-              'support.function.directive.assembly',
-              'text',
-              'entity.name.function.assembly' ],
-           regex: '(\\s*)(%define|%xdefine|%idefine|%undef|%assign|%defstr|%strcat|%strlen|%substr|%00|%0|%rotate|%rep|%endrep|%include|\\$\\$|\\$|%unmacro|%if|%elif|%else|%endif|%(?:el)?ifdef|%(?:el)?ifmacro|%(?:el)?ifctx|%(?:el)?ifidn|%(?:el)?ifidni|%(?:el)?ifid|%(?:el)?ifnum|%(?:el)?ifstr|%(?:el)?iftoken|%(?:el)?ifempty|%(?:el)?ifenv|%pathsearch|%depend|%use|%push|%pop|%repl|%arg|%stacksize|%local|%error|%warning|%fatal|%line|%!|%comment|%endcomment|__NASM_VERSION_ID__|__NASM_VER__|__FILE__|__LINE__|__BITS__|__OUTPUT_FORMAT__|__DATE__|__TIME__|__DATE_NUM__|_TIME__NUM__|__UTC_DATE__|__UTC_TIME__|__UTC_DATE_NUM__|__UTC_TIME_NUM__|__POSIX_TIME__|__PASS__|ISTRUC|AT|IEND|BITS 16|BITS 32|BITS 64|USE16|USE32|__SECT__|ABSOLUTE|EXTERN|GLOBAL|COMMON|CPU|FLOAT)\\b( ?)((?:[_a-zA-Z][_a-zA-Z0-9]*)?)',
-           caseInsensitive: true },
-          { token: 'support.function.directive.assembly',
-           regex: '\\b(?:d[bwdqtoy]|res[bwdqto]|equ|times|align|alignb|sectalign|section|ptr|byte|word|dword|qword|incbin)\\b',
-           caseInsensitive: true },
-         { token: 'entity.name.function.assembly', regex: '^\\s*%%[\\w.]+?:$' },
-         { token: 'entity.name.function.assembly', regex: '^\\s*%\\$[\\w.]+?:$' },
-         { token: 'entity.name.function.assembly', regex: '^[\\w.]+?:' },
-         { token: 'entity.name.function.assembly', regex: '^[\\w.]+?\\b' },
-         { token: 'comment.assembly', regex: ';.*$' } ] 
-    };
-    
-    this.normalizeRules();
-};
-
-AssemblyX86HighlightRules.metaData = { fileTypes: [ 'asm' ],
-      name: 'Assembly x86',
-      scopeName: 'source.assembly' };
-
-
-oop.inherits(AssemblyX86HighlightRules, TextHighlightRules);
-
-exports.AssemblyX86HighlightRules = AssemblyX86HighlightRules;
-});
-
-ace.define("ace/mode/folding/coffee",["require","exports","module","ace/lib/oop","ace/mode/folding/fold_mode","ace/range"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../../lib/oop");
-var BaseFoldMode = acequire("./fold_mode").FoldMode;
-var Range = acequire("../../range").Range;
-
-var FoldMode = exports.FoldMode = function() {};
-oop.inherits(FoldMode, BaseFoldMode);
-
-(function() {
-
-    this.getFoldWidgetRange = function(session, foldStyle, row) {
-        var range = this.indentationBlock(session, row);
-        if (range)
-            return range;
-
-        var re = /\S/;
-        var line = session.getLine(row);
-        var startLevel = line.search(re);
-        if (startLevel == -1 || line[startLevel] != "#")
-            return;
-
-        var startColumn = line.length;
-        var maxRow = session.getLength();
-        var startRow = row;
-        var endRow = row;
-
-        while (++row < maxRow) {
-            line = session.getLine(row);
-            var level = line.search(re);
-
-            if (level == -1)
-                continue;
-
-            if (line[level] != "#")
-                break;
-
-            endRow = row;
-        }
-
-        if (endRow > startRow) {
-            var endColumn = session.getLine(endRow).length;
-            return new Range(startRow, startColumn, endRow, endColumn);
-        }
-    };
-    this.getFoldWidget = function(session, foldStyle, row) {
-        var line = session.getLine(row);
-        var indent = line.search(/\S/);
-        var next = session.getLine(row + 1);
-        var prev = session.getLine(row - 1);
-        var prevIndent = prev.search(/\S/);
-        var nextIndent = next.search(/\S/);
-
-        if (indent == -1) {
-            session.foldWidgets[row - 1] = prevIndent!= -1 && prevIndent < nextIndent ? "start" : "";
-            return "";
-        }
-        if (prevIndent == -1) {
-            if (indent == nextIndent && line[indent] == "#" && next[indent] == "#") {
-                session.foldWidgets[row - 1] = "";
-                session.foldWidgets[row + 1] = "";
-                return "start";
-            }
-        } else if (prevIndent == indent && line[indent] == "#" && prev[indent] == "#") {
-            if (session.getLine(row - 2).search(/\S/) == -1) {
-                session.foldWidgets[row - 1] = "start";
-                session.foldWidgets[row + 1] = "";
-                return "";
-            }
-        }
-
-        if (prevIndent!= -1 && prevIndent < indent)
-            session.foldWidgets[row - 1] = "start";
-        else
-            session.foldWidgets[row - 1] = "";
-
-        if (indent < nextIndent)
-            return "start";
-        else
-            return "";
-    };
-
-}).call(FoldMode.prototype);
-
-});
-
-ace.define("ace/mode/assembly_x86",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/assembly_x86_highlight_rules","ace/mode/folding/coffee"], function(acequire, exports, module) {
-"use strict";
-
-var oop = acequire("../lib/oop");
-var TextMode = acequire("./text").Mode;
-var AssemblyX86HighlightRules = acequire("./assembly_x86_highlight_rules").AssemblyX86HighlightRules;
-var FoldMode = acequire("./folding/coffee").FoldMode;
-
-var Mode = function() {
-    this.HighlightRules = AssemblyX86HighlightRules;
-    this.foldingRules = new FoldMode();
-    this.$behaviour = this.$defaultBehaviour;
-};
-oop.inherits(Mode, TextMode);
-
-(function() {
-    this.lineCommentStart = ";";
-    this.$id = "ace/mode/assembly_x86";
-}).call(Mode.prototype);
-
-exports.Mode = Mode;
-});
-
 },{}],"/home/slune/tmp/thesis/EDEMS/EDEMS/node_modules/brace/theme/solarized_dark.js":[function(require,module,exports){
 ace.define("ace/theme/solarized_dark",["require","exports","module","ace/lib/dom"], function(acequire, exports, module) {
 

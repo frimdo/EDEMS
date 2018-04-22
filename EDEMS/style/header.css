@@ -5,12 +5,12 @@
 
     display: grid;
     grid-row-gap: 15px;
-    grid-column-gap: 15px;
-    grid-template-columns: 1fr 0.5fr 2fr 0.5fr 1.5fr;
-    grid-template-areas: "buttons-grid . clock-grid . logo";
+    /*grid-column-gap: 15px;*/
+    grid-template-columns: 0.25fr 3.5fr 1fr 4fr 1fr 3.5fr 0.25fr ;
+    grid-template-areas: ". buttons-grid . clock-grid . logo .";
 }
 
-@media (max-width: 990px) {
+@media (max-width: 1200px) {
     #header-grid {
         border: 0;
         grid-area: header-grid;
@@ -38,13 +38,7 @@
 #buttons-grid button, #clock-grid button {
     margin: 5px;
     flex-grow: 10;
-}
-
-#clock-grid span {
-    max-width: 30%;
-    font-size: 120%;
-    margin: 5px;
-    flex-grow: 1;
+    flex-basis: 0;
 }
 
 #freq {
@@ -62,11 +56,12 @@
     grid-area: logo;
     font-weight: bold;
     font-size: 370%;
+    text-align: right;
 }
 
 #logo select {
     font-size: 50%;
-    width: 35%;
+    width: 50%;
     margin: 0;
     padding: 0;
     border: none;

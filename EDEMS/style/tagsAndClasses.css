@@ -1,5 +1,4 @@
 * {
-    font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
     font-size: 100%;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
@@ -26,9 +25,6 @@ table, th, td {
     padding: 2px;
 }
 
-div {
-    font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
-}
 
 .block, button, .block input {
     font-family: Ubuntu Mono, Helvetica, Arial, sans-serif;
@@ -117,8 +113,7 @@ select {
 }
 
 .ace_editor {
-    font-family: inherit !important;
-    font-size: 16px !important;
+    font-size: 13px !important;
 }
 
 .insideBlock {
@@ -134,12 +129,88 @@ select {
     min-width: 34.55px;
 }
 
-.F-viewer-NameBlock, .F-viewer-ValueBlock{
-    border: 1px solid #2d2d2d;
-    padding: 2px 0 2px 0;
-}
+
 
 .descr-table {
     padding-right: 8px;
 }
 
+.frequency {
+    max-width: 30%;
+    font-size: 120%;
+    margin: 5px;
+    flex-grow: 1;
+}
+
+.tooltip {
+    position: relative;
+
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+
+
+    opacity: 0;
+    transition: opacity 0.3s;
+    transition-delay: 1s;
+}
+.tooltiptext {
+    white-space: nowrap;
+
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 5px;
+
+    background-color: black;
+    color: #fff;
+    font-size: medium;
+    font-weight: bold;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -30px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.upload-btn {
+    padding-top: 3px;
+}
+
+.viewer-table {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.viewer-table>div{
+    flex-grow: 1;
+    display: flex;
+}
+
+.viewer-table>div>span{
+    width: 25%;
+    flex-grow: 1;
+}
+
+.viewer-NameBlock, .viewer-ValueBlock{
+    border: 2px solid #2d2d2d;
+    padding: 2px 3px 2px 3px;
+}
+
+.btns button,
+.btns label {
+    flex-grow: 1;
+    font-size: 80%;
+    justify-content: space-between;
+    margin: 0 5px 0 5px;
+}
+.btns{
+    display:flex;
+}

@@ -7,18 +7,18 @@
     grid-row-gap: 3px;
     grid-column-gap: 3px;
     grid-template-columns: 0.5fr 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr;
-    grid-template-rows: 0.25fr 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr 0.25fr;
+    grid-template-rows: 0.25fr 1fr 1fr 6fr 1fr 1fr 1fr 3fr 1fr 1fr 0.25fr;
     grid-template-areas:
             ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  "
-            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
-            ".  .   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
-            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  "
+            ".  .   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .   .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .   .  "
             ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU .  "
             ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU .  "
             ".  MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU .  "
-            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .   .  "
-            ".  .   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .   .  "
-            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  "
+            ".  MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  .   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
+            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
             ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  ";
 }
 
@@ -31,23 +31,23 @@
     grid-row-gap: 3px;
     grid-column-gap: 3px;
     grid-template-columns: 0.5fr 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr;
-    grid-template-rows: 0.25fr 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr 0.25fr;
+    grid-template-rows: 0.25fr 1fr 1fr 6fr 1fr 1fr 1fr 3fr 1fr 1fr 0.25fr;
     grid-template-areas:
             ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  "
-            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
-            ".  .   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
-            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  "
+            ".  .   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .   .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .   .  "
             ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU .  "
             ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU .  "
             ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU .  "
-            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .   .  "
-            ".  .   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .   .  "
-            ".  ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB .  "
+            ".  MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU .  "
+            ".  .   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2 .  "
+            ".  EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB .  "
             ".  .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .  ";
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
     #body-grid.advanced {
         grid-area: body-grid;
         max-height: 90vh;
@@ -56,17 +56,19 @@
         grid-row-gap: 3px;
         grid-column-gap: 3px;
         grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 7fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
-        grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 6fr 1fr 1fr 1fr 3fr 1fr 1fr;
         grid-template-areas:
-                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB"
-                ".   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2"
-                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB"
+                ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
                 "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG ALR ALU ALU ALU"
                 "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
                 "MEM MEM MEM MEM MEM M2C COU COU COU .   REG REG REG REG REG RAL ALU ALU ALU"
-                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   .   .   .  "
-                ".   .   .   A2M .   .   .   .   .   .   .   W2A .   A2W .   .   .   .   .  "
-                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+                "MEM MEM MEM MEM MEM .   COU COU COU .   REG REG REG REG REG .   ALU ALU ALU"
+                ".   WRT .   REA .   .   .   C2D .   .   .   D2R .   R2D .   .   D2L .   AL2"
+                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB DAB";
+
+
     }
 
     #body-grid:not(.advanced) {
@@ -78,17 +80,17 @@
         grid-row-gap: 3px;
         grid-column-gap: 3px;
         grid-template-columns: 1fr 1fr 5fr 1fr 1fr 1fr 1fr 1fr 2fr 1fr 1fr 1fr 1fr 2fr 1fr;
-        grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr 6fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 6fr 1fr 1fr 1fr 3fr 1fr 1fr;
         grid-template-areas:
-                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB"
-                ".   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2"
+                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB"
+                ".   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .  "
                 "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
                 "MEM MEM MEM MEM MEM .   REG REG REG REG REG ALR ALU ALU ALU"
                 "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   ALU ALU ALU"
                 "MEM MEM MEM MEM MEM .   REG REG REG REG REG RAL ALU ALU ALU"
                 "MEM MEM MEM MEM MEM .   REG REG REG REG REG .   .   .   .  "
-                ".   .   .   A2M .   .   .   W2A .   A2W .   .   .   .   .  "
-                "ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB ADB";
+                ".   WRT .   REA .   .   .   D2R .   R2D .   .   D2L .   AL2"
+                "EDB EDB EDB EDB EDB D2D DAB DAB DAB DAB DAB DAB DAB DAB DAB";
     }
 }
 
@@ -112,7 +114,6 @@
     display: flex;
     flex-direction: column;
     padding: 5px;
-    overflow-y: auto;
     grid-area: MEM;
 }
 
@@ -120,7 +121,6 @@
     display: flex;
     flex-direction: column;
     padding: 5px;
-    overflow-y: auto;
     grid-area: COU;
 }
 
@@ -220,7 +220,7 @@
     display: flex;
 }
 
-#memory-editor, #microcode-editor {
+#memory-editor, #microcode-editor, #memory-debug, #microcode-debug {
     flex-grow: 1;
     margin-bottom: 2px;
 }
@@ -240,18 +240,6 @@
     top: 80px;
 }
 */
-#memory-btns button,
-#microcode-btns button,
-#memory-btns label,
-#microcode-btns label {
-    flex-grow: 1;
-    font-size: 80%;
-    justify-content: space-between;
-    margin: 0 5px 0 5px;
-}
-#memory-btns, #microcode-btns{
-    display:flex;
-}
 
 #EdataBus, #addressBus {
     font-size: 120%;

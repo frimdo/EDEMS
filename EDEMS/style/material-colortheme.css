@@ -84,13 +84,22 @@ body {
     background-color: #52c7b8;
     border: none;
 }
-#buttons-grid, #clock-grid, #logo {
+#clock-grid{
     background-color: #009688;
 }
 
-#buttons-grid button, #clock-grid button, #logo button, #logo span, #logo select {
+#buttons-grid, #logo {
+    box-shadow: none;
+}
+
+#clock-grid button, #logo button, #logo span, #logo select {
     color: #000000;
     background-color: #52c7b8;
+}
+
+#buttons-grid button {
+    color: #000000;
+    background-color: #009688;
 }
 
 #buttons-grid button:hover, #clock-grid button:hover{
@@ -131,12 +140,20 @@ body {
     color: #fafafa;
 }
 
+#microcode-tabs .highlighted-tab,
+#memory-tabs .highlighted-tab{
+    background-color: rgb(0, 43, 54);
+    border-color: rgb(0, 43, 54);
+}
+
+#memory-tabs button,
 #memory-btns button,
 #memory-btns label{
     background-color: #9a0007;
     border-color: #9a0007;
     color: #fafafa;
 }
+#memory-tabs button:hover,
 #memory-btns button:hover,
 #memory-btns label:hover{
     background-color: #a40a11;
@@ -148,6 +165,7 @@ body {
     color: #fafafa;
 }
 
+#microcode-tabs button,
 #microcode-btns button,
 #microcode-btns label{
     background-color: #6a0080;
@@ -155,6 +173,7 @@ body {
     color: #fafafa;
 }
 
+#microcode-tabs button:hover,
 #microcode-btns button:hover,
 #microcode-btns label:hover{
     background-color: #740a8a;
@@ -229,6 +248,17 @@ body {
 .pairButton[disabled],
 .registerButton:disabled,
 .registerButton[disabled] {
+    background-color: transparent;
+    border: transparent;
+    color: #000000;
+}
+
+.pairBlock .flowButton:disabled,
+.pairBlock .flowButton[disabled],
+.pairBlock .pairButton:disabled,
+.pairBlock .pairButton[disabled],
+.pairBlock .registerButton:disabled,
+.pairBlock .registerButton[disabled] {
     background-color: #757575;
     border: 1px solid #757575;
     color: #000000;
@@ -254,13 +284,15 @@ body {
     background-color: #F44336 !important;
 }
 
-.F-viewer-NameBlock{
+.viewer-NameBlock{
     background-color: #00600f;
-    border: 1px solid #00600f;
 }
 
-.F-viewer-ValueBlock{
+.viewer-ValueBlock{
     background-color: #6abf69;
-    border: 1px solid #6abf69;
     color: #000000;
+}
+
+.viewer-NameBlock, .viewer-ValueBlock {
+    border-color: #388e3c;
 }
