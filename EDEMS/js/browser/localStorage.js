@@ -2,6 +2,7 @@ var global = require('../globals.js')
 
 var LS = {}
 
+/** Function that stores all globals to local storage of browser */
 LS.storeGlobals = function () {
   LS.storeMicrocode()
   LS.storeMemory()
@@ -10,11 +11,13 @@ LS.storeGlobals = function () {
   window.localStorage.setItem('advanced', global.advanced)
 }
 
+/** Function that stores microcode and microcode source code to local storage of browser */
 LS.storeMicrocode = function () {
   window.localStorage.setItem('microcode', global.microcode.toString())
   window.localStorage.setItem('microcodeValue', global.microcodeEditor.getValue())
 }
 
+/** Function that stores memory and memorysource code to local storage of browser */
 LS.storeMemory = function () {
   var tmp = new Array(65536)
   for (var i = 0; i < 65536; i++) {
@@ -24,6 +27,7 @@ LS.storeMemory = function () {
   window.localStorage.setItem('memoryValue', global.memoryEditor.getValue())
 }
 
+/** Function that stores register values to local storage of browser */
 LS.storeRegisters = function () {
   window.localStorage.setItem('registerF', global.registerF.hex)
   window.localStorage.setItem('registerA', global.registerA.hex)
@@ -43,7 +47,7 @@ LS.storeRegisters = function () {
   window.localStorage.setItem('registerUPCL', global.registerUPCL.hex)
 }
 
-/* function that loads variables from localStorage. In case of empty localStorage initializes default values. */
+/** function that loads variables from localStorage. In case of empty localStorage initializes default values. */
 LS.initGlobals = function () {
   if (window.localStorage.getItem('advanced') === null) {
     window.localStorage.setItem('advanced', 'basic')

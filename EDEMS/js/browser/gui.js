@@ -10,10 +10,10 @@ require('../ace/EdemsMicrocodeAssemblyListing')
 require('../ace/EdemsMemoryAssembly')
 require('../ace/EdemsMemoryAssemblyListing')
 require('brace/theme/solarized_dark')
-//var ace = require('../../node_modules/ace-builds/src-min-noconflict/ace.js')
 
 var gui = {}
 
+/** Function to populate all values to GUI */
 gui.refresh = function () {
   $('#registerF').text('0x' + global.registerF.hex)
   $('#registerA').text('0x' + global.registerA.hex)
@@ -40,6 +40,7 @@ gui.refresh = function () {
   global.dataBus.onChange()
 }
 
+/** Function to create GUI table for memory */
 gui.DrawMemoryTable = function () {
 
   gui.memoryData = []
@@ -87,6 +88,7 @@ gui.DrawMemoryTable = function () {
   gui.MemoryTable.refresh(gui.memoryData)
 }
 
+/** Function that inicializes memory editor */
 gui.DrawMemoryEditor = function () {
   global.memoryEditor = ace.edit('memory-editor')
   global.memoryEditor.setTheme('ace/theme/solarized_dark')
@@ -97,6 +99,7 @@ gui.DrawMemoryEditor = function () {
   global.memoryEditor.setValue(window.localStorage.getItem('memoryValue'))
 }
 
+/** Function that inicializes memory listing editor */
 gui.DrawMemoryDebug = function () {
   global.memoryDebug = ace.edit('memory-debug')
   global.memoryDebug.setTheme('ace/theme/solarized_dark')
@@ -111,6 +114,7 @@ gui.DrawMemoryDebug = function () {
   global.memoryDebug.setValue('Nothing to debug...')
 }
 
+/** Function that inicializes microcode editor */
 gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor = ace.edit('microcode-editor')
   global.microcodeEditor.getSession().setMode('ace/mode/EdemsMicrocodeAssembly')
@@ -118,6 +122,7 @@ gui.DrawMicrocodeEditor = function () {
   global.microcodeEditor.setValue(window.localStorage.getItem('microcodeValue'))
 }
 
+/** Function that inicializes microcode listing editor */
 gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug = ace.edit('microcode-debug')
   global.microcodeDebug.getSession().setMode('ace/mode/EdemsMicrocodeAssemblyListing')
@@ -129,8 +134,8 @@ gui.DrawMicrocodeDebug = function () {
   global.microcodeDebug.setValue('Nothing to debug...')
 }
 
+/** Function to create GUI table for microcode */
 gui.DrawMicrocodeTable = function () {
-
   gui.microcodeData = []
 
   var newline = ''
@@ -163,8 +168,8 @@ gui.DrawMicrocodeTable = function () {
   gui.MemoryTable.refresh(gui.microcodeData)
 }
 
+/* Function to initialize all onclick functions of clickable GUI blocks */
 gui.onclickSetup = function () {
-
   document.getElementById('loadMemory').onchange = function (event) {
     var input = event.target
     try {
@@ -619,10 +624,11 @@ gui.onclickSetup = function () {
   }
 }
 
+/** Function that creates all onChange functions of EDEM */
 gui.onChangeSetup = function () {
   document.getElementById('selectEdemsType').onchange = function () {
     global.advanced = this.value
-    if (global.advanced == 'advanced') {
+    if (global.advanced === 'advanced') {
       $('#logo span').html('advanced')
       $('#body-grid').addClass('advanced')
 
@@ -661,7 +667,7 @@ gui.onChangeSetup = function () {
       global.microcodeEditor.resize()
       global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
       global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
-    } else if (global.advanced == 'basic') {
+    } else if (global.advanced === 'basic') {
       $('#logo span').html('basic')
       $('#body-grid').removeClass('advanced')
 
