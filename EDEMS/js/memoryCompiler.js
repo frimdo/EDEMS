@@ -3,6 +3,10 @@ var BinNumber = require('./binNumber.js')
 
 var memoryCompiler = {}
 
+/** Function that compiles input as EDEMS code
+ * @param {string} multiline string to be parsed as code
+ * @borrows microcodeCompiler.assemblyKeywords
+ */
 memoryCompiler.compile = function (input) {
   var output = {'0': []}
   var pointer = '0'
@@ -69,7 +73,7 @@ memoryCompiler.compile = function (input) {
       }
     }
 
-    code =  code + ' '.repeat(8 - code.length)
+    code = code + ' '.repeat(8 - code.length)
     listing = listing
       + address
       + '  '
@@ -82,6 +86,10 @@ memoryCompiler.compile = function (input) {
   return {output, listing}
 }
 
+/** Function that parses hex string as n-bit number
+ * @param {string} HEX formatted string (0x1F)
+ * @param {number} Number of bits
+ */
 function parseHEX (input, bits) {
   input = input.toLowerCase()
   var output = {}
@@ -106,6 +114,10 @@ function parseHEX (input, bits) {
   return output.hex
 }
 
+/** Function to parse string number to number type
+ * @param {string} Number
+ * @param {number} Number of bits
+ */
 function parseNumber (input, bits) {
   input = input.toLowerCase()
   var output = {}

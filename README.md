@@ -68,14 +68,14 @@ F register contains ALU flags. Those are:
 |-----|-----|-----|-----|-----|-----|-----|-----|
 |F[7] |F[6] |F[5] |F[4] |F[3] |F[2] |F[1] |F[0] |
 
-- C - carry
-- Z - zero
-- N - Negative
-- V - Two's complement overflow
-          - P - Parity (1 if parity odd)
-- H - Half carry
-- Q - Sticky bit 
-- X - not operated by ALU, usage defined by instruction set/user.
+#### C - carry
+#### Z - zero
+#### N - Negative
+#### V - Two's complement overflow
+#### P - Parity (1 if parity odd)
+#### H - Half carry
+#### Q - Sticky bit 
+#### X - not operated by ALU, usage defined by instruction set/user.
 
 ## ALU
 ```
@@ -232,6 +232,37 @@ LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |ad
 |OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|
 |XOR{reg}  | address  | 17   |logical **xor** operation of value from address and register. (result saved in the register)|
 
+
+
+
+## Clock
+- ustep - one microstep is done
+- run - steps being done until stopped
+- step - microsteps being done until microinstruction END is done
+- stop - stop after actual uinstruction is done
+
+## Microcode compiler
 ### Supported pseudoinstructions
 - `.org` - defines starting address to place binary to
 - `.const` - place constant to memory
+
+### Supported microinstructions
+
+
+### Supported number formats
+
+### Supported register names
+
+### Supported comments
+
+## Memory compiler
+### Supported pseudoinstructions
+- `.org` - defines starting address to place binary to
+- `.const` - place constant to memory
+
+### Supported instructions
+
+
+### Supported number formats
+
+### Supported comments

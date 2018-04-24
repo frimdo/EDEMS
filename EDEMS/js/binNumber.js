@@ -1,4 +1,10 @@
+/** New type allowing to create a n-bit int variable */
 class BinNumber {
+  /** @constructor
+   * @param {number} default value
+   * @param {number} number of bits
+   * @param {BinNumber} Paired BinNumber (constructedNumber paired)
+   */
   constructor (val, bits = 8, paired = undefined) {
     this.bits = bits
     this.maximum = (Math.pow(2, bits)) - 1
@@ -14,6 +20,9 @@ class BinNumber {
     }
   }
 
+  /** Value setter
+   * @param {number/string} value that will be truncated. Accepts number or hex and binary strings (0x7F, 0b1010)
+   */
   set val (val) {
     if (typeof val === 'number') {
       this.value = val & this.maximum
@@ -33,6 +42,9 @@ class BinNumber {
     throw new TypeError('BinNumber - val: Wrong input')
   }
 
+  /** Value setter for whole pair
+   * @param {number/string} value that will be truncated. Accepts number or hex and binary strings (0x7F, 0b1010)
+   */
   set valPair (val) {
     this.pair.val = val
 
@@ -55,6 +67,7 @@ class BinNumber {
     this.onChange()
   }
 
+  /** Value getter in hex format (0x7F) */
   get hex () {
     var value = parseInt(this.value, 10).toString(16)
 
@@ -67,6 +80,7 @@ class BinNumber {
     }
   }
 
+  /** Value getter in hex format (0x7F) for whole pair */
   get hexPair () {
     if (this.pair === undefined) {
       throw new TypeError('BinNumber - hexPair: Instance does not have a pair.')
@@ -78,11 +92,13 @@ class BinNumber {
     }
   }
 
+  /** Value getter in bin format (0b10110) */
   get bin () {
     var value = parseInt(this.value, 10).toString(2)
     return '0'.repeat(this.bits - value.length) + value
   }
 
+  /** Value getter in bin format (0b10110) for whole pair */
   get binPair () {
     if (this.pair === undefined) {
       throw new TypeError('BinNumber - binPair: Instance does not have a pair.')
@@ -94,10 +110,12 @@ class BinNumber {
     }
   }
 
+  /** Value getter in numbern format (123) */
   get dec () {
     return this.value
   }
 
+  /** Value getter in numbern format (123) for whole pair */
   get decPair () {
     if (this.pair === undefined) {
       throw new TypeError('BinNumber - decPair: Instance does not have a pair.')
@@ -105,12 +123,14 @@ class BinNumber {
     return parseInt(this.hexPair, 16)
   }
 
+  /** Method to increment value */
   incr () {
     this.value = (this.value + 1) & this.maximum
     this.onChange()
     return this
   }
 
+  /** Method to increment value of whole pair */
   incrPair () {
     var tmp = this.pair.value + 1
     if (tmp !== this.pair.incr().value) {
@@ -123,12 +143,14 @@ class BinNumber {
     return this
   }
 
+  /** Method to decrement value */
   decr () {
     this.value = (this.value - 1) & this.maximum
     this.onChange()
     return this
   }
 
+  /** Method to decrement value of whole pair */
   decrPair () {
     if (this.pair.value === 0 && this.value === 0) {
       this.pair.val = this.pair.maximum
@@ -139,6 +161,9 @@ class BinNumber {
     return this
   }
 
+  /** Method to set certain bit of number
+   * @param {number} number of bit. LSB = 0
+   */
   setBit (num) {
     if (Math.pow(2, (num + 1)) > this.maximum) {
       throw new RangeError('BinNumber - setBit: Argument num too big.')
@@ -148,6 +173,9 @@ class BinNumber {
     return this
   }
 
+  /** Method to reset certain bit of number
+   * @param {number} number of bit. LSB = 0
+   */
   resBit (num) {
     if (Math.pow(2, (num + 1)) > this.maximum) {
       throw new RangeError('BinNumber - resBit: argument num too big')
@@ -157,6 +185,7 @@ class BinNumber {
     return this
   }
 
+  /** Function, that is called on change of value */
   onChange () {
     return 0
   }

@@ -2,6 +2,9 @@ var global = require('./globals.js')
 
 var ALU = {}
 
+/** Function to execute ALU operation
+ * @param {number} index of operation
+ */
 ALU.doOperation = function (x) {
   switch (x) {
     case 0:
@@ -69,6 +72,9 @@ ALU.doOperation = function (x) {
   countParity(global.dataBus.dec)
 }
 
+/** Function for finding carry
+ * @param {number} untruncated result of operation
+ */
 function countCarry (input) {
   if (((input >> 8) & 1) === 1) {
     global.registerF.setBit(0)
@@ -77,7 +83,9 @@ function countCarry (input) {
   }
 }
 
-
+/** Function for finding if result is zero
+ * @param {number} result of operation
+ */
 function countZero (input) {
   if (input === 0) {
     global.registerF.setBit(1)
@@ -86,17 +94,24 @@ function countZero (input) {
   }
 }
 
+/** Function for finding if result is negative
+ * @param {number} result of operation
+ */
 function countNegative (input) {
   if (input > 127) {
     global.registerF.setBit(2)
-  }
-  else {
+  } else {
     global.registerF.resBit(2)
   }
 }
 
-//If the sum of two positive numbers yields a negative result, the sum has overflowed.
-//If the sum of two negative numbers yields a positive result, the sum has overflowed.
+/** Function for finding if overflow occured. This has two rules:
+ * If the sum of two positive numbers yields a negative result, the sum has overflowed.
+ * If the sum of two negative numbers yields a positive result, the sum has overflowed.
+ * @param {number} operand1 of operation
+ * @param {number} operand2 of operation
+ * @param {number} result of operation
+ */
 function countOverflow (operand1, operand2, result) {
   if (operand1 > 127 && operand2 > 127 && result <= 127) {
     global.registerF.setBit(3)
@@ -107,18 +122,27 @@ function countOverflow (operand1, operand2, result) {
   }
 }
 
-//parity odd = 1, even = 0
+/** Function for finding if parity is odd.
+ * parity odd = 1, even = 0
+ * @param {number} result of operation
+ */
 function countParity (input) {
   input = input.toString(2)
   if (input.match(/1/g) === null) {
     global.registerF.resBit(4)
-  } else if(input.match(/1/g).length % 2) {
+  } else if (input.match(/1/g).length % 2) {
     global.registerF.resBit(4)
   } else {
     global.registerF.setBit(4)
   }
 }
 
+/** Function for finding if half carry occured.
+ * Half carry occures if fourth bit of number changes
+ * parity odd = 1, even = 0
+ * @param {number} operand of operation
+ * @param {number} result of operation
+ */
 function countHalfCarry (before, after) {
   if (((before >> 4) & 1) === ((after >> 4) & 1)) {
     global.registerF.resBit(5)
@@ -239,5 +263,4 @@ ALU.oop = function () {
   }
   ALU.doOperation(global.registerOP.dec)
 }
-// TODO: ALU operace by měly ovlivňovat F registr
 module.exports = ALU

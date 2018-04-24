@@ -3,8 +3,10 @@ var alu = require('./alu.js')
 
 var CU = {}
 
+/** Function that is called before executing an microinstruction */
 CU.beforeUintruction = function () {}
 
+/** Function that executes next microinstruction */
 CU.doUInstruction = function () {
   try {
     CU.beforeUintruction()
@@ -99,6 +101,9 @@ CU.doUInstruction = function () {
   return (opcode.Name)
 }
 
+/** Function that decodes opcode to name and operands of microinstruction
+ * @param {string} opcode
+ */
 CU.decode = function (opcode) {
   if (opcode.length !== 3) {
     throw new Error('CU.decode: wrong opcode: 0x' + opcode)
@@ -171,19 +176,27 @@ CU.decode = function (opcode) {
   }
 }
 
+/** convert hex string to number
+ * @param {string} hex formatted number (0x1F)
+ */
 function hex2num (string) {
   return parseInt(string, 16)
 }
 
+/** Objects that stores all microinstruction functions */
 CU.uinstr = {}
+
+/** execute DB<O microinstruction */
 CU.uinstr.o2db = function () {
   global.dataBus.val = global.registerOP.dec
 }
 
+/** execute DB>O microinstruction */
 CU.uinstr.db2o = function () {
   global.registerOP.val = global.dataBus.dec
 }
 
+/** execute END microinstruction */
 CU.uinstr.end = function () {
   global.registerPCH.incrPair()
   global.addressBus.val = global.registerPCH.decPair
@@ -193,15 +206,20 @@ CU.uinstr.end = function () {
   global.registerUPCH.decrPair()
 }
 
+/** execute RD microinstruction */
 CU.uinstr.rd = function () {
   global.dataBus.val = '0x' + global.memory[global.addressBus.dec]
 }
 
+/** execute WRT microinstruction */
 CU.uinstr.wt = function () {
   global.memory[global.addressBus.dec] = global.dataBus.hex
   global.onMemoryChange()
 }
 
+/** execute ALU microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.alu = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -211,6 +229,9 @@ CU.uinstr.alu = function (operand) {
   alu.doOperation(operand)
 }
 
+/** execute DB<R microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.r2db = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -220,6 +241,9 @@ CU.uinstr.r2db = function (operand) {
   global.dataBus.val = global.register(operand).dec
 }
 
+/** execute AB<R microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.r2ab = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -229,6 +253,9 @@ CU.uinstr.r2ab = function (operand) {
   global.addressBus.val = global.register(operand).dec
 }
 
+/** execute AB<W microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.w2ab = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -238,6 +265,9 @@ CU.uinstr.w2ab = function (operand) {
   global.addressBus.val = global.register(operand).decPair
 }
 
+/** execute DB>R microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.db2r = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -247,6 +277,9 @@ CU.uinstr.db2r = function (operand) {
   global.register(operand).val = global.dataBus.dec
 }
 
+/** execute AB>W microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.ab2w = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -256,6 +289,9 @@ CU.uinstr.ab2w = function (operand) {
   global.register(operand).valPair = global.addressBus.dec
 }
 
+/** execute INCB microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.incb = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -265,6 +301,9 @@ CU.uinstr.incb = function (operand) {
   global.register(operand).incr()
 }
 
+/** execute INCW microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.incw = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -274,6 +313,9 @@ CU.uinstr.incw = function (operand) {
   global.register(operand).incrPair()
 }
 
+/** execute DECB microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.decb = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -283,6 +325,9 @@ CU.uinstr.decb = function (operand) {
   global.register(operand).decr()
 }
 
+/** execute DECW microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.decw = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -292,6 +337,9 @@ CU.uinstr.decw = function (operand) {
   global.register(operand).decrPair()
 }
 
+/** execute JOI microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.joi = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -305,6 +353,9 @@ CU.uinstr.joi = function (operand) {
   }
 }
 
+/** execute JON microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.jon = function (operand) {
   operand = hex2num(operand)
   if (operand === 13) {
@@ -318,6 +369,9 @@ CU.uinstr.jon = function (operand) {
   }
 }
 
+/** execute JOFI microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.jofi = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
@@ -332,6 +386,9 @@ CU.uinstr.jofi = function (operand) {
   }
 }
 
+/** execute JOFN microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.jofn = function (operand) {
   var leading = '0'.repeat(8 - global.registerF.bin.length)
   var F = leading + global.registerF.bin
@@ -346,35 +403,60 @@ CU.uinstr.jofn = function (operand) {
   }
 }
 
+/** execute COOP microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.coop = function (operand) {
   global.registerOP.val = global.instructionRegister.dec - hex2num(operand)
 }
 
+/** execute DB<C microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.c2db = function (operand) {
   global.dataBus.val = '0x' + operand
 }
 
+/** execute SVR microinstruction
+ * @param {string} operand1 in hex format (without 0x)
+ * @param {string} operand2 in hex format (without 0x)
+ */
 CU.uinstr.svr = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).dec
   global.register(hex2num(operand1)).val = global.register(hex2num(operand2)).dec
   global.register(hex2num(operand2)).val = tmp
 }
 
+/** execute SVW microinstruction
+ * @param {string} operand1 in hex format (without 0x)
+ * @param {string} operand2 in hex format (without 0x)
+ */
 CU.uinstr.svw = function (operand1, operand2) {
   var tmp = global.register(hex2num(operand1)).decPair
   global.register(hex2num(operand1)).valPair = global.register(hex2num(operand2)).decPair
   global.register(hex2num(operand2)).valPair = tmp
 }
 
+/** execute JMP microinstruction
+ * @param {string} operand in hex format (without 0x)
+ */
 CU.uinstr.jmp = function (operand) {
   global.registerUPCH.valPair = hex2num(operand)
   global.registerUPCH.decrPair()
 }
 
+/** execute SETB microinstruction
+ * @param {string} operand1 in hex format (without 0x)
+ * @param {string} operand2 in hex format (without 0x)
+ */
 CU.uinstr.setb = function (operand1, operand2) {
   global.register(hex2num(operand2)).setBit(hex2num(operand1))
 }
 
+/** execute RETB microinstruction
+ * @param {string} operand1 in hex format (without 0x)
+ * @param {string} operand2 in hex format (without 0x)
+ */
 CU.uinstr.retb = function (operand1, operand2) {
   global.register(hex2num(operand2)).resBit(hex2num(operand1))
 }

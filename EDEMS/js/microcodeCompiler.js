@@ -1,6 +1,10 @@
 var global = require('./globals.js')
 var BinNumber = require('./binNumber.js')
 
+
+/** Function that compiles input as EDEMS microcode
+ * @param {string} multiline string to be parsed as code
+ */
 var microcodeCompiler = {}
 
 microcodeCompiler.compile = function (input) {
@@ -423,6 +427,10 @@ microcodeCompiler.compile = function (input) {
   return {output, listing}
 }
 
+/** Function to parse string number to number type
+ * @param {string} Number
+ * @param {number} Number of bits
+ */
 function parseNumber (input, bits) {
   input = input.toLowerCase()
   var output = {}
