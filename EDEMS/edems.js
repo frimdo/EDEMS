@@ -1410,8 +1410,6 @@ gui.onChangeSetup = function () {
 
       global.memoryEditor.resize()
       global.microcodeEditor.resize()
-      global.memoryDebug.resize()
-      global.microcodeDebug.resize()
       global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
       global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     } else if (global.advanced == 'basic') {
@@ -1450,8 +1448,6 @@ gui.onChangeSetup = function () {
       $('#M2C').addClass('hidden')
       global.memoryEditor.resize()
       global.microcodeEditor.resize()
-      global.memoryDebug.resize()
-      global.microcodeDebug.resize()
       global.memoryEditor.selection.moveCursorToPosition({row: 0, column: 0})
       global.microcodeEditor.selection.moveCursorToPosition({row: 0, column: 0})
     }

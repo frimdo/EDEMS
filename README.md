@@ -1,28 +1,28 @@
 note: this file is deprecated. Update is on a way.
-# EDEMS
-Educational DEmonstrative Microprocessor Simulator
+# EDEMS basic
+Educational DEmonstrative Microprocessor Simulator, basic mod
+ ![basic GUI](./basicGUI.png)
 
-![img](./documents/GUI.png)
-
-## EDEMS  registers
-EDEMS has 16 registers, two of those are 16b, others are 8b. User reachable are 8 registers.
-
-| #   | ------------ | #   | ------------ |
-|-----|--------------|-----|--------------|
-| R00 | F            | R04 | A            |
-| R01 | B            | R05 | C            |
-| R02 | D            | R06 | E            |
-| R03 | S            | R07 | P            |
-| R08 | PCH          | R12 | PCL          |
-| R09 | TMP0         | R13 | OP           |
-| R10 | TMP1         | R14 | TMP2         |
-| R11 | UPCH         | R15 | UPCL         |
-
-Registers 0-7 are user-addressable registers, 8-15 are microcode-only-addressable registers.
+## Clock
+![Clock image](./clock.png)
 
 
 
-All registers, except PC(Program Counter) could theoretically be used as general purpose registers, but some bytes of F(flags) is rewrited after almost every ALU operation. SP is used by stack pointer instructions.
+Function block of clock generator allows you to generate clock pulses.
+
+Buttons from left to right do:
+
+- instruction step (generate clock cycles, until a instruction is done)
+- microinstruction step (generate one clock impulse)
+- run (generate clock cycles until stopped
+- pause (stop generating clock pulses)
+- stop (stop generating clock pulses, set program counter to zero and load first instruction)
+- frequency selector (value of clock pulses in Hz)
+
+## basic registers
+EDEMS has 8 basic registers. Basic means, they are visible to programmer. There is one exception, and that is program counter register pair, that is visible.
+
+![basicRegisters](./basicRegisters.png)
 
 ### A, B, C, D, E, S, P
 Those registers can be used as general purpose 8b registers.
@@ -30,34 +30,8 @@ Those registers can be used as general purpose 8b registers.
 ### BC, DE, SP
 Those 8b register pairs can be used as general purpose 16b registers.
 
-### TMP0, TMP1, TMP2
-General purpose registers for microcode. 
-
-### TMP1TMP2
-register pair can be used as general purpose 16b register for microcode.
-
-### OP 
-Register for addressing of other registers.
-
 ### PCH, PCL
 Program counter of microprocessor. Though not addressable for user, is visible and editable using jump instructions.
-
-### UPCL, UPCH
-High and low bits of microprogram counter. Since microprogram addresses are only 11b, 5MSB of uPCH is not used.
-
-Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use JMP instruction.
-
-UPCH
-
-|uPCH[7] |uPCH[6] |uPCH[5] |uPCH[4] |uPCH[3] |uPCH[2] |uPCH[1] |uPCH[0]|
-|--------|--------|--------|--------|--------|--------|--------|-------|
-|NA      |NA      |NA      |NA      |NA      | uPC[10]| uPC[9] | uPC[8]|
-
-UPCL
-
-|uPCL[7] |uPCL[6] |uPCL[5] |uPCL[4] |uPCL[3] |uPCL[2] |uPCL[1] |uPCL[0]|
-|--------|--------|--------|--------|--------|--------|--------|-------|
-|uPC[7]  |uPC[6]  |uPC[5]  |uPC[4]  |uPC[3]  |uPC[2]  |uPC[1]  |uPC[0] |
 
 ### F register
 F register contains ALU flags. Those are:
@@ -66,178 +40,234 @@ F register contains ALU flags. Those are:
 |-----|-----|-----|-----|-----|-----|-----|-----|
 |F[7] |F[6] |F[5] |F[4] |F[3] |F[2] |F[1] |F[0] |
 
-- C - carry
-- Z - zero
-- N - Negative
-- V - Two's complement overflow
-- P - Parity (1 if parity odd)
-- H - Half carry
-- Q - Sticky bit 
-- X - not operated by ALU, usage defined by instruction set/user.
+#### C - carry
+Carry bit is set to one if last operation resulted with carry out = 1.
+
+#### Z - zero
+Zero bit is set, if result of last operation is zero.
+
+#### N - Negative
+Negative bit is set, if result of last operation has 1 as MSB, meaning number is negative in two's complement
+
+#### V - Two's complement overflow
+Two's complement overflow is set if the overflow occured in last operation. Theese two rules defines overflow.
+- If the sum of two positive numbers yields a negative result, the sum has overflowed. 
+- If the sum of two negative numbers yields a positive result, the sum has overflowed. 
+
+#### P - Parity
+Parity bit is set, if sum of ones in operation result is odd.
+
+#### H - Half carry
+Half carry is set, when carry out from thirth to fourth bit is 1. 
+
+#### Q 
+Not operated by ALU, usage defined by instruction set. Default instruction set does not use this bit.
+
+#### X
+Not operated by ALU, usage defined by instruction set. Default instruction set does not use this bit.
 
 ## ALU
-```
-                           
- |F[C]| |DB|     |TMP0| 
-   |     |        |   
-   V     V        |
-  |  MUX  |       |
-      |           |
-      V           V   
-  \---------\   /----/ 
-   \         \ /    /  
-    \              /---->|F|
-     \    ALU     /    
-      \----------/     
-        |    |  
-        |    |  
-        V    V               
-     |F[C]| |DB|
-```
+![ALU image](./ALU.png)
 
-ALU has 2 inputs and 3 outputs. Operations use data bus as its output, overflow is written to C flag of F register. Other flags of F are modified too. C flag of F register can be used as input too.
+Arithmetic-logic unit has 2 inputs and 2 outputs. Inputs are operands. Those are data bus and register TMP0 (special register edited by microinstructions). Outputs are data bus and register F. This is special register described in registers chapter. 
+
+Operations use data bus and register TMP0 (special register edited by microinstructions) as its input. Data bus is used as output. Overflow is written to C flag of F register. Other flags of F are modified too according to table of operations. C flag of F register is used as input for some operations.
 
 ### Operations
 
-| name | number | operation description                               |
-|------|--------|-----------------------------------------------------|
-|ADD   |0       | **ADD** numbers: DB = DB + TMP                      |
-|SUB   |1       | **SUB**stract: DB = TwosComplement(DB) + TMP        |
-|NEG   |2       | create **NEG**ative number: DB = TwosComplement(DB) |
-|NOT   |3       | bitwise **NOT** bits: DB = ~DB                      |
-|AND   |4       | bitwise **AND** bits: DB = DB && TMP                |
-|ORR   |5       | bitwise **OR** bits: DB = DB &#124;&#124; TMP       |
-|XOR   |6       | bitwise **XOR** bits: DB = DB ^ TMP                 |
-|SHR   |7       | **SH**ift **R**ight DB                              |
-|SHL   |8       | **SH**ift **L**eft                                  |
-|ROR   |9       | **RO**tate **R**ight DB                             |
-|ROL   |10      | **RO**tate **L**eft                                 |
-|RCR   |11      | **R**otate **R**ight through **C**arry DB           |
-|RCL   |12      | **R**otate **L**eft through **C**arry               |
-|ASR   |13      | **A**rithmetic **S**hift **R**ight                  |
-|ASL   |14      | **A**rithmetic **S**hift **L**eft                   |
-|BSR   |15      | **B**CD **S**hift **R**ight                         |
-|BSL   |16      | **B**CD **S**hift **L**eft                          |
-|EQU   |17      | compare if **EQU**al to zero: DB = DB == 0          |
-|OOP   |18      | Do **O**peration defined by **OP** register.        |
+| name | number | operation description                               | X           | Q           | H           | P           | V           | N           | Z           | C           |
+|------|--------|-----------------------------------------------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------| 
+|ADD   |0       | **ADD** numbers: DB = DB + TMP                      | -           | -           |&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|
+|SUB   |1       | **SUB**stract: DB = TwosComplement(DB) + TMP        | -           | -           |&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|&updownarrow;|
+|NEG   |2       | create **NEG**ative number: DB = TwosComplement(DB) | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|NOT   |3       | bitwise **NOT** bits: DB = ~DB                      | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|AND   |4       | bitwise **AND** bits: DB = DB && TMP                | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ORR   |5       | bitwise **OR** bits: DB = DB &#124;&#124; TMP       | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|XOR   |6       | bitwise **XOR** bits: DB = DB ^ TMP                 | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|SHR   |7       | **SH**ift **R**ight DB                              | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|SHL   |8       | **SH**ift **L**eft                                  | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ROR   |9       | **RO**tate **R**ight DB                             | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ROL   |10      | **RO**tate **L**eft                                 | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|RCR   |11      | **R**otate **R**ight through **C**arry DB           | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;|&updownarrow;|
+|RCL   |12      | **R**otate **L**eft through **C**arry               | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;|&updownarrow;|
+|ASR   |13      | **A**rithmetic **S**hift **R**ight                  | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|ASL   |14      | **A**rithmetic **S**hift **L**eft                   | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|BSR   |15      | **B**CD **S**hift **R**ight                         | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|BSL   |16      | **B**CD **S**hift **L**eft                          | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|EQU   |17      | compare if **EQU**al to zero: DB = DB == 0          | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
+|OOP   |18      | Do **O**peration defined by **OP** register.        | -           | -           | -           |&updownarrow;| -           |&updownarrow;|&updownarrow;| -           |
 
+## Memory block
+Memory block is graphical representation of 65kB memory. It has two view tabs. One tab for viewing memory and debugging written code and the second for editing source code. 
 
-## uInstructon set
-uInstructions are 2B wide. Opcode usually is 12b with 1 4b operad, but there are some exceptions (JMP is 4b opcode with 11b operand). OP register is addressing register. When used in most microinstructions, containing value is used as address of another register instead.
+### Debug tab
+![debug tab img](./memoryListing.png)
+The editor is ineditable, and shows listing of source code. The memory view is ineditable too and shows 8bit blocks of memory.
 
-O is operand, and number next to it says how many bits it takes. For example `COOP` instruction is 8bit opcode and 8bit operand.
+#### Listing
+First collumn of listing output is address of first value of code. Second, third and fourth columns are values being stored in memory. Selected line represents actual program counter position.
 
-| name             | opcode | operation description                    |
-|------------------|--------|------------------------------------------|
-| `COOP + O8`      | 0x6?? | **CO**unt **OP** register value. OP=IR-o1. |
-| `ALU + O5`       | 0x0?? | **ALU** does operation defined by operand. For example 0x01 is ADD, 0X02 is SUB,... |
-| `R>DB + O4`      | 0x7C? | move value from **R**egister defined by operand to **D**ata **B**uss. |
-| `R>AB + O4`      | 0x7B? | move value from **R**egister defined by operand to 8 least significant bits of **A**ddress **B**uss, nulling 8MSB. |
-| `W>AB + O4`      | 0x7A? | move **W**ord value (16b) from register pair defined by address of high register of pair defined by operand to **A**ddress **B**uss. |
-| `DB>R + O4`      | 0x79? | move value from **D**ata **B**us to **R**egister. |
-| `AB>W + O4`      | 0x78? | move value from **A**ddress **B**us to **W**ord pair of register defined by operand. (address of high register of pair) |
-| `INCB + O4`      | 0x77? | **INC**rement **B**yte value in register defined by operand. |
-| `DECB + O4`      | 0x76? | **DEC**rement **B**yte value in register defined by operand. |
-| `INCW + O4`      | 0x75? | **INC**rement **W**ord value in register defined by operand. (address of high register of pair)  |
-| `DECW + O4`      | 0x74? | **DEC**rement **W**ord value in register defined by operand. (address of high register of pair)  |
-| `JOI + O4`       | 0x73? | **J**ump **O**ver next microinstruction if value in register defined by operand **I**s 0x00. |
-| `JON + O4`       | 0x72? | **J**ump **O**ver next microinstruction if value in register defined by operand is **N**ot 0x00. |
-| `JOFI + O4`      | 0x71? | **J**ump **O**ver next microinstruction if value in F[operand] **I**s 0b. uO acts as normal register for this microinstruction. |
-| `JOFN + O4`      | 0x70? | **J**ump **O**ver next microinstruction if value in F[operand] is **N**ot 0b. uO acts as normal register for this microinstruction. |
-| `C>DB + O8`      | 0x5?? | move operand as **C**onstant to **DB** |
-| `SVR + O4 + O4`  | 0x1?? | **S**witch **V**alues in **R**egisters defined by first and second operands. |
-| `SVW + O4 + O4`  | 0x2?? | **S**witch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair) |
-| `O>DB`           | 0x7F0 | move value from **O**P to **DB**. |
-| `DB>O`           | 0x7F1 | move value from **DB** to **O**P. |
-| `END`            | 0x7F2 | **END** of microinstruction. Signal for control unit to fetch another instruction. |
-| `JMP + O11`      | 0x??? | write operand to uPC, effectively **J**u**MP**ing in microcode. opcode is 0x800 + address|
-| `READ`           | 0x7F4 | **READ** from memory. |
-| `WRT`            | 0x7F5 | **WR**i**T**e to memory. |
-| `SETB + O4 + O4` | 0x3?? | **SET** **B**yte defined by first operand in register defined by second operand. |
-| `RETB + O4 + O4` | 0X4?? |  **R**es**ET** **B**yte defined by first operand in register defined by second operand. |
+### Source tab
+![source tab img](./memoryEditor.png)
+Source tab allows editing source code, compiling it and writing it to memory, erasing memory, saving and loading source code.
 
-## brainfuck
-used registers:
+Editor allows you to write source code, that can be compiled and written to memory. Syntax of source code is described in EDEMS assembly chapter.
 
-- HL1 - Data pointer, initial value = `0x0010`
-- SP - Output pointer, initial value = `0xFFFF`
-- OP1 - Parenthesis counter, initial value = `0x00`
+Button operations from left to right:
+- compile code and write it to memory
+- erase memory
+- save source code
+- load source code
 
-### Initial memory map
-All of memory is filled with `0x00`
+#### EDEMS assembly syntax
+EDEMS assembly is simpler version of assembly. It supports four types of code sections - instructions, pseudoinstructions, constants and comments. EDEMS assembly is case insensitive.
 
+##### Instructions
+Instructions are defined by microcode. Simulator comes with default instruction set:
+
+|mnemonic  | argument |cycles| operation description                    |
+|----------|----------|------|------------------------------------|
+|LD{reg}   | address  | 14   |**l**oa**d** from  address to register.|
+|ST{reg}   | address  | 14   |**st**ore from  register to  address.|
+|ADD{reg}  | address  | 17   |**add**  value from  address to  register. (result saved in the register)|
+|INC{reg}  | none     | 4    |**inc**rement  register.|
+|INC{reg\*}| none     | 4    |**inc**rement  register pair.|
+|DEC{reg}  | none     | 4    |**dec**rement  register.|
+|DEC{reg\*}| none     | 4    |**dec**rement  register pair.|
+|JP        | address  | 12   |**j**u**mp** to address.|
+|JPF{flag} | address  | 6-15 |**j**um**p** to address **i**f flag is zero.|
+|JP{reg}   | address  | 6-15 |**j**um**p** to address **i**f register is zero.|
+|SUB{reg}  | address  | 17   |**sub**tract  value from  address to  register. (result saved in the register)|
+|AND{reg}  | address  | 17   |logical **and** operation of value from address and register. (result saved in the register)|
+|OR{reg}   | address  | 17   |logical **or** operation of value from address and register. (result saved in the register)|
+|XOR{reg}  | address  | 17   |logical **xor** operation of value from address and register. (result saved in the register)|
+
+statements must be written in following format:
 ```
-*********** - BC - IP(input pointer) - 0x0000
-*         *
-*         *
-*********** - DE - DP(data pointer) - 0x0010
-*         *
-*         *
-*         *
-*         *
-*         *
-*         *
-    ...
-*         *
-*         *
-*********** - SP - OP(output pointer) - 0xFFFF
+mnemonic   [operands]   [;comment]
 ```
-### Instructions
--  `>` - 0x3E Increment the data pointer (to point to the next cell to the right).
--  `<` - 0x3C Decrement the data pointer (to point to the next cell to the left).
--  `+` - 0x2B Increment (increase by one) the byte at the data pointer.
--  `-` - 0x2D Decrement (decrease by one) the byte at the data pointer.
--  `*` - 0x2A Output the byte at the data pointer.
--  `,` - 0x2C Accept one byte of input, storing its value in the byte at the data pointer.
--  `[` - 0x5B If the byte at the data pointer is zero, then instead of moving the instruction pointer forward to the next command, jump it forward to the command after the matching ] command.
--  `]` - 0x5D If the byte at the data pointer is nonzero, then instead of moving the instruction pointer forward to the next command, jump it back to the command after the matching [ command.
-- unknown - Any unknown opcode is skipped.
+##### Pseudoinstructions
+Pseudoinstructions are instructions for compiler. There are two pseudoinstructions supported by EDEMS assembly:
+- `.ORG [16b constant]` set offset of code from zero.
+- `.CONST [8b constant]` store constant to memory.
 
-## minimal instruction set
+##### Constants
+Constants can be in three formats:
+- Binary format `0b10010`
+- Hexadecimal format `0x12`
+- Decimal format `18`
 
-Instructions use two, one or zero operands. Microcode can operate with "microoperands" that opcodes has coded inside. For example: 
-LD loads 8b value from 16b address. Its definition is `|LDa16  (3b) where| + |addrH| + |addrL|`. every `| |` block means 8bit value. This means that this operation has 8b opcode and two 8b operands. The last 3 bits of opcode defines save location of load action (000b - B, 111b - F, 101b - P).
-
-### instructions
-- `|LD 3b where| + |addrH| + |addrL|` - **l**oa**d** from 2B address to 8 bit register.
-- `|ST 3b what| + |addrH| + |addrL|` - **st**ore from 1B register to 2B address.
-- `|ADD 3b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 1B register. (result saved in the register)
-- `|ADD 2b where| + |addrH| + |addrL|` - **add** 1B value from 2B address to 2B register. (result saved in the register)
-- `|INCW 2b what|` - **inc**rement 2B register.
-- `|INC 3b what|` - **inc**rement 1B register.
-- `|DECW 2b what|` - **dec**rement 2B register.
-- `|DEC 3b what|` - **dec**rement 1B register.
-- `|TST| + |addrH| + |addrL|` - **t**e**st** if value on 2B address is zero, next instruction is skipped.
-- `|TSTF 3b which|` - **t**e**st** if nth bit of **F** register is zero, next instruction is skipped.
-- `|JMP| + |where|` - relative **j**u**mp** to address. (operand is added to PC)
-
-<!--
-
-## complete instruction set
-
-### instructions
-- |LDa16 3b where| + |addrH| + |addrL| - load from 16b address to 8 bit register.
-- |LDa8 3b where| + |addr|
-- |STa16 3b what|
-- |STa8 3b what|
-- |ADDa16 3b where|
-- |ADDa8 3b where|
-- |INC16b 2b what|
-- |INC8b 3b what|
-- |DEC16b 2b what|
-- |DEC8b 3b what|
-- |TSTa16|
-- |TSTa8|
-- |TSTF 3b which|
-- ...
+##### Comments
+Comment is considered everything afer sign `;` until end of line.
 
 
 
 
 
+# EDEMS advanced
+Advanced view of simulation of EDEM processor. This view allows to inspect function of microprocessor on microarchitecture level. Since this is just expanded basic mod, most of the informations about basic mod applies to advanced too.
 
-keyword: "TSTFC", hex: "0x30", address: 48,  
-keyword: "TST",   hex: "0x38", address: 56, operand: "2B" ,
-keyword: "JMP",   hex: "0x39", address: 57,
+## Registers
+There are 6 more registers visible in advanced view.
+![registers advanced](registersAdvanced.png)
 
--->
+### TMP0, TMP1, TMP2
+General purpose registers for microcode.
+
+### TMP1TMP2
+register pair can be used as general purpose 16b register for microcode.
+
+### OP 
+Register for addressing of other registers. Most of the microinstruction use this register as pointer to another one.
+
+### PCH, PCL
+Program counter of microprocessor is now accesible.
+
+### UPCL, UPCH
+High and low bits of microprogram counter. Since microprogram addresses are only 11b, 5MSB of uPCH is not used.
+
+Rewriting only one of the registers is not recomanded, since you would jump to another part of microprogram. For jump you should use     JMP instruction.
+
+
+## Control unit
+In advanced mod, there is a visible advanced unit block. This block represents microprogram memory, decoder and instruction register. 
+
+Instruction register holds opcode of instruction being executed. All source and debug tab informations are same with memory source and debug informations, except microcode must be written in EDEMS micro assembly language.
+
+### EDEMS micro assembly syntax
+EDEMS micro assembly is simpler version of assembly. It supports five types of code sections - instructions, pseudoinstructions, constants, registers and comments. EDEMS assembly is case insensitive.
+
+#### Microinstructions
+//TODO: popsat mikroinstrukce a vylepšit tabulku 
+This table explains whole microinstruction set. Microinstruction is an 12bit long number. This number is result of adding opcode base (for DB\<R it is 0x7C0) with "operand". This operand is usually 
+
+| Mnemonic         | Opcode        | Operand | Function description                                                                                                                 |
+|------------------|---------------|---------|--------------------------------------------------------------------------------------------------------------------------------------|
+| DB \textless C   | 0x500         | 8b      | move operand as **C**onstant to **DB**                                                                                               |
+| DB \textless R   | 0x7C0         | 4b      | move value from **R**egister defined by operand to **D**ata **B**uss.                                                                |
+| AB \textless R   | 0x7B0         | 4b      | move value from **R**egister defined by operand to 8 least significant bits of **A**ddress **B**uss, nulling 8MSB.                   |
+| AB \textless W   | 0x7A0         | 4b      | move **W**ord value (16b) from register pair defined by address of high register of pair defined by operand to **A**ddress **B**uss. |
+| DB\textgreater R | 0x790         | 4b      | move value from **D**ata **B**us to **R**egister.                                                                                    |
+| AB\textgreater W | 0x780         | 4b      | move value from **A**ddress **B**us to **W**ord pair of register defined by operand. (address of high register of pair)              |
+| DB  \textless O  | 0x7F0         |         | move value from **O**P to **DB**.                                                                                                    |
+| DB\textgreater O | 0x7F1         |         | move value from **DB** to **O**P.                                                                                                    |
+| SVR              | 0x100         | 4b, 4b  | **S**witch **V**alues in **R**egisters defined by first and second operands.                                                         |
+| SVW              | 0x200         | 4b, 4b  | **S**witch **V**alues in **W**ord register pair defined by first and second operands. (address of high register of pair)             |
+| ALU              | 0x000         | 5b      | **ALU** does operation defined by operand. For example 0x02 is SUB, because 2 is index of sub operation                              |
+| SETB             | 0x300         | 4b, 4b  | **SET** **B**yte defined by first operand in register defined by second operand.                                                     |
+| RETB             | 0x400         | 4b, 4b  | **R**es**ET** **B**yte defined by first operand in register defined by second operand.                                               |
+| INCB             | 0x770         | 4b      | **INC**rement **B**yte value in register defined by operand.                                                                         |
+| DECB             | 0x760         | 4b      | **DEC**rement **B**yte value in register defined by operand.                                                                         |
+| INCW             | 0x750         | 4b      | **INC**rement **W**ord value in register defined by operand. (address of high register of pair)                                      |
+| DECW             | 0x740         | 4b      | **DEC**rement **W**ord value in register defined by operand. (address of high register of pair)                                      |
+| READ             | 0x7F4         |         | **READ** from memory.                                                                                                                |
+| WRT              | 0x7F5         |         | **WR**i**T**e to memory.                                                                                                             |
+| JOI              | 0x730         | 4b      | **J**ump **O**ver next microinstruction if value in register defined by operand **I**s 0x00.                                         |
+| JON              | 0x720         | 4b      | **J**ump **O**ver next microinstruction if value in register defined by operand is **N**ot 0x00.                                     |
+| JOFI             | 0x710         | 4b      | **J**ump **O**ver next microinstruction if value in F[operand] **I**s 0b. uO acts as normal register for this microinstruction.      |
+| JOFN             | 0x700         | 4b      | **J**ump **O**ver next microinstruction if value in F[operand] is **N**ot 0b. uO acts as normal register for this microinstruction.  |
+| JMP              | 0x800         | 11b     | write operand to uPC, effectively **J**u**MP**ing in microcode. opcode is 0x800 + address                                            |
+| COOP             | 0x600         | 8b      | **CO**unt **OP** register value. OP=IR-o1.                                                                                           |
+| END              | 0x7F2         |         | **End** of instruction. Signal for control unit to load another instruction. This is done by incrementing PC, and loading value from memory addressed by PC to IR and UPC. |
+
+statements must be written in following format:
+```
+mnemonic   [operands]   [;comment]
+```
+#### Pseudoinstructions
+Pseudoinstructions are instructions for compiler. There are two pseudoinstructions supported by EDEMS micro assembly:
+
+##### `.DEF`
+This pseudo-microinstruction is used to define instructions. It has up to three arguments. First argument is address of first microinstruction of instruction, second argument is name of instruction and third is optional, defining how many bytes of argument the instruction takes. It is translated as jump to address of first microinstruction.
+
+#### Constants
+Constants can be in three formats:
+- Binary format `0b10010`
+- Hexadecimal format `0x12`
+- Decimal format `18`
+
+#### Comments
+Comment is considered everything afer sign `;` until end of line.
+
+#### Registers
+Most of operands are registers. To make code more readable, you use its names instead of index. When pointing to simple register, you can use its name. When pointing to register pair, you have some options.
+
+- FA - `FA`, `F`
+- BC - `BC`, `B`
+- DE - `DE`, `D`
+- SP - `SP`, `S`
+- PCHPCL - `PCHPCL`, `PCH`, `PC`
+- TMP0OP - `TMP0OP`, `TMP0`, `TMPOP` 
+- TMP1TMP2 - `TMP1TMP2`, `TMP1`, `TMP`
+- UPCHUPCL - `UPCHUPCL`, `UPCH`, `UPC`
+
+
+
+
+
+
+
+
+
+
+## Microinstruction buttons
