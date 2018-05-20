@@ -1,4 +1,3 @@
-note: this file is deprecated. Update is on a way.
 # EDEMS basic
 Educational DEmonstrative Microprocessor Simulator, basic mod
  ![basic GUI](./basicGUI.png)
