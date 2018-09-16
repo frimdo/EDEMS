@@ -1,448 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <link href="./node_modules/clusterize.js/clusterize.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
-          integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S" crossorigin="anonymous">
-    <script src="edems.js"></script>
+    <meta http-equiv="Refresh" content="10;URL=https://friml.gitlab.io/EDEMS/">
+    <meta charset="UTF-8">
+    <title>This page haas moved</title>
+    <meta name="description" content="Our site has moved to a new address. Please note the change of address." >
+ 
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+ 
+    <link href='http://fonts.googleapis.com/css?family=Noto+Sans:400,700' rel='stylesheet' type='text/css'>
+ 
+    <style>
+ 
+        body{
+            font-family: 'Noto Sans', Arial, serif;
+            font-weight: 400;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            line-height: 1.618em;
+            background: #464646 url('lake.jpg') center center no-repeat fixed;
+            background-size: cover;
+        }
+        h2{
+            font-family: 'Noto Sans', Arial, serif;
+            font-weight: 700;
+            font-size:40px;
+            line-height: 1.618em;
+        }
+        section{
+            max-width:800px;
+            margin:8% auto 1em auto;
+            background-color:#222;
+            opacity: 0.8;
+            filter: alpha(opacity=80); /* For IE8 and earlier */
+            color:#fff;
+            padding:1em 5%;
+        }
+ 
+        a{
+            color: #00CC66;
+        }
+        a:focus{
+            outline:none;
+            outline-offset:inherit;
+        }
+        @media (max-device-width: 1027px) {
+ 
+            body{
+                text-align:center;
+                font-size:larger;
+            }
+            section{
+                max-width: 90%;
+            }
+ 
+        }
+ 
+        @media (max-device-width: 640px) {
+            section{
+                max-width: 97%;
+            }
+ 
+        }
+ 
+ 
+    </style>
 </head>
 <body>
-
-<div id="main-grid">
-
-    <div id="header-grid">
-
-        <div id="buttons-grid" class="block">
-            <button type="button" id="import">Import</button>
-            <button type="button" id="export">Export</button>
-            <button type="button" onclick=location.href="mailto:xfriml02@stud.feec.vutbr.cz?subject=Edems%20feedback"><i
-                    class="fas fa-envelope-open"></i> Feedback
-            </button>
-            <button type="button" onclick=location.href="manual/index.html">
-                <i class="fas fa-question-circle"></i> Help
-            </button>
-        </div>
-
-        <div id="clock-grid" class="block">
-
-
-            <button type="button" id="step-btn" class="tooltip">
-                <i class="fa fa-fast-forward">
-                    <span class="tooltiptext">Step</span>
-                </i>
-            </button>
-            <button type="button" id="ustep-btn" class="tooltip">
-                <i class="fa fa-step-forward">
-                    <span class="tooltiptext">Microstep</span>
-                </i>
-            </button>
-            <button type="button" id="urun-btn" class="tooltip">
-                <i class="fa fa-play">
-                    <span class="tooltiptext">Run</span>
-                </i>
-            </button>
-            <button type="button" id="stop-btn" class="tooltip">
-                <i class="fa fa-pause">
-                    <span class="tooltiptext">Pause</span>
-                </i>
-            </button>
-            <button type="button" id="rst-btn" class="tooltip">
-                <i class="fa fa-stop">
-                    <span class="tooltiptext">Stop</span>
-                </i>
-            </button>
-            <span class="frequency">f: <input type="number" id="freq" title="freq" min="1" max="500"> Hz</span>
-
-        </div>
-
-        <div id="logo" class="block">
-            EDEMS<select id="selectEdemsType">
-            <option value="basic" selected>basic <i class="fas fa-arrow-down"></i></option>
-            <option value="advanced">advanced <i class="fas fa-arrow-down"></i></option>
-
-            <!--<option value="unreal">unreal</option>-->
-        </select>
-        </div>
-    </div>
-
-    <div id="body-grid" class="advanced">
-
-        <button type="button" class="flowButton" id="D2D" disabled><i class="fas fa-arrows-alt-h"></i></button>
-        <button type="button" class="flowButton tooltip" id="REA"><i class="fas fa-arrow-down"></i><span
-                class="tooltiptext">RD</span></button>
-        <button type="button" class="flowButton tooltip" id="WRT"><i class="fas fa-arrow-up"></i><span
-                class="tooltiptext">WRT</span></button>
-        <button type="button" class="flowButton tooltip" id="M2C"><i class="fas fa-arrow-right"><span
-                class="tooltiptext">END</span></i></button>
-        <button type="button" class="flowButton" id="A2M" disabled><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton" id="C2D" disabled><i class="fas fa-arrow-down"></i></button>
-        <button type="button" class="flowButton tooltip" id="R2D"><i class="fas fa-arrow-down"></i><span
-                class="tooltiptext">D&ltR</span></button>
-        <button type="button" class="flowButton tooltip" id="D2R"><i class="fas fa-arrow-up"></i><span
-                class="tooltiptext">D&gtR</span></button>
-        <button type="button" class="flowButton tooltip" id="W2A"><i class="fas fa-arrow-up"></i><span
-                class="tooltiptext">A&ltR / A&ltW</span></button>
-        <button type="button" class="flowButton tooltip" id="A2W"><i class="fas fa-arrow-down"></i><span
-                class="tooltiptext">A&gtW</span></button>
-        <button type="button" class="flowButton tooltip" id="AL2"><i class="fas fa-arrow-down"></i><span
-                class="tooltiptext">ALU</span></button>
-        <button type="button" class="flowButton" id="D2L" disabled><i class="fas fa-arrow-up"></i></button>
-        <button type="button" class="flowButton" id="RAL" disabled><i class="fas fa-arrow-right"></i></button>
-        <button type="button" class="flowButton" id="ALR" disabled><i class="fas fa-arrow-left"></i></button>
-
-        <div id="externalDataBus" class="block">
-            External Data Bus
-            <div id="EdataBus">placeholder</div>
-        </div>
-
-        <div id="internalDataBus" class="block">
-            Internal Data Bus
-            <input type="text" name="IdataBus" id="IdataBus" title="IdataBus">
-        </div>
-
-        <div id="memory-grid" class="block">
-            <div class="nameBlock">
-                Memory
-            </div>
-            <div id="memory-tabs" class="btns">
-                <button id="memorySource" type="button" class="tooltip">Source<span
-                        class="tooltiptext">Source view tab</span></button>
-                <button id="memoryDebug" type="tablinks" class="tooltip">Debug</i><span
-                        class="tooltiptext">Debug view tab</span></button>
-            </div>
-            <div class="insideBlock">
-                <div id="memory-editor">
-                    Editor loading...
-                </div>
-                <div id="memory-debug">
-                    Editor loading...
-                </div>
-                <div id="memory-btns" class="btns">
-                    <button id="compileMemory" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
-                            class="tooltiptext">Compile</span></button>
-                    <button id="eraseMemory" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
-                            class="tooltiptext">Erase</span></button>
-                    <button id="saveMemory" type="button" class="tooltip"><i class="fa fa-download"></i><span
-                            class="tooltiptext">Save</span></button>
-                    <input id="loadMemory" type="file"></i></input>
-                    <label for="loadMemory" class="upload-btn tooltip"><i class="fa fa-upload"></i><span
-                            class="tooltiptext">Load</span></label>
-                </div>
-                <div id="memory-descr-table" class="descr-table">
-                    <table>
-                        <tr>
-                            <th>
-                                <div class="memory-table-descr">0x</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory0" class="memory-table-descr">00</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory1" class="memory-table-descr">01</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory2" class="memory-table-descr">02</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory3" class="memory-table-descr">03</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory4" class="memory-table-descr">04</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory5" class="memory-table-descr">05</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory6" class="memory-table-descr">06</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-memory7" class="memory-table-descr">07</div>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div id="scrollArea-memory" class="clusterize-scroll">
-
-                    <table>
-                        <tbody id="contentArea-memory" class="clusterize-content">
-                        <tr class="clusterize-no-data">
-                            <td>Loading data…</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-
-        <div id="controlUnit-grid" class="block">
-            <div class="nameBlock">
-                Control Unit
-            </div>
-            <div class="insideBlock">
-                <div type="button" id="IR">IR
-                    <div id="instructionRegister">0x12 <span>UNKNOWN</span></div>
-                </div>
-                <div id="microcode-tabs" class="btns">
-                    <button id="microcodeSource" type="tablinks" class="tooltip">Source<span
-                            class="tooltiptext">Source view tab</span></button>
-                    <button id="microcodeDebug" type="tablinks" class="tooltip">Debug</i><span
-                            class="tooltiptext">Debug view tab</span></button>
-                </div>
-                <div id="microcode-editor">
-                </div>
-                <div id="microcode-debug">
-                </div>
-
-                <div id="microcode-btns" class="btns">
-                    <button id="compileMicrocode" type="button" class="tooltip"><i class="fa fa-cogs"></i><span
-                            class="tooltiptext">Compile</span></button>
-                    <button id="eraseMicrocode" type="button" class="tooltip"><i class="fa fa-eraser"></i><span
-                            class="tooltiptext">Erase</span></button>
-                    <button id="saveMicrocode" type="button" class="tooltip"><i class="fa fa-download"></i><span
-                            class="tooltiptext">Save</span></button>
-                    <input id="loadMicrocode" type="file"></i></input>
-                    <label for="loadMicrocode" class="upload-btn tooltip"><i class="fa fa-upload"></i><span
-                            class="tooltiptext">Load</span></label>
-                </div>
-
-                <div id="microcode-descr-table" class="descr-table">
-                    <table>
-                        <tr>
-                            <th>
-                                <div class="microcode-table-descr">0x</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode0" class="microcode-table-descr">00</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode1" class="microcode-table-descr">01</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode2" class="microcode-table-descr">02</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode3" class="microcode-table-descr">03</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode4" class="microcode-table-descr">04</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode5" class="microcode-table-descr">05</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode6" class="microcode-table-descr">06</div>
-                            </th>
-                            <th>
-                                <div id="x-offset-microcode7" class="microcode-table-descr">07</div>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-                <div id="scrollArea-microcode" class="clusterize-scroll">
-
-                    <table>
-                        <tbody id="contentArea-microcode" class="clusterize-content">
-                        <tr class="clusterize-no-data">
-                            <td>Loading data…</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div id=registers-grid class="block">
-            <div class="nameBlock">Registers
-                <button type="button" id="incr" class="tooltip">++<span class="tooltiptext">INCR/INCW</span></button>
-                <button type="button" id="decr" class="tooltip">--<span class="tooltiptext">DECR/DECW</span></button>
-                <button type="button" id="svr" class="tooltip"><i class="fas fa-retweet"></i><span class="tooltiptext">SVR/SVW</span>
-                </button>
-            </div>
-            <div class="insideBlock">
-                <div class="pairBlock">
-                    <button type="button" id="F-pair" class="pairButton"></button>
-                    <button type="button" id="F-button" class="registerButton">F <span>[0]</span>
-                        <div id="registerF">placeholder</div>
-                    </button>
-                    <button type="button" id="A-button" class="registerButton selectedRegister">A <span>[4]</span>
-                        <div id="registerA">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="B-pair" class="pairButton"></button>
-                    <button type="button" id="B-button" class="registerButton">B <span>[1]</span>
-                        <div id="registerB">placeholder</div>
-                    </button>
-                    <button type="button" id="C-button" class="registerButton">C <span>[5]</span>
-                        <div id="registerC">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="D-pair" class="pairButton"></button>
-                    <button type="button" id="D-button" class="registerButton">D <span>[2]</span>
-                        <div id="registerD">placeholder</div>
-                    </button>
-                    <button type="button" id="E-button" class="registerButton">E <span>[6]</span>
-                        <div id="registerE">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="S-pair" class="pairButton"></button>
-                    <button type="button" id="S-button" class="registerButton">S <span>[3]</span>
-                        <div id="registerS">placeholder</div>
-                    </button>
-                    <button type="button" id="P-button" class="registerButton">P <span>[7]</span>
-                        <div id="registerP">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="PCH-pair" class="pairButton"></button>
-                    <button type="button" id="PCH-button" class="registerButton">PCH <span>[8]</span>
-                        <div id="registerPCH">placeholder</div>
-                    </button>
-                    <button type="button" id="PCL-button" class="registerButton">PCL <span>[12]</span>
-                        <div id="registerPCL">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="TMP0-pair" class="pairButton"></button>
-                    <button type="button" id="TMP0-button" class="registerButton">TMP0 <span>[9]</span>
-                        <div id="registerTMP0">placeholder</div>
-                    </button>
-                    <button type="button" id="OP-button" class="registerButton">OP <span>[13]</span>
-                        <div id="registerOP">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="TMP1-pair" class="pairButton"></button>
-                    <button type="button" id="TMP1-button" class="registerButton">TMP1 <span>[10]</span>
-                        <div id="registerTMP1">placeholder</div>
-                    </button>
-                    <button type="button" id="TMP2-button" class="registerButton">TMP2 <span>[14]</span>
-                        <div id="registerTMP2">placeholder</div>
-                    </button>
-                </div>
-                <div class="pairBlock">
-                    <button type="button" id="UPCH-pair" class="pairButton"></button>
-                    <button type="button" id="UPCH-button" class="registerButton">UPCH <span>[11]</span>
-                        <div id="registerUPCH">placeholder</div>
-                    </button>
-                    <button type="button" id="UPCL-button" class="registerButton">UPCL <span>[15]</span>
-                        <div id="registerUPCL">placeholder</div>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="alu-grid" class="block">
-            <div class="nameBlock">
-                ALU
-            </div>
-            <div class="insideBlock">
-                <div class=viewer-table>
-                    <div>
-                    <span>
-                        <div class="viewer-NameBlock tooltip">DB<span class="tooltiptext dataBus-view-bin"></span></div>
-                        <div class="viewer-ValueBlock tooltip dataBus-view"><span class="tooltiptext dataBus-view-bin"></span></div>
-                    </span>
-                        <span>
-                        <div class="viewer-NameBlock tooltip">TMP0<span class="tooltiptext TMP0-view-bin"></span></div>
-                        <div class="viewer-ValueBlock tooltip TMP0-view">1<span class="tooltiptext TMP0-view-bin"></span></div>
-                    </span>
-                    </div>
-                </div>
-                <div class="spacer"></div>
-
-                <select id="aluSelect">
-                    <option value="0">0: ADD</option>
-                    <option value="1">1: SUB</option>
-                    <option value="2">2: NEG</option>
-                    <option value="3">3: NOT</option>
-                    <option value="4">4: AND</option>
-                    <option value="5">5: ORR</option>
-                    <option value="6">6: XOR</option>
-                    <option value="7">7: SHR</option>
-                    <option value="8">8: SHL</option>
-                    <option value="9">9: ROR</option>
-                    <option value="10">10: ROL</option>
-                    <option value="11">11: RCR</option>
-                    <option value="12">12: RCL</option>
-                    <option value="13">13: ASR</option>
-                    <option value="14">14: ASL</option>
-                    <option value="15">15: BSR</option>
-                    <option value="16">16: BSL</option>
-                    <option value="17">17: EQU</option>
-                    <option value="18">18: OOP</option>
-                </select>
-                <div class="spacer"></div>
-                <div id="F-viewer">
-                    F register
-
-                    <!--
-                        <button type="button" id="step-btn" class="tooltip">
-                            <i class="fa fa-fast-forward">
-                                <span class="tooltiptext">Step</span>
-                            </i>
-                        </button>
-                    -->
-
-                    <div class=viewer-table>
-                        <div>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">X<span class="tooltiptext">X</span></div>
-                              <div class="F-viewer7 viewer-ValueBlock tooltip">1<span
-                                      class="tooltiptext">X</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">Q<span class="tooltiptext">Q</span></div>
-                              <div class="F-viewer6 viewer-ValueBlock tooltip">0<span
-                                      class="tooltiptext">Q</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">H<span class="tooltiptext">Half carry</span></div>
-                              <div class="F-viewer5 viewer-ValueBlock tooltip">1<span
-                                      class="tooltiptext">Half carry</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">P<span class="tooltiptext">Parity</span></div>
-                              <div class="F-viewer4 viewer-ValueBlock tooltip">0<span
-                                      class="tooltiptext">Parity</span></div>
-                            </span>
-                        </div>
-                        <div>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">V<span class="tooltiptext">Overflow</span></div>
-                              <div class="F-viewer3 viewer-ValueBlock tooltip">1<span
-                                      class="tooltiptext">Overflow</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">N<span class="tooltiptext">Negative</span></div>
-                              <div class="F-viewer2 viewer-ValueBlock tooltip">0<span
-                                      class="tooltiptext">Negative</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">Z<span class="tooltiptext">Zero</span></div>
-                              <div class="F-viewer1 viewer-ValueBlock tooltip">1<span class="tooltiptext">Zero</span></div>
-                            </span>
-                            <span>
-                              <div class="viewer-NameBlock tooltip">C<span class="tooltiptext">Carry</span></div>
-                              <div class="F-viewer0 viewer-ValueBlock tooltip">0<span class="tooltiptext">Carry</span></div>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="spacer"></div>
-            </div>
-        </div>
-
-        <div id="addressBus-grid" class="block">
-            Address Bus
-            <div id="addressBus">placeholder</div>
-        </div>
-    </div>
-</div>
+ 
+<section>
+    <h2>This Site has moved!</h2>
+ 
+    <h3>The new web address for this page is <a href="https://friml.gitlab.io/EDEMS/">https://friml.gitlab.io/EDEMS/</a></h3>
+    <h3>...You will be transferred to the new site in a moment...</h3>
+ 
+    <p>If you have waited more than a few seconds and you are still seeing this message, please click on the link above! Thank you.</p>
+</section>
+ 
 </body>
 </html>
